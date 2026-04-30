@@ -161,76 +161,79 @@ function ConfigPanel({
                             </div>
                         </div>
 
-                        {/* Pattern Builder - full width with mobile-optimized layout */}
-                        <div className="mt-3 p-3 rounded-lg border bg-white dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644] shadow-soft dark:shadow-none">
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-3">
-                                <div className="flex items-center gap-2">
-                                    <Layers className="w-3.5 h-3.5 text-[#0078d4]" />
-                                    <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">Pattern Builder</h3>
-                                </div>
-                                <span className="text-[12px] text-[#616161] dark:text-[#a19f9d]">
-                                    <span className="hidden sm:inline">— </span>Customize segment order for your naming convention
-                                </span>
-                            </div>
-
-                            {/* Pattern Builder Section
-                                Allows users to drag/move segments of the naming convention.
-                                The order defined here is used by generateName() in App.jsx.
-                            */}
-                            {/* Sequence items - vertical on mobile, horizontal on larger screens */}
-                            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
-                                {namingOrder.map((item, index) => (
-                                    <div
-                                        key={item}
-                                        className={`flex items-center justify-between sm:justify-start gap-2 px-3 h-[44px] sm:h-[36px] rounded-md border cursor-default ${item === 'Org' && !showOrg ? 'opacity-40' : ''} bg-[#faf9f8] dark:bg-[#252423] border-[#edebe9] dark:border-[#484644] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] transition-colors`}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <span className="w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 bg-[#deecf9] dark:bg-[#0078d4]/30 text-[#0078d4] dark:text-[#60cdff]">
-                                                {index + 1}
-                                            </span>
-                                            <span className="text-[13px] font-medium text-[#201f1e] dark:text-white">{item}</span>
-                                        </div>
-                                        <div className="flex items-center gap-0.5">
-                                            <button
-                                                onClick={() => onMoveItem(index, -1)}
-                                                disabled={index === 0}
-                                                className="p-1.5 sm:p-1 rounded transition-colors disabled:opacity-20 text-[#605e5c] dark:text-[#a19f9d] hover:bg-[#edebe9] dark:hover:bg-[#484644]"
-                                                title="Move left"
-                                            >
-                                                <ArrowLeft className="w-4 h-4" />
-                                            </button>
-                                            <button
-                                                onClick={() => onMoveItem(index, 1)}
-                                                disabled={index === namingOrder.length - 1}
-                                                className="p-1.5 sm:p-1 rounded transition-colors disabled:opacity-20 text-[#605e5c] dark:text-[#a19f9d] hover:bg-[#edebe9] dark:hover:bg-[#484644]"
-                                                title="Move right"
-                                            >
-                                                <ArrowRight className="w-4 h-4" />
-                                            </button>
-                                        </div>
+                        {/* Pattern Builder + Live Preview — unified card */}
+                        <div className="mt-3 rounded-lg border bg-white dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644] shadow-soft dark:shadow-none">
+                            {/* Builder header + segments */}
+                            <div className="p-3">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-3">
+                                    <div className="flex items-center gap-2">
+                                        <Layers className="w-3.5 h-3.5 text-[#0078d4]" />
+                                        <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">Pattern Builder</h3>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
+                                    <span className="text-[12px] text-[#616161] dark:text-[#a19f9d]">
+                                        <span className="hidden sm:inline">— </span>Customize segment order for your naming convention
+                                    </span>
+                                </div>
 
-                        {/* Live Preview - compact bar */}
-                        <div className="mt-3 px-3 py-2 rounded border flex items-center gap-3 bg-[#faf9f8] dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644]">
-                            <div className="flex items-center gap-2 shrink-0">
-                                <Eye className="w-3.5 h-3.5 text-[#0078d4]" />
-                                <span className="text-[12px] font-medium text-[#616161] dark:text-[#a19f9d]">Preview</span>
+                                {/* Pattern Builder Section
+                                    Allows users to drag/move segments of the naming convention.
+                                    The order defined here is used by generateName() in App.jsx.
+                                */}
+                                {/* Sequence items - vertical on mobile, horizontal on larger screens */}
+                                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
+                                    {namingOrder.map((item, index) => (
+                                        <div
+                                            key={item}
+                                            className={`flex items-center justify-between sm:justify-start gap-2 px-3 h-[44px] sm:h-[36px] rounded-md border cursor-default ${item === 'Org' && !showOrg ? 'opacity-40' : ''} bg-[#faf9f8] dark:bg-[#252423] border-[#edebe9] dark:border-[#484644] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] transition-colors`}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <span className="w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 bg-[#deecf9] dark:bg-[#0078d4]/30 text-[#0078d4] dark:text-[#60cdff]">
+                                                    {index + 1}
+                                                </span>
+                                                <span className="text-[13px] font-medium text-[#201f1e] dark:text-white">{item}</span>
+                                            </div>
+                                            <div className="flex items-center gap-0.5">
+                                                <button
+                                                    onClick={() => onMoveItem(index, -1)}
+                                                    disabled={index === 0}
+                                                    className="p-1.5 sm:p-1 rounded transition-colors disabled:opacity-20 text-[#605e5c] dark:text-[#a19f9d] hover:bg-[#edebe9] dark:hover:bg-[#484644]"
+                                                    title="Move left"
+                                                >
+                                                    <ArrowLeft className="w-4 h-4" />
+                                                </button>
+                                                <button
+                                                    onClick={() => onMoveItem(index, 1)}
+                                                    disabled={index === namingOrder.length - 1}
+                                                    className="p-1.5 sm:p-1 rounded transition-colors disabled:opacity-20 text-[#605e5c] dark:text-[#a19f9d] hover:bg-[#edebe9] dark:hover:bg-[#484644]"
+                                                    title="Move right"
+                                                >
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex-1 px-3 py-1.5 rounded font-mono text-[14px] font-semibold tracking-wide bg-white dark:bg-[#252423] text-[#0078d4] dark:text-[#60cdff] border border-[#edebe9] dark:border-transparent">
-                                {liveSchemaStr}
+
+                            {/* Live Preview — integrated footer */}
+                            <div className="px-3 py-2 flex items-center gap-3 border-t border-[#edebe9] dark:border-[#484644] bg-[#faf9f8] dark:bg-[#1b1a19] rounded-b-lg">
+                                <div className="flex items-center gap-2 shrink-0">
+                                    <Eye className="w-3.5 h-3.5 text-[#0078d4]" />
+                                    <span className="text-[12px] font-medium text-[#616161] dark:text-[#a19f9d]">Preview</span>
+                                </div>
+                                <div className="flex-1 px-3 py-1.5 rounded font-mono text-[14px] font-semibold tracking-wide bg-white dark:bg-[#252423] text-[#0078d4] dark:text-[#60cdff] border border-[#edebe9] dark:border-transparent">
+                                    {liveSchemaStr}
+                                </div>
+                                <button
+                                    onClick={onCopy}
+                                    className={`shrink-0 px-3 py-1.5 rounded text-[12px] font-semibold transition-all flex items-center gap-1.5 ${copiedId === 'live-pill'
+                                        ? 'bg-[#107c10] text-white'
+                                        : 'bg-[#0078d4] text-white hover:bg-[#106ebe]'
+                                        }`}
+                                >
+                                    {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> Copied</> : <><Copy className="w-3.5 h-3.5" /> Copy</>}
+                                </button>
                             </div>
-                            <button
-                                onClick={onCopy}
-                                className={`shrink-0 px-3 py-1.5 rounded text-[12px] font-semibold transition-all flex items-center gap-1.5 ${copiedId === 'live-pill'
-                                    ? 'bg-[#107c10] text-white'
-                                    : 'bg-[#0078d4] text-white hover:bg-[#106ebe]'
-                                    }`}
-                            >
-                                {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> Copied</> : <><Copy className="w-3.5 h-3.5" /> Copy</>}
-                            </button>
                         </div>
                     </div>
                 )}
