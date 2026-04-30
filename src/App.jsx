@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import { Search, X, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 import Header from './components/Header';
 import ConfigPanel from './components/ConfigPanel';
@@ -238,30 +238,17 @@ export default function App() {
                 onCopy={(e) => copyToClipboard(liveSchemaStr, 'live-pill', e)}
             />
 
-            <div className="max-w-[1600px] mx-auto px-6 pt-8 space-y-8">
-                {/* Services Header Card */}
-                <div className="p-5 rounded-lg shadow-soft border flex flex-col gap-4 bg-white dark:bg-[#252423] border-[#edebe9] dark:border-[#484644]">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <h2 className="text-[18px] font-semibold text-[#242424] dark:text-white">Services</h2>
-                            <p className="text-[13px] text-[#616161] dark:text-[#a19f9d]">Select a resource to generate a name</p>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:max-w-xl">
-                            <div className="relative flex-1 w-full flex items-center px-2 h-[32px] border rounded bg-white dark:bg-[#1b1a19] border-[#8a8886] dark:border-[#605e5c]">
-                                <Search className="w-4 h-4 mr-2 text-[#0078d4]" />
-                                <input ref={searchInputRef} type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Filter services... (Ctrl+K)" className="w-full bg-transparent border-none outline-none text-[14px] text-[#201f1e] dark:text-white placeholder:text-[#a19f9d] dark:placeholder:text-[#605e5c]" />
-                                {searchTerm && <button onClick={() => setSearchTerm('')} className="p-0.5 hover:bg-black/10 rounded-full"><X className="w-3 h-3 text-black dark:text-white" /></button>}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-3 border-t pt-3 border-[#edebe9] dark:border-[#484644]">
-                        <ServiceFilter
-                            activeCategory={activeCategory}
-                            onCategoryChange={setActiveCategory}
-                            categories={CATEGORIES}
-                        />
-                    </div>
-                </div>
+            <div className="max-w-[1600px] mx-auto px-6 pt-6 space-y-5">
+                {/* Compact service toolbar: search + category tabs */}
+                <ServiceFilter
+                    activeCategory={activeCategory}
+                    onCategoryChange={setActiveCategory}
+                    categories={CATEGORIES}
+                    searchTerm={searchTerm}
+                    onSearchChange={(e) => setSearchTerm(e.target.value)}
+                    onClearSearch={() => setSearchTerm('')}
+                    searchInputRef={searchInputRef}
+                />
 
                 {/* Resource Grid */}
                 {displayedResources.length === 0 ? (
