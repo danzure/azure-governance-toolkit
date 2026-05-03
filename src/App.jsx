@@ -45,6 +45,7 @@ export default function App() {
     const [visibleCount, setVisibleCount] = useState(24); // Initial visible count for infinite scroll
 
     const searchInputRef = useRef(null);
+    const loadMoreRef = useRef(null);
 
     // Debounce search term to prevent expensive filtering on every keystroke
     // Delays search execution by 300ms until user stops typing
@@ -102,16 +103,13 @@ export default function App() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [expandedCard, searchTerm]);
 
-    // Scroll-to-top visibility and Infinite Scroll (throttled with rAF)
+    // Scroll-to-top visibility (throttled with rAF)
     useEffect(() => {
         let ticking = false;
         const handleScroll = () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
                     setShowScrollTop(window.scrollY > 200);
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
-                        setVisibleCount(prev => Math.min(prev + 24, 1000));
-                    }
                     ticking = false;
                 });
                 ticking = true;
@@ -119,6 +117,29 @@ export default function App() {
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Infinite Scroll using IntersectionObserver to prevent layout thrashing
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setVisibleCount(prev => Math.min(prev + 24, 1000));
+                }
+            },
+            { rootMargin: '500px' }
+        );
+
+        const currentTarget = loadMoreRef.current;
+        if (currentTarget) {
+            observer.observe(currentTarget);
+        }
+
+        return () => {
+            if (currentTarget) {
+                observer.unobserve(currentTarget);
+            }
+        };
     }, []);
 
     // Reset visible count on filter change
@@ -318,7 +339,7 @@ export default function App() {
                 )}
 
                 {/* Footer */}
-                <footer className="py-6 text-center text-[12px] text-[#605e5c] dark:text-[#a19f9d]">
+                <footer ref={loadMoreRef} className="py-6 text-center text-[12px] text-[#605e5c] dark:text-[#a19f9d]">
                     Published by <a href="https://www.linkedin.com/in/danielpowley92/" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0078d4] hover:underline">Daniel Powley</a> • <a href="https://github.com/danzure/azres-naming-tool" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">GitHub</a> • Licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">MIT License</a>
                 </footer>
             </div>
