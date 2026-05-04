@@ -72,13 +72,13 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
         <div
             id={id}
             onClick={() => onToggle(resource.name, isExpanded)}
-            className={`group relative flex flex-col rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-[#0078d4] shadow-depth' : 'hover:-translate-y-1 hover:shadow-depth shadow-soft'} bg-white dark:bg-[#252423] border-[#edebe9] dark:border-[#484644] ${hasErrors ? 'border-l-4 border-l-[#a80000]' : hasWarnings ? 'border-l-4 border-l-[#ffaa44]' : ''}`}
+            className={`group relative flex flex-col rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-[#0078d4] shadow-depth border-transparent dark:border-transparent' : 'hover:shadow-depth hover:border-[#c8c6c4] dark:hover:border-[#8a8886] shadow-soft'} bg-white dark:bg-[#252423] border-[#edebe9] dark:border-[#484644] ${hasErrors ? 'border-l-4 border-l-[#a80000]' : hasWarnings ? 'border-l-4 border-l-[#ffaa44]' : ''}`}
         >
             <div className="p-4 flex flex-col h-full gap-3">
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 overflow-hidden">
                         <div
-                            className={`p-2 rounded shrink-0 ${categoryColors.bgClass} ${categoryColors.textClass}`}
+                            className={`p-2 rounded-md shrink-0 ${categoryColors.bgClass} ${categoryColors.textClass}`}
                         >
                             <CategoryIcon className="w-5 h-5" />
                         </div>
@@ -126,11 +126,11 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                 </p>
 
                 <div className="mt-auto pt-2">
-                    <div className="relative rounded px-3 border flex flex-col justify-center h-[32px] bg-[#faf9f8] dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644]">
-                        <div className={`text-[13px] font-medium font-mono truncate w-full pr-8 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-[#242424] dark:text-[#ffffff]'}`}>
+                    <div className="group/copy relative rounded-md px-3 flex flex-col justify-center h-[32px] bg-[#f3f2f1] dark:bg-[#292827] hover:bg-[#edebe9] dark:hover:bg-[#323130] transition-colors border border-transparent">
+                        <div className={`text-[13px] font-medium font-mono truncate w-full pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-[#242424] dark:text-[#ffffff]'}`}>
                             <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                             {hasBundle && (
-                                <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-[#f3f2f1] dark:bg-[#323130] text-[#0078d4] dark:text-[#60cdff]">
+                                <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-white dark:bg-[#3b3a39] text-[#0078d4] dark:text-[#60cdff] shadow-sm">
                                     +{bundle.length - 1}
                                 </span>
                             )}
@@ -146,13 +146,12 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                 }
                             }}
                             aria-label={isCopied ? 'Copied' : 'Copy name'}
-                            className={`absolute right-1 top-1 h-[24px] px-2 rounded text-[11px] font-semibold transition-all flex items-center gap-1 z-10 ${isCopied
-                                ? 'bg-[#107c10] text-white'
-                                : 'bg-[#0078d4] text-white hover:bg-[#106ebe]'
-                                }`}
+                            className={`absolute right-1 top-1 h-[24px] px-2 flex items-center justify-center gap-1.5 rounded-sm text-[11px] font-medium transition-all z-10 border ${isCopied 
+                                ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                : 'bg-white dark:bg-[#323130] border-[#e1dfdd] dark:border-[#484644] text-[#605e5c] dark:text-[#c8c6c4] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
                         >
-                            {isCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                            {/* Mobile visual optimization: hide text on very small screens if needed, but keeping separate for now */}
+                            {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                            <span>{isCopied ? 'Copied' : 'Copy'}</span>
                         </button>
                     </div>
                     <div className="flex justify-between items-center text-[11px] mt-2 px-0.5 opacity-70 shrink-0">

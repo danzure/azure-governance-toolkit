@@ -175,7 +175,7 @@ function ConfigPanel({
                                             key={item}
                                             className={`group flex items-center gap-1.5 pl-1 pr-1.5 h-[30px] rounded-md border cursor-default transition-colors ${item === 'Org' && !showOrg ? 'opacity-40' : ''} bg-[#faf9f8] dark:bg-[#252423] border-[#edebe9] dark:border-[#484644] hover:border-[#0078d4] dark:hover:border-[#0078d4]`}
                                         >
-                                            <span className="w-[18px] h-[18px] rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 bg-[#deecf9] dark:bg-[#0078d4]/30 text-[#0078d4] dark:text-[#60cdff]">
+                                            <span className="w-[18px] h-[18px] rounded-sm flex items-center justify-center text-[10px] font-bold shrink-0 bg-[#deecf9] dark:bg-[#0078d4]/30 text-[#0078d4] dark:text-[#60cdff]">
                                                 {index + 1}
                                             </span>
                                             <span className="text-[12px] font-medium text-[#201f1e] dark:text-white">{item}</span>
@@ -214,12 +214,12 @@ function ConfigPanel({
                                 </div>
                                 <button
                                     onClick={onCopy}
-                                    className={`shrink-0 px-3 py-1.5 rounded text-[12px] font-semibold transition-all flex items-center gap-1.5 ${copiedId === 'live-pill'
-                                        ? 'bg-[#107c10] text-white'
-                                        : 'bg-[#0078d4] text-white hover:bg-[#106ebe]'
+                                    className={`shrink-0 h-[26px] px-2.5 rounded-sm text-[12px] font-medium transition-all flex items-center gap-1.5 border ${copiedId === 'live-pill'
+                                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
+                                        : 'bg-white dark:bg-[#323130] border-[#e1dfdd] dark:border-[#484644] text-[#605e5c] dark:text-[#c8c6c4] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] hover:text-[#323130] dark:hover:text-[#e1dfdd]'
                                         }`}
                                 >
-                                    {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> Copied</> : <><Copy className="w-3.5 h-3.5" /> Copy</>}
+                                    {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>}
                                 </button>
                             </div>
                         </div>

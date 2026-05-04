@@ -37,9 +37,12 @@ export default function BundleList({ bundle, getBundleName, resource, isCopied, 
                             </div>
                             <button
                                 onClick={(e) => { e.stopPropagation(); onCopy(e, itemName); }}
-                                className={`h-[22px] px-2 rounded-sm text-[12px] font-medium transition-all flex items-center gap-1 shrink-0 text-white ${isCopied ? 'bg-[#107c10]' : 'bg-[#0078d4] hover:bg-[#106ebe]'}`}
+                                className={`h-[24px] w-[24px] rounded-sm transition-all flex items-center justify-center shrink-0 border ${isCopied 
+                                    ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                    : 'bg-white dark:bg-[#323130] border-[#e1dfdd] dark:border-[#484644] text-[#605e5c] dark:text-[#c8c6c4] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                                title="Copy name"
                             >
-                                <Copy className="w-3 h-3" />
+                                {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                             </button>
                         </div>
                     );

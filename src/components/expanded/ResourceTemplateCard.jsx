@@ -66,7 +66,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                         className={`h-[26px] px-2.5 rounded-sm text-[12px] font-medium transition-all flex items-center gap-1.5 border ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-white dark:bg-[#323130] border-[#e1dfdd] dark:border-[#484644] text-[#605e5c] dark:text-[#c8c6c4] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
                         title="Copy template"
                     >
-                        {isIacCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                        {isIacCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{isIacCopied ? 'Copied' : 'Copy'}</span>
                     </button>
                 </div>
