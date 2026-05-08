@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
  * @param {Function} props.onToggleMenu - Callback to toggle the navigation menu.
  * @returns {JSX.Element}
  */
-export default function Header({ isDarkMode, onToggleTheme, onToggleMenu }) {
+export default function Header({ isDarkMode, onToggleTheme, onToggleMenu, title = "Resource Naming Tool" }) {
     return (
         <header className="h-[48px] flex items-center justify-between px-5 border-b z-50 fixed top-0 w-full bg-primary-gradient dark:bg-[#1b1a19] border-transparent dark:border-[#323130] text-white shadow-soft dark:shadow-none">
             <div className="flex items-center gap-4">
@@ -27,7 +27,7 @@ export default function Header({ isDarkMode, onToggleTheme, onToggleMenu }) {
                 <div className="flex items-baseline gap-2">
                     <span className="font-semibold text-[16px] text-white tracking-tight">app.atozazure</span>
                     <span className="text-[13px] text-white/40 mx-1">|</span>
-                    <span className="text-[12px] text-white/80 tracking-wide">Resource Naming Tool</span>
+                    <span className="text-[12px] text-white/80 tracking-wide">{title}</span>
                 </div>
             </div>
             <button
@@ -45,4 +45,5 @@ Header.propTypes = {
     isDarkMode: PropTypes.bool.isRequired,
     onToggleTheme: PropTypes.func.isRequired,
     onToggleMenu: PropTypes.func.isRequired,
+    title: PropTypes.string,
 };

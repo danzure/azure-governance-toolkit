@@ -137,15 +137,15 @@ export default function ConditionalAccessPage() {
                         <div className="p-3.5 rounded-lg border shadow-soft bg-[#F0F6FF] dark:bg-[#0078d4]/10 border-[#C7E0F4] dark:border-[#0078d4]/30 flex gap-3 items-start">
                             <Info className="w-4 h-4 text-[#0078d4] mt-0.5 shrink-0" />
                             <div className="text-[13px] leading-relaxed text-[#004578] dark:text-[#c7e0f4]">
-                                Conditional Access policies are logic-driven <strong>If-Then</strong> statements. Use the natural language builder below to construct a standardized name describing who it applies to, under what conditions, and what control is enforced.
+                                Conditional Access policies are logic-driven <strong>If-Then</strong> statements. Use the Pattern Builder below to construct a standardized name describing who it applies to, under what conditions, and what control is enforced.
                             </div>
                         </div>
 
-                        {/* Natural Language Policy Builder */}
+                        {/* Pattern Builder */}
                         <div className="p-4 lg:p-5 rounded-lg border shadow-soft bg-white dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644]">
                             <div className="flex items-center gap-2 mb-5 pb-3 border-b border-[#edebe9] dark:border-[#323130]">
                                 <Edit3 className="w-4 h-4 text-[#0078d4]" />
-                                <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">Natural Language Builder</h3>
+                                <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">Pattern Builder</h3>
                             </div>
                             
                             <div className="flex flex-wrap items-center gap-y-3 gap-x-2 text-[14px] text-[#323130] dark:text-[#e1dfdd] leading-relaxed">

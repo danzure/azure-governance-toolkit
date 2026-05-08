@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Header from './components/Header';
 import NavigationMenu from './components/NavigationMenu';
@@ -22,6 +22,9 @@ export default function App() {
     
     // State for slide-out navigation drawer
     const [isNavOpen, setIsNavOpen] = useState(false);
+    
+    // Get current route to update header title
+    const location = useLocation();
 
     // Toggle document class for Tailwind dark mode
     useEffect(() => {
@@ -53,12 +56,19 @@ export default function App() {
     const handleToggleMenu = useCallback(() => setIsNavOpen(prev => !prev), []);
     const handleCloseMenu = useCallback(() => setIsNavOpen(false), []);
 
+    // Determine header subtitle based on current route
+    let headerTitle = "Resource Naming Tool";
+    if (location.pathname === '/conditional-access') {
+        headerTitle = "Conditional Access Generator";
+    }
+
     return (
         <div className="min-h-screen font-sans transition-colors duration-200 bg-[#faf9f8] dark:bg-[#111009] text-[#242424] dark:text-white flex flex-col">
             <Header
                 isDarkMode={isDarkMode}
                 onToggleTheme={handleToggleTheme}
                 onToggleMenu={handleToggleMenu}
+                title={headerTitle}
             />
 
             <NavigationMenu 
