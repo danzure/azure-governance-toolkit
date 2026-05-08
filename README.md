@@ -18,6 +18,12 @@ This application simplifies governance by ensuring all resource names adhere to 
   - Validates allowed characters (e.g., no hyphens in Storage Accounts or Key Vaults).
   - Checks for mandatory names (e.g., `AzureFirewallSubnet`, `GatewaySubnet`).
 
+### 🔹 Conditional Access Policy Builder
+- **Microsoft Zero Trust Aligned**: Generates standardized Entra ID Conditional Access policy names following the `[Prefix]-[Persona]-[Resource]-[Requirement]` naming convention.
+- **Pre-made Template Library**: Includes over 15 Microsoft-recommended default policies (e.g., Require MFA for Admins, Block Legacy Auth, Require Compliant Device).
+- **Multi-Category Tagging**: Policies are visually tagged across security frameworks including Secure Foundation, Zero Trust, Remote Work, Protect Administrator, and AI Agents.
+- **Customization**: Support for granular parameters (Platform types, Insider Risk, Session Controls) and fully custom requirement definitions.
+
 ### 🔹 Enhanced User Experience
 - **One-Click Copy**: Quickly copy generated names to clipboard.
 - **Dark Mode**: Fully supported dark theme that respects system preferences.
@@ -74,9 +80,10 @@ This will generate optimized static assets in the `dist` directory, ready for de
 
 ```
 src/
-├── components/       # UI Components (ConfigPanel, ResourceCard, etc.)
+├── components/       # UI Components (Header, ConfigPanel, ResourceCard, etc.)
 ├── data/            # Static data including Azure resource definitions
-├── App.jsx          # Main application logic and state management
+├── pages/           # Application views (ResourceNamingPage, ConditionalAccessPage)
+├── App.jsx          # Main application routing and layout
 ├── main.jsx         # Entry point
 └── index.css        # Global styles and Tailwind directives
 ```
