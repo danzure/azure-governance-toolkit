@@ -132,135 +132,120 @@ export default function ConditionalAccessPage() {
                         </div>
                     </div>
 
-                    <div className="animate-slide-up">
-                        {/* Two-column grid: Parameters + About */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                            {/* About / Introduction */}
-                            <div className="order-1 lg:order-2 p-3 rounded-lg border shadow-soft bg-white dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644]">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <Info className="w-3.5 h-3.5 text-[#0078d4]" />
-                                    <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">About This Tool</h3>
-                                </div>
-                                <div className="text-[13px] leading-relaxed space-y-2 text-[#616161] dark:text-[#c8c6c4]">
-                                    <p>
-                                        Generate consistent naming conventions for Microsoft Entra Conditional Access policies based on best practices.
-                                    </p>
-                                    <p>
-                                        Use the builder to configure your policy naming elements. The structure defaults to <strong>Prefix - Persona - Resource - Requirement</strong> to ensure optimal manageability and auditing. Below, you can find a list of common Microsoft default policies to easily copy.
-                                    </p>
-                                </div>
+                    <div className="animate-slide-up flex flex-col gap-3">
+                        {/* About / Introduction */}
+                        <div className="p-3.5 rounded-lg border shadow-soft bg-[#F0F6FF] dark:bg-[#0078d4]/10 border-[#C7E0F4] dark:border-[#0078d4]/30 flex gap-3 items-start">
+                            <Info className="w-4 h-4 text-[#0078d4] mt-0.5 shrink-0" />
+                            <div className="text-[13px] leading-relaxed text-[#004578] dark:text-[#c7e0f4]">
+                                Conditional Access policies are logic-driven <strong>If-Then</strong> statements. Use the natural language builder below to construct a standardized name describing who it applies to, under what conditions, and what control is enforced.
                             </div>
+                        </div>
 
-                            {/* Parameters Builder */}
-                            <div className="order-2 lg:order-1 p-3 rounded-lg border shadow-soft bg-white dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644]">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <Edit3 className="w-3.5 h-3.5 text-[#0078d4]" />
-                                    <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">Policy Builder</h3>
+                        {/* Natural Language Policy Builder */}
+                        <div className="p-4 lg:p-5 rounded-lg border shadow-soft bg-white dark:bg-[#1b1a19] border-[#edebe9] dark:border-[#484644]">
+                            <div className="flex items-center gap-2 mb-5 pb-3 border-b border-[#edebe9] dark:border-[#323130]">
+                                <Edit3 className="w-4 h-4 text-[#0078d4]" />
+                                <h3 className="text-[14px] font-semibold text-[#201f1e] dark:text-white">Natural Language Builder</h3>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center gap-y-3 gap-x-2 text-[14px] text-[#323130] dark:text-[#e1dfdd] leading-relaxed">
+                                <span>Create a policy starting with</span>
+                                <input
+                                    type="text"
+                                    value={prefix}
+                                    onChange={(e) => setPrefix(e.target.value)}
+                                    className="px-2 h-[32px] border rounded outline-none text-[13px] font-mono transition-all focus:border-[#0078d4] focus:ring-2 focus:ring-[#0078d4]/20 bg-white dark:bg-[#252423] border-[#8a8886] dark:border-[#605e5c] w-[60px] text-center"
+                                />
+                                
+                                <span>that applies to</span>
+                                <select
+                                    value={persona}
+                                    onChange={(e) => setPersona(e.target.value)}
+                                    className="px-2.5 h-[32px] rounded outline-none text-[13px] font-semibold transition-all bg-[#EFF6FC] dark:bg-[#0078d4]/15 text-[#0078d4] dark:text-[#60cdff] border border-transparent hover:border-[#c7e0f4] dark:hover:border-[#0078d4]/30 cursor-pointer"
+                                >
+                                    <option value="AllUsers">All Users</option>
+                                    <option value="Admins">Administrators</option>
+                                    <option value="Guests">Guests / Externals</option>
+                                    <option value="Internal">Internal Users</option>
+                                    <option value="ServiceAccts">Service Accounts</option>
+                                    <option value="AIAgents">AI Agents</option>
+                                    <option value="VIPs">VIPs / Executives</option>
+                                    <option value="Vendors">Vendors</option>
+                                    <option value="BreakGlass">Break Glass Accounts</option>
+                                </select>
+                                
+                                <span>when they access</span>
+                                <select
+                                    value={resource}
+                                    onChange={(e) => setResource(e.target.value)}
+                                    className="px-2.5 h-[32px] rounded outline-none text-[13px] font-semibold transition-all bg-[#EFF6FC] dark:bg-[#0078d4]/15 text-[#0078d4] dark:text-[#60cdff] border border-transparent hover:border-[#c7e0f4] dark:hover:border-[#0078d4]/30 cursor-pointer"
+                                >
+                                    <option value="AllApps">All Cloud Apps</option>
+                                    <option value="O365">Office 365 Suite</option>
+                                    <option value="AzurePortal">Azure Management</option>
+                                    <option value="MsAdminPortals">MS Admin Portals</option>
+                                    <option value="Exo">Exchange Online</option>
+                                    <option value="Spo">SharePoint Online</option>
+                                    <option value="Teams">Microsoft Teams</option>
+                                    <option value="Intune">Microsoft Intune</option>
+                                    <option value="Avd">Azure Virtual Desktop</option>
+                                    <option value="Defender">Microsoft Defender</option>
+                                    <option value="HighRiskApps">High Risk Apps</option>
+                                    <option value="SecurityInfo">Security Info Registration</option>
+                                </select>
+
+                                <span>from</span>
+                                <select
+                                    value={platform}
+                                    onChange={(e) => setPlatform(e.target.value)}
+                                    className="px-2.5 h-[32px] rounded outline-none text-[13px] font-semibold transition-all bg-[#EFF6FC] dark:bg-[#0078d4]/15 text-[#0078d4] dark:text-[#60cdff] border border-transparent hover:border-[#c7e0f4] dark:hover:border-[#0078d4]/30 cursor-pointer"
+                                >
+                                    <option value="AnyPlatform">Any Platform</option>
+                                    <option value="UnknownPlatform">Unknown / Unsupported</option>
+                                    <option value="Windows">Windows</option>
+                                    <option value="macOS">macOS</option>
+                                    <option value="iOS">iOS</option>
+                                    <option value="Android">Android</option>
+                                    <option value="Linux">Linux</option>
+                                </select>
+
+                                <span>and enforces</span>
+                                <div className="flex items-center gap-2">
+                                    <select
+                                        value={action}
+                                        onChange={(e) => setAction(e.target.value)}
+                                        className="px-2.5 h-[32px] rounded outline-none text-[13px] font-semibold transition-all bg-[#F3F0F7] dark:bg-[#5C2D91]/20 text-[#5C2D91] dark:text-[#d1a8ff] border border-transparent hover:border-[#E1DFDD] dark:hover:border-[#5C2D91]/40 cursor-pointer"
+                                    >
+                                        <option value="RequireMFA">Require Multi-factor Authentication</option>
+                                        <option value="RequirePhishResist">Require Phishing-Resistant Multi-factor Authentication</option>
+                                        <option value="RequireMfaForRisk">Require Multi-factor Authentication for Risk</option>
+                                        <option value="RequirePasswordChange">Require Password Change</option>
+                                        <option value="RequireCompliant">Require Compliant Device</option>
+                                        <option value="AppProtection">Require App Protection</option>
+                                        <option value="AppEnforced">App Enforced Restrictions</option>
+                                        <option value="Block">Block Unknown Platforms</option>
+                                        <option value="BlockHighRisk">Block High Risk</option>
+                                        <option value="BlockInsiderRisk">Block Insider Risk</option>
+                                        <option value="BlockLegacyAuth">Block Legacy Auth</option>
+                                        <option value="BlockInteractive">Block Interactive Sign-in</option>
+                                        <option value="SessionControl">Session Control</option>
+                                        <option value="TermsOfUse">Terms of Use</option>
+                                        <option value="Custom">Custom Requirement...</option>
+                                    </select>
+                                    
+                                    {action === 'Custom' && (
+                                        <input
+                                            type="text"
+                                            value={customAction}
+                                            onChange={(e) => setCustomAction(e.target.value.replace(/[^a-zA-Z0-9-]/g, ''))}
+                                            placeholder="e.g. BlockNonCompliant"
+                                            className="px-2 h-[32px] border rounded outline-none text-[13px] font-mono transition-all focus:border-[#5C2D91] focus:ring-2 focus:ring-[#5C2D91]/20 bg-white dark:bg-[#252423] border-[#5C2D91]/40 dark:border-[#5C2D91]/60 w-[160px]"
+                                            maxLength={30}
+                                            autoFocus
+                                        />
+                                    )}
                                 </div>
-                                {/* Form grid - label left, input right */}
-                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 items-center">
-                                    {/* Prefix */}
-                                    <label className={labelClasses}>Prefix</label>
-                                    <input
-                                        type="text"
-                                        value={prefix}
-                                        onChange={(e) => setPrefix(e.target.value)}
-                                        className={inputClasses}
-                                    />
-
-                                    {/* Persona */}
-                                    <label className={labelClasses}>Persona</label>
-                                    <select
-                                        value={persona}
-                                        onChange={(e) => setPersona(e.target.value)}
-                                        className={inputClasses}
-                                    >
-                                        <option value="AllUsers">All Users</option>
-                                        <option value="Admins">Administrators</option>
-                                        <option value="Guests">Guests / Externals</option>
-                                        <option value="Internal">Internal Users</option>
-                                        <option value="ServiceAccts">Service Accounts</option>
-                                        <option value="AIAgents">AI Agents</option>
-                                        <option value="VIPs">VIPs / Executives</option>
-                                        <option value="Vendors">Vendors</option>
-                                        <option value="BreakGlass">Break Glass Accounts</option>
-                                    </select>
-
-                                    {/* Resource */}
-                                    <label className={labelClasses}>Resource</label>
-                                    <select
-                                        value={resource}
-                                        onChange={(e) => setResource(e.target.value)}
-                                        className={inputClasses}
-                                    >
-                                        <option value="AllApps">All Cloud Apps</option>
-                                        <option value="O365">Office 365 Suite</option>
-                                        <option value="AzurePortal">Azure Management</option>
-                                        <option value="MsAdminPortals">MS Admin Portals</option>
-                                        <option value="Exo">Exchange Online</option>
-                                        <option value="Spo">SharePoint Online</option>
-                                        <option value="Teams">Microsoft Teams</option>
-                                        <option value="Intune">Microsoft Intune</option>
-                                        <option value="Avd">Azure Virtual Desktop</option>
-                                        <option value="Defender">Microsoft Defender</option>
-                                        <option value="HighRiskApps">High Risk Apps</option>
-                                        <option value="SecurityInfo">Security Info Registration</option>
-                                    </select>
-
-                                    {/* Platform */}
-                                    <label className={labelClasses}>Platform</label>
-                                    <select
-                                        value={platform}
-                                        onChange={(e) => setPlatform(e.target.value)}
-                                        className={inputClasses}
-                                    >
-                                        <option value="AnyPlatform">Any Platform</option>
-                                        <option value="UnknownPlatform">Unknown / Unsupported</option>
-                                        <option value="Windows">Windows</option>
-                                        <option value="macOS">macOS</option>
-                                        <option value="iOS">iOS</option>
-                                        <option value="Android">Android</option>
-                                        <option value="Linux">Linux</option>
-                                    </select>
-
-                                    {/* Action / Requirement */}
-                                    <label className={labelClasses}>Requirement</label>
-                                    <div className="flex flex-col gap-2 w-full">
-                                        <select
-                                            value={action}
-                                            onChange={(e) => setAction(e.target.value)}
-                                            className={inputClasses}
-                                        >
-                                            <option value="RequireMFA">Require Multi-factor Authentication</option>
-                                            <option value="RequirePhishResist">Require Phishing-Resistant Multi-factor Authentication</option>
-                                            <option value="RequireMfaForRisk">Require Multi-factor Authentication for Risk</option>
-                                            <option value="RequirePasswordChange">Require Password Change</option>
-                                            <option value="RequireCompliant">Require Compliant Device</option>
-                                            <option value="AppProtection">Require App Protection</option>
-                                            <option value="AppEnforced">App Enforced Restrictions</option>
-                                            <option value="Block">Block Unknown Platforms</option>
-                                            <option value="BlockHighRisk">Block High Risk</option>
-                                            <option value="BlockInsiderRisk">Block Insider Risk</option>
-                                            <option value="BlockLegacyAuth">Block Legacy Auth</option>
-                                            <option value="BlockInteractive">Block Interactive Sign-in</option>
-                                            <option value="SessionControl">Session Control</option>
-                                            <option value="TermsOfUse">Terms of Use</option>
-                                            <option value="Custom">Custom Requirement...</option>
-                                        </select>
-
-                                        {action === 'Custom' && (
-                                            <input
-                                                type="text"
-                                                value={customAction}
-                                                onChange={(e) => setCustomAction(e.target.value.replace(/[^a-zA-Z0-9-]/g, ''))}
-                                                placeholder="e.g. BlockNonCompliant"
-                                                className={inputClasses}
-                                                maxLength={30}
-                                                autoFocus
-                                            />
-                                        )}
-                                    </div>
-                                </div>
+                                <span>.</span>
                             </div>
                         </div>
 
