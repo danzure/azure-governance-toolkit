@@ -1,8 +1,8 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import { ArrowUp } from 'lucide-react';
 
 import ConfigPanel from '../components/ConfigPanel';
-import ResourceCard from '../components/ResourceCard';
+import ResourceGrid from '../components/ResourceGrid';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 import ServiceFilter from '../components/ServiceFilter';
 import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -32,13 +32,7 @@ export default function ResourceNamingPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useLocalStorage('azres_category', 'All');
     const [copiedId, setCopiedId] = useState(null);
-    const [expandedCard, setExpandedCard] = useState(null);
-    const [subResourceSelections, setSubResourceSelections] = useLocalStorage('azres_subResources', {}); // Track selected sub-resource per resource
-    const [showScrollTop, setShowScrollTop] = useState(false);
-    const [visibleCount, setVisibleCount] = useState(24); // Initial visible count for infinite scroll
-
     const searchInputRef = useRef(null);
-    const loadMoreRef = useRef(null);
 
     // Debounce search term to prevent expensive filtering on every keystroke
     // Delays search execution by 300ms until user stops typing
@@ -51,9 +45,8 @@ export default function ResourceNamingPage() {
         const handleKeyDown = (e) => {
             // Escape to close expanded card or clear search
             if (e.key === 'Escape') {
-                if (expandedCard) {
-                    setExpandedCard(null);
-                } else if (searchTerm) {
+                if (document.querySelector('.col-span-full')) return; // A card is expanded, let ResourceGrid handle it
+                if (searchTerm) {
                     setSearchTerm('');
                     searchInputRef.current?.blur();
                 }
@@ -68,55 +61,9 @@ export default function ResourceNamingPage() {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [expandedCard, searchTerm]);
+    }, [searchTerm]);
 
-    // Scroll-to-top visibility (throttled with rAF)
-    useEffect(() => {
-        let ticking = false;
-        const handleScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    setShowScrollTop(window.scrollY > 200);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
-    // Infinite Scroll using IntersectionObserver to prevent layout thrashing
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    setVisibleCount(prev => Math.min(prev + 24, 1000));
-                }
-            },
-            { rootMargin: '500px' }
-        );
-
-        const currentTarget = loadMoreRef.current;
-        if (currentTarget) {
-            observer.observe(currentTarget);
-        }
-
-        return () => {
-            if (currentTarget) {
-                observer.unobserve(currentTarget);
-            }
-        };
-    }, []);
-
-    // Reset visible count on filter change
-    useEffect(() => {
-        setVisibleCount(24);
-    }, [debouncedSearchTerm, activeCategory]);
-
-    const scrollToTop = useCallback(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
 
     // Stable callback references for memoised child components
     const handleToggleMinimize = useCallback(() => setIsConfigMinimized(prev => !prev), []);
@@ -175,10 +122,6 @@ export default function ResourceNamingPage() {
         });
     }, [debouncedSearchTerm, activeCategory]);
 
-    const displayedResources = useMemo(() => {
-        return filteredResources.slice(0, visibleCount);
-    }, [filteredResources, visibleCount]);
-
     const copyToClipboard = useCallback(async (text, id, e) => {
         if (e) { e.stopPropagation(); e.preventDefault(); }
         try {
@@ -188,25 +131,6 @@ export default function ResourceNamingPage() {
         } catch (err) {
             console.error('Copy failed', err);
         }
-    }, []);
-
-    const handleCardToggle = useCallback((resourceName, isCurrentlyExpanded) => {
-        if (isCurrentlyExpanded) {
-            setExpandedCard(null);
-        } else {
-            setExpandedCard(resourceName);
-            // Scroll to center the card after a brief delay to allow expansion
-            setTimeout(() => {
-                const element = document.getElementById(`resource-${resourceName}`);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 50);
-        }
-    }, []);
-
-    const handleSubResourceChange = useCallback((resourceName, suffix) => {
-        setSubResourceSelections(prev => ({ ...prev, [resourceName]: suffix }));
     }, []);
 
     // Generate the schema pattern (shows placeholders like {resource}-{workload}-{env}-{region}-{instance})
@@ -264,57 +188,20 @@ export default function ResourceNamingPage() {
                 />
 
                 {/* Resource Grid */}
-                {displayedResources.length === 0 ? (
-                    <div className="text-center py-16 text-[#605e5c] dark:text-[#a19f9d]">
-                        <p className="text-[14px]">No resources found matching your criteria.</p>
-                        <p className="text-[12px] mt-2">Try adjusting your search or category filter.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                        {displayedResources.map((resource, index) => {
-                            const selectedSubResource = subResourceSelections[resource.name] || (resource.subResources?.[0]?.suffix);
-                            const genName = generateName(resource, selectedSubResource);
-                            const isCopied = copiedId === resource.name;
-                            const isExpanded = expandedCard === resource.name;
-                            // Cap stagger delay at 10 items to prevent long waits
-                            const staggerClass = index < 10 ? `stagger-${index + 1}` : '';
-
-                            return (
-                                <div key={resource.name} className={`animate-fade-in opacity-0 ${staggerClass} ${isExpanded ? 'col-span-full z-10' : 'h-full'}`}>
-                                    <ResourceCard
-                                        id={`resource-${resource.name}`}
-                                        resource={resource}
-                                        genName={genName}
-                                        isCopied={isCopied}
-                                        isExpanded={isExpanded}
-                                        onCopy={copyToClipboard}
-                                        onToggle={handleCardToggle}
-                                        selectedSubResource={selectedSubResource}
-                                        onSubResourceChange={handleSubResourceChange}
-                                        generateName={generateName}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
+                <ResourceGrid
+                    resources={filteredResources}
+                    generateName={generateName}
+                    copiedId={copiedId}
+                    onCopy={copyToClipboard}
+                />
 
                 {/* Footer */}
-                <footer ref={loadMoreRef} className="py-6 text-center text-[12px] text-[#605e5c] dark:text-[#a19f9d]">
+                <footer className="py-6 text-center text-[12px] text-[#605e5c] dark:text-[#a19f9d]">
                     Published by <a href="https://www.linkedin.com/in/danielpowley92/" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0078d4] hover:underline">Daniel Powley</a> • <a href="https://github.com/danzure/azres-naming-tool" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">GitHub</a> • Licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">MIT License</a>
                 </footer>
             </div>
 
-            {/* Scroll to Top Button */}
-            {showScrollTop && (
-                <button
-                    onClick={scrollToTop}
-                    aria-label="Scroll to top"
-                    className="fixed bottom-6 right-6 p-3 rounded-full shadow-lg hover:shadow-depth transition-all duration-300 z-50 animate-scale-in bg-primary-gradient dark:bg-[#323130] text-white hover:shadow-glow dark:hover:shadow-none dark:hover:bg-[#484644]"
-                >
-                    <ArrowUp className="w-5 h-5" />
-                </button>
-            )}
+            <ScrollToTopButton />
         </div>
     );
 }
