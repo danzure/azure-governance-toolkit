@@ -179,8 +179,8 @@ function ConfigPanel({
                                                 {index + 1}
                                             </span>
                                             <span className="text-[12px] font-medium text-[#201f1e] dark:text-white">{item}</span>
-                                            {/* Arrow buttons — revealed on hover */}
-                                            <div className="flex items-center gap-px opacity-0 group-hover:opacity-100 transition-opacity">
+                                            {/* Arrow buttons — visible on mobile, revealed on hover on desktop */}
+                                            <div className="flex items-center gap-px opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() => onMoveItem(index, -1)}
                                                     disabled={index === 0}
@@ -204,14 +204,17 @@ function ConfigPanel({
                             </div>
 
                             {/* Live Preview — integrated footer with inline title */}
-                            <div className="px-3 py-2 flex items-center gap-3 border-t border-[#edebe9] dark:border-[#484644] bg-[#faf9f8] dark:bg-[#1b1a19] rounded-b-lg">
-                                <div className="flex items-center gap-2 shrink-0">
-                                    <Eye className="w-3.5 h-3.5 text-[#0078d4]" />
-                                    <span className="text-[12px] font-medium text-[#616161] dark:text-[#a19f9d]">Preview</span>
+                            <div className="px-3 py-2 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 border-t border-[#edebe9] dark:border-[#484644] bg-[#faf9f8] dark:bg-[#1b1a19] rounded-b-lg">
+                                <div className="flex items-center justify-between w-full sm:w-auto">
+                                    <div className="flex items-center gap-2 shrink-0">
+                                        <Eye className="w-3.5 h-3.5 text-[#0078d4]" />
+                                        <span className="text-[12px] font-medium text-[#616161] dark:text-[#a19f9d]">Preview</span>
+                                    </div>
                                 </div>
-                                <div className="flex-1 px-3 py-1.5 rounded font-mono text-[14px] font-semibold tracking-wide bg-white dark:bg-[#252423] text-[#0078d4] dark:text-[#60cdff] border border-[#edebe9] dark:border-transparent">
-                                    {liveSchemaStr}
-                                </div>
+                                <div className="flex flex-1 items-center gap-2 sm:gap-3 w-full min-w-0">
+                                    <div className="flex-1 px-3 py-1.5 rounded font-mono text-[13px] sm:text-[14px] font-semibold tracking-wide bg-white dark:bg-[#252423] text-[#0078d4] dark:text-[#60cdff] border border-[#edebe9] dark:border-transparent overflow-x-auto whitespace-nowrap scrollbar-hide">
+                                        {liveSchemaStr}
+                                    </div>
                                 <button
                                     onClick={onCopy}
                                     className={`shrink-0 h-[26px] px-2.5 rounded-sm text-[12px] font-medium transition-all flex items-center gap-1.5 border ${copiedId === 'live-pill'
@@ -221,6 +224,7 @@ function ConfigPanel({
                                 >
                                     {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>}
                                 </button>
+                                </div>
                             </div>
                         </div>
                     </div>
