@@ -1,5 +1,5 @@
 import { memo, useState, useMemo } from 'react';
-import { Box, Copy, Check, ShieldAlert, AlertTriangle, LayoutGrid, Cpu, Network, Database, Globe, DatabaseZap, ShieldCheck, Workflow, BarChart3, BrainCircuit, Settings2, Wifi, GitBranch, X } from 'lucide-react';
+import { Box, Copy, Check, ShieldAlert, AlertTriangle, LayoutGrid, Cpu, Network, Database, Globe, DatabaseZap, ShieldCheck, Workflow, BarChart3, Sparkles, Settings2, Wifi, GitBranch, X } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import ExpandedPanel from './ExpandedPanel';
 import { getCategoryColors } from '../data/categoryColors';
@@ -18,7 +18,7 @@ const CATEGORY_ICONS = {
     'Security': ShieldCheck,
     'Integration': Workflow,
     'Analytics': BarChart3,
-    'AI + ML': BrainCircuit,
+    'AI + ML': Sparkles,
     'Management + Governance': Settings2,
     'IoT': Wifi,
     'DevOps': GitBranch,
