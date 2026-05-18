@@ -157,6 +157,11 @@ export default function ConditionalAccessPage() {
                 )}
             </div>
 
+            {/* Footer */}
+            <footer className="py-6 text-center text-[12px] text-[#605e5c] dark:text-[#a19f9d]">
+                Published by <a href="https://www.linkedin.com/in/danielpowley92/" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0078d4] hover:underline">Daniel Powley</a> • <a href="https://blog.atozazure.com" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">Blog</a> • <a href="https://github.com/danzure/azres-naming-tool" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">GitHub</a> • Licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" className="text-[#0078d4] hover:underline">MIT License</a>
+            </footer>
+
             <ScrollToTopButton />
         </div>
     );
