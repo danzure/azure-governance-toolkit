@@ -12,8 +12,6 @@ This tool simplifies cloud governance by ensuring all resource names and securit
 ## 🔗 Live Demo
 [https://app.atozazure.com/](https://app.atozazure.com/)
 
----
-
 ## 🚀 Core Capabilities
 
 ### 🔹 Intelligent Resource Naming Generation
