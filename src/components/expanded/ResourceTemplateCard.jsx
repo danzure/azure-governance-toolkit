@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Code2, Copy, Check } from 'lucide-react';
 import PropTypes from 'prop-types';
-import { generateBicepTemplate, generateTerraformTemplate, generateBundleTemplates } from '../../utils/templateGenerator';
+import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates } from '../../utils/templateGenerator';
 
 /**
  * ResourceTemplateCard Component
@@ -27,9 +27,9 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
         if (bundle && bundle.length > 0) {
             return generateBundleTemplates(bundle, iacTab, getBundleName);
         }
-        return iacTab === 'bicep' 
-            ? generateBicepTemplate(resource, genName)
-            : generateTerraformTemplate(resource, genName);
+        if (iacTab === 'bicep') return generateBicepTemplate(resource, genName);
+        if (iacTab === 'terraform') return generateTerraformTemplate(resource, genName);
+        return generateArmTemplate(resource, genName);
     }, [bundle, iacTab, resource, genName, getBundleName]);
 
     const handleCopyIac = (e) => {
@@ -53,6 +53,12 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                             className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'bicep' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
                         >
                             Bicep
+                        </button>
+                        <button
+                            onClick={(e) => { e.stopPropagation(); setIacTab('arm'); }}
+                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'arm' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                        >
+                            ARM
                         </button>
                         <button
                             onClick={(e) => { e.stopPropagation(); setIacTab('terraform'); }}

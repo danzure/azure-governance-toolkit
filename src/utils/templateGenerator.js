@@ -234,11 +234,92 @@ resource "${fallbackResType}" "${identifier}" {
 }
 
 /**
+ * Generates ARM template snippet for a given resource
+ */
+export function generateArmTemplate(resource, genName) {
+    const mapping = RESOURCE_MAP[resource.name];
+    let type = 'Microsoft.Unknown/providerType';
+    let apiVersion = 'latest';
+
+    if (mapping && mapping.bicep) {
+        const parts = mapping.bicep.split('@');
+        type = parts[0];
+        if (parts.length > 1) {
+            apiVersion = parts[1];
+        }
+    }
+
+    const template = {
+      "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "location": {
+          "type": "string",
+          "defaultValue": "[resourceGroup().location]"
+        }
+      },
+      "resources": [
+        {
+          "type": type,
+          "apiVersion": apiVersion,
+          "name": genName,
+          "location": "[parameters('location')]",
+          "properties": {}
+        }
+      ]
+    };
+
+    let result = JSON.stringify(template, null, 2);
+    if (!mapping || !mapping.bicep) {
+        result = `// Note: This is an approximate placeholder.\n// The exact resource type for '${resource.name}' must be obtained from Azure Docs.\n` + result;
+    }
+    return result;
+}
+
+/**
  * Generates templates for a bundle collection
  */
 export function generateBundleTemplates(bundleItems, provider = 'bicep', getBundleName) {
     if (!bundleItems || bundleItems.length === 0) return '';
     
+    if (provider === 'arm') {
+        const resources = bundleItems.map(item => {
+            const genName = getBundleName(item);
+            const mapping = RESOURCE_MAP[item.name];
+            let type = 'Microsoft.Unknown/providerType';
+            let apiVersion = 'latest';
+
+            if (mapping && mapping.bicep) {
+                const parts = mapping.bicep.split('@');
+                type = parts[0];
+                if (parts.length > 1) {
+                    apiVersion = parts[1];
+                }
+            }
+            return {
+              "type": type,
+              "apiVersion": apiVersion,
+              "name": genName,
+              "location": "[parameters('location')]",
+              "properties": {}
+            };
+        });
+
+        const template = {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            }
+          },
+          "resources": resources
+        };
+        
+        return JSON.stringify(template, null, 2);
+    }
+
     let result = '';
     
     bundleItems.forEach((item, index) => {
@@ -247,8 +328,10 @@ export function generateBundleTemplates(bundleItems, provider = 'bicep', getBund
         let template = '';
         if (provider === 'bicep') {
             template = generateBicepTemplate(item, genName);
-        } else {
+        } else if (provider === 'terraform') {
             template = generateTerraformTemplate(item, genName);
+        } else {
+            template = generateArmTemplate(item, genName);
         }
         
         result += template;
