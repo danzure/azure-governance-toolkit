@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES } from '../data/constants';
 import { validateName } from '../utils/nameValidator';
 
-import ValidationBar from './expanded/ValidationBar';
+
 import BundleList from './expanded/BundleList';
 import AboutCard from './expanded/AboutCard';
 import NamingRulesCard from './expanded/NamingRulesCard';
@@ -216,7 +216,7 @@ function ExpandedPanel({
                 t={t} 
             />
 
-            <ValidationBar validationIssues={validationIssues} />
+
 
             {/* Two Column Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-3">
