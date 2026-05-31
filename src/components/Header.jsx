@@ -25,7 +25,7 @@ export default function Header({ isDarkMode, onToggleTheme, onToggleMenu, title 
                     <Menu className="w-5 h-5" />
                 </button>
                 <div className="flex items-baseline gap-2">
-                    <span className="font-semibold text-[16px] text-white tracking-tight">app.atozazure</span>
+                    <span className="font-semibold text-[16px] text-white tracking-tight">atozazure</span>
                     <span className="text-[13px] text-white/40 mx-1">|</span>
                     <span className="text-[12px] text-white/80 tracking-wide">{title}</span>
                 </div>

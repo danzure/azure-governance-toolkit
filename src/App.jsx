@@ -59,7 +59,7 @@ export default function App() {
     // Determine header subtitle based on current route
     let headerTitle = "Resource Naming Tool";
     if (location.pathname === '/conditional-access') {
-        headerTitle = "Conditional Access Generator";
+        headerTitle = "Conditional Access";
     }
 
     return (
