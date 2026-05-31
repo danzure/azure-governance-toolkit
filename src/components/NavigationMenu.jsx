@@ -1,188 +1,134 @@
-import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 /**
  * NavigationMenu Component
  * 
- * A left-side slide-out drawer for application navigation.
- * Includes a focus trap when open — keyboard focus cycles within the drawer
- * and cannot escape to elements behind the overlay. Focus is restored to the
- * trigger button when the drawer is closed.
+ * A persistent left-side navigation sidebar.
  * 
  * @param {Object} props
- * @param {boolean} props.isOpen - Whether the menu is currently open.
- * @param {Function} props.onClose - Callback to close the menu.
+ * @param {boolean} props.isExpanded - Whether the menu is currently expanded.
+ * @param {Function} props.onToggleExpand - Callback to toggle the menu expansion.
  * @returns {JSX.Element}
  */
-export default function NavigationMenu({ isOpen, onClose }) {
-    const drawerRef = useRef(null);
-    const closeButtonRef = useRef(null);
-    const previouslyFocusedRef = useRef(null);
-
-    // Capture the element that opened the drawer and focus the close button
-    useEffect(() => {
-        if (isOpen) {
-            // Remember what was focused before opening so we can restore it
-            previouslyFocusedRef.current = document.activeElement;
-
-            // Slight delay to ensure the drawer has transitioned into view
-            const timer = setTimeout(() => {
-                closeButtonRef.current?.focus();
-            }, 100);
-
-            return () => clearTimeout(timer);
-        } else {
-            // Restore focus to the element that opened the drawer
-            if (previouslyFocusedRef.current && typeof previouslyFocusedRef.current.focus === 'function') {
-                previouslyFocusedRef.current.focus();
-                previouslyFocusedRef.current = null;
-            }
-        }
-    }, [isOpen]);
-
-    // Focus trap: cycle Tab focus within the drawer while it's open
-    const handleKeyDown = useCallback((e) => {
-        if (!isOpen) return;
-
-        // Close on Escape
-        if (e.key === 'Escape') {
-            e.preventDefault();
-            onClose();
-            return;
-        }
-
-        // Only trap Tab key
-        if (e.key !== 'Tab') return;
-
-        const drawer = drawerRef.current;
-        if (!drawer) return;
-
-        // Query all focusable elements within the drawer
-        const focusableElements = drawer.querySelectorAll(
-            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusableElements.length === 0) return;
-
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey) {
-            // Shift+Tab: if focus is on the first element, wrap to the last
-            if (document.activeElement === firstElement) {
-                e.preventDefault();
-                lastElement.focus();
-            }
-        } else {
-            // Tab: if focus is on the last element, wrap to the first
-            if (document.activeElement === lastElement) {
-                e.preventDefault();
-                firstElement.focus();
-            }
-        }
-    }, [isOpen, onClose]);
-
-    // Attach keydown listener at the document level to catch all Tab/Escape presses
-    useEffect(() => {
-        if (isOpen) {
-            document.addEventListener('keydown', handleKeyDown);
-            return () => document.removeEventListener('keydown', handleKeyDown);
-        }
-    }, [isOpen, handleKeyDown]);
-
+export default function NavigationMenu({ isExpanded, onToggleExpand }) {
     return (
-        <>
-            {/* Overlay */}
-            {isOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/20 dark:bg-black/40 z-50 transition-opacity"
-                    onClick={onClose}
-                    aria-hidden="true"
-                />
-            )}
-
-            {/* Slide-out Drawer */}
-            <div 
-                ref={drawerRef}
-                className={`fixed top-0 left-0 h-full w-[280px] bg-fluent-bg-card shadow-xl z-50 transform transition-transform duration-300 ease-in-out border-r border-fluent-stroke-subtle flex flex-col ${
-                    isOpen ? 'translate-x-0' : '-translate-x-full'
-                }`}
-                role="dialog"
-                aria-modal="true"
-                aria-label="Navigation menu"
-                aria-hidden={!isOpen}
-            >
-                {/* Header inside drawer */}
-                <div className="h-[48px] flex items-center justify-between px-5 border-b border-fluent-stroke-subtle">
-                    <span className="font-semibold text-[16px] tracking-tight">Navigation</span>
-                    <button 
-                        ref={closeButtonRef}
-                        onClick={onClose}
-                        className="p-1 rounded hover:bg-fluent-bg-hover transition-colors"
-                        aria-label="Close navigation menu"
-                        tabIndex={isOpen ? 0 : -1}
-                    >
-                        <X className="w-5 h-5" />
-                    </button>
-                </div>
-
-                {/* Navigation Links */}
-                <nav className="flex-1 p-2 space-y-1" aria-label="Main navigation">
-                    <NavLink
-                        to="/"
-                        onClick={onClose}
-                        tabIndex={isOpen ? 0 : -1}
-                        className={({ isActive }) => 
-                            `flex items-center gap-3 px-3 py-2 rounded text-[14px] font-medium transition-colors ${
-                                isActive 
-                                    ? 'bg-fluent-bg-hover text-fluent-brand-fg font-semibold' 
-                                    : 'text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
-                            }`
-                        }
-                    >
-                        <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg" alt="" className="w-5 h-5 object-contain" aria-hidden="true" />
-                        Dashboard
-                    </NavLink>
-
-                    <NavLink
-                        to="/azure-resources"
-                        onClick={onClose}
-                        tabIndex={isOpen ? 0 : -1}
-                        className={({ isActive }) => 
-                            `flex items-center gap-3 px-3 py-2 rounded text-[14px] font-medium transition-colors ${
-                                isActive 
-                                    ? 'bg-fluent-bg-hover text-fluent-brand-fg font-semibold' 
-                                    : 'text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
-                            }`
-                        }
-                    >
-                        <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg" alt="" className="w-5 h-5 object-contain" aria-hidden="true" />
-                        Azure Resources
-                    </NavLink>
-                    
-                    <NavLink
-                        to="/conditional-access"
-                        onClick={onClose}
-                        tabIndex={isOpen ? 0 : -1}
-                        className={({ isActive }) => 
-                            `flex items-center gap-3 px-3 py-2 rounded text-[14px] font-medium transition-colors ${
-                                isActive 
-                                    ? 'bg-fluent-bg-hover text-fluent-brand-fg font-semibold' 
-                                    : 'text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
-                            }`
-                        }
-                    >
-                        <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg" alt="" className="w-5 h-5 object-contain" aria-hidden="true" />
-                        Conditional Access
-                    </NavLink>
-                </nav>
+        <div 
+            className={`relative flex flex-col h-full bg-fluent-bg-card shadow-soft z-40 transition-[width] duration-300 ease-in-out border-r border-fluent-stroke-subtle ${
+                isExpanded ? 'w-[280px]' : 'w-[64px]'
+            }`}
+            aria-label="Navigation menu"
+        >
+            {/* Header inside drawer */}
+            <div className={`h-[48px] flex items-center border-b border-fluent-stroke-subtle overflow-hidden whitespace-nowrap transition-all duration-300 ${isExpanded ? 'px-4 justify-between' : 'justify-center px-0'}`}>
+                {isExpanded && <span className="font-semibold text-[16px] tracking-tight pl-1">Navigation</span>}
+                <button
+                    onClick={onToggleExpand}
+                    className="p-1.5 rounded-md hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary transition-colors flex-shrink-0"
+                    aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
+                    title={isExpanded ? "Collapse menu" : "Expand menu"}
+                >
+                    {isExpanded ? <ChevronsLeft className="w-5 h-5" /> : <ChevronsRight className="w-5 h-5" />}
+                </button>
             </div>
-        </>
+
+            {/* Navigation Links */}
+            <nav className="flex-1 py-4 space-y-1 overflow-hidden" aria-label="Main navigation">
+                <NavLink
+                    to="/"
+                    title={!isExpanded ? "Dashboard" : undefined}
+                    className={({ isActive }) => 
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
+                            isExpanded ? 'px-3' : 'justify-center px-0'
+                        } ${
+                            isActive 
+                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
+                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                        }`
+                    }
+                >
+                    {({ isActive }) => (
+                        <>
+                            {isActive && (
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
+                            )}
+                            <img 
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg" 
+                                alt="" 
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded ? 'mx-auto' : ''}`} 
+                                aria-hidden="true" 
+                            />
+                            {isExpanded && <span className="whitespace-nowrap">Dashboard</span>}
+                        </>
+                    )}
+                </NavLink>
+
+                <NavLink
+                    to="/azure-resources"
+                    title={!isExpanded ? "Azure Resources" : undefined}
+                    className={({ isActive }) => 
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
+                            isExpanded ? 'px-3' : 'justify-center px-0'
+                        } ${
+                            isActive 
+                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
+                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                        }`
+                    }
+                >
+                    {({ isActive }) => (
+                        <>
+                            {isActive && (
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
+                            )}
+                            <img 
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg" 
+                                alt="" 
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded ? 'mx-auto' : ''}`} 
+                                aria-hidden="true" 
+                            />
+                            {isExpanded && <span className="whitespace-nowrap">Azure Resources</span>}
+                        </>
+                    )}
+                </NavLink>
+                
+                <NavLink
+                    to="/conditional-access"
+                    title={!isExpanded ? "Conditional Access" : undefined}
+                    className={({ isActive }) => 
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
+                            isExpanded ? 'px-3' : 'justify-center px-0'
+                        } ${
+                            isActive 
+                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
+                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                        }`
+                    }
+                >
+                    {({ isActive }) => (
+                        <>
+                            {isActive && (
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
+                            )}
+                            <img 
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg" 
+                                alt="" 
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded ? 'mx-auto' : ''}`} 
+                                aria-hidden="true" 
+                            />
+                            {isExpanded && <span className="whitespace-nowrap">Conditional Access</span>}
+                        </>
+                    )}
+                </NavLink>
+            </nav>
+
+
+        </div>
     );
 }
 
 NavigationMenu.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
+    isExpanded: PropTypes.bool.isRequired,
+    onToggleExpand: PropTypes.func.isRequired,
 };

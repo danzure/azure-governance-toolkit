@@ -94,8 +94,8 @@ export default function ConditionalAccessPage() {
 
 
     return (
-        <div className="pt-12">
-            <nav className="mt-[48px] shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
+        <div className="flex flex-col">
+            <nav className="shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
                 <div className="max-w-[1600px] mx-auto px-4 py-3">
                     {/* Header row */}
                     <div className="flex items-center justify-between mb-3">

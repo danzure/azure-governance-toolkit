@@ -23,8 +23,8 @@ export default function App() {
     // Persistent state using local storage for user preferences
     const [isDarkMode, setIsDarkMode] = useLocalStorage('azres_darkMode', systemPrefersDark);
     
-    // State for slide-out navigation drawer
-    const [isNavOpen, setIsNavOpen] = useState(false);
+    // State for persistent navigation sidebar
+    const [isNavExpanded, setIsNavExpanded] = useLocalStorage('azres_navExpanded', false);
     
     // Get current route to update header title
     const location = useLocation();
@@ -56,8 +56,7 @@ export default function App() {
     }, [setIsDarkMode]);
 
     const handleToggleTheme = useCallback(() => setIsDarkMode(prev => !prev), [setIsDarkMode]);
-    const handleToggleMenu = useCallback(() => setIsNavOpen(prev => !prev), []);
-    const handleCloseMenu = useCallback(() => setIsNavOpen(false), []);
+    const handleToggleMenu = useCallback(() => setIsNavExpanded(prev => !prev), [setIsNavExpanded]);
 
     // Determine header subtitle based on current route
     let headerTitle = "Dashboard";
@@ -68,28 +67,30 @@ export default function App() {
     }
 
     return (
-        <div className="min-h-screen font-sans transition-colors duration-200 bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col">
+        <div className="h-screen font-sans transition-colors duration-200 bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
             <Header
                 isDarkMode={isDarkMode}
                 onToggleTheme={handleToggleTheme}
-                onToggleMenu={handleToggleMenu}
                 title={headerTitle}
             />
 
-            <NavigationMenu 
-                isOpen={isNavOpen} 
-                onClose={handleCloseMenu} 
-            />
+            <div className="flex-1 flex overflow-hidden pt-[48px]">
+                <NavigationMenu 
+                    isExpanded={isNavExpanded} 
+                    onToggleExpand={handleToggleMenu} 
+                />
 
-            <main className="flex-1 w-full relative flex flex-col">
-                <Routes>
-                    <Route path="/" element={<DashboardPage />} />
-                    <Route path="/azure-resources" element={<ResourceNamingPage />} />
-                    <Route path="/conditional-access" element={<ConditionalAccessPage />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </main>
-            <Footer />
+                <main className="flex-1 w-full relative flex flex-col overflow-y-auto">
+                    <Routes>
+                        <Route path="/" element={<DashboardPage />} />
+                        <Route path="/azure-resources" element={<ResourceNamingPage />} />
+                        <Route path="/conditional-access" element={<ConditionalAccessPage />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                    <Footer />
+                </main>
+            </div>
+            
             <ScrollToTopButton />
         </div>
     );
