@@ -58,110 +58,127 @@ function ConfigPanel({
 
                 {!isMinimized && (
                     <div className="animate-slide-up">
-                        {/* Two-column grid: Parameters + About (reversed order on mobile) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                            {/* About / CAF Introduction - shows first on mobile via order */}
-                            <div className="order-1 lg:order-2 p-3.5 rounded-lg border shadow-soft bg-fluent-info-bg border-fluent-info-border flex gap-3 items-start">
-                                <Info className="w-4 h-4 text-fluent-brand-fg mt-0.5 shrink-0" />
-                                <div className="text-[13px] leading-relaxed text-fluent-info-text space-y-2">
-                                    <p>
-                                        The app.atozazure Resource Naming Tool helps you generate consistent, standards-compliant Azure resource names aligned with Microsoft's{' '}
-                                        <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline font-medium">
-                                            Cloud Adoption Framework (CAF)
-                                        </a>
-                                        . Each name is automatically validated against Azure's character, length, and scope constraints so you can deploy with confidence.
-                                    </p>
-                                    <p>
-                                        Configure your environment, region, workload, and optional org prefix using the parameters panel, then use the pattern builder to customise segment order. Browse the catalog of 100+ Azure services below — each card shows the generated name, recommended abbreviation, and best-practice guidance. Copy individual names or export bundles for use in your IaC templates and deployments.
-                                    </p>
+                        {/* Parameters */}
+                        <div className="relative p-3 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full">
+                            <div className="flex items-center gap-2 mb-3 pr-8">
+                                <Edit3 className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Parameters</h3>
+                            </div>
+                            
+                            {/* Information hover card at the top right */}
+                            <div className="absolute top-3 right-3 group z-50">
+                                <Info className="w-4 h-4 text-fluent-fg-secondary hover:text-fluent-brand-fg cursor-help transition-colors" />
+                                <div className="absolute right-0 top-full pt-2 w-[320px] sm:w-[450px] invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
+                                    <div className="p-3.5 rounded-lg border shadow-lg bg-fluent-info-bg dark:bg-fluent-bg-subtle border-fluent-info-border dark:border-fluent-stroke-subtle">
+                                        <div className="text-[13px] leading-relaxed text-fluent-info-text dark:text-fluent-fg-secondary space-y-2">
+                                            <p>
+                                                The Resource Naming Tool helps you generate consistent, standards-compliant Azure resource names aligned with Microsoft's{' '}
+                                                <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline font-medium">
+                                                    Cloud Adoption Framework (CAF)
+                                                </a>
+                                                . Each name is automatically validated against Azure's character, length, and scope constraints so you can deploy with confidence.
+                                            </p>
+                                            <p>
+                                                Configure your environment, region, workload, and optional org prefix using the parameters panel, then use the pattern builder to customise segment order. Browse the catalog of 100+ Azure services below — each card shows the generated name, recommended abbreviation, and best-practice guidance. Copy individual names or export bundles for use in your IaC templates and deployments.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            {/* Parameters - shows second on mobile via order */}
-                            <div className="order-2 lg:order-1 p-3 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <Edit3 className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                    <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Parameters</h3>
-                                </div>
-                                {/* Form grid - label left, input right */}
-                                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 items-center">
+                                {/* Form grid - 2 columns on large screens to cleanly fill whitespace */}
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-4 items-center">
                                     {/* Org Prefix */}
-                                    <Tooltip content="Organisation prefix">
-                                        <label className={`text-[12px] font-medium text-right text-fluent-fg-secondary ${!showOrg ? 'opacity-50' : ''}`}>Org Prefix</label>
-                                    </Tooltip>
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-3">
+                                        <Tooltip content="Organisation prefix">
+                                            <label className={`w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap ${!showOrg ? 'opacity-50' : ''}`}>Org Prefix</label>
+                                        </Tooltip>
+                                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                                            <input
+                                                type="text"
+                                                value={orgPrefix}
+                                                onChange={(e) => setOrgPrefix(e.target.value)}
+                                                placeholder="Optional"
+                                                disabled={!showOrg}
+                                                className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 disabled:opacity-40 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                            />
+                                            <button
+                                                onClick={() => setShowOrg(!showOrg)}
+                                                className={`h-[32px] flex items-center justify-center rounded border transition-colors shrink-0 px-2.5 gap-1.5 ${showOrg ? 'bg-fluent-brand-bg border-fluent-brand-bg text-white' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
+                                                title={showOrg ? 'Disable Org' : 'Enable Org'}
+                                            >
+                                                {showOrg ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                                                <span className="text-[13px] font-semibold">{showOrg ? 'Hide Org' : 'Show Org'}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Workload */}
+                                    <div className="flex items-center gap-3">
+                                        <Tooltip content="Application or workload name">
+                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Workload</label>
+                                        </Tooltip>
                                         <input
                                             type="text"
-                                            value={orgPrefix}
-                                            onChange={(e) => setOrgPrefix(e.target.value)}
-                                            placeholder="Optional"
-                                            disabled={!showOrg}
-                                            className="flex-1 px-2.5 h-[28px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 disabled:opacity-40 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                            value={workload}
+                                            onChange={(e) => setWorkload(e.target.value)}
+                                            placeholder="web"
+                                            className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                         />
-                                        <button
-                                            onClick={() => setShowOrg(!showOrg)}
-                                            className={`h-[28px] flex items-center justify-center rounded border transition-colors shrink-0 px-2 gap-1.5 ${showOrg ? 'bg-fluent-brand-bg border-fluent-brand-bg text-white' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
-                                            title={showOrg ? 'Disable Org' : 'Enable Org'}
-                                        >
-                                            {showOrg ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-                                            <span className="text-[12px] font-semibold">{showOrg ? 'Hide Org' : 'Show Org'}</span>
-                                        </button>
                                     </div>
-                                    {/* Workload */}
-                                    <Tooltip content="Application or workload name">
-                                        <label className="text-[12px] font-medium text-right text-fluent-fg-secondary">Workload</label>
-                                    </Tooltip>
-                                    <input
-                                        type="text"
-                                        value={workload}
-                                        onChange={(e) => setWorkload(e.target.value)}
-                                        placeholder="web"
-                                        className="px-2.5 h-[28px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
-                                    />
+
                                     {/* Environment */}
-                                    <Tooltip content="Lifecycle stage">
-                                        <label className="text-[12px] font-medium text-right text-fluent-fg-secondary">Environment</label>
-                                    </Tooltip>
-                                    <SearchableSelect items={ENVIRONMENTS} value={envValue} onChange={setEnvValue} compact />
-                                    {/* Region */}
-                                    <Tooltip content="Azure region">
-                                        <label className="text-[12px] font-medium text-right text-fluent-fg-secondary">Region</label>
-                                    </Tooltip>
-                                    <div className="flex items-center gap-1.5">
+                                    <div className="flex items-center gap-3">
+                                        <Tooltip content="Lifecycle stage">
+                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Environment</label>
+                                        </Tooltip>
                                         <div className="flex-1 min-w-0">
-                                            <SearchableSelect items={AZURE_REGIONS} value={regionValue} onChange={setRegionValue} placeholder="Select..." compact />
+                                            <SearchableSelect items={ENVIRONMENTS} value={envValue} onChange={setEnvValue} compact />
                                         </div>
-                                        <a
-                                            href="https://datacenters.microsoft.com/globe/explore/"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            title="View Azure Infrastructure Map"
-                                            className="h-[32px] flex items-center justify-center rounded border transition-colors shrink-0 px-2 gap-1.5 no-underline bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary"
-                                        >
-                                            <svg viewBox="0 0 23 23" className="w-3.5 h-3.5 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 0h11v11H0z" fill="#f35325"/>
-                                                <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                                                <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                                                <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                                            </svg>
-                                            <span className="text-[12px] font-semibold">Azure Datacentre Map</span>
-                                        </a>
                                     </div>
+
+                                    {/* Region */}
+                                    <div className="flex items-center gap-3">
+                                        <Tooltip content="Azure region">
+                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Region</label>
+                                        </Tooltip>
+                                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                                            <div className="flex-1 min-w-0">
+                                                <SearchableSelect items={AZURE_REGIONS} value={regionValue} onChange={setRegionValue} placeholder="Select..." compact />
+                                            </div>
+                                            <a
+                                                href="https://datacenters.microsoft.com/globe/explore/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                title="View Azure Infrastructure Map"
+                                                className="h-[32px] flex items-center justify-center rounded border transition-colors shrink-0 px-2.5 gap-1.5 no-underline bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary"
+                                            >
+                                                <svg viewBox="0 0 23 23" className="w-4 h-4 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                                    <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                                    <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                                    <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                                                </svg>
+                                                <span className="text-[13px] font-semibold hidden xl:inline">Azure Datacentre Map</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
                                     {/* Instance */}
-                                    <Tooltip content="Instance number (001-999)">
-                                        <label className="text-[12px] font-medium text-right text-fluent-fg-secondary">Instance</label>
-                                    </Tooltip>
-                                    <input
-                                        type="text"
-                                        value={instance}
-                                        onChange={onInstanceChange}
-                                        maxLength={3}
-                                        placeholder="001"
-                                        className="px-2.5 h-[28px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
-                                    />
+                                    <div className="flex items-center gap-3">
+                                        <Tooltip content="Instance number (001-999)">
+                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Instance</label>
+                                        </Tooltip>
+                                        <input
+                                            type="text"
+                                            value={instance}
+                                            onChange={onInstanceChange}
+                                            maxLength={3}
+                                            placeholder="001"
+                                            className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
                         {/* Pattern Builder + Live Preview — streamlined card */}
                         <div className="mt-3 rounded-lg border bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle shadow-soft dark:shadow-none">
