@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Boxes, Shield, X } from 'lucide-react';
+import { Boxes, Shield, X, LayoutDashboard } from 'lucide-react';
 
 /**
  * NavigationMenu Component
@@ -131,6 +131,22 @@ export default function NavigationMenu({ isOpen, onClose }) {
                 <nav className="flex-1 p-2 space-y-1" aria-label="Main navigation">
                     <NavLink
                         to="/"
+                        onClick={onClose}
+                        tabIndex={isOpen ? 0 : -1}
+                        className={({ isActive }) => 
+                            `flex items-center gap-3 px-3 py-2 rounded text-[14px] font-medium transition-colors ${
+                                isActive 
+                                    ? 'bg-fluent-bg-hover text-fluent-brand-fg font-semibold' 
+                                    : 'text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                            }`
+                        }
+                    >
+                        <LayoutDashboard className="w-5 h-5" aria-hidden="true" />
+                        Dashboard
+                    </NavLink>
+
+                    <NavLink
+                        to="/azure-resources"
                         onClick={onClose}
                         tabIndex={isOpen ? 0 : -1}
                         className={({ isActive }) => 

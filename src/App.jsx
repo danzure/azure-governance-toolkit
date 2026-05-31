@@ -6,6 +6,7 @@ import NavigationMenu from './components/NavigationMenu';
 import useLocalStorage from './hooks/useLocalStorage';
 
 // Pages
+import DashboardPage from './pages/DashboardPage';
 import ResourceNamingPage from './pages/ResourceNamingPage';
 import ConditionalAccessPage from './pages/ConditionalAccessPage';
 
@@ -57,8 +58,10 @@ export default function App() {
     const handleCloseMenu = useCallback(() => setIsNavOpen(false), []);
 
     // Determine header subtitle based on current route
-    let headerTitle = "Resource Naming Tool";
-    if (location.pathname === '/conditional-access') {
+    let headerTitle = "Cloud Tools Dashboard";
+    if (location.pathname === '/azure-resources') {
+        headerTitle = "Resource Naming Tool";
+    } else if (location.pathname === '/conditional-access') {
         headerTitle = "CA Policy Builder";
     }
 
@@ -78,7 +81,8 @@ export default function App() {
 
             <main className="flex-1 w-full relative">
                 <Routes>
-                    <Route path="/" element={<ResourceNamingPage />} />
+                    <Route path="/" element={<DashboardPage />} />
+                    <Route path="/azure-resources" element={<ResourceNamingPage />} />
                     <Route path="/conditional-access" element={<ConditionalAccessPage />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>

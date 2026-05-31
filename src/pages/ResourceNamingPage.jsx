@@ -4,7 +4,6 @@ import ConfigPanel from '../components/ConfigPanel';
 import ResourceGrid from '../components/ResourceGrid';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ServiceFilter from '../components/ServiceFilter';
-import Footer from '../components/Footer';
 import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { generateName as generateResourceName } from '../utils/nameGenerator';
@@ -197,8 +196,6 @@ export default function ResourceNamingPage() {
                     onCopy={copyToClipboard}
                 />
             </div>
-
-            <Footer />
 
             <ScrollToTopButton />
         </div>
