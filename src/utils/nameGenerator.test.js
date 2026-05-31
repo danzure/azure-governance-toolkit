@@ -245,6 +245,21 @@ describe('generateName', () => {
         expect(generateName(resource, configWithRegion)).toBe('NetworkWatcher_eastus');
     });
 
+    it('returns custom name pattern for DevOps organization', () => {
+        const resource = makeResource({
+            name: 'DevOps organization',
+            abbrev: 'ado',
+            chars: 'a-z, A-Z, 0-9, -',
+        });
+        
+        // Uses workload when orgPrefix is not present
+        expect(generateName(resource, defaultConfig)).toBe('ado-web');
+        
+        // Uses orgPrefix when present
+        const configWithOrg = { ...defaultConfig, orgPrefix: 'contoso' };
+        expect(generateName(resource, configWithOrg)).toBe('ado-contoso');
+    });
+
     it('returns AzureFirewallSubnet for subnet with afw sub-resource', () => {
         const resource = makeResource({
             name: 'Subnet',
