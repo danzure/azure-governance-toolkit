@@ -1,28 +1,14 @@
 import { memo, useState, useMemo } from 'react';
-import { Box, Copy, Check, ShieldAlert, AlertTriangle, LayoutGrid, Cpu, Network, Database, Globe, DatabaseZap, ShieldCheck, Workflow, BarChart3, Sparkles, Settings2, Wifi, GitBranch, X } from 'lucide-react';
+import { Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck, X } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import ExpandedPanel from './ExpandedPanel';
+import AzureServiceIcon from './AzureServiceIcon';
 import { getCategoryColors } from '../data/categoryColors';
 import { getBundleResources } from '../utils/bundleGenerator';
 import { validateName } from '../utils/nameValidator';
 import PropTypes from 'prop-types';
 
-const CATEGORY_ICONS = {
-    'General': LayoutGrid,
-    'Compute': Cpu,
-    'Networking': Network,
-    'Storage': Database,
-    'Web': Globe,
-    'Databases': DatabaseZap,
-    'Containers': Box,
-    'Security': ShieldCheck,
-    'Integration': Workflow,
-    'Analytics': BarChart3,
-    'AI + ML': Sparkles,
-    'Management + Governance': Settings2,
-    'IoT': Wifi,
-    'DevOps': GitBranch,
-};
+
 
 /**
  * ResourceCard Component
@@ -49,7 +35,7 @@ const CATEGORY_ICONS = {
  */
 function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onToggle, selectedSubResource, onSubResourceChange, generateName }) {
     const categoryColors = getCategoryColors(resource.category);
-    const CategoryIcon = CATEGORY_ICONS[resource.category] || Box;
+
 
     const [topology, setTopology] = useState('single');
     const [spokeCount, setSpokeCount] = useState(1);
@@ -84,11 +70,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
             <div className="p-4 flex flex-col h-full gap-3">
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 overflow-hidden">
-                        <div
-                            className={`p-2 rounded-md shrink-0 ${categoryColors.bgClass} ${categoryColors.textClass}`}
-                        >
-                            <CategoryIcon className="w-5 h-5" />
-                        </div>
+                        <AzureServiceIcon resourceName={resource.name} category={resource.category} className="w-8 h-8 shrink-0" />
                         <div className="flex flex-col min-w-0">
                             <h3 className="text-[14px] font-semibold truncate text-fluent-fg-primary">{resource.name}</h3>
                             <div className="flex items-center gap-1.5 mt-1">
