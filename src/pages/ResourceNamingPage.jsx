@@ -2,7 +2,6 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 
 import ConfigPanel from '../components/ConfigPanel';
 import ResourceGrid from '../components/ResourceGrid';
-import ScrollToTopButton from '../components/ScrollToTopButton';
 import ServiceFilter from '../components/ServiceFilter';
 import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -196,8 +195,6 @@ export default function ResourceNamingPage() {
                     onCopy={copyToClipboard}
                 />
             </div>
-
-            <ScrollToTopButton />
         </div>
     );
 }

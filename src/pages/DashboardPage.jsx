@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Footer from '../components/Footer';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
@@ -27,7 +26,7 @@ export default function DashboardPage() {
     ];
 
     return (
-        <div className="flex flex-col min-h-[calc(100vh-48px)] w-full">
+        <div className="flex flex-col flex-1 w-full">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8 animate-fade-in flex-1 flex flex-col justify-center">
                 <div className="w-full">
                     <div className="mb-10 text-center sm:text-left">
@@ -83,7 +82,6 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

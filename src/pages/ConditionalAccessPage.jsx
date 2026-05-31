@@ -4,8 +4,6 @@ import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/condi
 import PatternBuilderCard from '../components/PatternBuilderCard';
 import ServiceFilter from '../components/ServiceFilter';
 import PolicyGroupCard from '../components/PolicyGroupCard';
-import Footer from '../components/Footer';
-import ScrollToTopButton from '../components/ScrollToTopButton';
 
 // Pre-compute groupings outside the render lifecycle for performance
 const INITIAL_GROUPS = {};
@@ -157,10 +155,6 @@ export default function ConditionalAccessPage() {
                     </div>
                 )}
             </div>
-
-            <Footer />
-
-            <ScrollToTopButton />
         </div>
     );
 }

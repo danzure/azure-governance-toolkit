@@ -3,6 +3,8 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import Header from './components/Header';
 import NavigationMenu from './components/NavigationMenu';
+import Footer from './components/Footer';
+import ScrollToTopButton from './components/ScrollToTopButton';
 import useLocalStorage from './hooks/useLocalStorage';
 
 // Pages
@@ -79,7 +81,7 @@ export default function App() {
                 onClose={handleCloseMenu} 
             />
 
-            <main className="flex-1 w-full relative">
+            <main className="flex-1 w-full relative flex flex-col">
                 <Routes>
                     <Route path="/" element={<DashboardPage />} />
                     <Route path="/azure-resources" element={<ResourceNamingPage />} />
@@ -87,6 +89,8 @@ export default function App() {
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </main>
+            <Footer />
+            <ScrollToTopButton />
         </div>
     );
 }
