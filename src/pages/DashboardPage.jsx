@@ -32,7 +32,7 @@ export default function DashboardPage() {
                 <div className="w-full">
                 <div className="mb-10 text-center sm:text-left">
                     <h1 className="text-3xl font-bold tracking-tight text-fluent-fg-primary mb-3">
-                        Azure Naming Tools
+                        Azure Governance Tools
                     </h1>
                     <p className="text-fluent-fg-secondary text-lg max-w-2xl mx-auto sm:mx-0">
                         Streamline your cloud operations with tools designed to standardize resources, manage access policies, and enforce best practices.

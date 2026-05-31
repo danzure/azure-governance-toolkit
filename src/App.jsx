@@ -60,9 +60,9 @@ export default function App() {
     // Determine header subtitle based on current route
     let headerTitle = "Dashboard";
     if (location.pathname === '/azure-resources') {
-        headerTitle = "Resource Naming Tool";
+        headerTitle = "Azure Resource Naming Tool";
     } else if (location.pathname === '/conditional-access') {
-        headerTitle = "CA Policy Builder";
+        headerTitle = "Conditional Access Policy Builder";
     }
 
     return (
