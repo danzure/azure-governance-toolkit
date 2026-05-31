@@ -1,10 +1,4 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Shield, Settings } from 'lucide-react';
-import ServiceFilter from '../components/ServiceFilter';
-import PolicyGroupCard from '../components/PolicyGroupCard';
-import PatternBuilderCard from '../components/PatternBuilderCard';
-import ScrollToTopButton from '../components/ScrollToTopButton';
-import Footer from '../components/Footer';
 import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/conditionalAccessData';
 
 // Pre-compute groupings outside the render lifecycle for performance
@@ -145,14 +139,14 @@ export default function ConditionalAccessPage() {
                 ) : (
                     <div className="flex flex-col gap-3">
                         {groupedPolicies.map((group) => (
-                                <PolicyGroupCard
-                                    key={group.requirement}
-                                    requirement={group.requirement}
-                                    policies={group.policies}
-                                    copiedId={copiedId}
-                                    handleCopy={handleCopy}
-                                    globalExpandState={globalExpandState}
-                                />
+                            <PolicyGroupCard
+                                key={group.requirement}
+                                requirement={group.requirement}
+                                policies={group.policies}
+                                copiedId={copiedId}
+                                handleCopy={handleCopy}
+                                globalExpandState={globalExpandState}
+                            />
                         ))}
                     </div>
                 )}

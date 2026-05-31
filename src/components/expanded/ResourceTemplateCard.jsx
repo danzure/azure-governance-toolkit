@@ -96,14 +96,9 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                     onClick={(e) => e.stopPropagation()}
                 >
                     {iacTab === 'terraform' ? (
-                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1.465 14.282v-6.082l5.35-3.084v6.082l-5.35 3.084z" fill="#5C4EE5"/>
-                            <path d="M7.643 17.842v-6.08l5.348-3.085v6.08l-5.348 3.085z" fill="#5C4EE5"/>
-                            <path d="M7.643 10.613V4.53l5.348-3.083v6.082l-5.348 3.084z" fill="#5C4EE5"/>
-                            <path d="M13.821 14.282v-6.082l5.35-3.084v6.082l-5.35 3.084z" fill="#5C4EE5"/>
-                        </svg>
+                        <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
                     ) : (
-                        <svg viewBox="0 0 23 23" className="w-3.5 h-3.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0h11v11H0z" fill="#f35325"/>
                             <path d="M12 0h11v11H12z" fill="#81bc06"/>
                             <path d="M0 12h11v11H0z" fill="#05a6f0"/>

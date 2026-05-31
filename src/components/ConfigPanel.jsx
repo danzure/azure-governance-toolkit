@@ -138,8 +138,13 @@ function ConfigPanel({
                                             title="View Azure Infrastructure Map"
                                             className="h-[32px] flex items-center justify-center rounded border transition-colors shrink-0 px-2 gap-1.5 no-underline bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary"
                                         >
-                                            <Globe className="w-3.5 h-3.5" />
-                                            <span className="text-[12px] font-semibold">View Map</span>
+                                            <svg viewBox="0 0 23 23" className="w-3.5 h-3.5 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                                <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                                <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                                <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                                            </svg>
+                                            <span className="text-[12px] font-semibold">Azure Datacentre Map</span>
                                         </a>
                                     </div>
                                     {/* Instance */}
