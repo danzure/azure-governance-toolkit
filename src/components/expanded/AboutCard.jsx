@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Info, Lightbulb, Copy, Check } from 'lucide-react';
+import { useState } from 'react';
+import { Info, Lightbulb, Copy, Check, ExternalLink } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 /**
@@ -46,10 +46,16 @@ export default function AboutCard({ resource, displayDesc, namingPattern, naming
                             href={resource.learnUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex h-[26px] px-2.5 rounded-sm text-[12px] font-medium transition-all items-center gap-1.5 border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary"
+                            className="w-fit flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                         >
+                            <svg viewBox="0 0 23 23" className="w-3.5 h-3.5 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                            </svg>
                             Microsoft Learn
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                            <ExternalLink className="w-3 h-3" />
                         </a>
                     </div>
                 )}
@@ -67,7 +73,7 @@ export default function AboutCard({ resource, displayDesc, namingPattern, naming
                             <span className="break-all">{namingPattern}</span>
                             <button
                                 onClick={handleCopy}
-                                className={`shrink-0 flex items-center justify-center p-1 rounded-sm transition-colors hover:bg-black/5 dark:hover:bg-white/10 ${isCopied ? 'text-[#107c10] dark:text-[#a3d4a3]' : t.muted}`}
+                                className={`shrink-0 flex items-center justify-center w-7 h-7 rounded-md border shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-colors ${isCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
                                 title="Copy naming guidance"
                             >
                                 {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}

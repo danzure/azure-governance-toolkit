@@ -1,5 +1,5 @@
 import { memo, useState, useMemo } from 'react';
-import { Box, Copy, Check, ShieldAlert, AlertTriangle, LayoutGrid, Cpu, Network, Database, Globe, DatabaseZap, ShieldCheck, Workflow, BarChart3, Sparkles, Settings2, Wifi, GitBranch, X, ExternalLink } from 'lucide-react';
+import { Box, Copy, Check, ShieldAlert, AlertTriangle, LayoutGrid, Cpu, Network, Database, Globe, DatabaseZap, ShieldCheck, Workflow, BarChart3, Sparkles, Settings2, Wifi, GitBranch, X } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import ExpandedPanel from './ExpandedPanel';
 import { getCategoryColors } from '../data/categoryColors';
@@ -132,20 +132,6 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                     {resource.desc}
                 </p>
 
-                {!isExpanded && resource.learnUrl && (
-                    <div className="flex items-center gap-4 mt-1">
-                        <a
-                            href={resource.learnUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-fit text-fluent-brand-fg hover:underline flex items-center gap-1.5 text-[12px] font-medium"
-                        >
-                            Microsoft Learn
-                            <ExternalLink className="w-3 h-3" />
-                        </a>
-                    </div>
-                )}
 
                 <div className="mt-auto pt-2">
                     <div className={`group/copy relative rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border ${isExpanded ? expandedValidationBg : 'bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent'}`}>
@@ -169,9 +155,9 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                     }
                                 }}
                                 aria-label={isCopied ? 'Copied' : 'Copy name'}
-                                className={`absolute right-0 top-1/2 -translate-y-1/2 h-[24px] px-2 flex items-center justify-center gap-1.5 rounded-sm text-[11px] font-medium transition-all z-10 border ${isCopied 
+                                className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${isCopied 
                                     ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
-                                    : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
+                                    : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
                             >
                                 {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                                 <span>{isCopied ? 'Copied' : 'Copy'}</span>

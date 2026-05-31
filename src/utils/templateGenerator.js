@@ -342,3 +342,31 @@ export function generateBundleTemplates(bundleItems, provider = 'bicep', getBund
     
     return result;
 }
+
+/**
+ * Returns the official documentation URL for a given resource and IaC provider
+ */
+export function getIacDocsUrl(resource, provider) {
+    const mapping = RESOURCE_MAP[resource.name];
+    if (!mapping) {
+        if (provider === 'terraform') return 'https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs';
+        return 'https://learn.microsoft.com/en-us/azure/templates/';
+    }
+
+    if (provider === 'terraform') {
+        const tfName = mapping.tf;
+        if (tfName && tfName.startsWith('azurerm_')) {
+            const shortName = tfName.substring(8);
+            return `https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/${shortName}`;
+        }
+        return 'https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs';
+    } else {
+        const bicepType = mapping.bicep;
+        if (bicepType) {
+            const typeOnly = bicepType.split('@')[0].toLowerCase();
+            const pivot = provider === 'bicep' ? 'deployment-language-bicep' : 'deployment-language-arm-template';
+            return `https://learn.microsoft.com/en-us/azure/templates/${typeOnly}?pivots=${pivot}`;
+        }
+        return 'https://learn.microsoft.com/en-us/azure/templates/';
+    }
+}

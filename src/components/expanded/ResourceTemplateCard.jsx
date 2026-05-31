@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import { Code2, Copy, Check } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Code2, Copy, Check, ExternalLink } from 'lucide-react';
 import PropTypes from 'prop-types';
-import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates } from '../../utils/templateGenerator';
+import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates, getIacDocsUrl } from '../../utils/templateGenerator';
 
 /**
  * ResourceTemplateCard Component
@@ -31,6 +31,11 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
         if (iacTab === 'terraform') return generateTerraformTemplate(resource, genName);
         return generateArmTemplate(resource, genName);
     }, [bundle, iacTab, resource, genName, getBundleName]);
+
+    const docsUrl = useMemo(() => {
+        const targetResource = (bundle && bundle.length > 0) ? bundle[0] : resource;
+        return getIacDocsUrl(targetResource, iacTab);
+    }, [bundle, resource, iacTab]);
 
     const handleCopyIac = (e) => {
         e.stopPropagation();
@@ -69,7 +74,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                     </div>
                     <button
                         onClick={handleCopyIac}
-                        className={`h-[26px] px-2.5 rounded-sm text-[12px] font-medium transition-all flex items-center gap-1.5 border ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-white dark:bg-[#323130] border-[#e1dfdd] dark:border-[#484644] text-[#605e5c] dark:text-[#c8c6c4] hover:border-[#c8c6c4] dark:hover:border-[#605e5c] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                        className={`flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
                         title="Copy template"
                     >
                         {isIacCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -81,6 +86,33 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                 <pre className={`text-[11px] font-mono whitespace-pre-wrap overflow-x-auto overflow-y-auto max-h-[14.5rem] p-4 ${t.text}`}>
                     {iacTemplate}
                 </pre>
+            </div>
+            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] px-4 py-3 flex justify-start bg-fluent-bg-canvas dark:bg-[#1b1a19]">
+                <a
+                    href={docsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-fit flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {iacTab === 'terraform' ? (
+                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.465 14.282v-6.082l5.35-3.084v6.082l-5.35 3.084z" fill="#5C4EE5"/>
+                            <path d="M7.643 17.842v-6.08l5.348-3.085v6.08l-5.348 3.085z" fill="#5C4EE5"/>
+                            <path d="M7.643 10.613V4.53l5.348-3.083v6.082l-5.348 3.084z" fill="#5C4EE5"/>
+                            <path d="M13.821 14.282v-6.082l5.35-3.084v6.082l-5.35 3.084z" fill="#5C4EE5"/>
+                        </svg>
+                    ) : (
+                        <svg viewBox="0 0 23 23" className="w-3.5 h-3.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h11v11H0z" fill="#f35325"/>
+                            <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                            <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                            <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                        </svg>
+                    )}
+                    {iacTab === 'terraform' ? 'Terraform Registry' : iacTab === 'bicep' ? 'Bicep Template' : 'ARM Template'}
+                    <ExternalLink className="w-3 h-3" />
+                </a>
             </div>
         </div>
     );
