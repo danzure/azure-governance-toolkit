@@ -80,7 +80,7 @@ export default function App() {
                     onToggleExpand={handleToggleMenu} 
                 />
 
-                <main className="flex-1 w-full relative flex flex-col overflow-y-auto">
+                <main id="main-scroll-container" className="flex-1 w-full relative flex flex-col overflow-y-auto">
                     <Routes>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/azure-resources" element={<ResourceNamingPage />} />
