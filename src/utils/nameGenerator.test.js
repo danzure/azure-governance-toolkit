@@ -229,7 +229,21 @@ describe('generateName', () => {
         expect(result).toMatch(/^vmw/);
     });
 
-    // ─── Subnet Fixed Names ─────────────────────────────────────────
+    // ─── Subnet & Network Watcher Fixed Names ───────────────────────
+
+    it('returns fixed name for Network watcher', () => {
+        const resource = makeResource({
+            name: 'Network watcher',
+            abbrev: 'nw',
+            chars: 'a-z, A-Z, 0-9, -, _, .',
+        });
+        // With default config (no regionValue), falls back to uksouth
+        expect(generateName(resource, defaultConfig)).toBe('NetworkWatcher_uksouth');
+        
+        // With regionValue provided
+        const configWithRegion = { ...defaultConfig, regionValue: 'eastus' };
+        expect(generateName(resource, configWithRegion)).toBe('NetworkWatcher_eastus');
+    });
 
     it('returns AzureFirewallSubnet for subnet with afw sub-resource', () => {
         const resource = makeResource({

@@ -33,6 +33,12 @@ export function generateName(resource, config, selectedSubResource = null) {
         if (selectedSubResource === 'rs') return 'RouteServerSubnet';
     }
 
+    // Special handling for Network watcher (fixed name)
+    if (resource.name === 'Network watcher') {
+        const regValue = config.regionValue || 'uksouth';
+        return `NetworkWatcher_${regValue}`;
+    }
+
     const cleanWorkload = workload.toLowerCase().replace(/[^a-z0-9]/g, '') || 'workload';
     const cleanOrg = orgPrefix.toLowerCase().replace(/[^a-z0-9]/g, '');
     const regAbbrev = regionAbbrev || 'uks';

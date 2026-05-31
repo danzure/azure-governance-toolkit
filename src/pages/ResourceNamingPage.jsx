@@ -98,6 +98,7 @@ export default function ResourceNamingPage() {
             workload,
             orgPrefix,
             regionAbbrev: currentRegion?.abbrev || 'uks',
+            regionValue: currentRegion?.value || 'uksouth',
             instance: instanceOverride || formattedInstance,
             envValue,
             namingOrder,
