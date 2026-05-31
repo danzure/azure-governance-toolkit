@@ -136,6 +136,7 @@ export const PREMADE_POLICIES = [
             { label: "Users", value: "Include: All users.\nExclude: Break-glass / emergency access accounts." },
             { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
             { label: "Conditions", value: "Filter for devices: Include filtered devices in policy.\nRule: device.trustType -ne \"ServerAD\" -or device.isCompliant -ne True" },
+            { label: "Grant", value: "Grant access" },
             { label: "Session", value: "Sign-in frequency: Periodic reauthentication — 1 Hour.\nPersistent browser session: Never persistent." }
         ]
     },
@@ -193,6 +194,7 @@ export const PREMADE_POLICIES = [
         settings: [
             { label: "Users", value: "Include: All users.\nExclude: Break-glass / emergency access accounts." },
             { label: "Target resources", value: "Include: Select resources — Office 365." },
+            { label: "Grant", value: "Grant access" },
             { label: "Session", value: "Use app enforced restrictions." }
         ]
     },
@@ -206,6 +208,77 @@ export const PREMADE_POLICIES = [
             { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
             { label: "Conditions", value: "Agent risk (Preview): High." },
             { label: "Grant", value: "Block access." }
+        ]
+    },
+    { 
+        name: 'CA-AllUsers-AllApps-AnyPlatform-BlockUntrustedLocations', 
+        categories: ['Zero Trust', 'Secure foundation'], 
+        desc: 'Reduces the attack surface by explicitly blocking all access attempts originating from countries or regions where your organization does not operate. This mitigates risks from foreign threat actors and botnets located outside your expected geographical footprint. PREREQUISITES: You must define your untrusted countries or IP ranges in Entra ID Named Locations before deploying this policy.', 
+        link: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-location',
+        settings: [
+            { label: "Users", value: "Include: All users.\nExclude: Break-glass / emergency access accounts." },
+            { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
+            { label: "Conditions", value: "Locations: Include Untrusted Locations (custom Named Location).\nExclude: MFA Trusted IPs." },
+            { label: "Grant", value: "Block access." }
+        ]
+    },
+    { 
+        name: 'CA-AllUsers-AllApps-AnyPlatform-RequireTermsOfUse', 
+        categories: ['Zero Trust', 'Secure foundation'], 
+        desc: 'Ensures that internal and guest users legally acknowledge your organization\'s IT and security policies before accessing corporate resources. This is essential for compliance, auditing, and setting clear expectations for acceptable use of company data and systems. PREREQUISITES: You must create and publish a Terms of Use document (PDF) in Entra ID before deploying this policy.', 
+        link: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/terms-of-use',
+        settings: [
+            { label: "Users", value: "Include: All users.\nExclude: Break-glass / emergency access accounts." },
+            { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
+            { label: "Grant", value: "Grant access -> Require accepted terms of use." }
+        ]
+    },
+    { 
+        name: 'CA-WorkloadIdentities-AllApps-AnyPlatform-BlockUntrustedLocations', 
+        categories: ['Zero Trust', 'Emerging threats'], 
+        desc: 'Protects automated processes and service principals by restricting where they can authenticate from. By blocking workload identities from authenticating outside of known trusted IP ranges (such as your Azure VNets or corporate datacenters), you prevent attackers from using compromised client secrets or certificates from external networks. PREREQUISITES: You must define your corporate egress IPs and Azure VNets in Entra ID Named Locations as trusted IPs before deploying.', 
+        link: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-workload-identities',
+        settings: [
+            { label: "Identities", value: "What does this policy apply to: Workload identities.\nInclude: All service principals." },
+            { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
+            { label: "Conditions", value: "Locations: Include Any location.\nExclude: Trusted locations (e.g., Azure VNet IPs, Datacenter IPs)." },
+            { label: "Grant", value: "Block access." }
+        ]
+    },
+    { 
+        name: 'CA-Guests-SensitiveApps-AnyPlatform-BlockAccess', 
+        categories: ['Zero Trust'], 
+        desc: 'Explicitly prevents external guests, vendors, and B2B collaborators from accessing highly sensitive applications or administrative portals. This establishes a hard boundary, ensuring that even if a guest account is compromised, the blast radius is contained and critical systems remain isolated.', 
+        link: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-block-access',
+        settings: [
+            { label: "Users", value: "Include: All guest and external users." },
+            { label: "Target resources", value: "Include: Select resources — highly sensitive or administrative apps." },
+            { label: "Grant", value: "Block access." }
+        ]
+    },
+    { 
+        name: 'CA-Admins-AllApps-AnyPlatform-SignInFrequency', 
+        categories: ['Protect administrator', 'Zero Trust'], 
+        desc: 'Instead of relying on default token lifetimes, this policy enforces a strict sign-in frequency (e.g., every 24 hours) for privileged roles. This ensures that administrative sessions do not stay alive indefinitely, reducing the window of opportunity if a session token is stolen.', 
+        link: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-session-lifetime',
+        settings: [
+            { label: "Users", value: "Include: Directory roles — Global Admin, Security Admin, Privileged Role Admin, etc.\nExclude: Break-glass / emergency access accounts." },
+            { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
+            { label: "Grant", value: "Grant access" },
+            { label: "Session", value: "Sign-in frequency: Periodic reauthentication — 24 Hours." }
+        ]
+    },
+    { 
+        name: 'CA-AllUsers-AllApps-AnyPlatform-EnforceCAE', 
+        categories: ['Zero Trust', 'Secure foundation'], 
+        desc: 'Ensures Continuous Access Evaluation (CAE) is strictly enforced. With CAE, critical events (like a user password change, account disablement, or location change) are evaluated in real-time. PREREQUISITES: To deploy this, IP-based Named Locations MUST be configured first. All authentication and access traffic must originate from known, dedicated egress IPs, otherwise legitimate users will be blocked.', 
+        link: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation',
+        settings: [
+            { label: "Users", value: "Include: All users.\nExclude: Break-glass / emergency access accounts." },
+            { label: "Target resources", value: "Include: All resources (formerly 'All cloud apps')." },
+            { label: "Conditions", value: "Locations: Include Any location. (Ensures CAE location evaluation triggers globally)" },
+            { label: "Grant", value: "Grant access (Policy serves primarily to apply the session control)." },
+            { label: "Session", value: "Customize continuous access evaluation: Strictly enforce location policies." }
         ]
     }
 ];
@@ -232,7 +305,11 @@ export const TITLE_OVERRIDES = {
     'BlockHighRiskAgentIdentities': 'Block high-risk agent identities',
     'BlockInsiderRisk': 'Block Insider Risk',
     'BlockLegacyAuth': 'Block Legacy Authentication',
-    'SessionControl': 'Session Control'
+    'SessionControl': 'Session Control',
+    'RequireTermsOfUse': 'Require Terms of Use',
+    'BlockAccess': 'Block Guests from Sensitive Apps',
+    'SignInFrequency': 'Sign-in Frequency',
+    'EnforceCAE': 'Enforce Continuous Access Evaluation'
 };
 
 export const getReadableTitle = (requirement) => {
