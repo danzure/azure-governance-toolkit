@@ -34,10 +34,11 @@ A dedicated module aligned with Microsoft's Zero Trust principles to standardize
 
 ### 🔹 Premium User Experience (UX)
 Built for speed and developer productivity.
+- **Centralized Dashboard & Navigation**: Unified landing page with an elegant, responsive flyout navigation menu to seamlessly switch between the governance tools.
 - **Instant Clipboard Access**: One-click copy interactions with localized success feedback.
 - **Keyboard Navigation**: Power-user friendly with global shortcuts (`Ctrl+K` or `/` to focus search, `Escape` to clear).
 - **Persistent State**: Leverages local storage to remember your custom prefixes, environment selections, and component ordering across sessions.
-- **Optimized Performance**: Implements debounced searching and memoized component rendering for fluid interactions even with large data lists.
+- **Optimized Performance**: Implements debounced searching, memoized component rendering, and Vite chunking optimizations for fluid interactions and blazing-fast load times.
 - **Responsive Dark/Light Mode**: Fully responsive Tailwind layout that respects OS-level theme preferences.
 
 ---
@@ -47,7 +48,7 @@ Built for speed and developer productivity.
 Built as a lightweight, client-side Single Page Application (SPA) focusing on performance and maintainability.
 
 - **Frontend Library**: [React 18](https://react.dev/) utilizing Hooks for state and lifecycle management.
-- **Build & Bundling**: [Vite](https://vitejs.dev/) for sub-second HMR and optimized production builds.
+- **Build & Bundling**: [Vite](https://vitejs.dev/) for sub-second HMR and optimized production builds (including manual chunk splitting for reduced bundle sizes).
 - **Styling**: [Tailwind CSS 3.4](https://tailwindcss.com/) combined with a custom Fluent-UI inspired color system for a native Microsoft look and feel.
 - **Icons**: [Lucide React](https://lucide.dev/) for crisp, scalable vector iconography.
 - **Testing**: [Vitest](https://vitest.dev/) for fast, reliable unit testing.
@@ -66,8 +67,8 @@ Built as a lightweight, client-side Single Page Application (SPA) focusing on pe
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/azres-naming-tool.git
-   cd azres-naming-tool
+   git clone https://github.com/danzure/react-azresourcename-app.git
+   cd react-azresourcename-app
    ```
 
 2. **Install dependencies**
@@ -124,7 +125,7 @@ We welcome contributions! Whether it's adding new Azure resource types to the sc
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-Feel free to check the [Issues page](https://github.com/yourusername/azres-naming-tool/issues) for open tasks.
+Feel free to check the [Issues page](https://github.com/danzure/react-azresourcename-app/issues) for open tasks.
 
 ---
 

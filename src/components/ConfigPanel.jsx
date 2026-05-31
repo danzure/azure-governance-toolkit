@@ -198,12 +198,12 @@ function ConfigPanel({
                                                 {index + 1}
                                             </span>
                                             <span className="text-[12px] font-medium text-fluent-fg-primary">{item}</span>
-                                            {/* Arrow buttons — visible on mobile, revealed on hover on desktop */}
-                                            <div className="flex items-center gap-px opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                            {/* Arrow buttons — always visible */}
+                                            <div className="flex items-center gap-px transition-opacity">
                                                 <button
                                                     onClick={() => onMoveItem(index, -1)}
                                                     disabled={index === 0}
-                                                    className="p-0.5 rounded transition-colors disabled:opacity-20 text-fluent-fg-tertiary hover:bg-fluent-bg-hover"
+                                                    className="p-0.5 rounded transition-colors disabled:opacity-20 text-fluent-fg-tertiary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary"
                                                     title="Move left"
                                                 >
                                                     <ArrowLeft className="w-3 h-3" />
@@ -211,7 +211,7 @@ function ConfigPanel({
                                                 <button
                                                     onClick={() => onMoveItem(index, 1)}
                                                     disabled={index === namingOrder.length - 1}
-                                                    className="p-0.5 rounded transition-colors disabled:opacity-20 text-fluent-fg-tertiary hover:bg-fluent-bg-hover"
+                                                    className="p-0.5 rounded transition-colors disabled:opacity-20 text-fluent-fg-tertiary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary"
                                                     title="Move right"
                                                 >
                                                     <ArrowRight className="w-3 h-3" />
