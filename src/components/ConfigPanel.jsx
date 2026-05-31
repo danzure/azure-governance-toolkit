@@ -42,7 +42,7 @@ function ConfigPanel({
     namingOrder, onMoveItem, liveSchemaStr, copiedId, onCopy
 }) {
     return (
-        <nav className="mt-[48px] shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
+        <nav className="relative z-40 mt-[48px] shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
             <div className="max-w-[1600px] mx-auto px-4 py-3">
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-3">
