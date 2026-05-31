@@ -135,10 +135,10 @@ const RESOURCE_MAP = {
 
     // Governance & Management — additional
     'Policy definition': { tf: 'azurerm_policy_definition', bicep: 'Microsoft.Authorization/policyDefinitions@2023-04-01' },
-    'Policy assignment': { tf: 'azurerm_policy_assignment', bicep: 'Microsoft.Authorization/policyAssignments@2024-04-01' },
+    'Policy assignment': { tf: 'azurerm_resource_group_policy_assignment', bicep: 'Microsoft.Authorization/policyAssignments@2024-04-01' },
     'Blueprint': { tf: 'azurerm_blueprint_assignment', bicep: 'Microsoft.Blueprint/blueprints@2018-11-01-preview' },
     'Cost Management export': { tf: 'azurerm_cost_management_scheduled_action', bicep: 'Microsoft.CostManagement/exports@2023-11-01' },
-    'Template Spec': { tf: 'azurerm_template_deployment', bicep: 'Microsoft.Resources/templateSpecs@2022-02-01' },
+    'Template Spec': { tf: 'azurerm_resource_group_template_deployment', bicep: 'Microsoft.Resources/templateSpecs@2022-02-01' },
 
     // Compute — additional
     'Image': { tf: 'azurerm_image', bicep: 'Microsoft.Compute/images@2024-03-01' },
@@ -154,6 +154,11 @@ const RESOURCE_MAP = {
     // AI & Cognitive — additional
     'Azure AI services': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
     'Azure Bot Service': { tf: 'azurerm_bot_service_azure_bot', bicep: 'Microsoft.BotService/botServices@2022-09-15' },
+    'Azure AI Foundry account': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
+    'Azure AI Foundry hub': { tf: 'azurerm_ai_foundry', bicep: 'Microsoft.MachineLearningServices/workspaces@2024-04-01' },
+    'Azure AI Foundry project': { tf: 'azurerm_ai_foundry_project', bicep: 'Microsoft.MachineLearningServices/workspaces@2024-04-01' },
+    'Azure AI services account': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
+    'Azure OpenAI service': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
 
     // Analytics — additional
     'Fabric Capacity': { tf: 'azurerm_fabric_capacity', bicep: 'Microsoft.Fabric/capacities@2023-11-01' },
