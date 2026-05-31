@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Boxes, Shield, X, LayoutDashboard } from 'lucide-react';
+import { X } from 'lucide-react';
 
 /**
  * NavigationMenu Component
@@ -141,7 +141,7 @@ export default function NavigationMenu({ isOpen, onClose }) {
                             }`
                         }
                     >
-                        <LayoutDashboard className="w-5 h-5" aria-hidden="true" />
+                        <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg" alt="" className="w-5 h-5 object-contain" aria-hidden="true" />
                         Dashboard
                     </NavLink>
 
@@ -157,7 +157,7 @@ export default function NavigationMenu({ isOpen, onClose }) {
                             }`
                         }
                     >
-                        <Boxes className="w-5 h-5" aria-hidden="true" />
+                        <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg" alt="" className="w-5 h-5 object-contain" aria-hidden="true" />
                         Azure Resources
                     </NavLink>
                     
@@ -173,7 +173,7 @@ export default function NavigationMenu({ isOpen, onClose }) {
                             }`
                         }
                     >
-                        <Shield className="w-5 h-5" aria-hidden="true" />
+                        <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg" alt="" className="w-5 h-5 object-contain" aria-hidden="true" />
                         Conditional Access
                     </NavLink>
                 </nav>

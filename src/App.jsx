@@ -58,7 +58,7 @@ export default function App() {
     const handleCloseMenu = useCallback(() => setIsNavOpen(false), []);
 
     // Determine header subtitle based on current route
-    let headerTitle = "Cloud Tools Dashboard";
+    let headerTitle = "Dashboard";
     if (location.pathname === '/azure-resources') {
         headerTitle = "Resource Naming Tool";
     } else if (location.pathname === '/conditional-access') {

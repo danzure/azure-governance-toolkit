@@ -10,8 +10,8 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="mt-16 w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
-            <div className="max-w-[1600px] mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <footer className="mt-auto w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
+            <div className="max-w-[1600px] mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
                 
                 {/* Left Side: Brand & Copyright */}
                 <div className="flex items-center gap-3.5">
@@ -30,11 +30,11 @@ export default function Footer() {
                             </span>
                             <span className="text-[12px] text-fluent-fg-tertiary opacity-70 font-normal">|</span>
                             <span className="text-[12px] text-fluent-fg-tertiary font-medium">
-                                Naming Utilities
+                                Naming Tools
                             </span>
                         </div>
                         <span className="text-[11px] text-fluent-fg-tertiary opacity-80 mt-0.5">
-                            &copy; {currentYear} Daniel Powley. Built in alignment with Cloud Adoption Framework.
+                            &copy; {currentYear} Daniel Powley. All rights reserved.
                         </span>
                     </div>
                 </div>
