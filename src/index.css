@@ -23,27 +23,27 @@
     --colorInfoBorder: #c7e0f4;
     --colorInfoText: #004578;
     
-    /* Category Colors - Light Mode */
-    --colorCategoryBlueBg: #eff6fc;
-    --colorCategoryBlueFg: #0078d4;
-    --colorCategoryOrangeBg: #fdf6f3;
-    --colorCategoryOrangeFg: #d83b01;
-    --colorCategoryGreenBg: #f3f9f1;
-    --colorCategoryGreenFg: #107c10;
-    --colorCategoryPurpleBg: #f6f3f9;
+    /* Category Colors - Light Mode (Fluent UI 2 badge-style contrast) */
+    --colorCategoryBlueBg: #e8f1fb;
+    --colorCategoryBlueFg: #0f6cbd;
+    --colorCategoryOrangeBg: #fceee8;
+    --colorCategoryOrangeFg: #c43501;
+    --colorCategoryGreenBg: #e9f5e9;
+    --colorCategoryGreenFg: #0e700e;
+    --colorCategoryPurpleBg: #f0ebf7;
     --colorCategoryPurpleFg: #5c2d91;
-    --colorCategoryCyanBg: #eaf8fc;
-    --colorCategoryCyanFg: #00bcf2;
-    --colorCategoryTealBg: #ebf7f7;
-    --colorCategoryTealFg: #038387;
-    --colorCategoryRedBg: #fdf3f4;
-    --colorCategoryRedFg: #d13438;
-    --colorCategoryMagentaBg: #fcf0f6;
-    --colorCategoryMagentaFg: #b4009e;
-    --colorCategoryYellowBg: #fff9e6;
-    --colorCategoryYellowFg: #ffb900;
-    --colorCategoryNeutralBg: #f3f2f1;
-    --colorCategoryNeutralFg: #605e5c;
+    --colorCategoryCyanBg: #e0f4fa;
+    --colorCategoryCyanFg: #006a8e;
+    --colorCategoryTealBg: #e1f2f2;
+    --colorCategoryTealFg: #036c70;
+    --colorCategoryRedBg: #fce9ea;
+    --colorCategoryRedFg: #c4262e;
+    --colorCategoryMagentaBg: #f9e5f2;
+    --colorCategoryMagentaFg: #9b008a;
+    --colorCategoryYellowBg: #fdf4d9;
+    --colorCategoryYellowFg: #6e5900;
+    --colorCategoryNeutralBg: #ebebeb;
+    --colorCategoryNeutralFg: #4d4d4d;
 }
 
 .dark {
@@ -65,27 +65,27 @@
     --colorInfoBorder: rgba(31, 158, 255, 0.3);
     --colorInfoText: #c7e0f4;
 
-    /* Category Colors - Dark Mode */
-    --colorCategoryBlueBg: #00245b;
-    --colorCategoryBlueFg: #2899f5;
-    --colorCategoryOrangeBg: #4a1600;
-    --colorCategoryOrangeFg: #f36f38;
-    --colorCategoryGreenBg: #062906;
-    --colorCategoryGreenFg: #42a142;
-    --colorCategoryPurpleBg: #200d3b;
-    --colorCategoryPurpleFg: #8d64c5;
-    --colorCategoryCyanBg: #00384b;
-    --colorCategoryCyanFg: #3ed1f6;
-    --colorCategoryTealBg: #002a2b;
-    --colorCategoryTealFg: #32b4b8;
-    --colorCategoryRedBg: #43020a;
-    --colorCategoryRedFg: #f46b70;
-    --colorCategoryMagentaBg: #3d0026;
-    --colorCategoryMagentaFg: #d13fb8;
-    --colorCategoryYellowBg: #4c3b00;
-    --colorCategoryYellowFg: #ffce40;
-    --colorCategoryNeutralBg: #323130;
-    --colorCategoryNeutralFg: #c8c6c4;
+    /* Category Colors - Dark Mode (Fluent UI 2 aligned, WCAG AA compliant) */
+    --colorCategoryBlueBg: #152d44;
+    --colorCategoryBlueFg: #62abf5;
+    --colorCategoryOrangeBg: #3d1f0e;
+    --colorCategoryOrangeFg: #f7884d;
+    --colorCategoryGreenBg: #0f2d0f;
+    --colorCategoryGreenFg: #5ec75e;
+    --colorCategoryPurpleBg: #291545;
+    --colorCategoryPurpleFg: #b392db;
+    --colorCategoryCyanBg: #0a3040;
+    --colorCategoryCyanFg: #60d6f5;
+    --colorCategoryTealBg: #0a2e2f;
+    --colorCategoryTealFg: #4dc7cb;
+    --colorCategoryRedBg: #3b1114;
+    --colorCategoryRedFg: #f78d91;
+    --colorCategoryMagentaBg: #361028;
+    --colorCategoryMagentaFg: #e06bc7;
+    --colorCategoryYellowBg: #3a2f0a;
+    --colorCategoryYellowFg: #ffd966;
+    --colorCategoryNeutralBg: #3a3938;
+    --colorCategoryNeutralFg: #d2d0ce;
 }
 
 * {
