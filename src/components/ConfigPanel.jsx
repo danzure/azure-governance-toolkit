@@ -43,7 +43,7 @@ function ConfigPanel({
 }) {
     return (
         <nav className="relative z-40 shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
-            <div className="max-w-[1600px] mx-auto px-4 py-3">
+            <div className="max-w-[1600px] mx-auto px-3 sm:px-4 py-3">
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-3">
                     <div>
@@ -68,7 +68,7 @@ function ConfigPanel({
                             {/* Information hover card at the top right */}
                             <div className="absolute top-3 right-3 group z-50">
                                 <Info className="w-4 h-4 text-fluent-fg-secondary hover:text-fluent-brand-fg cursor-help transition-colors" />
-                                <div className="absolute right-0 top-full pt-2 w-[320px] sm:w-[450px] invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
+                                <div className="absolute right-0 top-full pt-2 w-[calc(100vw-48px)] sm:w-[320px] md:w-[450px] invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
                                     <div className="p-3.5 rounded-lg border shadow-lg bg-fluent-info-bg dark:bg-fluent-bg-subtle border-fluent-info-border dark:border-fluent-stroke-subtle">
                                         <div className="text-[13px] leading-relaxed text-fluent-info-text dark:text-fluent-fg-secondary space-y-2">
                                             <p>
@@ -86,11 +86,11 @@ function ConfigPanel({
                                 </div>
                             </div>
                                 {/* Form grid - 2 columns on large screens to cleanly fill whitespace */}
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-4 items-center">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-4">
                                     {/* Org Prefix */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                                         <Tooltip content="Organisation prefix">
-                                            <label className={`w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap ${!showOrg ? 'opacity-50' : ''}`}>Org Prefix</label>
+                                            <label className={`block text-[14px] font-bold sm:text-right text-fluent-fg-secondary whitespace-nowrap sm:w-[100px] ${!showOrg ? 'opacity-50' : ''}`}>Org Prefix</label>
                                         </Tooltip>
                                         <div className="flex items-center gap-2 min-w-0 flex-1">
                                             <input
@@ -113,9 +113,9 @@ function ConfigPanel({
                                     </div>
 
                                     {/* Workload */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                                         <Tooltip content="Application or workload name">
-                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Workload</label>
+                                            <label className="block text-[14px] font-bold sm:text-right text-fluent-fg-secondary whitespace-nowrap sm:w-[100px]">Workload</label>
                                         </Tooltip>
                                         <input
                                             type="text"
@@ -127,9 +127,9 @@ function ConfigPanel({
                                     </div>
 
                                     {/* Environment */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                                         <Tooltip content="Lifecycle stage">
-                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Environment</label>
+                                            <label className="block text-[14px] font-bold sm:text-right text-fluent-fg-secondary whitespace-nowrap sm:w-[100px]">Environment</label>
                                         </Tooltip>
                                         <div className="flex-1 min-w-0">
                                             <SearchableSelect items={ENVIRONMENTS} value={envValue} onChange={setEnvValue} compact />
@@ -137,9 +137,9 @@ function ConfigPanel({
                                     </div>
 
                                     {/* Region */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                                         <Tooltip content="Azure region">
-                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Region</label>
+                                            <label className="block text-[14px] font-bold sm:text-right text-fluent-fg-secondary whitespace-nowrap sm:w-[100px]">Region</label>
                                         </Tooltip>
                                         <div className="flex items-center gap-2 min-w-0 flex-1">
                                             <div className="flex-1 min-w-0">
@@ -164,9 +164,9 @@ function ConfigPanel({
                                     </div>
 
                                     {/* Instance */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                                         <Tooltip content="Instance number (001-999)">
-                                            <label className="w-[100px] block text-[14px] font-bold text-right text-fluent-fg-secondary whitespace-nowrap">Instance</label>
+                                            <label className="block text-[14px] font-bold sm:text-right text-fluent-fg-secondary whitespace-nowrap sm:w-[100px]">Instance</label>
                                         </Tooltip>
                                         <input
                                             type="text"
@@ -188,7 +188,7 @@ function ConfigPanel({
                                     <Layers className="w-3.5 h-3.5 text-fluent-brand-fg" />
                                     <h3 className="text-[13px] font-semibold text-fluent-fg-primary">Pattern Builder</h3>
                                 </div>
-                                <div className="flex flex-wrap items-center gap-1.5">
+                                <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto">
                                     {namingOrder.map((item, index) => (
                                         <div
                                             key={item}

@@ -1,46 +1,68 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight, X } from 'lucide-react';
 
 /**
  * NavigationMenu Component
  * 
- * A persistent left-side navigation sidebar.
+ * A persistent left-side navigation sidebar on desktop.
+ * On mobile, renders as a fixed overlay drawer that slides in from the left.
  * 
  * @param {Object} props
  * @param {boolean} props.isExpanded - Whether the menu is currently expanded.
  * @param {Function} props.onToggleExpand - Callback to toggle the menu expansion.
+ * @param {boolean} props.isMobile - Whether the viewport is mobile-sized.
+ * @param {Function} props.onClose - Callback to close the mobile drawer.
  * @returns {JSX.Element}
  */
-export default function NavigationMenu({ isExpanded, onToggleExpand }) {
+export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, onClose }) {
+    // On mobile: fixed overlay that slides in/out
+    // On desktop: inline sidebar that expands/collapses
+    const mobileClasses = isMobile
+        ? `fixed inset-y-0 left-0 z-50 w-[280px] transform transition-transform duration-300 ease-in-out pt-[48px] ${isExpanded ? 'translate-x-0' : '-translate-x-full'}`
+        : `relative transition-[width] duration-300 ease-in-out ${isExpanded ? 'w-[280px]' : 'w-[64px]'}`;
+
+    const handleNavClick = () => {
+        if (isMobile && onClose) onClose();
+    };
+
     return (
         <div 
-            className={`relative flex flex-col h-full bg-fluent-bg-card shadow-soft z-40 transition-[width] duration-300 ease-in-out border-r border-fluent-stroke-subtle ${
-                isExpanded ? 'w-[280px]' : 'w-[64px]'
-            }`}
+            className={`flex flex-col h-full bg-fluent-bg-card shadow-soft z-40 border-r border-fluent-stroke-subtle ${mobileClasses}`}
             aria-label="Navigation menu"
         >
             {/* Header inside drawer */}
-            <div className={`h-[48px] flex items-center border-b border-fluent-stroke-subtle overflow-hidden whitespace-nowrap transition-all duration-300 ${isExpanded ? 'px-4 justify-between' : 'justify-center px-0'}`}>
-                {isExpanded && <span className="font-semibold text-[16px] tracking-tight pl-1">Navigation</span>}
-                <button
-                    onClick={onToggleExpand}
-                    className="p-1.5 rounded-md hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary transition-colors flex-shrink-0"
-                    aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
-                    title={isExpanded ? "Collapse menu" : "Expand menu"}
-                >
-                    {isExpanded ? <ChevronsLeft className="w-5 h-5" /> : <ChevronsRight className="w-5 h-5" />}
-                </button>
+            <div className={`h-[48px] flex items-center border-b border-fluent-stroke-subtle overflow-hidden whitespace-nowrap transition-all duration-300 ${isExpanded ? 'px-4 justify-between' : isMobile ? 'px-4 justify-between' : 'justify-center px-0'}`}>
+                {(isExpanded || isMobile) && <span className="font-semibold text-[16px] tracking-tight pl-1">Navigation</span>}
+                {isMobile ? (
+                    <button
+                        onClick={onClose}
+                        className="p-1.5 rounded-md hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary transition-colors flex-shrink-0"
+                        aria-label="Close menu"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
+                ) : (
+                    <button
+                        onClick={onToggleExpand}
+                        className="p-1.5 rounded-md hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary transition-colors flex-shrink-0"
+                        aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
+                        title={isExpanded ? "Collapse menu" : "Expand menu"}
+                    >
+                        {isExpanded ? <ChevronsLeft className="w-5 h-5" /> : <ChevronsRight className="w-5 h-5" />}
+                    </button>
+                )}
             </div>
 
             {/* Navigation Links */}
             <nav className="flex-1 py-4 space-y-1 overflow-hidden" aria-label="Main navigation">
                 <NavLink
                     to="/"
-                    title={!isExpanded ? "Dashboard" : undefined}
+                    onClick={handleNavClick}
+                    title={!isExpanded && !isMobile ? "Dashboard" : undefined}
                     className={({ isActive }) => 
                         `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded ? 'px-3' : 'justify-center px-0'
+                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
                         } ${
                             isActive 
                                 ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
@@ -56,20 +78,21 @@ export default function NavigationMenu({ isExpanded, onToggleExpand }) {
                             <img 
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg" 
                                 alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded ? 'mx-auto' : ''}`} 
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
                                 aria-hidden="true" 
                             />
-                            {isExpanded && <span className="whitespace-nowrap">Dashboard</span>}
+                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Dashboard</span>}
                         </>
                     )}
                 </NavLink>
 
                 <NavLink
                     to="/azure-resources"
-                    title={!isExpanded ? "Azure Resources" : undefined}
+                    onClick={handleNavClick}
+                    title={!isExpanded && !isMobile ? "Azure Resources" : undefined}
                     className={({ isActive }) => 
                         `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded ? 'px-3' : 'justify-center px-0'
+                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
                         } ${
                             isActive 
                                 ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
@@ -85,20 +108,21 @@ export default function NavigationMenu({ isExpanded, onToggleExpand }) {
                             <img 
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg" 
                                 alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded ? 'mx-auto' : ''}`} 
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
                                 aria-hidden="true" 
                             />
-                            {isExpanded && <span className="whitespace-nowrap">Azure Resources</span>}
+                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Azure Resources</span>}
                         </>
                     )}
                 </NavLink>
                 
                 <NavLink
                     to="/conditional-access"
-                    title={!isExpanded ? "Conditional Access" : undefined}
+                    onClick={handleNavClick}
+                    title={!isExpanded && !isMobile ? "Conditional Access" : undefined}
                     className={({ isActive }) => 
                         `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded ? 'px-3' : 'justify-center px-0'
+                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
                         } ${
                             isActive 
                                 ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
@@ -114,10 +138,10 @@ export default function NavigationMenu({ isExpanded, onToggleExpand }) {
                             <img 
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg" 
                                 alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded ? 'mx-auto' : ''}`} 
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
                                 aria-hidden="true" 
                             />
-                            {isExpanded && <span className="whitespace-nowrap">Conditional Access</span>}
+                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Conditional Access</span>}
                         </>
                     )}
                 </NavLink>
@@ -131,4 +155,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand }) {
 NavigationMenu.propTypes = {
     isExpanded: PropTypes.bool.isRequired,
     onToggleExpand: PropTypes.func.isRequired,
+    isMobile: PropTypes.bool,
+    onClose: PropTypes.func,
 };
+

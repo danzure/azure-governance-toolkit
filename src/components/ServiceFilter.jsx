@@ -93,9 +93,9 @@ const ServiceFilter = ({
 
     return (
         <div className="rounded-lg border shadow-soft bg-fluent-bg-card border-fluent-stroke-subtle" role="toolbar" aria-label="Filter and category toolbar">
-            <div className="flex items-center h-[42px] px-3 gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:h-[42px] px-3 gap-2 sm:gap-2 py-2 sm:py-0">
                 {/* Inline compact search */}
-                <div className="flex items-center shrink-0 w-[180px] sm:w-[220px] h-[30px] px-2 gap-1.5 rounded border transition-colors bg-fluent-bg-canvas border-fluent-stroke-subtle focus-within:border-fluent-brand-bg focus-within:ring-1 focus-within:ring-fluent-brand-bg/20">
+                <div className="flex items-center shrink-0 w-full sm:w-[220px] h-[36px] sm:h-[30px] px-2 gap-1.5 rounded border transition-colors bg-fluent-bg-canvas border-fluent-stroke-subtle focus-within:border-fluent-brand-bg focus-within:ring-1 focus-within:ring-fluent-brand-bg/20">
                     <Search className="w-3.5 h-3.5 shrink-0 text-fluent-fg-tertiary" aria-hidden="true" />
                     <input
                         ref={searchInputRef}
@@ -113,8 +113,8 @@ const ServiceFilter = ({
                     )}
                 </div>
 
-                {/* Divider */}
-                <div className="w-px h-5 shrink-0 bg-fluent-stroke-subtle" aria-hidden="true" />
+                {/* Divider — desktop only */}
+                <div className="w-px h-5 shrink-0 bg-fluent-stroke-subtle hidden sm:block" aria-hidden="true" />
 
                 {/* Scroll left — always rendered, disabled when not scrollable */}
                 <button
@@ -182,7 +182,7 @@ const ServiceFilter = ({
                         onClick={() => onCategoryChange('All')}
                         title="Clear filter"
                         aria-label="Clear category filter"
-                        className="shrink-0 hidden sm:flex items-center gap-1.5 h-[28px] px-2 rounded text-[12px] font-semibold transition-colors bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover"
+                        className="shrink-0 flex items-center gap-1.5 h-[28px] px-2 rounded text-[12px] font-semibold transition-colors bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover"
                     >
                         <X className="w-3.5 h-3.5" aria-hidden="true" />
                         <span>Clear</span>

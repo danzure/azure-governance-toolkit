@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -26,8 +26,30 @@ export default function App() {
     // State for persistent navigation sidebar
     const [isNavExpanded, setIsNavExpanded] = useLocalStorage('azres_navExpanded', false);
     
+    // Mobile detection (< 768px)
+    const [isMobile, setIsMobile] = useState(() => 
+        typeof window !== 'undefined' && window.innerWidth < 768
+    );
+    // Separate mobile nav open state (not persisted)
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 767px)');
+        const handleChange = (e) => {
+            setIsMobile(e.matches);
+            if (e.matches) setIsMobileNavOpen(false);
+        };
+        mq.addEventListener('change', handleChange);
+        return () => mq.removeEventListener('change', handleChange);
+    }, []);
+
     // Get current route to update header title
     const location = useLocation();
+
+    // Auto-close mobile nav on route change
+    useEffect(() => {
+        if (isMobile) setIsMobileNavOpen(false);
+    }, [location.pathname, isMobile]);
 
     // Toggle document class for Tailwind dark mode
     useEffect(() => {
@@ -56,7 +78,14 @@ export default function App() {
     }, [setIsDarkMode]);
 
     const handleToggleTheme = useCallback(() => setIsDarkMode(prev => !prev), [setIsDarkMode]);
-    const handleToggleMenu = useCallback(() => setIsNavExpanded(prev => !prev), [setIsNavExpanded]);
+    const handleToggleMenu = useCallback(() => {
+        if (isMobile) {
+            setIsMobileNavOpen(prev => !prev);
+        } else {
+            setIsNavExpanded(prev => !prev);
+        }
+    }, [isMobile, setIsNavExpanded]);
+    const handleCloseMobileNav = useCallback(() => setIsMobileNavOpen(false), []);
 
     // Determine header subtitle based on current route
     let headerTitle = "Dashboard";
@@ -71,13 +100,25 @@ export default function App() {
             <Header
                 isDarkMode={isDarkMode}
                 onToggleTheme={handleToggleTheme}
+                onToggleMenu={handleToggleMenu}
                 title={headerTitle}
+                isMobile={isMobile}
             />
 
             <div className="flex-1 flex overflow-hidden pt-[48px]">
+                {/* Mobile backdrop overlay */}
+                {isMobile && isMobileNavOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 pt-[48px]"
+                        onClick={handleCloseMobileNav}
+                        aria-hidden="true"
+                    />
+                )}
                 <NavigationMenu 
-                    isExpanded={isNavExpanded} 
-                    onToggleExpand={handleToggleMenu} 
+                    isExpanded={isMobile ? isMobileNavOpen : isNavExpanded} 
+                    onToggleExpand={handleToggleMenu}
+                    isMobile={isMobile}
+                    onClose={handleCloseMobileNav}
                 />
 
                 <main id="main-scroll-container" className="flex-1 w-full relative flex flex-col overflow-y-auto">

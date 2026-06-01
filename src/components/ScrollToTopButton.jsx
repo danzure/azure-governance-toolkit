@@ -56,7 +56,7 @@ export default function ScrollToTopButton() {
         <button
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className={`group fixed right-8 p-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 z-50 animate-scale-in bg-white/70 dark:bg-black/40 backdrop-blur-md border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg/30 ${isAtBottom ? 'bottom-4' : 'bottom-8'}`}
+            className={`group fixed right-4 sm:right-8 p-2.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 z-50 animate-scale-in bg-white/70 dark:bg-black/40 backdrop-blur-md border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg/30 ${isAtBottom ? 'bottom-4' : 'bottom-6 sm:bottom-8'}`}
         >
             <ArrowUp className="w-5 h-5 transition-transform group-hover:-translate-y-0.5" />
         </button>

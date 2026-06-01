@@ -11,7 +11,7 @@ export default function Footer() {
 
     return (
         <footer className="mt-auto w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
-            <div className="max-w-[1600px] mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
+            <div className="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
                 
                 {/* Left Side: Brand & Copyright */}
                 <div className="flex items-center gap-3.5">

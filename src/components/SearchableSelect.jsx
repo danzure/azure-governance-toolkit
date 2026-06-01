@@ -203,7 +203,7 @@ export default function SearchableSelect({ items, value, onChange, label, placeh
                             data-highlighted={isHighlighted}
                             onClick={() => selectItem(item.value)}
                             onMouseEnter={() => setHighlightedIndex(selectableIdx)}
-                            className={`flex items-center justify-between px-3 py-2 text-[${fontSize}] cursor-pointer transition-colors ${
+                            className={`flex items-center justify-between px-3 py-2.5 text-[${fontSize}] cursor-pointer transition-colors ${
                                 isHighlighted
                                     ? 'bg-fluent-bg-hover text-fluent-fg-primary'
                                     : isSelected

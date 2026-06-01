@@ -125,7 +125,7 @@ export default function DashboardPage() {
                                         Furthermore, the integrated Conditional Access builder standardises your identity perimeter using a predictable <strong className="text-fluent-fg-primary">Zero Trust</strong> naming convention. This fortifies Security while significantly streamlining the auditing and troubleshooting of access policies for your team.
                                     </p>
 
-                                    <div className="flex gap-4 pt-2">
+                                    <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
                                         <div className="flex items-center gap-2 bg-fluent-bg-subtle px-3 py-1.5 rounded-md text-sm font-medium border border-fluent-stroke-subtle">
                                             <Cloud className="w-4 h-4 text-[#0078D4]" />
                                             <span className="text-fluent-fg-primary">100+ Azure Services</span>

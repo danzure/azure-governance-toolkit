@@ -2,7 +2,7 @@ import { useState, useMemo, memo } from 'react';
 import { Copy, Check, Edit3, Eye, Info } from 'lucide-react';
 
 const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9-]/g;
-const selectClasses = "px-2.5 h-[32px] flex-1 min-w-[120px] border rounded outline-none text-[13px] transition-all bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg cursor-pointer text-ellipsis";
+const selectClasses = "px-2.5 h-[36px] sm:h-[32px] min-w-0 w-full sm:w-auto sm:min-w-[120px] sm:flex-1 border rounded outline-none text-[13px] transition-all bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg cursor-pointer text-ellipsis";
 
 function PatternBuilderCard({ copiedId, handleCopy }) {
     // Policy naming parts
@@ -35,7 +35,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
             </div>
 
             {/* Pattern Builder */}
-            <div className="p-4 lg:p-5 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle">
+            <div className="p-3 sm:p-4 lg:p-5 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle">
                 <div className="flex items-center gap-2 mb-5 pb-3 border-b border-fluent-stroke-subtle">
                     <Edit3 className="w-4 h-4 text-fluent-brand-fg" />
                     <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Pattern Builder</h3>
@@ -177,7 +177,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         <Eye className="w-3.5 h-3.5 text-fluent-brand-fg" />
                         <span className="text-[12px] font-medium text-fluent-fg-tertiary">Preview</span>
                     </div>
-                    <div className="flex-1 px-3 py-1.5 rounded font-mono text-[14px] font-semibold tracking-wide bg-fluent-bg-card text-fluent-brand-fg border border-fluent-stroke-subtle dark:border-transparent truncate">
+                    <div className="flex-1 px-3 py-1.5 rounded font-mono text-[12px] sm:text-[14px] font-semibold tracking-wide bg-fluent-bg-card text-fluent-brand-fg border border-fluent-stroke-subtle dark:border-transparent truncate overflow-x-auto scrollbar-hide">
                         {generatedName}
                     </div>
                     <button

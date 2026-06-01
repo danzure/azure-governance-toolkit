@@ -111,7 +111,7 @@ export default function ConditionalAccessPage() {
 
             <div className="max-w-[1600px] mx-auto px-4 pt-6 pb-12 space-y-5">
                 {/* Pre-made Policies Section - styled like ResourceCards */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4">
                     <div className="flex items-center gap-2">
                         <Shield className="w-4 h-4 text-fluent-brand-fg" />
                         <h2 className="text-[16px] font-semibold text-fluent-fg-primary">Common Microsoft Defaults</h2>

@@ -148,7 +148,7 @@ function ExpandedPanel({
     // ── Render ─────────────────────────────────────────────────────────────────
 
     return (
-        <div onClick={(e) => e.stopPropagation()} className="px-5 py-4 border-t cursor-default bg-fluent-bg-canvas border-fluent-stroke-subtle">
+        <div onClick={(e) => e.stopPropagation()} className="px-3 sm:px-5 py-3 sm:py-4 border-t cursor-default bg-fluent-bg-canvas border-fluent-stroke-subtle">
             {/* Header — compact inline row */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-fluent-stroke-subtle">
                 <span className={`text-[13px] font-bold uppercase tracking-wide ${t.caption}`}>Resource details</span>
@@ -156,7 +156,7 @@ function ExpandedPanel({
                 <div className="flex items-center gap-4 flex-wrap">
                     {/* Topology inline */}
                     {showTopology && (
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                             <span className={`text-[12px] leading-[26px] ${t.muted}`}>{isVNet ? 'Topology:' : 'Bundle:'}</span>
                             <div className="relative">
                                 <select

@@ -67,7 +67,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
             onClick={() => onToggle(resource.name, isExpanded)}
             className={`group relative flex flex-col rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-fluent-brand-bg shadow-depth border-transparent dark:border-transparent' : 'hover:shadow-depth hover:border-fluent-stroke-strong shadow-soft'} bg-fluent-bg-card border-fluent-stroke-subtle ${hasErrors ? 'border-l-4 border-l-[#a80000]' : hasWarnings ? 'border-l-4 border-l-[#ffaa44]' : ''}`}
         >
-            <div className="p-4 flex flex-col h-full gap-3">
+            <div className="p-3 sm:p-4 flex flex-col h-full gap-3">
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 overflow-hidden">
                         <AzureServiceIcon resourceName={resource.name} category={resource.category} className="w-8 h-8 shrink-0" />
@@ -87,7 +87,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                     ? <ShieldAlert className="w-4 h-4 text-[#a80000]" aria-label={`${validationIssues.length} validation issue(s)`} />
                                     : <AlertTriangle className="w-4 h-4 text-[#ffaa44]" aria-label={`${validationIssues.length} validation warning(s)`} />
                                 }
-                                <div className="absolute right-0 top-6 z-50 w-56 p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
+                                <div className="absolute right-0 top-6 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
                                     {validationIssues.map((issue, i) => (
                                         <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
                                             <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-[#a80000]' : 'bg-[#ffaa44]'}`} />
@@ -117,7 +117,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                 <div className="mt-auto pt-2">
                     <div className={`group/copy relative rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border ${isExpanded ? expandedValidationBg : 'bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent'}`}>
                         <div className="relative flex items-center min-h-[24px]">
-                            <div className={`text-[13px] font-medium font-mono truncate w-full pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
+                            <div className={`text-[13px] font-medium font-mono truncate w-full pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
                                 <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                                 {hasBundle && (
                                     <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm">
