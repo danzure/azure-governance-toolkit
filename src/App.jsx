@@ -105,7 +105,7 @@ export default function App() {
                 isMobile={isMobile}
             />
 
-            <div className="flex-1 flex overflow-hidden pt-[48px]">
+            <div className="flex-1 flex overflow-hidden pt-[48px] min-w-0">
                 {/* Mobile backdrop overlay */}
                 {isMobile && isMobileNavOpen && (
                     <div 
@@ -121,7 +121,7 @@ export default function App() {
                     onClose={handleCloseMobileNav}
                 />
 
-                <main id="main-scroll-container" className="flex-1 w-full relative flex flex-col overflow-y-auto">
+                <main id="main-scroll-container" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto">
                     <Routes>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/azure-resources" element={<ResourceNamingPage />} />

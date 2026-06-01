@@ -65,10 +65,10 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
         <div
             id={id}
             onClick={() => onToggle(resource.name, isExpanded)}
-            className={`group relative flex flex-col rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-fluent-brand-bg shadow-depth border-transparent dark:border-transparent' : 'hover:shadow-depth hover:border-fluent-stroke-strong shadow-soft'} bg-fluent-bg-card border-fluent-stroke-subtle ${hasErrors ? 'border-l-4 border-l-[#a80000]' : hasWarnings ? 'border-l-4 border-l-[#ffaa44]' : ''}`}
+            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-fluent-brand-bg shadow-depth border-transparent dark:border-transparent' : 'hover:shadow-depth hover:border-fluent-stroke-strong shadow-soft'} bg-fluent-bg-card border-fluent-stroke-subtle ${hasErrors ? 'border-l-4 border-l-[#a80000]' : hasWarnings ? 'border-l-4 border-l-[#ffaa44]' : ''}`}
         >
-            <div className="p-3 sm:p-4 flex flex-col h-full gap-3">
-                <div className="flex items-start justify-between gap-3">
+            <div className="p-3 sm:p-4 flex flex-col h-full gap-3 min-w-0">
+                <div className="flex items-start justify-between gap-3 min-w-0">
                     <div className="flex items-center gap-3 overflow-hidden">
                         <AzureServiceIcon resourceName={resource.name} category={resource.category} className="w-8 h-8 shrink-0" />
                         <div className="flex flex-col min-w-0">
@@ -114,10 +114,10 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                 </p>
 
 
-                <div className="mt-auto pt-2">
-                    <div className={`group/copy relative rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border ${isExpanded ? expandedValidationBg : 'bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent'}`}>
-                        <div className="relative flex items-center min-h-[24px]">
-                            <div className={`text-[13px] font-medium font-mono w-full pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
+                <div className="mt-auto pt-2 min-w-0 w-full">
+                    <div className={`group/copy relative w-full min-w-0 rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border ${isExpanded ? expandedValidationBg : 'bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent'}`}>
+                        <div className="relative flex items-center min-h-[24px] min-w-0 w-full">
+                            <div className={`text-[13px] font-medium font-mono w-full min-w-0 pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
                                 <span className="truncate min-w-0 block">
                                     <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                                 </span>

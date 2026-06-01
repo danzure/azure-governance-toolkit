@@ -153,7 +153,7 @@ export default function ResourceNamingPage() {
     }, [copyToClipboard, liveSchemaStr]);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-w-0 w-full">
             <ConfigPanel
                 isMinimized={isConfigMinimized}
                 onToggleMinimize={handleToggleMinimize}
