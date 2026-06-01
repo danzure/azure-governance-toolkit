@@ -117,8 +117,10 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                 <div className="mt-auto pt-2">
                     <div className={`group/copy relative rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border ${isExpanded ? expandedValidationBg : 'bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent'}`}>
                         <div className="relative flex items-center min-h-[24px]">
-                            <div className={`text-[13px] font-medium font-mono truncate w-full pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
-                                <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
+                            <div className={`text-[13px] font-medium font-mono w-full pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
+                                <span className="truncate min-w-0 block">
+                                    <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
+                                </span>
                                 {hasBundle && (
                                     <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm">
                                         +{bundle.length - 1}

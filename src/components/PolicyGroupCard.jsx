@@ -41,7 +41,7 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
             <div className="p-4 flex flex-col lg:flex-row gap-4 lg:gap-6 lg:items-center">
 
                 {/* Left Side: Name, Target Dropdown, Badges */}
-                <div className="flex flex-col gap-3 lg:w-[45%] shrink-0">
+                <div className="flex flex-col gap-3 lg:w-[45%] shrink-0 min-w-0">
                     <div className="flex items-start gap-2.5">
                         <div className="mt-0.5 bg-fluent-bg-canvas p-1.5 rounded shrink-0">
                             <Shield className="w-4 h-4 text-fluent-brand-fg" />
@@ -70,8 +70,8 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                 </div>
                             )}
 
-                            <div className="mt-3 flex items-center gap-2">
-                                <span className="font-mono text-[12px] text-fluent-brand-fg bg-fluent-info-bg px-1.5 py-0.5 rounded break-all border border-fluent-info-border dark:border-transparent">
+                            <div className="mt-3 flex items-start sm:items-center gap-2 w-full min-w-0">
+                                <span className="font-mono text-[12px] text-fluent-brand-fg bg-fluent-info-bg px-1.5 py-0.5 rounded break-all border border-fluent-info-border dark:border-transparent flex-1 min-w-0">
                                     {activePolicy.name}
                                 </span>
                                 <button
@@ -157,14 +157,14 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                                 <div className="text-[13px] text-fluent-fg-primary leading-relaxed">
                                                     {setting.value.split('\n').map((line, i) => {
                                                         if (line.startsWith('Include:')) return (
-                                                            <div key={i} className="flex items-start gap-2 mt-1"><span className="text-fluent-cat-green-fg font-bold mt-[1px]">+</span><span><strong className="font-semibold text-fluent-fg-primary">Include:</strong> {line.replace('Include:', '').trim()}</span></div>
+                                                            <div key={i} className="flex items-start gap-2 mt-1"><span className="text-fluent-cat-green-fg font-bold mt-[1px]">+</span><span className="break-words min-w-0 break-all sm:break-normal"><strong className="font-semibold text-fluent-fg-primary">Include:</strong> {line.replace('Include:', '').trim()}</span></div>
                                                         );
                                                         if (line.startsWith('Exclude:')) return (
-                                                            <div key={i} className="flex items-start gap-2 mt-1"><span className="text-fluent-cat-red-fg font-bold mt-[1px]">-</span><span><strong className="font-semibold text-fluent-fg-primary">Exclude:</strong> {line.replace('Exclude:', '').trim()}</span></div>
+                                                            <div key={i} className="flex items-start gap-2 mt-1"><span className="text-fluent-cat-red-fg font-bold mt-[1px]">-</span><span className="break-words min-w-0 break-all sm:break-normal"><strong className="font-semibold text-fluent-fg-primary">Exclude:</strong> {line.replace('Exclude:', '').trim()}</span></div>
                                                         );
                                                         const colonIdx = line.indexOf(':');
                                                         if (colonIdx > -1 && colonIdx < 30) {
-                                                            return <div key={i} className="flex items-start gap-2 mt-1"><span className="w-1 h-1 rounded-full bg-fluent-brand-fg mt-[9px] shrink-0"></span><span><strong className="font-semibold text-fluent-fg-primary">{line.substring(0, colonIdx)}:</strong>{line.substring(colonIdx + 1)}</span></div>;
+                                                            return <div key={i} className="flex items-start gap-2 mt-1"><span className="w-1 h-1 rounded-full bg-fluent-brand-fg mt-[9px] shrink-0"></span><span className="break-words min-w-0 break-all sm:break-normal"><strong className="font-semibold text-fluent-fg-primary">{line.substring(0, colonIdx)}:</strong>{line.substring(colonIdx + 1)}</span></div>;
                                                         }
                                                         return <div key={i} className="mt-1">{line}</div>;
                                                     })}
