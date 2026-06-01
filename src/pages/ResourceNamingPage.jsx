@@ -176,7 +176,7 @@ export default function ResourceNamingPage() {
                 onCopy={handleCopySchema}
             />
 
-            <div className="max-w-[1600px] mx-auto px-3 sm:px-6 pt-4 sm:pt-6 space-y-4 sm:space-y-5">
+            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 space-y-4 sm:space-y-5">
                 {/* Compact service toolbar: search + category tabs */}
                 <ServiceFilter
                     activeCategory={activeCategory}

@@ -96,7 +96,7 @@ export default function ConditionalAccessPage() {
     return (
         <div className="flex flex-col min-w-0 w-full">
             <nav className="shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
-                <div className="max-w-[1600px] mx-auto px-4 py-3">
+                <div className="max-w-[1600px] w-full min-w-0 mx-auto px-4 py-3">
                     {/* Header row */}
                     <div className="flex items-center justify-between mb-3">
                         <div>
@@ -109,7 +109,7 @@ export default function ConditionalAccessPage() {
                 </div>
             </nav>
 
-            <div className="max-w-[1600px] mx-auto px-4 pt-6 pb-12 space-y-5">
+            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-4 pt-6 pb-12 space-y-5">
                 {/* Pre-made Policies Section - styled like ResourceCards */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4">
                     <div className="flex items-center gap-2">
