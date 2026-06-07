@@ -7,10 +7,12 @@ import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import useLocalStorage from './hooks/useLocalStorage';
 
-// Pages
-import DashboardPage from './pages/DashboardPage';
-import ResourceNamingPage from './pages/ResourceNamingPage';
-import ConditionalAccessPage from './pages/ConditionalAccessPage';
+import { Suspense, lazy } from 'react';
+
+// Lazy loaded Pages
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const ResourceNamingPage = lazy(() => import('./pages/ResourceNamingPage'));
+const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccessPage'));
 
 /**
  * Main Layout & Routing Component
@@ -122,12 +124,14 @@ export default function App() {
                 />
 
                 <main id="main-scroll-container" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto">
-                    <Routes>
-                        <Route path="/" element={<DashboardPage />} />
-                        <Route path="/azure-resources" element={<ResourceNamingPage />} />
-                        <Route path="/conditional-access" element={<ConditionalAccessPage />} />
-                        <Route path="*" element={<Navigate to="/" replace />} />
-                    </Routes>
+                    <Suspense fallback={<div className="flex-1 flex items-center justify-center p-8 text-fluent-fg-secondary">Loading page...</div>}>
+                        <Routes>
+                            <Route path="/" element={<DashboardPage />} />
+                            <Route path="/azure-resources" element={<ResourceNamingPage />} />
+                            <Route path="/conditional-access" element={<ConditionalAccessPage />} />
+                            <Route path="*" element={<Navigate to="/" replace />} />
+                        </Routes>
+                    </Suspense>
                     <Footer />
                 </main>
             </div>
