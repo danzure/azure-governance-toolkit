@@ -180,20 +180,71 @@ function normalizeIdentifier(name) {
     return name.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
 }
 
+function getBicepProperties(resourceName) {
+    switch(resourceName) {
+        case 'Storage account': return `  sku: {\n    name: 'Standard_LRS'\n  }\n  kind: 'StorageV2'\n  properties: {\n    accessTier: 'Hot'\n    minimumTlsVersion: 'TLS1_2'\n    supportsHttpsTrafficOnly: true\n  }`;
+        case 'Virtual network': return `  properties: {\n    addressSpace: {\n      addressPrefixes: [\n        '10.0.0.0/16'\n      ]\n    }\n    subnets: []\n  }`;
+        case 'Subnet': return `  properties: {\n    addressPrefix: '10.0.0.0/24'\n    privateEndpointNetworkPolicies: 'Disabled'\n    privateLinkServiceNetworkPolicies: 'Enabled'\n  }`;
+        case 'Virtual Machine - Windows':
+        case 'Virtual Machine - Linux': return `  properties: {\n    hardwareProfile: {\n      vmSize: 'Standard_D2s_v3'\n    }\n    storageProfile: {\n      osDisk: {\n        createOption: 'FromImage'\n        managedDisk: {\n          storageAccountType: 'Premium_LRS'\n        }\n      }\n    }\n  }`;
+        case 'Key vault': return `  properties: {\n    tenantId: subscription().tenantId\n    sku: {\n      family: 'A'\n      name: 'standard'\n    }\n    enableSoftDelete: true\n    softDeleteRetentionInDays: 90\n    accessPolicies: []\n  }`;
+        case 'App Service plan': return `  sku: {\n    name: 'P1v3'\n    tier: 'PremiumV3'\n    size: 'P1v3'\n    family: 'Pv3'\n    capacity: 1\n  }\n  properties: {\n    reserved: true // Required for Linux\n  }`;
+        case 'App Service': return `  properties: {\n    serverFarmId: 'appServicePlanId' // Replace with your plan ID\n    siteConfig: {\n      alwaysOn: true\n      linuxFxVersion: 'NODE|18-lts'\n    }\n  }`;
+        case 'SQL server': return `  properties: {\n    administratorLogin: 'sqladmin'\n    administratorLoginPassword: 'ChangeYourPassword123!' // Use KeyVault!\n    version: '12.0'\n  }`;
+        case 'SQL database': return `  sku: {\n    name: 'Standard'\n    tier: 'Standard'\n    capacity: 10\n  }\n  properties: {\n    collation: 'SQL_Latin1_General_CP1_CI_AS'\n    maxSizeBytes: 1073741824\n  }`;
+        case 'Kubernetes (AKS)': return `  identity: {\n    type: 'SystemAssigned'\n  }\n  properties: {\n    dnsPrefix: 'aks-dns'\n    agentPoolProfiles: [\n      {\n        name: 'agentpool'\n        count: 3\n        vmSize: 'Standard_DS2_v2'\n        osType: 'Linux'\n        mode: 'System'\n      }\n    ]\n  }`;
+        case 'Log Analytics workspace': return `  properties: {\n    sku: {\n      name: 'PerGB2018'\n    }\n    retentionInDays: 30\n    workspaceCapping: {\n      dailyQuotaGb: -1\n    }\n  }`;
+        default: return `  properties: {\n    // TODO: Add ${resourceName} specific properties here\n    // Example properties often include sku, networking, or sizing\n  }`;
+    }
+}
+
+function getTerraformProperties(resourceName) {
+    switch(resourceName) {
+        case 'Storage account': return `  account_tier             = "Standard"\n  account_replication_type = "LRS"\n  min_tls_version          = "TLS1_2"`;
+        case 'Virtual network': return `  address_space       = ["10.0.0.0/16"]`;
+        case 'Subnet': return `  address_prefixes     = ["10.0.0.0/24"]\n  virtual_network_name = "example-vnet" # Replace with actual VNet`;
+        case 'Virtual Machine - Windows':
+        case 'Virtual Machine - Linux': return `  size           = "Standard_D2s_v3"\n  admin_username = "adminuser"\n  network_interface_ids = [\n    "nic-id" # Replace with actual NIC ID\n  ]\n  os_disk {\n    caching              = "ReadWrite"\n    storage_account_type = "Premium_LRS"\n  }`;
+        case 'Key vault': return `  tenant_id                  = data.azurerm_client_config.current.tenant_id\n  sku_name                   = "standard"\n  soft_delete_retention_days = 90\n  purge_protection_enabled   = false`;
+        case 'App Service plan': return `  os_type  = "Linux"\n  sku_name = "P1v2"`;
+        case 'App Service': return `  service_plan_id = "app-service-plan-id"\n  site_config {\n    always_on = true\n    application_stack {\n      node_version = "18-lts"\n    }\n  }`;
+        case 'SQL server': return `  version                      = "12.0"\n  administrator_login          = "sqladmin"\n  administrator_login_password = "ChangeYourPassword123!"`;
+        case 'SQL database': return `  server_id      = "sql-server-id"\n  collation      = "SQL_Latin1_General_CP1_CI_AS"\n  max_size_gb    = 1\n  sku_name       = "S0"`;
+        case 'Kubernetes (AKS)': return `  dns_prefix = "aks-dns"\n  default_node_pool {\n    name       = "default"\n    node_count = 3\n    vm_size    = "Standard_DS2_v2"\n  }\n  identity {\n    type = "SystemAssigned"\n  }`;
+        case 'Log Analytics workspace': return `  sku               = "PerGB2018"\n  retention_in_days = 30`;
+        default: return `  # TODO: Add ${resourceName} specific properties here\n  # Example properties often include sku, networking, or sizing`;
+    }
+}
+
+function getArmProperties(resourceName) {
+    switch(resourceName) {
+        case 'Storage account': return { accessTier: 'Hot', minimumTlsVersion: 'TLS1_2', supportsHttpsTrafficOnly: true };
+        case 'Virtual network': return { addressSpace: { addressPrefixes: [ '10.0.0.0/16' ] }, subnets: [] };
+        case 'Subnet': return { addressPrefix: '10.0.0.0/24', privateEndpointNetworkPolicies: 'Disabled' };
+        case 'Key vault': return { tenantId: '[subscription().tenantId]', sku: { family: 'A', name: 'standard' }, enableSoftDelete: true, softDeleteRetentionInDays: 90, accessPolicies: [] };
+        case 'Log Analytics workspace': return { sku: { name: 'PerGB2018' }, retentionInDays: 30 };
+        default: return {}; // Use empty object for default properties
+    }
+}
+
 /**
  * Generates Bicep template snippet for a given resource
  */
 export function generateBicepTemplate(resource, genName) {
     const mapping = RESOURCE_MAP[resource.name];
     const identifier = normalizeIdentifier(resource.abbrev + '_' + genName.substring(0, 5));
+    const bicepProps = getBicepProperties(resource.name);
 
     if (mapping && mapping.bicep) {
         return `resource ${identifier} '${mapping.bicep}' = {
   name: '${genName}'
   location: location // Replace with your location variable
-  properties: {
-    // Add ${resource.name} specific properties here
+  tags: {
+    Environment: 'Production'
+    Project: 'CloudTransformation'
+    ManagedBy: 'InfrastructureAsCode'
   }
+${bicepProps}
 }`;
     }
 
@@ -203,6 +254,11 @@ export function generateBicepTemplate(resource, genName) {
 resource ${identifier} 'Microsoft.Unknown/providerType@latest' = {
   name: '${genName}'
   location: location
+  tags: {
+    Environment: 'Production'
+    Project: 'CloudTransformation'
+    ManagedBy: 'InfrastructureAsCode'
+  }
   properties: {
     // ...
   }
@@ -215,6 +271,7 @@ resource ${identifier} 'Microsoft.Unknown/providerType@latest' = {
 export function generateTerraformTemplate(resource, genName) {
     const mapping = RESOURCE_MAP[resource.name];
     const identifier = normalizeIdentifier(resource.abbrev + '_res');
+    const tfProps = getTerraformProperties(resource.name);
 
     if (mapping && mapping.tf) {
         return `resource "${mapping.tf}" "${identifier}" {
@@ -222,7 +279,13 @@ export function generateTerraformTemplate(resource, genName) {
   location            = var.location            # Replace with appropriate var
   resource_group_name = var.resource_group_name # Replace with appropriate rg
   
-  # Add ${resource.name} specific properties here
+  tags = {
+    Environment = "Production"
+    Project     = "CloudTransformation"
+    ManagedBy   = "Terraform"
+  }
+
+${tfProps}
 }`;
     }
 
@@ -235,6 +298,12 @@ resource "${fallbackResType}" "${identifier}" {
   name                = "${genName}"
   location            = var.location
   resource_group_name = var.resource_group_name
+  
+  tags = {
+    Environment = "Production"
+    Project     = "CloudTransformation"
+    ManagedBy   = "Terraform"
+  }
 }`;
 }
 
@@ -254,6 +323,17 @@ export function generateArmTemplate(resource, genName) {
         }
     }
 
+    const armProps = getArmProperties(resource.name);
+    
+    // For ARM Storage accounts, sku and kind are required at top level
+    const extraFields = {};
+    if (resource.name === 'Storage account') {
+        extraFields.sku = { name: 'Standard_LRS' };
+        extraFields.kind = 'StorageV2';
+    } else if (resource.name === 'App Service plan') {
+        extraFields.sku = { name: 'P1v3', tier: 'PremiumV3', size: 'P1v3', family: 'Pv3', capacity: 1 };
+    }
+
     const template = {
       "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
@@ -269,7 +349,13 @@ export function generateArmTemplate(resource, genName) {
           "apiVersion": apiVersion,
           "name": genName,
           "location": "[parameters('location')]",
-          "properties": {}
+          "tags": {
+            "Environment": "Production",
+            "Project": "CloudTransformation",
+            "ManagedBy": "ARM"
+          },
+          ...extraFields,
+          "properties": armProps
         }
       ]
     };
@@ -301,12 +387,28 @@ export function generateBundleTemplates(bundleItems, provider = 'bicep', getBund
                     apiVersion = parts[1];
                 }
             }
+            
+            const armProps = getArmProperties(item.name);
+            const extraFields = {};
+            if (item.name === 'Storage account') {
+                extraFields.sku = { name: 'Standard_LRS' };
+                extraFields.kind = 'StorageV2';
+            } else if (item.name === 'App Service plan') {
+                extraFields.sku = { name: 'P1v3', tier: 'PremiumV3', size: 'P1v3', family: 'Pv3', capacity: 1 };
+            }
+
             return {
               "type": type,
               "apiVersion": apiVersion,
               "name": genName,
               "location": "[parameters('location')]",
-              "properties": {}
+              "tags": {
+                "Environment": "Production",
+                "Project": "CloudTransformation",
+                "ManagedBy": "ARM"
+              },
+              ...extraFields,
+              "properties": armProps
             };
         });
 

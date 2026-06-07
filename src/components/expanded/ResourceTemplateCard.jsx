@@ -45,7 +45,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
     };
 
     return (
-        <div className={`rounded-md border overflow-hidden flex flex-col flex-1 ${t.card}`}>
+        <div className={`rounded-md border overflow-hidden flex flex-col h-full ${t.card}`}>
             <div className="flex items-center justify-between px-4 pt-3 pb-2 shrink-0">
                 <div className="flex items-center gap-1.5">
                     <Code2 className={`w-3 h-3 ${t.muted}`} />
@@ -72,42 +72,43 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                             Terraform
                         </button>
                     </div>
-                    <button
-                        onClick={handleCopyIac}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
-                        title="Copy template"
+                    <a
+                        href={docsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                        onClick={(e) => e.stopPropagation()}
+                        title="View documentation"
                     >
-                        {isIacCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{isIacCopied ? 'Copied' : 'Copy'}</span>
-                    </button>
+                        {iacTab === 'terraform' ? (
+                            <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
+                        ) : (
+                            <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                            </svg>
+                        )}
+                        {iacTab === 'terraform' ? 'Terraform Registry' : iacTab === 'bicep' ? 'Bicep Template' : 'ARM Template'}
+                        <ExternalLink className="w-3 h-3" />
+                    </a>
                 </div>
             </div>
-            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] bg-[#f3f2f1] dark:bg-[#1b1a19]">
-                <pre className={`text-[11px] font-mono whitespace-pre-wrap overflow-x-auto overflow-y-auto max-h-[14.5rem] p-4 ${t.text}`}>
+            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] bg-[#f3f2f1] dark:bg-[#1b1a19] flex-1 relative min-h-[14.5rem]">
+                <pre className={`absolute inset-0 text-[11px] font-mono whitespace-pre-wrap overflow-x-auto overflow-y-auto p-4 ${t.text}`}>
                     {iacTemplate}
                 </pre>
             </div>
-            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] px-4 py-3 flex justify-start bg-fluent-bg-canvas dark:bg-[#1b1a19]">
-                <a
-                    href={docsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-fit flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
-                    onClick={(e) => e.stopPropagation()}
+            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] px-4 py-3 flex justify-end bg-fluent-bg-canvas dark:bg-[#1b1a19] shrink-0">
+                <button
+                    onClick={handleCopyIac}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
+                    title="Copy template"
                 >
-                    {iacTab === 'terraform' ? (
-                        <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
-                    ) : (
-                        <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 0h11v11H0z" fill="#f35325"/>
-                            <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                            <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                            <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                        </svg>
-                    )}
-                    {iacTab === 'terraform' ? 'Terraform Registry' : iacTab === 'bicep' ? 'Bicep Template' : 'ARM Template'}
-                    <ExternalLink className="w-3 h-3" />
-                </a>
+                    {isIacCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{isIacCopied ? 'Copied' : 'Copy'}</span>
+                </button>
             </div>
         </div>
     );

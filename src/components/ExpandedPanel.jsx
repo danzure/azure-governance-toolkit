@@ -1,13 +1,13 @@
 import { memo, useMemo } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES } from '../data/constants';
 import { validateName } from '../utils/nameValidator';
-
+import ValidationHighlight from './ValidationHighlight';
 
 import BundleList from './expanded/BundleList';
-import AboutCard from './expanded/AboutCard';
+import { AboutBanner, GuidanceCard } from './expanded/AboutCard';
 import NamingRulesCard from './expanded/NamingRulesCard';
 import ResourceTemplateCard from './expanded/ResourceTemplateCard';
 
@@ -84,7 +84,9 @@ function ExpandedPanel({
     // ── Derived state ──────────────────────────────────────────────────────────
     const currentSubResource = resource.subResources?.find(sr => sr.suffix === selectedSubResource);
     const validationIssues = useMemo(() => validateName(genName, resource), [genName, resource]);
-
+    const hasErrors = validationIssues.some(i => i.type === 'error');
+    const isTooLong = validationIssues.some(i => i.code === 'TOO_LONG');
+    const hasBundle = bundle && bundle.length > 0;
     const isVNet = resource.name === 'Virtual network';
     const isAVD = resource.category === 'Desktop Virtualization' && resource.name === 'Host Pool';
 
@@ -149,9 +151,67 @@ function ExpandedPanel({
 
     return (
         <div onClick={(e) => e.stopPropagation()} className="px-3 sm:px-5 py-3 sm:py-4 border-t cursor-default bg-fluent-bg-canvas border-fluent-stroke-subtle">
-            {/* Header — compact inline row */}
+            {/* Header — compact inline row with Generated Name */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-fluent-stroke-subtle">
-                <span className={`text-[13px] font-bold uppercase tracking-wide ${t.caption}`}>Resource details</span>
+                {/* Generated Name and Validation */}
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className={`text-[14px] font-semibold font-mono min-w-0 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
+                        <span className="truncate min-w-0 block">
+                            <ValidationHighlight name={hasBundle && getBundleName ? getBundleName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
+                        </span>
+                        {hasBundle && (
+                            <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm shrink-0">
+                                +{bundle.length - 1}
+                            </span>
+                        )}
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                        {validationIssues.length === 0 ? (
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#f1faf1] dark:bg-[#1b2b1b] border border-[#c6ebc9] dark:border-[#1e4620]">
+                                <ShieldCheck className="w-3 h-3 text-[#107c10] dark:text-[#a3d4a3]" />
+                                <span className="text-[11px] font-medium text-[#0e700e] dark:text-[#a3d4a3]">Valid</span>
+                            </div>
+                        ) : (
+                            <div className="relative group/validation-exp">
+                                <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full border cursor-help ${hasErrors ? 'bg-[#fdf3f4] dark:bg-[#2c1515] border-[#eeacb2] dark:border-[#442726]' : 'bg-[#fff8f0] dark:bg-[#2c2412] border-[#f5d9a8] dark:border-[#4a3c1e]'}`}>
+                                    {hasErrors
+                                        ? <ShieldAlert className="w-3 h-3 text-[#c50f1f]" />
+                                        : <AlertTriangle className="w-3 h-3 text-[#f7941d]" />
+                                    }
+                                    <span className={`text-[11px] font-medium ${hasErrors ? 'text-[#a80000] dark:text-[#f1bbbc]' : 'text-[#8a6d3b] dark:text-[#f5d9a8]'}`}>
+                                        {validationIssues.length} {validationIssues.length === 1 ? 'issue' : 'issues'}
+                                    </span>
+                                </div>
+                                <div className="absolute left-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation-exp:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
+                                    {validationIssues.map((issue, i) => (
+                                        <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
+                                            <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-[#a80000]' : 'bg-[#ffaa44]'}`} />
+                                            <span>{issue.message}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (hasBundle && getBundleName) {
+                                    const allNames = bundle.map(item => `${item.name}: ${getBundleName(item)}`).join('\n');
+                                    onCopy(allNames, resource.name, e);
+                                } else {
+                                    onCopy(genName, resource.name, e);
+                                }
+                            }}
+                            aria-label={isCopied ? 'Copied' : 'Copy name'}
+                            className={`flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
+                                ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
+                        >
+                            {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                            <span>{isCopied ? 'Copied' : 'Copy'}</span>
+                        </button>
+                    </div>
+                </div>
 
                 <div className="flex items-center gap-4 flex-wrap">
                     {/* Topology inline */}
@@ -218,17 +278,16 @@ function ExpandedPanel({
 
 
 
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-3">
-                <AboutCard 
-                    resource={resource} 
-                    displayDesc={displayDesc} 
-                    namingPattern={guidanceName} 
-                    namingGuidanceText={namingGuidanceText} 
-                    t={t} 
-                />
+            {/* Full-width service description banner */}
+            <AboutBanner 
+                resource={resource} 
+                displayDesc={displayDesc} 
+                t={t} 
+            />
 
-                <div className="flex flex-col gap-4 min-w-0">
+            {/* Two Column Layout: Rules + Guidance | IaC Template */}
+            <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-3 mt-3">
+                <div className="flex flex-col gap-3 min-w-0 h-full">
                     <NamingRulesCard 
                         resource={resource} 
                         scopeDesc={scopeDesc} 
@@ -236,14 +295,20 @@ function ExpandedPanel({
                         t={t} 
                     />
 
-                    <ResourceTemplateCard 
-                        resource={resource} 
-                        genName={genName} 
-                        bundle={bundle} 
-                        getBundleName={getBundleName} 
+                    <GuidanceCard 
+                        namingPattern={guidanceName} 
+                        namingGuidanceText={namingGuidanceText} 
                         t={t} 
                     />
                 </div>
+
+                <ResourceTemplateCard 
+                    resource={resource} 
+                    genName={genName} 
+                    bundle={bundle} 
+                    getBundleName={getBundleName} 
+                    t={t} 
+                />
             </div>
         </div>
     );

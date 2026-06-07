@@ -1,5 +1,5 @@
 import { memo, useState, useMemo } from 'react';
-import { Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck, X } from 'lucide-react';
+import { Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck, X, ExternalLink } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import ExpandedPanel from './ExpandedPanel';
 import AzureServiceIcon from './AzureServiceIcon';
@@ -53,13 +53,6 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
     const hasWarnings = validationIssues.some(i => i.type === 'warning');
     const isTooLong = validationIssues.some(i => i.code === 'TOO_LONG');
 
-    // Calculate validation styles for expanded view
-    const expandedValidationBg = validationIssues.length === 0 
-        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620]'
-        : hasErrors 
-            ? 'bg-[#fdf3f4] dark:bg-[#2c1515] border-[#eeacb2] dark:border-[#442726]'
-            : 'bg-[#fff8f0] dark:bg-[#2c2412] border-[#f5d9a8] dark:border-[#4a3c1e]';
-
 
     return (
         <div
@@ -109,73 +102,55 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                     </div>
                 </div>
 
-                <p className="text-[13px] leading-relaxed line-clamp-2 text-fluent-fg-secondary">
-                    {resource.desc}
-                </p>
+                {!isExpanded && (
+                    <p className="text-[13px] leading-relaxed line-clamp-2 text-fluent-fg-secondary">
+                        {resource.desc}
+                    </p>
+                )}
 
 
-                <div className="mt-auto pt-2 min-w-0 w-full">
-                    <div className={`group/copy relative w-full min-w-0 rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border ${isExpanded ? expandedValidationBg : 'bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent'}`}>
-                        <div className="relative flex items-center min-h-[24px] min-w-0 w-full">
-                            <div className={`text-[13px] font-medium font-mono w-full min-w-0 pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
-                                <span className="truncate min-w-0 block">
-                                    <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
-                                </span>
-                                {hasBundle && (
-                                    <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm">
-                                        +{bundle.length - 1}
+                {/* Generated Name Section - Collapsed only (Expanded moved to ExpandedPanel) */}
+                {!isExpanded && (
+                    <div className="mt-auto pt-2 min-w-0 w-full">
+                        <div className="group/copy relative w-full min-w-0 rounded-md px-3 py-1.5 flex flex-col justify-center min-h-[32px] transition-all border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent">
+                            <div className="relative flex items-center min-h-[24px] min-w-0 w-full">
+                                <div className={`text-[13px] font-medium font-mono w-full min-w-0 pr-[70px] sm:pr-16 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
+                                    <span className="truncate min-w-0 block">
+                                        <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                                     </span>
-                                )}
+                                    {hasBundle && (
+                                        <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm">
+                                            +{bundle.length - 1}
+                                        </span>
+                                    )}
+                                </div>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (hasBundle) {
+                                            const allNames = bundle.map(item => `${item.name}: ${getGeneratedName(item)}`).join('\n');
+                                            onCopy(allNames, resource.name, e);
+                                        } else {
+                                            onCopy(genName, resource.name, e);
+                                        }
+                                    }}
+                                    aria-label={isCopied ? 'Copied' : 'Copy name'}
+                                    className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${isCopied 
+                                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                        : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
+                                >
+                                    {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                    <span>{isCopied ? 'Copied' : 'Copy'}</span>
+                                </button>
                             </div>
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (hasBundle) {
-                                        const allNames = bundle.map(item => `${item.name}: ${getGeneratedName(item)}`).join('\n');
-                                        onCopy(allNames, resource.name, e);
-                                    } else {
-                                        onCopy(genName, resource.name, e);
-                                    }
-                                }}
-                                aria-label={isCopied ? 'Copied' : 'Copy name'}
-                                className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${isCopied 
-                                    ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
-                                    : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
-                            >
-                                {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                                <span>{isCopied ? 'Copied' : 'Copy'}</span>
-                            </button>
                         </div>
-
-                        {isExpanded && (
-                            <div className="mt-2 pt-2 border-t border-black/5 dark:border-white/5">
-                                {validationIssues.length === 0 ? (
-                                    <div className="flex items-center gap-1.5">
-                                        <ShieldCheck className="w-3.5 h-3.5 text-[#107c10] shrink-0" />
-                                        <span className="text-[12px] font-medium text-[#0e700e] dark:text-[#a3d4a3]">Name passes all validation checks</span>
-                                    </div>
-                                ) : (
-                                    <div className="flex flex-col gap-1">
-                                        {validationIssues.map((issue, i) => (
-                                            <div key={i} className="flex items-center gap-1.5">
-                                                {issue.type === 'error'
-                                                    ? <ShieldAlert className="w-3 h-3 shrink-0 text-[#c50f1f]" />
-                                                    : <AlertTriangle className="w-3 h-3 shrink-0 text-[#f7941d]" />
-                                                }
-                                                <span className="text-[12px] text-[#242424] dark:text-[#e1dfdd]">{issue.message}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        )}
+                        
+                        <div className="flex justify-between items-center text-[11px] mt-2 px-0.5 opacity-70 shrink-0">
+                            <span className="text-fluent-fg-tertiary">Max: {resource.maxLength || 64}</span>
+                            <span className={`font-bold ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>{genName.length} chars</span>
+                        </div>
                     </div>
-                    
-                    <div className={`flex justify-between items-center text-[11px] mt-2 px-0.5 opacity-70 shrink-0 ${isExpanded ? 'hidden' : ''}`}>
-                        <span className="text-fluent-fg-tertiary">Max: {resource.maxLength || 64}</span>
-                        <span className={`font-bold ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>{genName.length} chars</span>
-                    </div>
-                </div>
+                )}
             </div>
 
 
