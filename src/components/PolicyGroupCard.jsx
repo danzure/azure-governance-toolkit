@@ -43,9 +43,6 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                 {/* Left Side: Name, Target Dropdown, Badges */}
                 <div className="flex flex-col gap-3 lg:w-[45%] shrink-0 min-w-0">
                     <div className="flex items-start gap-2.5">
-                        <div className="mt-0.5 bg-fluent-bg-canvas p-1.5 rounded shrink-0">
-                            <Shield className="w-4 h-4 text-fluent-brand-fg" />
-                        </div>
                         <div className="flex flex-col min-w-0 w-full">
                             <div className="flex items-center justify-between gap-2">
                                 <h3 className="text-[14px] font-semibold text-fluent-fg-primary truncate" title={readableTitle}>
@@ -76,16 +73,19 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                 </span>
                                 <button
                                     onClick={() => handleCopy(activePolicy.name, activePolicy.name)}
-                                    className="shrink-0 p-1 rounded text-fluent-fg-tertiary hover:bg-fluent-bg-hover transition-colors"
+                                    className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
+                                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                        : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
                                     title="Copy Name"
                                 >
-                                    {isCopied ? <Check className="w-4 h-4 text-fluent-cat-green-fg" /> : <Copy className="w-4 h-4" />}
+                                    {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                    <span>{isCopied ? 'Copied' : 'Copy'}</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex gap-1.5 flex-wrap ml-[34px]">
+                    <div className="flex gap-1.5 flex-wrap">
                         {activePolicy.categories.map((cat, idx) => (
                             <span key={idx} className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold tracking-wide uppercase bg-fluent-bg-subtle text-fluent-fg-tertiary border border-fluent-stroke-subtle">
                                 {cat}
@@ -119,10 +119,17 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                 href={activePolicy.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-fit text-fluent-brand-fg hover:underline flex items-center gap-1.5 text-[12px] font-medium"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[12px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                                onClick={(e) => e.stopPropagation()}
                             >
+                                <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                    <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                    <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                    <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                                </svg>
                                 Microsoft Learn
-                                <ExternalLink className="w-3 h-3" />
+                                <ExternalLink className="w-3 h-3 ml-0.5 text-fluent-fg-tertiary" />
                             </a>
                         )}
                     </div>
