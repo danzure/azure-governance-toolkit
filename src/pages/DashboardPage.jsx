@@ -41,6 +41,11 @@ export default function DashboardPage() {
             description: 'Microsoft best practices for naming and tagging Azure resources.'
         },
         {
+            title: 'Azure Landing Zones',
+            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/',
+            description: 'Learn about the architecture and design principles for enterprise-scale landing zones.'
+        },
+        {
             title: 'Conditional Access Documentation',
             url: 'https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview',
             description: 'Design and deploy Microsoft Entra Conditional Access policies.'
