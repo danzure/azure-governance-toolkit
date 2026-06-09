@@ -8,7 +8,7 @@ export default function DashboardPage() {
         {
             id: 'azure-resources',
             title: 'Azure Resource Naming Tool',
-            description: 'Generate standard compliant names for Azure resources based on the Cloud Adoption Framework.',
+            description: 'Generate standard compliant names for 100+ Azure services based on the Cloud Adoption Framework.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg',
             path: '/azure-resources',
             colorClass: 'text-fluent-brand-fg',
@@ -17,7 +17,7 @@ export default function DashboardPage() {
         {
             id: 'conditional-access',
             title: 'Conditional Access Policy Builder',
-            description: 'Design, document, and build Conditional Access policies with standard naming conventions.',
+            description: 'Design, document, and build Conditional Access policies with standard naming conventions for custom and pre-made policies.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg',
             path: '/conditional-access',
             colorClass: 'text-fluent-cat-purple-fg',
@@ -26,7 +26,7 @@ export default function DashboardPage() {
         {
             id: 'management-group-topology',
             title: 'Management Group Topology Designer',
-            description: 'Visually design your Azure Management Group hierarchy and generate Bicep or Terraform code.',
+            description: 'Visually design your Azure Management Group hierarchy using enterprise best-practice topologies.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
             path: '/management-group-topology',
             colorClass: 'text-fluent-brand-fg',
@@ -130,32 +130,14 @@ export default function DashboardPage() {
                                 </h3>
                                 <div className="space-y-3 text-fluent-fg-secondary leading-relaxed text-[14px]">
                                     <p>
-                                        This Azure Governance Tool has been developed to assist cloud architects and engineers in seamlessly aligning their environments with enterprise best practices.
+                                        The Azure Governance Toolkit is a comprehensive suite designed to help cloud architects and engineers build, manage, and scale their Azure environments with confidence. It serves as a centralized hub for aligning cloud deployments with enterprise best practices.
                                     </p>
                                     <p>
-                                        By enforcing strict naming conventions mapped directly to the <strong className="text-fluent-fg-primary">Microsoft Cloud Adoption Framework (CAF)</strong>, the tool mitigates deployment failures caused by character constraints or naming collisions—directly supporting the Reliability and Operational Excellence pillars of the <strong className="text-fluent-fg-primary">Well-Architected Framework (WAF)</strong>.
+                                        Whether you are structuring your Management Group hierarchies for enterprise-scale landing zones, enforcing strict naming conventions across hundreds of Azure services, or designing robust Zero Trust identity policies, this toolkit streamlines the entire governance lifecycle.
                                     </p>
                                     <p>
-                                        The integrated Conditional Access builder standardises your identity perimeter using a predictable <strong className="text-fluent-fg-primary">Zero Trust</strong> naming convention. This fortifies Security while significantly streamlining the auditing and troubleshooting of access policies.
+                                        By bridging the gap between the <strong className="text-fluent-fg-primary">Cloud Adoption Framework (CAF)</strong> and the <strong className="text-fluent-fg-primary">Well-Architected Framework (WAF)</strong>, the toolkit provides actionable utilities that reduce deployment friction, minimize configuration errors, and accelerate the delivery of secure, compliant infrastructure.
                                     </p>
-                                    <p>
-                                        Additionally, the new Management Group Topology Designer allows you to visually map out your enterprise-scale landing zones and subscription hierarchies, instantly generating deployable Infrastructure-as-Code (Bicep, Terraform, or ARM) to accelerate your environment setup.
-                                    </p>
-
-                                    <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
-                                        <div className="flex items-center gap-2 bg-fluent-bg-subtle px-3 py-1.5 rounded-md text-sm font-medium border border-fluent-stroke-subtle">
-                                            <Cloud className="w-4 h-4 text-[#0078D4]" />
-                                            <span className="text-fluent-fg-primary">100+ Azure Services</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 bg-fluent-bg-subtle px-3 py-1.5 rounded-md text-sm font-medium border border-fluent-stroke-subtle">
-                                            <ShieldCheck className="w-4 h-4 text-[#107C10]" />
-                                            <span className="text-fluent-fg-primary">15+ Default Policies</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 bg-fluent-bg-subtle px-3 py-1.5 rounded-md text-sm font-medium border border-fluent-stroke-subtle">
-                                            <Network className="w-4 h-4 text-[#5c2d91]" />
-                                            <span className="text-fluent-fg-primary">CAF Topologies</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 

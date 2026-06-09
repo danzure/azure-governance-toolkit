@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, Key, X, Wand2, Download } from 'lucide-react';
 import Tooltip from './Tooltip';
 import { generateName } from '../utils/nameGenerator';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 
 const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscription, onRemoveSubscription, onUpdateSubscriptionName, onGenerateSubName }) => {
     const [isExpanded, setIsExpanded] = useState(true);
@@ -371,38 +371,34 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
         
         try {
             const element = treeRef.current;
-            const parent = element.parentElement;
             
             // Save original styles
             const originalTransform = element.style.transform;
             const originalTransition = element.style.transition;
-            const originalOverflow = parent.style.overflow;
             
-            // Temporarily set scale to 1 and disable transitions for accurate capture
+            // Temporarily set scale to 1 for accurate capture
             element.style.transition = 'none';
             element.style.transform = 'scale(1)';
-            parent.style.overflow = 'visible';
             
             // Wait for DOM to update
             await new Promise(r => setTimeout(r, 100));
             
-            const canvas = await html2canvas(element, {
-                backgroundColor: '#ffffff', // White background to prevent transparent SVG issues
-                scale: 2, // High resolution
-                useCORS: true,
-                logging: false,
-                width: element.scrollWidth,
-                height: element.scrollHeight
+            const dataUrl = await toPng(element, {
+                backgroundColor: document.documentElement.classList.contains('dark') ? '#292929' : '#ffffff',
+                cacheBust: true,
+                pixelRatio: 2,
+                style: {
+                    transform: 'scale(1)',
+                    transition: 'none'
+                }
             });
             
             // Restore styles
             element.style.transform = originalTransform;
             element.style.transition = originalTransition;
-            parent.style.overflow = originalOverflow;
             
-            const image = canvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.href = image;
+            link.href = dataUrl;
             link.download = `azure-topology-${new Date().toISOString().split('T')[0]}.png`;
             link.click();
         } catch (err) {
@@ -484,7 +480,6 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
 
             {/* Zoom Controls */}
             <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2 bg-white dark:bg-[#292929] border border-[#d1d1d1] dark:border-[#525252] rounded-md shadow-sm p-0.5">
-                {/* Export to PNG temporarily hidden
                 <Tooltip position="left" content="Export as PNG">
                     <button
                         type="button"
@@ -496,7 +491,6 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                     </button>
                 </Tooltip>
                 <div className="h-px bg-[#d1d1d1] dark:bg-[#525252] w-full"></div>
-                */}
                 <Tooltip position="left" content="Zoom In">
                     <button
                         type="button"
