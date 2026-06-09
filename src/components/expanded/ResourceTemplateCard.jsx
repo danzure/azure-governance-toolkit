@@ -46,12 +46,12 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
 
     return (
         <div className={`rounded-md border overflow-hidden flex flex-col h-full ${t.card}`}>
-            <div className="flex items-center justify-between px-4 pt-3 pb-2 shrink-0">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between px-4 pt-3 pb-2 shrink-0 gap-3 lg:gap-0">
                 <div className="flex items-center gap-1.5">
                     <Code2 className={`w-3 h-3 ${t.muted}`} />
                     <span className={`text-[12px] font-semibold ${t.caption}`}>Infrastructure as Code</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                     <div className="flex bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5">
                         <button
                             onClick={(e) => { e.stopPropagation(); setIacTab('bicep'); }}
