@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, Key, X, Wand2 } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, Key, X, Wand2, Download } from 'lucide-react';
 import Tooltip from './Tooltip';
 import { generateName } from '../utils/nameGenerator';
+import html2canvas from 'html2canvas';
 
 const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscription, onRemoveSubscription, onUpdateSubscriptionName, onGenerateSubName }) => {
     const [isExpanded, setIsExpanded] = useState(true);
@@ -18,6 +19,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                     <img 
                         src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg" 
                         alt="Management Group" 
+                        crossOrigin="anonymous"
                         className="w-5 h-5 mr-3 object-contain opacity-80"
                     />
 
@@ -39,37 +41,40 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                         )}
                     </div>
 
-                    <div className="flex items-center gap-1 shrink-0">
+                    <div className="flex items-center gap-1.5 shrink-0 ml-1">
+                        {level < 6 && (
+                            <Tooltip align="center" content="Add Child Group">
+                                <button
+                                    onClick={() => {
+                                        setIsExpanded(true);
+                                        onAddChild(node.id);
+                                    }}
+                                    className="p-1.5 flex items-center justify-center rounded-md text-blue-600 bg-blue-500/10 hover:bg-blue-500/20 transition-colors"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                </button>
+                            </Tooltip>
+                        )}
                         {!isRoot && (
                             <Tooltip align="center" content="Attach Subscription">
                                 <button
                                     onClick={() => onAddSubscription(node.id)}
-                                    className="p-1 flex items-center justify-center rounded-md hover:bg-[#e1dfdd] dark:hover:bg-[#3b3a39] transition-colors"
+                                    className="p-1.5 flex items-center justify-center rounded-md bg-amber-500/10 hover:bg-amber-500/20 transition-colors"
                                 >
                                     <img 
                                         src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Subscriptions.svg" 
                                         alt="Subscription" 
-                                        className="w-4 h-4 object-contain opacity-80"
+                                        crossOrigin="anonymous"
+                                        className="w-4 h-4 object-contain opacity-90"
                                     />
                                 </button>
                             </Tooltip>
                         )}
-                        <Tooltip align="center" content="Add Child Group">
-                            <button
-                                onClick={() => {
-                                    setIsExpanded(true);
-                                    onAddChild(node.id);
-                                }}
-                                className="p-1 flex items-center justify-center rounded-md text-fluent-brand-fg bg-fluent-brand-bg/10 hover:bg-fluent-brand-bg/20 transition-colors"
-                            >
-                                <Plus className="w-4 h-4" />
-                            </button>
-                        </Tooltip>
                         {!isRoot && (
                             <Tooltip align="center" content="Remove this group and all its children">
                                 <button
                                     onClick={() => onRemove(node.id)}
-                                    className="p-1 flex items-center justify-center rounded-md text-fluent-status-danger bg-red-500/10 hover:bg-red-500/20 transition-colors"
+                                    className="p-1.5 flex items-center justify-center rounded-md text-fluent-status-danger bg-red-500/10 hover:bg-red-500/20 transition-colors"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>
@@ -86,6 +91,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                 <img 
                                     src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Subscriptions.svg" 
                                     alt="Subscription" 
+                                    crossOrigin="anonymous"
                                     className="w-3.5 h-3.5 shrink-0 object-contain opacity-70"
                                 />
                                 <input 
@@ -190,6 +196,8 @@ TreeNode.propTypes = {
 
 export default function TopologyTreeBuilder({ topology, setTopology }) {
     const [zoomLevel, setZoomLevel] = useState(1);
+    const treeRef = useRef(null);
+    const [isExporting, setIsExporting] = useState(false);
     
     const handleZoomIn = () => setZoomLevel(prev => Math.min(prev + 0.1, 1.5));
     const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 0.1, 0.5));
@@ -357,6 +365,53 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
         }
     };
 
+    const handleExportImage = async () => {
+        if (!treeRef.current) return;
+        setIsExporting(true);
+        
+        try {
+            const element = treeRef.current;
+            const parent = element.parentElement;
+            
+            // Save original styles
+            const originalTransform = element.style.transform;
+            const originalTransition = element.style.transition;
+            const originalOverflow = parent.style.overflow;
+            
+            // Temporarily set scale to 1 and disable transitions for accurate capture
+            element.style.transition = 'none';
+            element.style.transform = 'scale(1)';
+            parent.style.overflow = 'visible';
+            
+            // Wait for DOM to update
+            await new Promise(r => setTimeout(r, 100));
+            
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#ffffff', // White background to prevent transparent SVG issues
+                scale: 2, // High resolution
+                useCORS: true,
+                logging: false,
+                width: element.scrollWidth,
+                height: element.scrollHeight
+            });
+            
+            // Restore styles
+            element.style.transform = originalTransform;
+            element.style.transition = originalTransition;
+            parent.style.overflow = originalOverflow;
+            
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = `azure-topology-${new Date().toISOString().split('T')[0]}.png`;
+            link.click();
+        } catch (err) {
+            console.error('Failed to export topology image', err);
+        } finally {
+            setIsExporting(false);
+        }
+    };
+
     return (
         <div className="relative bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl p-5 shadow-soft min-w-0 w-full">
             <div className="mb-4 flex flex-col md:flex-row justify-between items-start gap-4">
@@ -406,6 +461,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             
             <div className="overflow-x-auto pb-8 min-h-[400px]">
                 <div 
+                    ref={treeRef}
                     className="w-max min-w-full pt-4 px-8 pb-4 flex justify-center origin-top transition-transform duration-200"
                     style={{ transform: `scale(${zoomLevel})` }}
                 >
@@ -427,24 +483,39 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             </div>
 
             {/* Zoom Controls */}
-            <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2 bg-white dark:bg-[#292929] border border-[#d1d1d1] dark:border-[#525252] rounded-md shadow-sm overflow-hidden p-0.5">
-                <button
-                    type="button"
-                    onClick={(e) => { e.preventDefault(); handleZoomIn(); }}
-                    className="p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm"
-                    title="Zoom In"
-                >
-                    <ZoomIn className="w-4 h-4" />
-                </button>
+            <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2 bg-white dark:bg-[#292929] border border-[#d1d1d1] dark:border-[#525252] rounded-md shadow-sm p-0.5">
+                {/* Export to PNG temporarily hidden
+                <Tooltip position="left" content="Export as PNG">
+                    <button
+                        type="button"
+                        onClick={(e) => { e.preventDefault(); handleExportImage(); }}
+                        disabled={isExporting}
+                        className={`p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center ${isExporting ? 'opacity-50 cursor-wait' : ''}`}
+                    >
+                        <Download className="w-4 h-4" />
+                    </button>
+                </Tooltip>
                 <div className="h-px bg-[#d1d1d1] dark:bg-[#525252] w-full"></div>
-                <button
-                    type="button"
-                    onClick={(e) => { e.preventDefault(); handleZoomOut(); }}
-                    className="p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm"
-                    title="Zoom Out"
-                >
-                    <ZoomOut className="w-4 h-4" />
-                </button>
+                */}
+                <Tooltip position="left" content="Zoom In">
+                    <button
+                        type="button"
+                        onClick={(e) => { e.preventDefault(); handleZoomIn(); }}
+                        className="p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
+                    >
+                        <ZoomIn className="w-4 h-4" />
+                    </button>
+                </Tooltip>
+                <div className="h-px bg-[#d1d1d1] dark:bg-[#525252] w-full"></div>
+                <Tooltip position="left" content="Zoom Out">
+                    <button
+                        type="button"
+                        onClick={(e) => { e.preventDefault(); handleZoomOut(); }}
+                        className="p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
+                    >
+                        <ZoomOut className="w-4 h-4" />
+                    </button>
+                </Tooltip>
             </div>
         </div>
     );

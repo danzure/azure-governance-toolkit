@@ -63,22 +63,15 @@ export default function ManagementGroupTopologyPage() {
                                 className="w-5 h-5 flex-shrink-0 opacity-70 mt-0.5"
                             />
                             <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-                                <p className="text-fluent-fg-primary font-medium">
-                                    Cloud Adoption Framework Guidance
-                                </p>
-                                <ul className="list-disc pl-5 flex flex-col gap-2 mt-2 text-[13px] text-fluent-fg-secondary">
-                                    <li><strong>Platform vs Workloads:</strong> Separate core infrastructure from applications. <em>Platform</em> groups house centralized shared services (e.g., Hub networks, Log Analytics, Domain Controllers). <em>Landing Zone</em> groups house the actual application workloads.</li>
-                                    <li><strong>Landing Zone Archetypes:</strong> Group workloads by their governance needs. Use <em>Corp</em> for internal apps requiring corporate network connectivity, <em>Online</em> for public internet-facing apps, and <em>Sandbox</em> for isolated dev/test environments.</li>
-                                    <li><strong>Keep it Flat:</strong> Avoid deep hierarchies. Aim for a maximum of 3-4 levels to keep policy inheritance simple, predictable, and easier to troubleshoot.</li>
-                                    <li><strong>Avoid Tenant Root:</strong> Never apply Azure Policies or Role Assignments directly to the Tenant Root Group to prevent accidental tenant-wide lockouts.</li>
-                                    <li><strong>Usage Tip:</strong> You can edit the management group names directly in the tree below. IDs for the generated code are automatically derived.</li>
-                                </ul>
-                                <div className="flex justify-end mt-2">
+                                <div className="flex justify-between items-start gap-4">
+                                    <p className="text-fluent-fg-primary font-medium pt-0.5">
+                                        Management Group Deployment Guidance
+                                    </p>
                                     <a
                                         href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg w-max"
+                                        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shrink-0"
                                     >
                                         <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 0h11v11H0z" fill="#f35325"/>
@@ -90,6 +83,13 @@ export default function ManagementGroupTopologyPage() {
                                         <ExternalLink className="w-3 h-3" />
                                     </a>
                                 </div>
+                                <ul className="list-disc pl-5 flex flex-col gap-2 mt-1 text-[13px] text-fluent-fg-secondary">
+                                    <li><strong>Platform vs Workloads:</strong> Separate core infrastructure from applications. <em>Platform</em> groups house centralized shared services (e.g., Hub networks, Log Analytics, Domain Controllers). <em>Landing Zone</em> groups house the actual application workloads.</li>
+                                    <li><strong>Landing Zone Archetypes:</strong> Group workloads by their governance needs. Use <em>Corp</em> for internal apps requiring corporate network connectivity, <em>Online</em> for public internet-facing apps, and <em>Sandbox</em> for isolated dev/test environments.</li>
+                                    <li><strong>Keep it Flat:</strong> Avoid deep hierarchies to ensure policy inheritance remains simple, predictable, and easy to troubleshoot. Aim for a maximum of 3-4 levels. While a management group tree can technically support up to six levels of depth (excluding the tenant root and subscription levels), flatter structures are highly recommended.</li>
+                                    <li><strong>Default Subscription Location:</strong> All new subscriptions are placed under the tenant root management group by default.</li>
+                                    <li><strong>Avoid Tenant Root:</strong> Never apply Azure Policies or Role Assignments directly to the Tenant Root Group to prevent accidental tenant-wide lockouts.</li>
+                                </ul>
                             </div>
                         </div>
 

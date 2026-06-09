@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, BookOpen, ShieldCheck, Cloud, ExternalLink } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Cloud, ExternalLink, Network } from 'lucide-react';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
@@ -131,7 +131,10 @@ export default function DashboardPage() {
                                         By enforcing strict naming conventions mapped directly to the <strong className="text-fluent-fg-primary">Microsoft Cloud Adoption Framework (CAF)</strong>, the tool mitigates deployment failures caused by character constraints or naming collisions—directly supporting the Reliability and Operational Excellence pillars of the <strong className="text-fluent-fg-primary">Well-Architected Framework (WAF)</strong>.
                                     </p>
                                     <p>
-                                        Furthermore, the integrated Conditional Access builder standardises your identity perimeter using a predictable <strong className="text-fluent-fg-primary">Zero Trust</strong> naming convention. This fortifies Security while significantly streamlining the auditing and troubleshooting of access policies for your team.
+                                        The integrated Conditional Access builder standardises your identity perimeter using a predictable <strong className="text-fluent-fg-primary">Zero Trust</strong> naming convention. This fortifies Security while significantly streamlining the auditing and troubleshooting of access policies.
+                                    </p>
+                                    <p>
+                                        Additionally, the new Management Group Topology Designer allows you to visually map out your enterprise-scale landing zones and subscription hierarchies, instantly generating deployable Infrastructure-as-Code (Bicep, Terraform, or ARM) to accelerate your environment setup.
                                     </p>
 
                                     <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
@@ -142,6 +145,10 @@ export default function DashboardPage() {
                                         <div className="flex items-center gap-2 bg-fluent-bg-subtle px-3 py-1.5 rounded-md text-sm font-medium border border-fluent-stroke-subtle">
                                             <ShieldCheck className="w-4 h-4 text-[#107C10]" />
                                             <span className="text-fluent-fg-primary">15+ Default Policies</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 bg-fluent-bg-subtle px-3 py-1.5 rounded-md text-sm font-medium border border-fluent-stroke-subtle">
+                                            <Network className="w-4 h-4 text-[#5c2d91]" />
+                                            <span className="text-fluent-fg-primary">CAF Topologies</span>
                                         </div>
                                     </div>
                                 </div>
