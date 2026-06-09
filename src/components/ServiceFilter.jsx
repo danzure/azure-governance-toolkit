@@ -32,6 +32,13 @@ const ServiceFilter = ({
     const scrollContainerRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 640 : false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 640);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const checkScrollRef = useRef(false);
     const checkScroll = () => {
@@ -102,7 +109,7 @@ const ServiceFilter = ({
                         type="text"
                         value={searchTerm}
                         onChange={onSearchChange}
-                        placeholder="Filter... (Ctrl+K)"
+                        placeholder={isMobile ? "Filter..." : "Filter... (Ctrl+K)"}
                         aria-label="Filter resources"
                         className="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px] sm:text-[12px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
                     />

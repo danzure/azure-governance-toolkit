@@ -52,7 +52,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                     <span className={`text-[12px] font-semibold ${t.caption}`}>Infrastructure as Code</span>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                    <div className="flex bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5">
+                    <div className="flex shrink-0 bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5">
                         <button
                             onClick={(e) => { e.stopPropagation(); setIacTab('bicep'); }}
                             className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'bicep' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
