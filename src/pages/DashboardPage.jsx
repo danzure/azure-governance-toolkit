@@ -22,6 +22,15 @@ export default function DashboardPage() {
             path: '/conditional-access',
             colorClass: 'text-fluent-cat-purple-fg',
             bgClass: 'bg-transparent',
+        },
+        {
+            id: 'management-group-topology',
+            title: 'Management Group Topology Designer',
+            description: 'Visually design your Azure Management Group hierarchy and generate Bicep or Terraform code.',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
+            path: '/management-group-topology',
+            colorClass: 'text-fluent-brand-fg',
+            bgClass: 'bg-transparent',
         }
     ];
 

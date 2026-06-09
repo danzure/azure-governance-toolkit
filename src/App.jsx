@@ -13,6 +13,7 @@ import { Suspense, lazy } from 'react';
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const ResourceNamingPage = lazy(() => import('./pages/ResourceNamingPage'));
 const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccessPage'));
+const ManagementGroupTopologyPage = lazy(() => import('./pages/ManagementGroupTopologyPage'));
 
 /**
  * Main Layout & Routing Component
@@ -95,6 +96,8 @@ export default function App() {
         headerTitle = "Azure Resource Naming Tool";
     } else if (location.pathname === '/conditional-access') {
         headerTitle = "Conditional Access Policy Builder";
+    } else if (location.pathname === '/management-group-topology') {
+        headerTitle = "Management Group Topology Designer";
     }
 
     return (
@@ -129,6 +132,7 @@ export default function App() {
                             <Route path="/" element={<DashboardPage />} />
                             <Route path="/azure-resources" element={<ResourceNamingPage />} />
                             <Route path="/conditional-access" element={<ConditionalAccessPage />} />
+                            <Route path="/management-group-topology" element={<ManagementGroupTopologyPage />} />
                             <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>
                     </Suspense>

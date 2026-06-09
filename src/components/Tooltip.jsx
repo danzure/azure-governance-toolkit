@@ -11,13 +11,19 @@ import PropTypes from 'prop-types';
  * @param {React.ReactNode} props.children - Element the tooltip is attached to.
  * @returns {JSX.Element}
  */
-export default function Tooltip({ content, children }) {
+export default function Tooltip({ content, align = 'left', children }) {
     if (!content) return children;
+
+    const alignClasses = {
+        left: 'left-0',
+        center: 'left-1/2 -translate-x-1/2',
+        right: 'right-0'
+    };
 
     return (
         <div className="relative group">
             {children}
-            <div className="absolute left-0 top-full mt-1 px-2 py-1 text-[11px] rounded shadow-lg whitespace-nowrap pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 bg-[#242424] dark:bg-[#323130] text-white">
+            <div className={`absolute top-full mt-1 px-2.5 py-1.5 text-[11px] rounded shadow-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 bg-[#242424] dark:bg-[#323130] text-white w-max max-w-[250px] whitespace-normal leading-tight ${alignClasses[align]}`}>
                 {content}
             </div>
         </div>
