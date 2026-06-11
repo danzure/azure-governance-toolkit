@@ -32,6 +32,12 @@ A dedicated module aligned with Microsoft's Zero Trust principles to standardize
 - **Multi-Category Tagging**: Organizes policies across core security pillars (Secure Foundation, Zero Trust, Remote Work, Protect Administrator, AI Agents).
 - **Granular Customization**: Interactive form builders allow precise parameter tweaking for platform types, insider risk levels, and session controls.
 
+### 🔹 Management Group Topology Designer
+A dedicated module for visually designing and structuring Azure Management Group hierarchies based on Cloud Adoption Framework (CAF) best practices.
+- **Visual Hierarchy Design**: Interactive tree builder to visually organize and structure management groups.
+- **Infrastructure as Code (IaC) Generation**: Automatically generates ready-to-deploy Bicep and Terraform code for your designed topology.
+- **CAF Aligned Guidance**: Built-in best practices for Platform vs Workloads, Landing Zone Archetypes (Corp, Online, Sandbox), and structural depth limits.
+
 ### 🔹 Premium User Experience (UX)
 Built for speed and developer productivity.
 - **Centralized Dashboard & Navigation**: Unified landing page with an elegant, responsive flyout navigation menu to seamlessly switch between the governance tools.
