@@ -181,9 +181,9 @@ const SERVICE_ICON_MAP_ALT = {
 const ICON_BASE_URL_MASKATI = 'https://raw.githubusercontent.com/maskati/azure-icons/main/svg/Microsoft_Azure_ProjectOxford';
 
 const SERVICE_ICON_MAP_MASKATI = {
-    'Azure AI Foundry account':         'AIFoundry',
-    'Azure AI Foundry hub':             'AIFoundry',
-    'Azure AI Foundry project':         'AIFoundryProject',
+    'Microsoft Foundry resource':         'AIFoundry',
+    'Microsoft Foundry hub':             'AIFoundry',
+    'Microsoft Foundry project':         'AIFoundryProject',
     'Azure AI services account':        'AIServices',
     'Azure AI services':                'AIServices',
     'Azure OpenAI service':             'OpenAI',

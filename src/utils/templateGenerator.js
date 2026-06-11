@@ -154,9 +154,9 @@ const RESOURCE_MAP = {
     // AI & Cognitive — additional
     'Azure AI services': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
     'Azure Bot Service': { tf: 'azurerm_bot_service_azure_bot', bicep: 'Microsoft.BotService/botServices@2022-09-15' },
-    'Azure AI Foundry account': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
-    'Azure AI Foundry hub': { tf: 'azurerm_ai_foundry', bicep: 'Microsoft.MachineLearningServices/workspaces@2024-04-01' },
-    'Azure AI Foundry project': { tf: 'azurerm_ai_foundry_project', bicep: 'Microsoft.MachineLearningServices/workspaces@2024-04-01' },
+    'Microsoft Foundry resource': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
+    'Microsoft Foundry hub': { tf: 'azurerm_ai_foundry', bicep: 'Microsoft.MachineLearningServices/workspaces@2024-04-01' },
+    'Microsoft Foundry project': { tf: 'azurerm_ai_foundry_project', bicep: 'Microsoft.MachineLearningServices/workspaces@2024-04-01' },
     'Azure AI services account': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
     'Azure OpenAI service': { tf: 'azurerm_cognitive_account', bicep: 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' },
 
