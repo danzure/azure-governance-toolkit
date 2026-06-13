@@ -19,12 +19,28 @@ const ManagementGroupTopologyPage = lazy(() => import('./pages/ManagementGroupTo
  * Main Layout & Routing Component
  */
 export default function App() {
-    // Detect system dark mode preference as the default when no localStorage value exists
-    const systemPrefersDark = typeof window !== 'undefined'
-        && window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    // Detect system dark mode preference
+    const [systemPrefersDark, setSystemPrefersDark] = useState(() => 
+        typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    );
 
     // Persistent state using local storage for user preferences
-    const [isDarkMode, setIsDarkMode] = useLocalStorage('azres_darkMode', systemPrefersDark);
+    const [themePref, setThemePref] = useLocalStorage('azres_themePref', () => {
+        if (typeof window !== 'undefined') {
+            try {
+                const oldPref = window.localStorage.getItem('azres_darkMode');
+                if (oldPref !== null) {
+                    window.localStorage.removeItem('azres_darkMode');
+                    return JSON.parse(oldPref) ? 'dark' : 'light';
+                }
+            } catch (e) {
+                // ignore
+            }
+        }
+        return 'system';
+    });
+
+    const isDarkMode = themePref === 'system' ? systemPrefersDark : themePref === 'dark';
     
     // State for persistent navigation sidebar
     const [isNavExpanded, setIsNavExpanded] = useLocalStorage('azres_navExpanded', false);
@@ -63,24 +79,22 @@ export default function App() {
         }
     }, [isDarkMode]);
 
-    // Listen for system theme changes and sync when the user hasn't set a manual preference
+    // Listen for system theme changes
     useEffect(() => {
         const mediaQuery = window.matchMedia?.('(prefers-color-scheme: dark)');
         if (!mediaQuery) return;
 
         const handleSystemThemeChange = (e) => {
-            // Only auto-sync if there is no manually saved preference in localStorage
-            const savedPref = window.localStorage.getItem('azres_darkMode');
-            if (savedPref === null) {
-                setIsDarkMode(e.matches);
-            }
+            setSystemPrefersDark(e.matches);
         };
 
         mediaQuery.addEventListener('change', handleSystemThemeChange);
         return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
-    }, [setIsDarkMode]);
+    }, []);
 
-    const handleToggleTheme = useCallback(() => setIsDarkMode(prev => !prev), [setIsDarkMode]);
+    const handleSetTheme = useCallback((theme) => {
+        setThemePref(theme);
+    }, [setThemePref]);
     const handleToggleMenu = useCallback(() => {
         if (isMobile) {
             setIsMobileNavOpen(prev => !prev);
@@ -103,8 +117,8 @@ export default function App() {
     return (
         <div className="h-screen font-sans transition-colors duration-200 bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
             <Header
-                isDarkMode={isDarkMode}
-                onToggleTheme={handleToggleTheme}
+                themePref={themePref}
+                onSetTheme={handleSetTheme}
                 onToggleMenu={handleToggleMenu}
                 title={headerTitle}
                 isMobile={isMobile}
