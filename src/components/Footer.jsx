@@ -12,14 +12,14 @@ export default function Footer() {
     return (
         <footer className="mt-auto w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
             <div className="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
-                
+
                 {/* Left Side: Brand & Copyright */}
                 <div className="flex items-center gap-3.5">
                     {/* Brand logo */}
                     <div className="flex items-center justify-center w-9 h-9 transition-transform duration-300 hover:scale-105 active:scale-95">
                         <img src="/favicon-32x32.png" alt="atozazure logo" className="w-8 h-8 object-contain" />
                     </div>
-                    
+
                     <div className="flex flex-col justify-center gap-1">
                         <div className="flex items-center gap-1.5 leading-none">
                             <span className="font-semibold text-[14px] text-fluent-fg-primary tracking-tight">
@@ -38,52 +38,52 @@ export default function Footer() {
 
                 {/* Right Side: Links styled like Fluent UI 2 buttons */}
                 <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                    <a 
-                        href="https://atozazure.com" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                    <a
+                        href="https://atozazure.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
                     >
                         <Globe className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>Portfolio</span>
+                        <span>atozazure</span>
                     </a>
 
-                    <a 
-                        href="https://blog.atozazure.com" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                    <a
+                        href="https://blog.atozazure.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
                     >
                         <BookOpen className="w-4 h-4 text-fluent-fg-tertiary" />
                         <span>Blog</span>
                     </a>
-                    
-                    <a 
-                        href="https://github.com/danzure/azres-naming-tool" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+
+                    <a
+                        href="https://github.com/danzure/azure-governance-toolkit"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
                     >
                         <Github className="w-4 h-4 text-fluent-fg-tertiary" />
                         <span>GitHub</span>
                     </a>
-                    
-                    <a 
-                        href="https://www.linkedin.com/in/danielpowley92/" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+
+                    <a
+                        href="https://www.linkedin.com/in/danielpowley92/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
                     >
                         <Linkedin className="w-4 h-4 text-fluent-fg-tertiary" />
                         <span>LinkedIn</span>
                     </a>
-                    
+
                     <div className="hidden sm:block w-px h-5 bg-fluent-stroke-subtle mx-1"></div>
-                    
-                    <a 
-                        href="https://opensource.org/licenses/MIT" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+
+                    <a
+                        href="https://opensource.org/licenses/MIT"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
                     >
                         <Scale className="w-4 h-4 text-fluent-fg-tertiary" />

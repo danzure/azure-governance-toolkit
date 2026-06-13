@@ -27,7 +27,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
     };
 
     return (
-        <div 
+        <div
             className={`flex flex-col h-full bg-fluent-bg-card shadow-soft z-40 border-r border-fluent-stroke-subtle ${mobileClasses}`}
             aria-label="Navigation menu"
         >
@@ -60,13 +60,11 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     to="/"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Dashboard" : undefined}
-                    className={({ isActive }) => 
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${
-                            isActive 
-                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
-                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                    className={({ isActive }) =>
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
+                        } ${isActive
+                            ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
+                            : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
                     }
                 >
@@ -75,11 +73,11 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             {isActive && (
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
                             )}
-                            <img 
-                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg" 
-                                alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
-                                aria-hidden="true" 
+                            <img
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg"
+                                alt=""
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                aria-hidden="true"
                             />
                             {(isExpanded || isMobile) && <span className="whitespace-nowrap">Dashboard</span>}
                         </>
@@ -90,13 +88,11 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     to="/azure-resources"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Azure Resources" : undefined}
-                    className={({ isActive }) => 
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${
-                            isActive 
-                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
-                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                    className={({ isActive }) =>
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
+                        } ${isActive
+                            ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
+                            : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
                     }
                 >
@@ -105,28 +101,26 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             {isActive && (
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
                             )}
-                            <img 
-                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg" 
-                                alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
-                                aria-hidden="true" 
+                            <img
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg"
+                                alt=""
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                aria-hidden="true"
                             />
                             {(isExpanded || isMobile) && <span className="whitespace-nowrap">Azure Resources</span>}
                         </>
                     )}
                 </NavLink>
-                
+
                 <NavLink
                     to="/conditional-access"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Conditional Access" : undefined}
-                    className={({ isActive }) => 
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${
-                            isActive 
-                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
-                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                    className={({ isActive }) =>
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
+                        } ${isActive
+                            ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
+                            : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
                     }
                 >
@@ -135,11 +129,11 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             {isActive && (
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
                             )}
-                            <img 
-                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg" 
-                                alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
-                                aria-hidden="true" 
+                            <img
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg"
+                                alt=""
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                aria-hidden="true"
                             />
                             {(isExpanded || isMobile) && <span className="whitespace-nowrap">Conditional Access</span>}
                         </>
@@ -150,13 +144,11 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     to="/management-group-topology"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Management Group Topology" : undefined}
-                    className={({ isActive }) => 
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${
-                            isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${
-                            isActive 
-                                ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold' 
-                                : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                    className={({ isActive }) =>
+                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
+                        } ${isActive
+                            ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
+                            : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
                     }
                 >
@@ -165,11 +157,11 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             {isActive && (
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
                             )}
-                            <img 
-                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg" 
-                                alt="" 
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`} 
-                                aria-hidden="true" 
+                            <img
+                                src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg"
+                                alt=""
+                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                aria-hidden="true"
                             />
                             {(isExpanded || isMobile) && <span className="whitespace-nowrap">Management Groups</span>}
                         </>
