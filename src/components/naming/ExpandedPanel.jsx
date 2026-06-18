@@ -2,8 +2,8 @@ import { memo, useMemo } from 'react';
 import { ChevronDown, Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck } from 'lucide-react';
 import PropTypes from 'prop-types';
 
-import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES } from '../data/constants';
-import { validateName } from '../utils/nameValidator';
+import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES } from '../../data/constants';
+import { validateName } from '../../utils/nameValidator';
 import ValidationHighlight from './ValidationHighlight';
 
 import BundleList from './expanded/BundleList';

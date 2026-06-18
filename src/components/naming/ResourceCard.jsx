@@ -3,9 +3,9 @@ import { Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck, X, ExternalLink }
 import ValidationHighlight from './ValidationHighlight';
 import ExpandedPanel from './ExpandedPanel';
 import AzureServiceIcon from './AzureServiceIcon';
-import { getCategoryColors } from '../data/categoryColors';
-import { getBundleResources } from '../utils/bundleGenerator';
-import { validateName } from '../utils/nameValidator';
+import { getCategoryColors } from '../../data/categoryColors';
+import { getBundleResources } from '../../utils/bundleGenerator';
+import { validateName } from '../../utils/nameValidator';
 import PropTypes from 'prop-types';
 
 

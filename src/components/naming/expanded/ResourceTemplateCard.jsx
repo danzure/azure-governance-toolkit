@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Code2, Copy, Check, ExternalLink } from 'lucide-react';
 import PropTypes from 'prop-types';
-import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates, getIacDocsUrl } from '../../utils/templateGenerator';
+import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates, getIacDocsUrl } from '../../../utils/templateGenerator';
 
 /**
  * ResourceTemplateCard Component

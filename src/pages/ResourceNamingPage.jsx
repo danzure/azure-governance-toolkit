@@ -1,8 +1,8 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 
-import ConfigPanel from '../components/ConfigPanel';
-import ResourceGrid from '../components/ResourceGrid';
-import ServiceFilter from '../components/ServiceFilter';
+import ConfigPanel from '../components/naming/ConfigPanel';
+import ResourceGrid from '../components/naming/ResourceGrid';
+import ServiceFilter from '../components/shared/ServiceFilter';
 import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { generateName as generateResourceName } from '../utils/nameGenerator';

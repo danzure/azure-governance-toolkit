@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { getServiceIconUrl } from '../data/serviceIcons';
+import { getServiceIconUrl } from '../../data/serviceIcons';
 import { Box, LayoutGrid, Cpu, Network, Database, Globe, DatabaseZap, ShieldCheck, Workflow, BarChart3, Sparkles, Settings2, Wifi, GitBranch } from 'lucide-react';
 
 const CATEGORY_ICONS = {

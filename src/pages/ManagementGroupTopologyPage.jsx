@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
-import TopologyTreeBuilder from '../components/TopologyTreeBuilder';
-import TopologyCodeGenerator from '../components/TopologyCodeGenerator';
+import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
+import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function ManagementGroupTopologyPage() {

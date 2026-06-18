@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
-import Header from './components/Header';
-import NavigationMenu from './components/NavigationMenu';
-import Footer from './components/Footer';
-import ScrollToTopButton from './components/ScrollToTopButton';
+import Header from './components/layout/Header';
+import NavigationMenu from './components/layout/NavigationMenu';
+import Footer from './components/layout/Footer';
+import ScrollToTopButton from './components/layout/ScrollToTopButton';
 import useLocalStorage from './hooks/useLocalStorage';
 
 import { Suspense, lazy } from 'react';

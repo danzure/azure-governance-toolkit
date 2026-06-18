@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, Key, X, Wand2, Download } from 'lucide-react';
-import Tooltip from './Tooltip';
-import { generateName } from '../utils/nameGenerator';
+import Tooltip from '../shared/Tooltip';
+import { generateName } from '../../utils/nameGenerator';
 import { toPng } from 'html-to-image';
 
 const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscription, onRemoveSubscription, onUpdateSubscriptionName, onGenerateSubName }) => {

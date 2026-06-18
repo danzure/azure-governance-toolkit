@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import ResourceCard from './ResourceCard';
-import useLocalStorage from '../hooks/useLocalStorage';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 export default function ResourceGrid({ resources, generateName, copiedId, onCopy }) {
     const [expandedCard, setExpandedCard] = useState(null);

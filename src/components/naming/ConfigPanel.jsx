@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { ChevronDown, ChevronUp, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, Globe } from 'lucide-react';
-import SearchableSelect from './SearchableSelect';
-import Tooltip from './Tooltip';
-import { AZURE_REGIONS, ENVIRONMENTS } from '../data/constants';
+import SearchableSelect from '../shared/SearchableSelect';
+import Tooltip from '../shared/Tooltip';
+import { AZURE_REGIONS, ENVIRONMENTS } from '../../data/constants';
 import PropTypes from 'prop-types';
 
 /**

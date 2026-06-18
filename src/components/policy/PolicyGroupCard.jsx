@@ -1,6 +1,6 @@
 import { useState, memo, useEffect } from 'react';
 import { Copy, Shield, Check, ExternalLink, ChevronDown, ChevronUp, Settings, Users, Lock, BadgeCheck, AlertCircle, Info } from 'lucide-react';
-import { getReadableTitle } from '../data/conditionalAccessData';
+import { getReadableTitle } from '../../data/conditionalAccessData';
 
 const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalExpandState }) => {
     const [selectedIdx, setSelectedIdx] = useState(0);
