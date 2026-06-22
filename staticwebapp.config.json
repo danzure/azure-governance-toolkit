@@ -1,24 +1,6 @@
 {
-    "$schema": "https://json.schemastore.org/staticwebapp.config.json",
-    "navigationFallback": {
-        "rewrite": "/index.html",
-        "exclude": [
-            "/assets/*",
-            "/*.svg",
-            "/*.png",
-            "/*.ico"
-        ]
-    },
-    "globalHeaders": {
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "Content-Security-Policy": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com; font-src 'self' https://fonts.cdnfonts.com; script-src 'self'; img-src 'self' data: https://raw.githubusercontent.com; upgrade-insecure-requests;",
-        "Referrer-Policy": "strict-origin-when-cross-origin",
-        "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-        "X-XSS-Protection": "0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload"
-    },
-    "mimeTypes": {
-        ".json": "application/json"
-    }
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+  }
 }
