@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import { ChevronDown, ChevronUp, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, Globe } from 'lucide-react';
+import { memo, useState } from 'react';
+import { ChevronDown, ChevronUp, ChevronRight, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, Globe, ExternalLink } from 'lucide-react';
 import SearchableSelect from '../shared/SearchableSelect';
 import Tooltip from '../shared/Tooltip';
 import { AZURE_REGIONS, ENVIRONMENTS } from '../../data/constants';
@@ -41,49 +41,92 @@ function ConfigPanel({
     instance, onInstanceChange, orgPrefix, setOrgPrefix, showOrg, setShowOrg,
     namingOrder, onMoveItem, liveSchemaStr, copiedId, onCopy
 }) {
+    const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
+    
     return (
-        <nav className="relative z-40 shadow-sm transition-all border-b bg-fluent-bg-card border-fluent-stroke-subtle">
-            <div className="max-w-[1600px] mx-auto px-3 sm:px-4 py-3">
+        <div className="relative z-40">
+            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-4 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col">
                 {/* Header row */}
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start justify-between mb-8 gap-4">
                     <div>
-                        <h2 className="text-[16px] font-semibold text-fluent-fg-primary">Configuration</h2>
-                        <p className="text-[13px] text-fluent-fg-tertiary">Define naming parameters</p>
+                        <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
+                            Azure Resource Naming Tool
+                        </h1>
+                        <p className="text-[13px] md:text-[14px] text-fluent-fg-secondary max-w-3xl">
+                            Generate consistent, standards-compliant Azure resource names aligned with Microsoft's Cloud Adoption Framework.
+                        </p>
                     </div>
-                    <button onClick={onToggleMinimize} className="text-[13px] font-medium text-fluent-brand-fg hover:underline flex items-center gap-1">
-                        {isMinimized ? 'Show' : 'Hide'}
+                    <button 
+                        onClick={onToggleMinimize} 
+                        className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[14px] font-medium text-fluent-brand-fg hover:bg-black/5 dark:hover:bg-white/5 transition-colors mt-1"
+                    >
+                        {isMinimized ? 'Show Configuration' : 'Hide Configuration'}
                         {isMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
                     </button>
                 </div>
 
+                {/* Resource Naming Guidance - Pinned below header */}
+                <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-6">
+                    <div 
+                        className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                        onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
+                        role="button"
+                        aria-expanded={isGuidanceExpanded}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setIsGuidanceExpanded(!isGuidanceExpanded);
+                            }
+                        }}
+                    >
+                        <div className="flex justify-between items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
+                                <p className="text-fluent-fg-primary text-[13px]">
+                                    About this tool
+                                </p>
+                                {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
+                            </div>
+                            <a
+                                href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shrink-0"
+                            >
+                                <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h11v11H0z" fill="#f35325" />
+                                    <path d="M12 0h11v11H12z" fill="#81bc06" />
+                                    <path d="M0 12h11v11H0z" fill="#05a6f0" />
+                                    <path d="M12 12h11v11H12z" fill="#ffba08" />
+                                </svg>
+                                <span className="hidden sm:inline">Microsoft Learn</span>
+                                <span className="sm:hidden">Docs</span>
+                                <ExternalLink className="w-3 h-3" />
+                            </a>
+                        </div>
+                            
+                        {isGuidanceExpanded && (
+                            <ul className="list-disc pl-5 ml-2 mt-4 flex flex-col gap-2 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
+                                <li><strong>Standardized Naming:</strong> Generate consistent Azure resource names aligned with Microsoft's <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline font-medium">Cloud Adoption Framework (CAF)</a>.</li>
+                                <li><strong>Built-in Validation:</strong> Each name is automatically validated against Azure's specific character, length, and scope constraints.</li>
+                                <li><strong>Custom Components:</strong> Define your own naming components, such as application name, environment, and region.</li>
+                                <li><strong>Instant Previews:</strong> See exactly what the final generated resource name will look like as you configure it.</li>
+                            </ul>
+                        )}
+                    </div>
+                </div>
+
                 {!isMinimized && (
                     <div className="animate-slide-up">
-                        {/* Parameters */}
-                        <div className="relative p-3 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full">
+                        {/* Unified Configuration Card */}
+                        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col">
+                            {/* Parameters */}
+                            <div className="p-3">
                             <div className="flex items-center gap-2 mb-3 pr-8">
                                 <Edit3 className="w-3.5 h-3.5 text-fluent-brand-fg" />
                                 <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Parameters</h3>
-                            </div>
-                            
-                            {/* Information hover card at the top right */}
-                            <div className="absolute top-3 right-3 group z-50">
-                                <Info className="w-4 h-4 text-fluent-fg-secondary hover:text-fluent-brand-fg cursor-help transition-colors" />
-                                <div className="absolute right-0 top-full pt-2 w-[calc(100vw-48px)] sm:w-[320px] md:w-[450px] invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
-                                    <div className="p-3.5 rounded-lg border shadow-lg bg-fluent-info-bg dark:bg-fluent-bg-subtle border-fluent-info-border dark:border-fluent-stroke-subtle">
-                                        <div className="text-[13px] leading-relaxed text-fluent-info-text dark:text-fluent-fg-secondary space-y-2">
-                                            <p>
-                                                The Resource Naming Tool helps you generate consistent, standards-compliant Azure resource names aligned with Microsoft's{' '}
-                                                <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline font-medium">
-                                                    Cloud Adoption Framework (CAF)
-                                                </a>
-                                                . Each name is automatically validated against Azure's character, length, and scope constraints so you can deploy with confidence.
-                                            </p>
-                                            <p>
-                                                Configure your environment, region, workload, and optional org prefix using the parameters panel, then use the pattern builder to customise segment order. Browse the catalog of 100+ Azure services below — each card shows the generated name, recommended abbreviation, and best-practice guidance. Copy individual names or export bundles for use in your IaC templates and deployments.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                                 {/* Form grid - 2 columns on large screens to cleanly fill whitespace */}
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-4">
@@ -180,8 +223,8 @@ function ConfigPanel({
                                 </div>
                             </div>
 
-                        {/* Pattern Builder + Live Preview — streamlined card */}
-                        <div className="mt-3 rounded-lg border bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle shadow-soft dark:shadow-none">
+                        {/* Pattern Builder + Live Preview */}
+                        <div className="border-t border-fluent-stroke-subtle">
                             {/* Segment chips — compact inline strip with hover-reveal arrows */}
                             <div className="px-3 py-2.5">
                                 <div className="flex items-center gap-2 mb-2">
@@ -247,9 +290,10 @@ function ConfigPanel({
                             </div>
                         </div>
                     </div>
+                    </div>
                 )}
             </div>
-        </nav>
+        </div>
     );
 }
 

@@ -1,5 +1,5 @@
 import { useState, useMemo, memo } from 'react';
-import { Copy, Check, Edit3, Eye, Info } from 'lucide-react';
+import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
 
 const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9-]/g;
 const selectClasses = "px-2.5 h-[36px] sm:h-[32px] min-w-0 w-full sm:w-auto sm:min-w-[120px] sm:flex-1 border rounded outline-none text-[13px] transition-all bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg cursor-pointer text-ellipsis";
@@ -13,6 +13,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
     const [resource, setResource] = useState('AllApps');
     const [customResource, setCustomResource] = useState('');
     const [platform, setPlatform] = useState('AnyPlatform');
+    const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
 
     /**
      * Memoized generation of the final policy name string.
@@ -27,12 +28,56 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
     return (
         <div className="animate-slide-up flex flex-col gap-3">
             {/* About / Introduction */}
-            <div className="p-3.5 rounded-lg border shadow-soft bg-fluent-info-bg border-fluent-info-border flex gap-3 items-start">
-                <Info className="w-4 h-4 text-fluent-brand-fg mt-0.5 shrink-0" />
-                <div className="text-[13px] leading-relaxed text-fluent-info-text">
-                    Conditional Access policies are logic-driven <strong>If-Then</strong> statements. Use the Pattern Builder below to construct a standardized name describing who it applies to, under what conditions, and what control is enforced.
+            <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-1">
+                <div 
+                        className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                        onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
+                        role="button"
+                        aria-expanded={isGuidanceExpanded}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setIsGuidanceExpanded(!isGuidanceExpanded);
+                            }
+                        }}
+                    >
+                        <div className="flex justify-between items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
+                                <p className="text-fluent-fg-primary text-[13px]">
+                                    About this tool
+                                </p>
+                                {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
+                            </div>
+                            <a
+                                href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shrink-0"
+                            >
+                                <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h11v11H0z" fill="#f35325" />
+                                    <path d="M12 0h11v11H12z" fill="#81bc06" />
+                                    <path d="M0 12h11v11H0z" fill="#05a6f0" />
+                                    <path d="M12 12h11v11H12z" fill="#ffba08" />
+                                </svg>
+                                <span className="hidden sm:inline">Microsoft Learn</span>
+                                <span className="sm:hidden">Docs</span>
+                                <ExternalLink className="w-3 h-3" />
+                            </a>
+                        </div>
+                    {isGuidanceExpanded && (
+                        <ul className="list-disc pl-5 ml-2 mt-4 flex flex-col gap-2 text-[13px] text-fluent-info-text cursor-default" onClick={(e) => e.stopPropagation()}>
+                            <li><strong>Logic-Driven:</strong> Conditional Access policies function as <strong>If-Then</strong> statements enforcing organizational controls.</li>
+                            <li><strong>Standardized Formatting:</strong> Use the Pattern Builder to construct a consistent name describing who it applies to, under what conditions, and what control is enforced.</li>
+                            <li><strong>Persona & Platform:</strong> Specify the target users (e.g., all users, guests) and the device platforms they are accessing from.</li>
+                            <li><strong>Custom Actions:</strong> Extend standard actions with custom definitions to match your exact governance needs.</li>
+                        </ul>
+                    )}
+                    </div>
                 </div>
-            </div>
 
             {/* Pattern Builder */}
             <div className="p-3 sm:p-4 lg:p-5 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle">

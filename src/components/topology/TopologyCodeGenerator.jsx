@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Copy, Check, ExternalLink, ChevronDown, ChevronRight, Code } from 'lucide-react';
+import { Copy, Check, ExternalLink, Code } from 'lucide-react';
 
 export default function TopologyCodeGenerator({ topology }) {
     const [format, setFormat] = useState('bicep');
     const [copied, setCopied] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
 
     // Flatten tree into an array of { id, name, parentId, subscriptions }
     const flattenTopology = (nodes, parentId = null) => {
@@ -155,99 +154,83 @@ export default function TopologyCodeGenerator({ topology }) {
     };
 
     return (
-        <div className="bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl shadow-soft flex flex-col overflow-hidden">
-            <div 
-                className="px-5 py-4 flex flex-col lg:flex-row justify-between cursor-pointer hover:bg-fluent-bg-subtle transition-colors gap-4 lg:gap-0"
-                onClick={() => setIsExpanded(!isExpanded)}
-            >
-                <div className="flex items-center justify-between w-full lg:w-auto">
-                    <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
-                        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
-                            <Code className="w-4 h-4" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-[15px]">Infrastructure Code</span>
-                            {isExpanded && <span className="text-[12px] font-normal text-fluent-fg-secondary hidden sm:block">Auto-generated {format === 'terraform' ? 'Terraform' : format === 'bicep' ? 'Bicep' : 'ARM'} template for your topology</span>}
-                        </div>
+        <div className="bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl shadow-soft flex flex-col flex-1 h-full overflow-hidden">
+            <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle">
+                <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
+                        <Code className="w-4 h-4" />
                     </div>
-                    {/* On mobile, chevron is here */}
-                    <div className="text-fluent-fg-tertiary ml-2 lg:hidden">
-                        {isExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                    <div className="flex flex-col">
+                        <span className="text-[15px]">Auto-generated Template</span>
+                        <span className="text-[12px] font-normal text-fluent-fg-secondary">Review and export your {format === 'terraform' ? 'Terraform' : format === 'bicep' ? 'Bicep' : 'ARM'} code</span>
                     </div>
                 </div>
                 
                 <div className="flex items-center gap-2 w-full lg:w-auto">
-                    {isExpanded && (
-                        <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 lg:gap-2 mr-0 lg:mr-4 w-full lg:w-auto" onClick={(e) => e.stopPropagation()}>
-                            <div className="flex shrink-0 bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5 w-full sm:w-auto">
-                                <button
-                                    onClick={() => setFormat('bicep')}
-                                    className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'bicep' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
-                                >
-                                    Bicep
-                                </button>
-                                <button
-                                    onClick={() => setFormat('arm')}
-                                    className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'arm' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
-                                >
-                                    ARM
-                                </button>
-                                <button
-                                    onClick={() => setFormat('terraform')}
-                                    className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'terraform' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
-                                >
-                                    Terraform
-                                </button>
-                            </div>
-                            <div className="flex flex-row items-center gap-2 w-full sm:w-auto">
-                                <a
-                                    href={docsUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex-1 sm:flex-none justify-center flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
-                                    title="View documentation"
-                                >
-                                    {format === 'terraform' ? (
-                                        <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
-                                    ) : (
-                                        <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M0 0h11v11H0z" fill="#f35325"/>
-                                            <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                                            <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                                            <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                                        </svg>
-                                    )}
-                                    <span className="hidden sm:inline">{format === 'terraform' ? 'Terraform Registry' : format === 'bicep' ? 'Bicep Template' : 'ARM Template'}</span>
-                                    <span className="sm:hidden">Docs</span>
-                                    <ExternalLink className="w-3 h-3 shrink-0" />
-                                </a>
-                                
-                                <div className="w-px h-5 bg-fluent-stroke-subtle hidden sm:block"></div>
-                                
-                                <button
-                                    onClick={handleCopy}
-                                    className={`flex-1 sm:flex-none justify-center flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${copied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
-                                    title="Copy code"
-                                >
-                                    {copied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
-                                    <span>{copied ? 'Copied' : 'Copy'}</span>
-                                </button>
-                            </div>
+                    <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 lg:gap-2 w-full sm:w-auto">
+                        <div className="flex shrink-0 bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5 w-full sm:w-auto">
+                            <button
+                                onClick={() => setFormat('bicep')}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'bicep' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                            >
+                                Bicep
+                            </button>
+                            <button
+                                onClick={() => setFormat('arm')}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'arm' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                            >
+                                ARM
+                            </button>
+                            <button
+                                onClick={() => setFormat('terraform')}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'terraform' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                            >
+                                Terraform
+                            </button>
                         </div>
-                    )}
-                    <div className="text-fluent-fg-tertiary ml-2 hidden lg:block self-center">
-                        {isExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                        <div className="flex flex-row items-center gap-2 w-full sm:w-auto">
+                            <a
+                                href={docsUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 sm:flex-none justify-center flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                                title="View documentation"
+                            >
+                                {format === 'terraform' ? (
+                                    <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
+                                ) : (
+                                    <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                        <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                        <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                        <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                                    </svg>
+                                )}
+                                <span className="hidden sm:inline">{format === 'terraform' ? 'Terraform Registry' : format === 'bicep' ? 'Bicep Template' : 'ARM Template'}</span>
+                                <span className="sm:hidden">Docs</span>
+                                <ExternalLink className="w-3 h-3 shrink-0" />
+                            </a>
+                            
+                            <div className="w-px h-5 bg-fluent-stroke-subtle hidden sm:block"></div>
+                            
+                            <button
+                                onClick={handleCopy}
+                                className={`flex-1 sm:flex-none justify-center flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${copied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
+                                title="Copy code"
+                            >
+                                {copied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                <span>{copied ? 'Copied' : 'Copy'}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            {isExpanded && (
-                <div className="border-t border-fluent-stroke-subtle bg-[#1E1E1E] w-full flex flex-col max-h-[500px]">
-                    <pre className="flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0">
-                        <code>{generatedCode}</code>
-                    </pre>
-                </div>
-            )}
+            <div className="bg-[#1E1E1E] w-full flex flex-col flex-1 h-full min-h-[500px]">
+                <pre className="flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0">
+                    <code>{generatedCode}</code>
+                </pre>
+            </div>
         </div>
     );
 }
