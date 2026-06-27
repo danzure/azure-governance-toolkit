@@ -55,8 +55,8 @@ const SERVICE_ICON_MAP = {
     'Template Spec':                    null,               // → ALT
 
     // ── Compute ──────────────────────────────────────────────────────────────
-    'Virtual Machine - Windows':        'Virtual-Machine',
-    'Virtual Machine - Linux':          'Virtual-Machine',
+    'Virtual Machine - Windows':        null,               // → PLAYER (official icon)
+    'Virtual Machine - Linux':          null,               // → PLAYER (official icon)
     'VM scale set':                     'VM-Scale-Sets',
     'Availability set':                 'Availability-Sets',
     'Managed disk':                     'Disks',
@@ -65,7 +65,7 @@ const SERVICE_ICON_MAP = {
     'Compute gallery':                  'Shared-Image-Galleries',
     'Proximity placement group':        'Proximity-Placement-Groups',
     'Function app':                     'Function-Apps',
-    'Batch account':                    'Batch-Accounts',
+    'Batch account':                    null,               // → PLAYER (official icon)
     'Azure Spring Apps':                null,               // → ALT
     'Service Fabric cluster':           'Service-Fabric-Clusters',
 
@@ -111,6 +111,7 @@ const SERVICE_ICON_MAP = {
     // ── Web ──────────────────────────────────────────────────────────────────
     'App Service plan':                 'App-Service-Plans',
     'App Service':                      'App-Services',
+    'Static Web App':                   null,               // → PLAYER (official icon)
     'Web PubSub':                       'Web-Environment',
     'App Configuration store':          null,               // → ALT
 
@@ -242,6 +243,10 @@ const SERVICE_ICON_MAP_MASKATI = {
 // Values are category-prefixed paths relative to the PLAYER base URL.
 
 const SERVICE_ICON_MAP_PLAYER = {
+    'Virtual Machine - Windows':        'compute/10021-icon-service-Virtual-Machine',
+    'Virtual Machine - Linux':          'compute/10021-icon-service-Virtual-Machine',
+    'Batch account':                    'compute/10031-icon-service-Batch-Accounts',
+    'Static Web App':                   'web/01007-icon-service-Static-Apps',
     'Subnet':                           'networking/02742-icon-service-Subnet',
     'Virtual network':                  'networking/10061-icon-service-Virtual-Networks',
     'Host Pool':                        'other/00327-icon-service-Azure-Virtual-Desktop',
