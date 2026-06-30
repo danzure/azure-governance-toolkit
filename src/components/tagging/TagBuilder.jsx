@@ -1,4 +1,5 @@
 import { Plus, Trash2, Info } from 'lucide-react';
+import Tooltip from '../shared/Tooltip';
 
 /**
  * TagBuilder Component
@@ -14,7 +15,7 @@ import { Plus, Trash2, Info } from 'lucide-react';
 export default function TagBuilder({ tags, setTags }) {
     const handleAddTag = () => {
         setTags([...tags, { 
-            id: crypto.randomUUID(), 
+            id: Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9), 
             name: '', 
             requirement: 'Mandatory', 
             effect: 'Audit', 
@@ -30,12 +31,23 @@ export default function TagBuilder({ tags, setTags }) {
         setTags(tags.filter(tag => tag.id !== id));
     };
 
+    const policyTooltip = (
+        <div className="flex flex-col gap-2 text-left">
+            <div><strong className="text-fluent-brand-fg">Audit:</strong> Logs a warning if the tag is missing, but does not block creation.</div>
+            <div><strong className="text-fluent-brand-fg">Deny:</strong> Blocks the creation or update of the resource if the tag is missing.</div>
+            <div><strong className="text-fluent-brand-fg">Modify:</strong> Automatically appends the tag to the resource during creation.</div>
+        </div>
+    );
+
     return (
         <div className="bg-fluent-bg-card rounded-xl p-5 border border-fluent-stroke-subtle shadow-soft flex flex-col h-full">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[16px] font-semibold text-fluent-fg-primary flex items-center gap-2">
                     <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg" alt="Tags" className="w-5 h-5" />
                     Tag Definitions
+                    <Tooltip content={policyTooltip} position="right" align="center" className="z-[60] ml-1">
+                        <Info className="w-4 h-4 text-fluent-fg-tertiary hover:text-fluent-brand-fg transition-colors cursor-help outline-none" />
+                    </Tooltip>
                 </h2>
                 <button
                     onClick={handleAddTag}
@@ -54,14 +66,17 @@ export default function TagBuilder({ tags, setTags }) {
                 ) : (
                     tags.map((tag, index) => (
                         <div key={tag.id} className="p-4 border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-subtle relative group animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
+                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                             <button
                                 onClick={() => handleRemoveTag(tag.id)}
-                                className="absolute top-3 right-3 text-fluent-fg-tertiary hover:text-fluent-danger transition-colors"
+                                className="p-1.5 text-fluent-fg-tertiary hover:text-fluent-state-danger hover:bg-fluent-bg-canvas rounded-md transition-colors"
                                 title="Remove Tag"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
+                        </div>
 
+                        <div className="flex flex-col gap-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mr-6">
                                 <div>
                                     <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Tag Name</label>
@@ -87,12 +102,8 @@ export default function TagBuilder({ tags, setTags }) {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="flex items-center gap-1.5 text-[12px] font-semibold text-fluent-fg-secondary mb-1">
+                                        <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">
                                             Policy Effect
-                                            <Info 
-                                                className="w-3.5 h-3.5 text-fluent-brand-fg opacity-80 hover:opacity-100 transition-opacity cursor-help outline-none" 
-                                                title="Audit: Logs a warning if the tag is missing, but does not block creation.&#10;Deny: Blocks the creation or update of the resource if the tag is missing.&#10;Modify: Automatically appends the tag to the resource during creation."
-                                            />
                                         </label>
                                         <select
                                             value={tag.effect}
@@ -118,8 +129,9 @@ export default function TagBuilder({ tags, setTags }) {
                                 </div>
                             </div>
                         </div>
-                    ))
-                )}
+                    </div>
+                ))
+            )}
             </div>
         </div>
     );
