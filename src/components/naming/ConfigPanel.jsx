@@ -84,7 +84,7 @@ function ConfigPanel({
                             <div className="flex items-center gap-2">
                                 <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
                                 <p className="text-fluent-fg-primary text-[13px]">
-                                    About this tool
+                                    How to use this tool
                                 </p>
                                 {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
                             </div>
@@ -109,10 +109,9 @@ function ConfigPanel({
                             
                         {isGuidanceExpanded && (
                             <ul className="list-disc pl-5 ml-2 mt-4 flex flex-col gap-2 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
-                                <li><strong>Standardized Naming:</strong> Generate consistent Azure resource names aligned with Microsoft's <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline font-medium">Cloud Adoption Framework (CAF)</a>.</li>
-                                <li><strong>Built-in Validation:</strong> Each name is automatically validated against Azure's specific character, length, and scope constraints.</li>
-                                <li><strong>Custom Components:</strong> Define your own naming components, such as application name, environment, and region.</li>
-                                <li><strong>Instant Previews:</strong> See exactly what the final generated resource name will look like as you configure it.</li>
+                                <li><strong>Configure Parameters:</strong> Input your organization prefix, application name, environment, and region in the Parameters section.</li>
+                                <li><strong>Toggle Components:</strong> Turn individual naming components on or off to match your specific naming convention.</li>
+                                <li><strong>Select Resources:</strong> Choose Azure services from the list to instantly preview their generated, CAF-compliant names.</li>
                             </ul>
                         )}
                     </div>

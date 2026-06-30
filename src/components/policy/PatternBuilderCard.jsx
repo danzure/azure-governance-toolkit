@@ -46,7 +46,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                             <div className="flex items-center gap-2">
                                 <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
                                 <p className="text-fluent-fg-primary text-[13px]">
-                                    About this tool
+                                    How to use this tool
                                 </p>
                                 {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
                             </div>
@@ -70,10 +70,9 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         </div>
                     {isGuidanceExpanded && (
                         <ul className="list-disc pl-5 ml-2 mt-4 flex flex-col gap-2 text-[13px] text-fluent-info-text cursor-default" onClick={(e) => e.stopPropagation()}>
-                            <li><strong>Logic-Driven:</strong> Conditional Access policies function as <strong>If-Then</strong> statements enforcing organizational controls.</li>
-                            <li><strong>Standardized Formatting:</strong> Use the Pattern Builder to construct a consistent name describing who it applies to, under what conditions, and what control is enforced.</li>
-                            <li><strong>Persona & Platform:</strong> Specify the target users (e.g., all users, guests) and the device platforms they are accessing from.</li>
-                            <li><strong>Custom Actions:</strong> Extend standard actions with custom definitions to match your exact governance needs.</li>
+                            <li><strong>Build Pattern:</strong> Select the prefix, persona, platform, and action in the Pattern Builder to generate a standardized policy name.</li>
+                            <li><strong>Customize Components:</strong> Toggle optional components like network conditions or MFA requirements as needed.</li>
+                            <li><strong>Apply Policy:</strong> Copy the generated name and apply it to your Azure AD Conditional Access policies for consistent naming.</li>
                         </ul>
                     )}
                     </div>

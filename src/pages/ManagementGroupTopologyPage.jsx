@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Network, FileCode2, ChevronDown, ChevronRight, Layers } from 'lucide-react';
+import { ExternalLink, Network, FileCode2, ChevronDown, ChevronRight, Layers, Info } from 'lucide-react';
 import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
 import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -74,9 +74,9 @@ export default function ManagementGroupTopologyPage() {
                             >
                                 <div className="flex justify-between items-center gap-4">
                                     <div className="flex items-center gap-2">
-                                        <Layers className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
+                                        <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
                                         <p className="text-fluent-fg-primary text-[13px]">
-                                            About this tool
+                                            How to use this tool
                                         </p>
                                         {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
                                     </div>
@@ -101,11 +101,9 @@ export default function ManagementGroupTopologyPage() {
 
                                 {isGuidanceExpanded && (
                                     <ul className="list-disc pl-5 ml-8 flex flex-col gap-2 mt-4 text-[13px] text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
-                                        <li><strong>Platform vs Workloads:</strong> Separate core infrastructure from applications. <em>Platform</em> groups house centralized shared services (e.g., Hub networks, Log Analytics, Domain Controllers). <em>Landing Zone</em> groups house the actual application workloads.</li>
-                                        <li><strong>Landing Zone Archetypes:</strong> Group workloads by their governance needs. Use <em>Corp</em> for internal apps requiring corporate network connectivity, <em>Online</em> for public internet-facing apps, and <em>Sandbox</em> for isolated dev/test environments.</li>
-                                        <li><strong>Keep it Flat:</strong> Avoid deep hierarchies to ensure policy inheritance remains simple, predictable, and easy to troubleshoot. Aim for a maximum of 3-4 levels. While a management group tree can technically support up to six levels of depth (excluding the tenant root and subscription levels), flatter structures are highly recommended.</li>
-                                        <li><strong>Default Subscription Location:</strong> All new subscriptions are placed under the tenant root management group by default.</li>
-                                        <li><strong>Avoid Tenant Root:</strong> Never apply Azure Policies or Role Assignments directly to the Tenant Root Group to prevent accidental tenant-wide lockouts.</li>
+                                        <li><strong>Design Topology:</strong> Use the Topology Designer tab to visually build and organize your management group hierarchy. Add, rename, or remove groups as needed.</li>
+                                        <li><strong>Generate Code:</strong> Switch to the Infrastructure as Code tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
+                                        <li><strong>Export & Deploy:</strong> Copy the generated code to use in your CI/CD pipelines or deploy directly to your Azure environment.</li>
                                     </ul>
                                 )}
                             </div>

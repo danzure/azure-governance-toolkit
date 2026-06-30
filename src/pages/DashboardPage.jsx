@@ -31,6 +31,15 @@ export default function DashboardPage() {
             path: '/management-group-topology',
             colorClass: 'text-fluent-brand-fg',
             bgClass: 'bg-transparent',
+        },
+        {
+            id: 'tagging-strategy',
+            title: 'Tagging Strategy Builder',
+            description: 'Define organizational tags and automatically generate Azure Policy compliance rules.',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg',
+            path: '/tagging-strategy',
+            colorClass: 'text-fluent-brand-fg',
+            bgClass: 'bg-transparent',
         }
     ];
 
