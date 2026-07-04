@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, BookOpen, ShieldCheck, Cloud, ExternalLink, Network } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Cloud, ExternalLink, Network, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
+    const [infoExpanded, setInfoExpanded] = useState(false);
 
     const tools = [
         {
@@ -84,7 +86,7 @@ export default function DashboardPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 auto-rows-fr">
                         {tools.map((tool, index) => {
                             return (
                                 <div
@@ -129,29 +131,43 @@ export default function DashboardPage() {
 
                     {/* Informational Sections */}
                     <div className="border-t border-fluent-stroke-subtle pt-6">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                        <div 
+                            className="flex items-center justify-between cursor-pointer group p-3 -mx-3 rounded-xl hover:bg-fluent-bg-subtle transition-colors"
+                            onClick={() => setInfoExpanded(!infoExpanded)}
+                        >
+                            <h2 className="text-xl font-semibold tracking-tight text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors">
+                                Information & Resources
+                            </h2>
+                            {infoExpanded ? (
+                                <ChevronUp className="w-5 h-5 text-fluent-fg-secondary group-hover:text-fluent-brand-fg transition-colors" />
+                            ) : (
+                                <ChevronDown className="w-5 h-5 text-fluent-fg-secondary group-hover:text-fluent-brand-fg transition-colors" />
+                            )}
+                        </div>
+                        <div className={`transition-all duration-500 ease-in-out overflow-hidden ${infoExpanded ? 'max-h-[2000px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pb-2">
 
                             {/* About Section */}
-                            <div className="bg-fluent-bg-card rounded-xl p-5 border border-fluent-stroke-subtle shadow-soft animate-slide-up stagger-3">
+                            <div className="bg-fluent-bg-card rounded-xl p-5 border border-fluent-stroke-subtle shadow-soft animate-slide-up stagger-3 h-full flex flex-col">
                                 <h3 className="text-lg font-semibold text-fluent-fg-primary mb-3 flex items-center gap-2">
                                     <ShieldCheck className="w-5 h-5 text-fluent-brand-fg" />
                                     About This Tool
                                 </h3>
                                 <div className="space-y-3 text-fluent-fg-secondary leading-relaxed text-[14px]">
                                     <p>
-                                        The Azure Governance Toolkit is a comprehensive suite designed to help cloud architects and engineers build, manage, and scale their Azure environments with confidence. It serves as a centralized hub for aligning cloud deployments with enterprise best practices.
+                                        This toolkit is a comprehensive suite designed to help teams build, manage, and scale their cloud environments with confidence. It serves as a centralized hub for aligning deployments with organizational standards and industry best practices.
                                     </p>
                                     <p>
-                                        Whether you are structuring your Management Group hierarchies for enterprise-scale landing zones, enforcing strict naming conventions across hundreds of Azure services, or designing robust Zero Trust identity policies, this toolkit streamlines the entire governance lifecycle.
+                                        Whether you are designing resource hierarchies, enforcing consistent naming conventions, or establishing robust access and security policies, these utilities are built to streamline your entire governance lifecycle from end to end.
                                     </p>
                                     <p>
-                                        By bridging the gap between the <strong className="text-fluent-fg-primary">Cloud Adoption Framework (CAF)</strong> and the <strong className="text-fluent-fg-primary">Well-Architected Framework (WAF)</strong>, the toolkit provides actionable utilities that reduce deployment friction, minimize configuration errors, and accelerate the delivery of secure, compliant infrastructure.
+                                        By providing intuitive and actionable interfaces, the toolkit reduces deployment friction, minimizes configuration errors, and accelerates the delivery of a secure, compliant, and well-architected infrastructure.
                                     </p>
                                 </div>
                             </div>
 
                             {/* Resources Section */}
-                            <div className="bg-fluent-bg-card rounded-xl p-5 border border-fluent-stroke-subtle shadow-soft animate-slide-up stagger-4 flex flex-col">
+                            <div className="bg-fluent-bg-card rounded-xl p-5 border border-fluent-stroke-subtle shadow-soft animate-slide-up stagger-4 flex flex-col h-full">
                                 <h3 className="text-lg font-semibold text-fluent-fg-primary mb-3 flex items-center gap-2">
                                     <BookOpen className="w-5 h-5 text-fluent-brand-fg" />
                                     Reference Documentation
@@ -179,6 +195,7 @@ export default function DashboardPage() {
                                 </div>
                             </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
