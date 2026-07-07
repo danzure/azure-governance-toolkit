@@ -172,6 +172,7 @@ const SERVICE_ICON_MAP = {
     'Microsoft Foundry resource':       null,               // → MASKATI
     'Microsoft Foundry hub':            null,               // → MASKATI
     'Microsoft Foundry project':        null,               // → MASKATI
+    'Foundry IQ':                       null,               // → MASKATI
 
     // ── Data & Analytics ─────────────────────────────────────────────────────
     'Data Factory':                     'Data-Factory',
@@ -229,6 +230,7 @@ const SERVICE_ICON_MAP_MASKATI = {
     'Microsoft Foundry resource':       'AIFoundry',
     'Microsoft Foundry hub':            'AIFoundry',
     'Microsoft Foundry project':        'AIFoundryProject',
+    'Foundry IQ':                       'AIFoundry',
     'Azure AI services account':        'AIServices',
     'Azure AI services':                'AIServices',
     'Azure OpenAI service':             'OpenAI',
