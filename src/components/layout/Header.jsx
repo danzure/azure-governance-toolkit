@@ -30,9 +30,9 @@ export default function Header({ themePref, onSetTheme, onToggleMenu, title = "R
                     </button>
                 )}
                 <div className="flex items-baseline gap-2 min-w-0">
-                    <a href="https://atozazure.com" className="font-semibold text-[16px] text-white tracking-tight shrink-0 hover:opacity-80 transition-opacity">atozazure</a>
-                    <span className="text-[13px] text-white/40 mx-1 hidden sm:inline">|</span>
-                    <span className="text-[12px] text-white/80 tracking-wide truncate hidden sm:inline">{title}</span>
+                    <a href="https://atozazure.com" className="font-semibold text-[18px] text-white tracking-tight shrink-0 hover:opacity-80 transition-opacity">atozazure</a>
+                    <span className="text-[14px] text-white/40 mx-1 hidden sm:inline">|</span>
+                    <span className="text-[14px] text-white/80 tracking-wide truncate hidden sm:inline">{title}</span>
                 </div>
             </div>
             

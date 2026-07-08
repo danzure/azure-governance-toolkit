@@ -79,8 +79,9 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                 </div>
 
             {/* Pattern Builder */}
-            <div className="p-3 sm:p-4 lg:p-5 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle">
-                <div className="flex items-center gap-2 mb-5 pb-3 border-b border-fluent-stroke-subtle">
+            <div className="rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle flex flex-col overflow-hidden">
+                <div className="p-3 sm:p-4 lg:p-5">
+                    <div className="flex items-center gap-2 mb-5 pb-3 border-b border-fluent-stroke-subtle">
                     <Edit3 className="w-4 h-4 text-fluent-brand-fg" />
                     <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Pattern Builder</h3>
                 </div>
@@ -212,11 +213,10 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         </select>
                     )}
                 </div>
-            </div>
+                </div>
 
-            {/* Live Preview — streamlined card integrated footer */}
-            <div className="mt-3 rounded-lg border bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle shadow-soft dark:shadow-none">
-                <div className="px-3 py-2 flex items-center gap-3 border-fluent-stroke-subtle bg-fluent-bg-canvas dark:bg-fluent-bg-subtle rounded-lg">
+                {/* Live Preview — streamlined card integrated footer */}
+                <div className="px-3 py-2 sm:px-4 sm:py-3 flex items-center gap-3 border-t border-fluent-stroke-subtle bg-fluent-bg-canvas dark:bg-fluent-bg-subtle">
                     <div className="flex items-center gap-2 shrink-0">
                         <Eye className="w-3.5 h-3.5 text-fluent-brand-fg" />
                         <span className="text-[12px] font-medium text-fluent-fg-tertiary">Preview</span>

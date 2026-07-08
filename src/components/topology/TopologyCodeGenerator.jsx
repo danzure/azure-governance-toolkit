@@ -154,8 +154,8 @@ export default function TopologyCodeGenerator({ topology }) {
     };
 
     return (
-        <div className="bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl shadow-soft flex flex-col flex-1 h-full overflow-hidden">
-            <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle">
+        <div className="bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl shadow-soft flex flex-col flex-1 h-full min-h-0 overflow-hidden">
+            <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
                         <Code className="w-4 h-4" />
@@ -226,7 +226,7 @@ export default function TopologyCodeGenerator({ topology }) {
                 </div>
             </div>
             
-            <div className="bg-[#1E1E1E] w-full flex flex-col flex-1 h-full min-h-[500px]">
+            <div className="bg-[#1E1E1E] w-full flex flex-col flex-1 h-full min-h-0">
                 <pre className="flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0">
                     <code>{generatedCode}</code>
                 </pre>

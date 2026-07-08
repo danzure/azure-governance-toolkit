@@ -44,9 +44,9 @@ export default function ManagementGroupTopologyPage() {
     ]);
 
     return (
-        <div className="flex flex-col flex-1 w-full min-w-0 overflow-x-hidden">
-            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col">
-                <div className="mb-8">
+        <div className="flex flex-col flex-1 w-full min-w-0 min-h-0 overflow-x-hidden">
+            <div className="max-w-[1600px] w-full min-w-0 min-h-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col">
+                <div className="mb-8 shrink-0">
                     <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
                         Management Group Topology Designer
                     </h1>
@@ -57,8 +57,8 @@ export default function ManagementGroupTopologyPage() {
 
                 <div className="flex flex-col gap-8 flex-1 min-h-0 pb-8">
                     {/* Top Section - Designer */}
-                    <div className="flex flex-col gap-4">
-                        <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-2">
+                    <div className="flex flex-col gap-4 flex-1 min-h-0">
+                        <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-2 shrink-0">
                             <div
                                 className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                                 onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
@@ -109,9 +109,9 @@ export default function ManagementGroupTopologyPage() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col min-w-0 w-full flex-1">
+                        <div className="flex flex-col min-w-0 w-full flex-1 min-h-0">
                             {/* Tabs Header */}
-                            <div className="flex mb-6">
+                            <div className="flex mb-6 shrink-0">
                                 <div className="flex bg-fluent-bg-subtle rounded-md p-1 w-full sm:w-auto border border-fluent-stroke-subtle">
                                     <button
                                         className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'designer' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium'}`}
@@ -132,11 +132,11 @@ export default function ManagementGroupTopologyPage() {
 
                             {/* Tab Content */}
                             {activeTab === 'designer' ? (
-                                <div className="flex flex-col min-w-0 w-full animate-fade-in flex-1">
+                                <div className="flex flex-col min-w-0 w-full animate-fade-in flex-1 min-h-0">
                                     <TopologyTreeBuilder topology={topology} setTopology={setTopology} />
                                 </div>
                             ) : (
-                                <div className="flex flex-col w-full min-w-0 animate-fade-in flex-1">
+                                <div className="flex flex-col w-full min-w-0 animate-fade-in flex-1 min-h-0">
                                     <TopologyCodeGenerator topology={topology} />
                                 </div>
                             )}

@@ -291,6 +291,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
 
     const applyTemplate = (type) => {
         if (type === 'independent') {
+            setZoomLevel(1);
             setTopology([{
                 id: 'root', name: 'Tenant Root Group', children: [
                     { id: `mg-${Date.now()}-1`, name: 'Production', children: [] },
@@ -298,6 +299,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                 ]
             }]);
         } else if (type === 'small') {
+            setZoomLevel(1);
             setTopology([{
                 id: 'root', name: 'Tenant Root Group', children: [
                     { id: `mg-${Date.now()}-1`, name: 'Workloads', children: [] },
@@ -305,6 +307,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                 ]
             }]);
         } else if (type === 'medium') {
+            setZoomLevel(0.8);
             setTopology([{
                 id: 'root', name: 'Tenant Root Group', children: [
                     {
@@ -323,6 +326,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                 ]
             }]);
         } else if (type === 'large') {
+            setZoomLevel(0.6);
             setTopology([{
                 id: 'root', name: 'Tenant Root Group', children: [
                     {
@@ -347,6 +351,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                 ]
             }]);
         } else if (type === 'default') {
+            setZoomLevel(0.9);
             setTopology([{
                 id: 'root', name: 'Tenant Root Group', children: [
                     {
@@ -409,8 +414,8 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
     };
 
     return (
-        <div className="relative bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl p-5 shadow-soft min-w-0 w-full">
-            <div className="mb-4 flex flex-col md:flex-row justify-between items-start gap-4">
+        <div className="relative bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl p-5 shadow-soft min-w-0 w-full flex flex-col flex-1 min-h-[600px]">
+            <div className="mb-4 flex flex-col md:flex-row justify-between items-start gap-4 shrink-0">
                 <div>
                     <h3 className="text-lg font-semibold text-fluent-fg-primary mb-1">Topology Builder</h3>
                     <p className="text-sm text-fluent-fg-secondary">
@@ -455,7 +460,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                 </div>
             </div>
             
-            <div className="overflow-x-auto pb-8 min-h-[400px]">
+            <div className="overflow-auto flex-1 w-full pb-8">
                 <div 
                     ref={treeRef}
                     className="w-max min-w-full pt-4 px-8 pb-4 flex justify-center origin-top transition-transform duration-200"
@@ -479,7 +484,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             </div>
 
             {/* Zoom Controls */}
-            <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2 bg-white dark:bg-[#292929] border border-[#d1d1d1] dark:border-[#525252] rounded-md shadow-sm p-0.5">
+            <div className="absolute bottom-10 right-6 z-20 flex flex-col gap-2 bg-white dark:bg-[#292929] border border-[#d1d1d1] dark:border-[#525252] rounded-md shadow-sm p-0.5">
                 <Tooltip position="left" content="Export as PNG">
                     <button
                         type="button"
