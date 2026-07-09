@@ -101,7 +101,6 @@ const SERVICE_ICON_MAP = {
 
     // ── Storage ──────────────────────────────────────────────────────────────
     'Storage account':                  'Storage-Accounts',
-    'Static Web App':                   'Static-Apps',
     'Data Lake Storage':                'Data-Lake-Storage-Gen1',
     'Azure Files share':                'Azure-NetApp-Files',
     'NetApp account':                   'Azure-NetApp-Files',

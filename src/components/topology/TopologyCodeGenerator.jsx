@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Copy, Check, ExternalLink, Code } from 'lucide-react';
 
@@ -7,7 +7,7 @@ export default function TopologyCodeGenerator({ topology }) {
     const [copied, setCopied] = useState(false);
 
     // Flatten tree into an array of { id, name, parentId, subscriptions }
-    const flattenTopology = (nodes, parentId = null) => {
+    const flattenTopology = useCallback((nodes, parentId = null) => {
         let result = [];
         nodes.forEach(node => {
             // Generate a safe identifier for code (alphanumeric and underscores)
@@ -24,7 +24,7 @@ export default function TopologyCodeGenerator({ topology }) {
             }
         });
         return result;
-    };
+    }, []);
 
     const generateBicep = (flatNodes) => {
         let code = `targetScope = 'tenant'\n\n`;
@@ -45,7 +45,7 @@ export default function TopologyCodeGenerator({ topology }) {
             code += `}\n\n`;
 
             if (node.subscriptions && node.subscriptions.length > 0) {
-                node.subscriptions.forEach((sub, index) => {
+                node.subscriptions.forEach((sub, _index) => {
                     const subSafeId = sub.id.replace(/[^a-zA-Z0-9]/g, '_');
                     code += `resource sub_${subSafeId} 'Microsoft.Management/managementGroups/subscriptions@2021-04-01' = {\n`;
                     code += `  parent: mg_${node.safeId}\n`;
@@ -71,7 +71,7 @@ export default function TopologyCodeGenerator({ topology }) {
             code += `}\n\n`;
 
             if (node.subscriptions && node.subscriptions.length > 0) {
-                node.subscriptions.forEach((sub, index) => {
+                node.subscriptions.forEach((sub, _index) => {
                     const subSafeId = sub.id.replace(/[^a-zA-Z0-9]/g, '_');
                     code += `data "azurerm_subscription" "sub_${subSafeId}" {\n`;
                     code += `  subscription_id = "${sub.name}"\n`;
@@ -116,8 +116,7 @@ export default function TopologyCodeGenerator({ topology }) {
             code.resources.push(resource);
 
             if (node.subscriptions && node.subscriptions.length > 0) {
-                node.subscriptions.forEach((sub, index) => {
-                    const subSafeId = sub.id.replace(/[^a-zA-Z0-9]/g, '_');
+                node.subscriptions.forEach((sub, _index) => {
                     code.resources.push({
                         "type": "Microsoft.Management/managementGroups/subscriptions",
                         "apiVersion": "2021-04-01",
@@ -139,7 +138,7 @@ export default function TopologyCodeGenerator({ topology }) {
         if (format === 'terraform') return generateTerraform(flatNodes);
         if (format === 'arm') return generateArm(flatNodes);
         return '';
-    }, [topology, format]);
+    }, [topology, format, flattenTopology]);
 
     const docsUrl = useMemo(() => {
         if (format === 'terraform') return 'https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_group';

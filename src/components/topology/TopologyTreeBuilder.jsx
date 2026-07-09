@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, Key, X, Wand2, Download } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wand2, Download } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
 import { generateName } from '../../utils/nameGenerator';
 import { toPng } from 'html-to-image';

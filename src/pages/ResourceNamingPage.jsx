@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import ConfigPanel from '../components/naming/ConfigPanel';
 import ResourceGrid from '../components/naming/ResourceGrid';
 import ServiceFilter from '../components/shared/ServiceFilter';
+import AiPromptBar from '../components/ai/AiPromptBar';
 import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { generateName as generateResourceName } from '../utils/nameGenerator';
@@ -19,7 +20,7 @@ import { AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '../data/constan
  * - Resource data and generation logic
  */
 export default function ResourceNamingPage() {
-    const [isConfigMinimized, setIsConfigMinimized] = useState(false);
+    const [isConfigMinimized, setIsConfigMinimized] = useState(true);
 
     const [workload, setWorkload] = useLocalStorage('azres_workload', '');
     const [envValue, setEnvValue] = useLocalStorage('azres_env', 'prod');
@@ -32,27 +33,38 @@ export default function ResourceNamingPage() {
     const [activeCategory, setActiveCategory] = useLocalStorage('azres_category', 'All');
     const [copiedId, setCopiedId] = useState(null);
     const searchInputRef = useRef(null);
+    const aiInputRef = useRef(null);
 
     // Debounce search term to prevent expensive filtering on every keystroke
     // Delays search execution by 300ms until user stops typing
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     // Keyboard shortcuts handler
-    // - Escape: Close expanded cards or clear search
-    // - Ctrl+K / Forward Slash: Focus search input
+    // - Escape: Close expanded cards, clear search, or unfocus AI prompt
+    // - Ctrl+K: Focus AI Prompt Bar
+    // - Forward Slash (/): Focus Grid Search
     useEffect(() => {
         const handleKeyDown = (e) => {
             // Escape to close expanded card or clear search
             if (e.key === 'Escape') {
                 if (document.querySelector('.col-span-full')) return; // A card is expanded, let ResourceGrid handle it
-                if (searchTerm) {
+                
+                if (document.activeElement === aiInputRef.current) {
+                    aiInputRef.current?.blur();
+                } else if (searchTerm) {
                     setSearchTerm('');
                     searchInputRef.current?.blur();
                 }
             }
 
-            // Ctrl+K or / to focus search
-            if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && document.activeElement !== searchInputRef.current)) {
+            // Ctrl+K to focus AI prompt bar
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                aiInputRef.current?.focus();
+            }
+            
+            // Forward Slash to focus grid search
+            if (e.key === '/' && document.activeElement !== searchInputRef.current && document.activeElement !== aiInputRef.current) {
                 e.preventDefault();
                 searchInputRef.current?.focus();
             }
@@ -60,7 +72,7 @@ export default function ResourceNamingPage() {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [searchTerm]);
+    }, [searchTerm, aiInputRef, searchInputRef]);
 
 
 
@@ -82,12 +94,12 @@ export default function ResourceNamingPage() {
             [newOrder[index], newOrder[newIndex]] = [newOrder[newIndex], newOrder[index]];
             return newOrder;
         });
-    }, []);
+    }, [setNamingOrder]);
 
     const handleInstanceChange = useCallback((e) => {
         const val = e.target.value.replace(/[^0-9]/g, '');
         if (val.length <= 3) setInstance(val);
-    }, []);
+    }, [setInstance]);
 
     /**
      * Generates a compliant Azure resource name based on configuration and resource specific rules.
@@ -108,7 +120,20 @@ export default function ResourceNamingPage() {
     }, [workload, orgPrefix, currentRegion, formattedInstance, envValue, namingOrder, showOrg]);
 
     const filteredResources = useMemo(() => {
-        const lowerSearch = debouncedSearchTerm.toLowerCase();
+        const terms = debouncedSearchTerm.split(',')
+            .map(t => t.trim().toLowerCase())
+            .filter(Boolean);
+            
+        // Pre-compute which terms perfectly match a known resource
+        const exactMatchTerms = new Set();
+        terms.forEach(term => {
+            const hasExactMatch = RESOURCE_DATA_SORTED.some(rt => 
+                String(rt.name).toLowerCase() === term || String(rt.abbrev).toLowerCase() === term
+            );
+            if (hasExactMatch) {
+                exactMatchTerms.add(term);
+            }
+        });
         
         return RESOURCE_DATA_SORTED.filter(rt => {
             // Short-circuit category match first 
@@ -116,10 +141,24 @@ export default function ResourceNamingPage() {
             if (!matchesCategory) return false;
             
             // Short-circuit empty search
-            if (!lowerSearch) return true;
+            if (terms.length === 0) return true;
             
-            // Only perform string allocations if necessary
-            return String(rt.name).toLowerCase().includes(lowerSearch) || String(rt.abbrev).toLowerCase().includes(lowerSearch);
+            const nameLower = String(rt.name).toLowerCase();
+            const abbrevLower = String(rt.abbrev).toLowerCase();
+            
+            // Check if any of the search terms match the resource
+            return terms.some(term => {
+                // 1. If it's a perfect match for THIS specific resource, always show it
+                if (nameLower === term || abbrevLower === term) return true;
+                
+                // 2. If this term was a perfect match for SOME OTHER resource, 
+                // do NOT use it to lazily/partially match this one.
+                // (e.g. searching exact "Workspace" shouldn't show "Databricks Workspace")
+                if (exactMatchTerms.has(term)) return false;
+                
+                // 3. Otherwise, perform a standard partial match
+                return nameLower.includes(term) || abbrevLower.includes(term);
+            });
         });
     }, [debouncedSearchTerm, activeCategory]);
 
@@ -152,6 +191,16 @@ export default function ResourceNamingPage() {
         copyToClipboard(liveSchemaStr, 'live-pill', e);
     }, [copyToClipboard, liveSchemaStr]);
 
+    const handleResetDefaults = useCallback(() => {
+        setWorkload('');
+        setEnvValue('prod');
+        setRegionValue('uksouth');
+        setInstance('001');
+        setOrgPrefix('');
+        setNamingOrder(['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance']);
+        setShowOrg(false);
+    }, [setWorkload, setEnvValue, setRegionValue, setInstance, setOrgPrefix, setNamingOrder, setShowOrg]);
+
     return (
         <div className="flex flex-col min-w-0 w-full">
             <ConfigPanel
@@ -174,7 +223,18 @@ export default function ResourceNamingPage() {
                 liveSchemaStr={liveSchemaStr}
                 copiedId={copiedId}
                 onCopy={handleCopySchema}
-            />
+                onResetDefaults={handleResetDefaults}
+            >
+                {/* AI Magic Fill is now the primary interaction point */}
+                <AiPromptBar 
+                    ref={aiInputRef}
+                    setWorkload={setWorkload}
+                    setEnvValue={setEnvValue}
+                    setRegionValue={setRegionValue}
+                    setSearchTerm={setSearchTerm}
+                    setActiveCategory={setActiveCategory}
+                />
+            </ConfigPanel>
 
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 space-y-4 sm:space-y-5">
                 {/* Compact service toolbar: search + category tabs */}

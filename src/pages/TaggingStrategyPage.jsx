@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, ChevronDown, ChevronRight, Tags, Info } from 'lucide-react';
+import { ExternalLink, ChevronDown, ChevronRight, Info } from 'lucide-react';
 import TagBuilder from '../components/tagging/TagBuilder';
 import TagOutputPanel from '../components/tagging/TagOutputPanel';
 

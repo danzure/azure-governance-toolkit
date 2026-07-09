@@ -109,7 +109,7 @@ const ServiceFilter = ({
                         type="text"
                         value={searchTerm}
                         onChange={onSearchChange}
-                        placeholder={isMobile ? "Filter..." : "Filter... (Ctrl+K)"}
+                        placeholder={isMobile ? "Filter..." : "Filter... (/)"}
                         aria-label="Filter resources"
                         className="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px] sm:text-[12px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
                     />

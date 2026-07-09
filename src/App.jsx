@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import Header from './components/layout/Header';
@@ -34,7 +34,7 @@ export default function App() {
                     window.localStorage.removeItem('azres_darkMode');
                     return JSON.parse(oldPref) ? 'dark' : 'light';
                 }
-            } catch (e) {
+            } catch {
                 // ignore
             }
         }

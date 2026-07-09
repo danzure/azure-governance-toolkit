@@ -30,7 +30,7 @@ export function validateName(name, resource) {
     const charsList = resource.chars ? resource.chars.split(',').map(c => c.trim()) : [];
     const allowsHyphens = charsList.includes('-');
     const allowsPeriods = charsList.includes('.');
-    const allowsUnderscores = charsList.includes('_');
+    const _allowsUnderscores = charsList.includes('_');
     const allowsUppercase = charsList.includes('A-Z');
     const allowsLowercase = charsList.includes('a-z');
 

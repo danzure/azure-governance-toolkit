@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Cloud, ExternalLink, Network, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
@@ -15,6 +15,7 @@ export default function DashboardPage() {
             path: '/azure-resources',
             colorClass: 'text-fluent-brand-fg',
             bgClass: 'bg-transparent',
+            hasAi: true,
         },
         {
             id: 'conditional-access',
@@ -65,37 +66,44 @@ export default function DashboardPage() {
                                     key={tool.id}
                                     onClick={() => navigate(tool.path)}
                                     className={`
-                                relative group cursor-pointer 
-                                bg-fluent-bg-card rounded-xl p-5
-                                border border-fluent-stroke-subtle
-                                shadow-soft hover:shadow-depth hover:-translate-y-1
-                                transition-all duration-300 ease-in-out
+                                relative group cursor-pointer overflow-hidden
+                                bg-white/70 dark:bg-[#242424]/70 backdrop-blur-xl rounded-xl p-5
+                                border border-black/5 dark:border-white/5
+                                shadow-sm hover:shadow-xl hover:-translate-y-1
+                                hover:border-black/10 dark:hover:border-white/10
+                                hover:bg-white/90 dark:hover:bg-[#292929]/90
+                                transition-all duration-200 ease-out
                                 flex flex-col h-full animate-slide-up stagger-${index + 1}
                             `}
                                 >
-                                    <div className="flex items-start justify-between mb-3">
+                                    <div className="flex items-start justify-between mb-4">
                                         <div className={`p-3 rounded-lg ${tool.bgClass}`}>
                                             {tool.iconUrl ? (
-                                                <img src={tool.iconUrl} alt={`${tool.title} icon`} className="w-10 h-10 object-contain" />
+                                                <img src={tool.iconUrl} alt={`${tool.title} icon`} className="w-10 h-10 object-contain drop-shadow-sm" />
                                             ) : (
-                                                <tool.icon className={`w-10 h-10 ${tool.colorClass}`} />
+                                                <tool.icon className={`w-10 h-10 ${tool.colorClass} drop-shadow-sm`} />
                                             )}
                                         </div>
-                                        <div className="text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors">
-                                            <ArrowRight className="w-5 h-5 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                                        <div className="flex items-center gap-3">
+                                            {tool.hasAi && (
+                                                <span className="flex items-center gap-1 bg-fluent-brand-bg/10 text-fluent-brand-bg border border-fluent-brand-bg/20 text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-sm">
+                                                    <Sparkles className="w-3 h-3" />
+                                                    AI Powered
+                                                </span>
+                                            )}
+                                            <div className="text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors">
+                                                <ArrowRight className="w-5 h-5 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out" />
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <h2 className="text-xl font-semibold text-fluent-fg-primary mb-1">
+                                    <h2 className="text-[20px] leading-tight font-semibold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200">
                                         {tool.title}
                                     </h2>
 
-                                    <p className="text-fluent-fg-secondary flex-grow leading-relaxed">
+                                    <p className="text-[14px] text-fluent-fg-secondary flex-grow leading-relaxed">
                                         {tool.description}
                                     </p>
-
-                                    {/* Decorative gradient line on hover */}
-                                    <div className="absolute bottom-0 left-0 h-1 w-0 bg-primary-gradient group-hover:w-full transition-all duration-500 rounded-b-xl"></div>
                                 </div>
                             );
                         })}

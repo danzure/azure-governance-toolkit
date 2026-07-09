@@ -1,5 +1,5 @@
 import { memo, useState, useMemo } from 'react';
-import { Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck, X, ExternalLink } from 'lucide-react';
+import { Copy, Check, ShieldAlert, AlertTriangle, X } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import ExpandedPanel from './ExpandedPanel';
 import AzureServiceIcon from './AzureServiceIcon';

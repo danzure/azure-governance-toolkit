@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ExternalLink, Network, FileCode2, ChevronDown, ChevronRight, Layers, Info } from 'lucide-react';
+import { useState } from 'react';
+import { ExternalLink, Network, FileCode2, ChevronDown, ChevronRight, Info } from 'lucide-react';
 import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
 import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator';
 import useLocalStorage from '../hooks/useLocalStorage';

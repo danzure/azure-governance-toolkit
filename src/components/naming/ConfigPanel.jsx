@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { ChevronDown, ChevronUp, ChevronRight, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, Globe, ExternalLink } from 'lucide-react';
+import { ChevronDown, ChevronUp, ChevronRight, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, ExternalLink, Settings2, RefreshCw } from 'lucide-react';
 import SearchableSelect from '../shared/SearchableSelect';
 import Tooltip from '../shared/Tooltip';
 import { AZURE_REGIONS, ENVIRONMENTS } from '../../data/constants';
@@ -39,7 +39,7 @@ function ConfigPanel({
     isMinimized, onToggleMinimize,
     workload, setWorkload, envValue, setEnvValue, regionValue, setRegionValue,
     instance, onInstanceChange, orgPrefix, setOrgPrefix, showOrg, setShowOrg,
-    namingOrder, onMoveItem, liveSchemaStr, copiedId, onCopy
+    namingOrder, onMoveItem, liveSchemaStr, copiedId, onCopy, onResetDefaults, children
 }) {
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
     
@@ -47,7 +47,7 @@ function ConfigPanel({
         <div className="relative z-40">
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-4 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col">
                 {/* Header row */}
-                <div className="flex items-start justify-between mb-8 gap-4">
+                <div className="flex items-start justify-between mb-6 gap-4">
                     <div>
                         <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
                             Azure Resource Naming Tool
@@ -56,13 +56,6 @@ function ConfigPanel({
                             Generate consistent, standards-compliant Azure resource names aligned with Microsoft's Cloud Adoption Framework.
                         </p>
                     </div>
-                    <button 
-                        onClick={onToggleMinimize} 
-                        className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[14px] font-medium text-fluent-brand-fg hover:bg-black/5 dark:hover:bg-white/5 transition-colors mt-1"
-                    >
-                        {isMinimized ? 'Show Configuration' : 'Hide Configuration'}
-                        {isMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-                    </button>
                 </div>
 
                 {/* Resource Naming Guidance - Pinned below header */}
@@ -117,15 +110,39 @@ function ConfigPanel({
                     </div>
                 </div>
 
+                {children}
+
+                {/* Manual Configuration Toggle */}
+                <div className="flex justify-center mt-2 mb-6">
+                    <button
+                        onClick={onToggleMinimize}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
+                    >
+                        <Settings2 className="w-4 h-4" />
+                        {isMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
+                        {isMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                    </button>
+                </div>
+
                 {!isMinimized && (
                     <div className="animate-slide-up">
                         {/* Unified Configuration Card */}
                         <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col">
                             {/* Parameters */}
                             <div className="p-3">
-                            <div className="flex items-center gap-2 mb-3 pr-8">
-                                <Edit3 className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Parameters</h3>
+                            <div className="flex items-center justify-between mb-3">
+                                <div className="flex items-center gap-2">
+                                    <Edit3 className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                    <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Parameters</h3>
+                                </div>
+                                <button
+                                    onClick={onResetDefaults}
+                                    className="text-[12px] flex items-center gap-1.5 text-fluent-brand-fg hover:text-fluent-brand-fg/80 font-medium px-2 py-1 rounded transition-colors hover:bg-fluent-brand-bg/10"
+                                    title="Reset to default naming configuration"
+                                >
+                                    <RefreshCw className="w-3.5 h-3.5" />
+                                    Reset
+                                </button>
                             </div>
                                 {/* Form grid - 2 columns on large screens to cleanly fill whitespace */}
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-4">
@@ -316,6 +333,8 @@ ConfigPanel.propTypes = {
     liveSchemaStr: PropTypes.string.isRequired,
     copiedId: PropTypes.string,
     onCopy: PropTypes.func.isRequired,
+    onResetDefaults: PropTypes.func.isRequired,
+    children: PropTypes.node
 };
 
 export default memo(ConfigPanel);

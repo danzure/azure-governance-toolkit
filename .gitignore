@@ -31,3 +31,6 @@ npm-debug.log*
 temp-icons/
 scratch*.cjs
 diff.txt
+
+# Azure Functions API
+api/local.settings.json
