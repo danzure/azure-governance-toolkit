@@ -137,7 +137,7 @@ function ConfigPanel({
                                 </div>
                                 <button
                                     onClick={onResetDefaults}
-                                    className="text-[12px] flex items-center gap-1.5 text-fluent-brand-fg hover:text-fluent-brand-fg/80 font-medium px-2 py-1 rounded transition-colors hover:bg-fluent-brand-bg/10"
+                                    className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium px-2.5 py-1.5 rounded-md transition-colors"
                                     title="Reset to default naming configuration"
                                 >
                                     <RefreshCw className="w-3.5 h-3.5" />

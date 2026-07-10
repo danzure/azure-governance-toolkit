@@ -199,7 +199,9 @@ export default function ResourceNamingPage() {
         setOrgPrefix('');
         setNamingOrder(['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance']);
         setShowOrg(false);
-    }, [setWorkload, setEnvValue, setRegionValue, setInstance, setOrgPrefix, setNamingOrder, setShowOrg]);
+        setSearchTerm('');
+        setActiveCategory('All');
+    }, [setWorkload, setEnvValue, setRegionValue, setInstance, setOrgPrefix, setNamingOrder, setShowOrg, setActiveCategory]);
 
     return (
         <div className="flex flex-col min-w-0 w-full">
@@ -233,6 +235,7 @@ export default function ResourceNamingPage() {
                     setRegionValue={setRegionValue}
                     setSearchTerm={setSearchTerm}
                     setActiveCategory={setActiveCategory}
+                    onResetAll={handleResetDefaults}
                 />
             </ConfigPanel>
 

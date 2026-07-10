@@ -11,14 +11,19 @@ You MUST extract the following fields and return them as a strict JSON object:
   CRITICAL: You MUST use exact names from this predefined list when returning resources: "SQL database", "SQL server", "App Service plan", "App Service", "Key vault", "Kubernetes (AKS)", "Container registry", "Virtual network", "Public IP", "Managed identity (user)", "VPN Gateway", "ExpressRoute circuit", "Azure Firewall", "Function app", "Storage account", "Application Insights", "Data Factory", "Data Lake Storage", "Synapse workspace", "Log Analytics workspace", "Host Pool", "Application Group", "Workspace", "Scaling Plan", "API Management".
   
   EXAMPLES OF EXACT EXPECTED MAPPINGS:
+  - For "Production E-Commerce Web App with Azure SQL Backend in West Europe", return searchTerm: "App Service plan, App Service, SQL server, SQL database, Key vault, Application Insights"
+  - For "Enterprise Data Analytics Environment for Finance in UK South", return searchTerm: "Data Factory, Data Lake Storage, Synapse workspace, Key vault, Log Analytics workspace"
+  - For "Azure Virtual Desktop for Remote Workers in UK South", return searchTerm: "Host Pool, Application Group, Workspace, Scaling Plan, Storage account, Virtual network"
+  - For "Core Hub and Spoke Networking in UK West", return searchTerm: "Virtual network, VPN Gateway, ExpressRoute circuit, Azure Firewall, Public IP"
+  - For "Serverless API Architecture for Mobile App in North Europe", return searchTerm: "Function app, API Management, Storage account, Application Insights, Key vault"
+  - For "A production data analytics environment for Finance in West Europe", return searchTerm: "Data Factory, Data Lake Storage, Synapse workspace, Key vault, Log Analytics workspace"
   - For "A staging database for HR in UK South", return searchTerm: "SQL database, SQL server"
-  - For "Production Web App with SQL Database in West Europe", return searchTerm: "App Service plan, App Service, SQL server, SQL database, Key vault"
-  - For "An AKS cluster for microservices in East US", return searchTerm: "Kubernetes (AKS), Container registry, Virtual network, Public IP, Managed identity (user)"
-  - For "Core Networking Hub in UK West", return searchTerm: "Virtual network, VPN Gateway, ExpressRoute circuit, Azure Firewall, Public IP"
-  - For "A serverless function app for processing orders in North Europe", return searchTerm: "Function app, Storage account, Application Insights, Key vault"
-  - For "A data analytics environment for Finance in Central US", return searchTerm: "Data Factory, Data Lake Storage, Synapse workspace, Key vault, Log Analytics workspace"
-  - For "Azure Virtual Desktop environment for Marketing in UK South", return searchTerm: "Host Pool, Application Group, Workspace, Scaling Plan, Storage account, Virtual network"
-  - For "Serverless API for orders in North Europe", return searchTerm: "Function app, API Management, Storage account, Application Insights, Key vault"
+  - For "An AKS cluster for microservices in North Europe", return searchTerm: "Kubernetes (AKS), Container registry, Virtual network, Public IP, Managed identity (user)"
+  - For "Machine Learning Workspace for Data Science in West Europe", return searchTerm: "Workspace, Storage account, Key vault, Application Insights, Container registry"
+  - For "Staging API Management Gateway with Azure Functions in North Europe", return searchTerm: "API Management, Function app, Storage account, Application Insights"
+  - For "Development Firewall and VPN Gateway Hub in UK South", return searchTerm: "Azure Firewall, VPN Gateway, Virtual network, Public IP"
+  - For "Disaster Recovery Storage and Data Factory in UK West", return searchTerm: "Storage account, Data Factory, Key vault, Managed identity (user)"
+  - For "Production AKS Microservices Environment in North Europe", return searchTerm: "Kubernetes (AKS), Container registry, Virtual network, Public IP, Managed identity (user), Log Analytics workspace"
 
 If the user does not specify one of these fields, make a best-effort guess based on context, or leave it as an empty string if completely unknown, but the key MUST exist in the JSON.
 Do NOT include any markdown formatting or explanations, just the JSON object.`;

@@ -1,5 +1,5 @@
 import { useState, forwardRef } from 'react';
-import { Sparkles, ArrowRight, Loader2 } from 'lucide-react';
+import { Sparkles, ArrowRight, Loader2, X, RefreshCw } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 /**
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * A premium natural language input bar that calls the Azure OpenAI backend
  * to automatically generate Resource Naming configurations based on user intent.
  */
-const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSearchTerm, setActiveCategory }, ref) => {
+const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSearchTerm, setActiveCategory, onResetAll }, ref) => {
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -62,22 +62,40 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
     };
 
     const presets = [
-        "Production Web App with SQL Database in West Europe",
-        "An AKS cluster for microservices in East US",
-        "Core Networking Hub in UK West",
-        "Azure Virtual Desktop environment for Marketing in UK South",
-        "Serverless API for orders in North Europe"
+        "Production E-Commerce Web App with Azure SQL Backend in West Europe",
+        "Enterprise Data Analytics Environment for Finance in UK South",
+        "Azure Virtual Desktop for Remote Workers in UK South",
+        "Core Hub and Spoke Networking in UK West",
+        "Serverless API Architecture for Mobile App in North Europe",
+        "Machine Learning Workspace for Data Science in West Europe",
+        "Staging API Management Gateway with Azure Functions in North Europe",
+        "Development Firewall and VPN Gateway Hub in UK South",
+        "Disaster Recovery Storage and Data Factory in UK West",
+        "Production AKS Microservices Environment in North Europe"
     ];
 
     return (
         <div className="w-full mb-4 group relative z-30">
-            <div className="flex items-center gap-2 mb-1.5 ml-1">
-                <span className="text-xs font-semibold text-fluent-brand-bg uppercase tracking-wider">
-                    Smart Generate
-                </span>
-                <span className="bg-fluent-bg-tertiary text-fluent-fg-secondary border border-fluent-stroke-subtle text-[10px] px-1.5 py-0.5 rounded-full font-bold">
-                    EXPERIMENTAL
-                </span>
+            <div className="flex items-center justify-between mb-1.5 ml-1">
+                <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-fluent-brand-bg uppercase tracking-wider">
+                        Smart Generate
+                    </span>
+                    <span className="bg-fluent-bg-tertiary text-fluent-fg-secondary border border-fluent-stroke-subtle text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+                        EXPERIMENTAL
+                    </span>
+                </div>
+                {onResetAll && (
+                    <button
+                        type="button"
+                        onClick={onResetAll}
+                        className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium px-2.5 py-1.5 rounded-md transition-colors"
+                        title="Reset all settings and filters"
+                    >
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        Reset All
+                    </button>
+                )}
             </div>
             <form onSubmit={handleSubmit} className="relative flex items-center w-full">
                 {/* Glow effect behind the bar */}
@@ -99,31 +117,48 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         disabled={isLoading}
-                        placeholder={isLoading ? "Analyzing intent and matching to CAF..." : "Describe what you're building (e.g., 'A staging database for HR in UK South')..."}
-                        className="flex-1 h-full bg-transparent !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[15px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary disabled:opacity-50 pr-4"
+                        placeholder={isLoading ? "Analyzing intent and matching to CAF..." : "Describe your cloud architecture (e.g., 'A production data analytics environment for Finance in West Europe')..."}
+                        className="flex-1 h-full bg-transparent !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[15px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary disabled:opacity-50 pr-20"
                     />
 
-                    {prompt.trim() && !isLoading && (
-                        <button
-                            type="submit"
-                            className="absolute right-2 flex items-center justify-center w-8 h-8 rounded-md bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover transition-colors"
-                            aria-label="Generate Configuration"
-                        >
-                            <ArrowRight className="w-4 h-4" />
-                        </button>
-                    )}
+                    <div className="absolute right-2 flex items-center gap-1">
+                        {prompt && !isLoading && (
+                            <button
+                                type="button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setPrompt('');
+                                    // Optionally refocus: ref?.current?.focus();
+                                }}
+                                className="flex items-center justify-center w-8 h-8 rounded-md text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle transition-colors"
+                                aria-label="Clear Input"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
+                        )}
+
+                        {prompt.trim() && !isLoading && (
+                            <button
+                                type="submit"
+                                className="flex items-center justify-center w-8 h-8 rounded-md bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover transition-colors"
+                                aria-label="Generate Configuration"
+                            >
+                                <ArrowRight className="w-4 h-4" />
+                            </button>
+                        )}
+                    </div>
                 </div>
             </form>
             {error && <p className="text-red-500 text-sm mt-2 ml-2">{error}</p>}
 
             {/* Pinned Presets */}
-            <div className="flex flex-wrap gap-2 mt-3 ml-1">
+            <div className="flex overflow-x-auto gap-2 mt-3 ml-1 pb-2 scrollbar-hide w-full" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {presets.map((preset, index) => (
                     <button
                         key={index}
                         type="button"
                         onClick={() => setPrompt(preset)}
-                        className="text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-full shadow-soft transition-colors"
+                        className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-full shadow-soft transition-colors"
                     >
                         {preset}
                     </button>
@@ -138,7 +173,8 @@ AiPromptBar.propTypes = {
     setEnvValue: PropTypes.func.isRequired,
     setRegionValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
-    setActiveCategory: PropTypes.func
+    setActiveCategory: PropTypes.func,
+    onResetAll: PropTypes.func
 };
 
 AiPromptBar.displayName = 'AiPromptBar';

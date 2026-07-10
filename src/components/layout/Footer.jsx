@@ -1,4 +1,4 @@
-import { Github, Linkedin, BookOpen, Scale, Globe } from 'lucide-react';
+import { Github, Linkedin, Coffee } from 'lucide-react';
 
 /**
  * Footer Component
@@ -38,24 +38,15 @@ export default function Footer() {
 
                 {/* Right Side: Links styled like Fluent UI 2 buttons */}
                 <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                    <a
-                        href="https://atozazure.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
-                    >
-                        <Globe className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>atozazure</span>
-                    </a>
 
                     <a
-                        href="https://blog.atozazure.com"
+                        href="https://www.buymeacoffee.com/danzure"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
                     >
-                        <BookOpen className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>Blog</span>
+                        <Coffee className="w-4 h-4 text-fluent-fg-tertiary" />
+                        <span>Buy me a Coffee</span>
                     </a>
 
                     <a
@@ -78,17 +69,7 @@ export default function Footer() {
                         <span>LinkedIn</span>
                     </a>
 
-                    <div className="hidden sm:block w-px h-5 bg-fluent-stroke-subtle mx-1"></div>
 
-                    <a
-                        href="https://opensource.org/licenses/MIT"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
-                    >
-                        <Scale className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>MIT License</span>
-                    </a>
                 </div>
 
             </div>
