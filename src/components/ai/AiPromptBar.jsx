@@ -75,7 +75,7 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
     ];
 
     return (
-        <div className="w-full mb-4 group relative z-30">
+        <div className="w-full mb-2 group relative z-30">
             <div className="flex items-center justify-between mb-1.5 ml-1">
                 <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-fluent-brand-bg uppercase tracking-wider">

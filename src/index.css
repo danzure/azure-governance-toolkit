@@ -121,7 +121,7 @@ body,
 }
 
 body {
-    @apply font-sans antialiased text-[#242424];
+    @apply font-sans antialiased text-[#242424] overscroll-y-none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

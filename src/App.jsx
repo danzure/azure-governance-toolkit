@@ -143,7 +143,7 @@ export default function App() {
                     onClose={handleCloseMobileNav}
                 />
 
-                <main id="main-scroll-container" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto">
+                <main id="main-scroll-container" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overscroll-y-none">
                     <Suspense fallback={<div className="flex-1 flex items-center justify-center p-8 text-fluent-fg-secondary">Loading page...</div>}>
                         <Routes>
                             <Route path="/" element={<DashboardPage />} />

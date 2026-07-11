@@ -113,7 +113,7 @@ function ConfigPanel({
                 {children}
 
                 {/* Manual Configuration Toggle */}
-                <div className="flex justify-center mt-2 mb-6">
+                <div className="flex justify-center mt-1 mb-3">
                     <button
                         onClick={onToggleMinimize}
                         className="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"

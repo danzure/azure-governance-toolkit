@@ -124,15 +124,17 @@ export default function ConditionalAccessPage() {
                     </button>
                 </div>
 
-                <ServiceFilter
-                    activeCategory={activeCategory}
-                    onCategoryChange={setActiveCategory}
-                    categories={CA_CATEGORIES}
-                    searchTerm={searchTerm}
-                    onSearchChange={handleSearchChange}
-                    onClearSearch={handleClearSearch}
-                    searchInputRef={searchInputRef}
-                />
+                <div className="sticky top-0 z-30 pt-2 pb-3 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
+                    <ServiceFilter
+                        activeCategory={activeCategory}
+                        onCategoryChange={setActiveCategory}
+                        categories={CA_CATEGORIES}
+                        searchTerm={searchTerm}
+                        onSearchChange={handleSearchChange}
+                        onClearSearch={handleClearSearch}
+                        searchInputRef={searchInputRef}
+                    />
+                </div>
 
                 {groupedPolicies.length === 0 ? (
                     <div className="text-center py-16 text-fluent-fg-tertiary">
