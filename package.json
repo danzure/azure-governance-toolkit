@@ -1,12 +1,13 @@
 {
   "name": "azure-governance-tools",
   "private": true,
-  "version": "2.7.1",
+  "version": "2.7.2",
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
+    "start": "npx concurrently \"npm run dev\" \"cd api && npm start\"",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
