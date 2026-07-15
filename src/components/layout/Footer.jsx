@@ -40,7 +40,7 @@ export default function Footer() {
                 <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
 
                     <a
-                        href="https://www.buymeacoffee.com/danzure"
+                        href="https://buymeacoffee.com/danielpowley"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
