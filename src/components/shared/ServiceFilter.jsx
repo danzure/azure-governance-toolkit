@@ -159,7 +159,7 @@ const ServiceFilter = ({
                                     role="tab"
                                     aria-selected={activeCategory === cat}
                                     className={`
-                                        shrink-0 px-3 py-1.5 sm:px-2.5 sm:py-1 text-[13px] sm:text-[12px] font-medium rounded-full sm:rounded transition-colors duration-150
+                                        shrink-0 px-3 py-1.5 sm:px-2.5 sm:py-1 text-[13px] sm:text-[12px] font-medium rounded-[4px] transition-colors duration-150
                                         focus:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg
                                         ${activeCategory === cat
                                             ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold'
@@ -191,7 +191,7 @@ const ServiceFilter = ({
                             onClick={() => onCategoryChange('All')}
                             title="Clear filter"
                             aria-label="Clear category filter"
-                            className="ml-2 sm:ml-0 shrink-0 flex items-center gap-1.5 h-[32px] sm:h-[28px] px-2.5 sm:px-2 rounded-full sm:rounded text-[13px] sm:text-[12px] font-semibold transition-colors bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover"
+                            className="ml-2 sm:ml-0 shrink-0 flex items-center gap-1.5 h-[32px] sm:h-[28px] px-2.5 sm:px-2 rounded-[4px] text-[13px] sm:text-[12px] font-semibold transition-colors bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover"
                         >
                             <X className="w-3.5 h-3.5" aria-hidden="true" />
                             <span className="hidden sm:inline">Clear</span>

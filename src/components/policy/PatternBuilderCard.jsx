@@ -207,18 +207,21 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         <Eye className="w-3.5 h-3.5 text-fluent-brand-fg" />
                         <span className="text-[12px] font-medium text-fluent-fg-tertiary">Preview</span>
                     </div>
-                    <div className="flex-1 px-3 py-1.5 rounded font-mono text-[12px] sm:text-[14px] font-semibold tracking-wide bg-fluent-bg-card text-fluent-brand-fg border border-fluent-stroke-subtle dark:border-transparent truncate overflow-x-auto scrollbar-hide">
-                        {generatedName}
+                    
+                    <div className="group/copy relative flex flex-1 items-center gap-2 px-3 py-1.5 min-h-[32px] min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
+                        <div className="flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-fg-primary truncate pr-20">
+                            {generatedName}
+                        </div>
+                        <button
+                            onClick={() => handleCopy(generatedName, 'live-pill')}
+                            aria-label={copiedId === 'live-pill' ? 'Copied' : 'Copy name'}
+                            className={`absolute right-1 top-1/2 -translate-y-1/2 shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${copiedId === 'live-pill' 
+                                ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
+                        >
+                            {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>}
+                        </button>
                     </div>
-                    <button
-                        onClick={() => handleCopy(generatedName, 'live-pill')}
-                        className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-colors inline-flex items-center justify-center gap-1.5 border ${copiedId === 'live-pill'
-                            ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
-                            : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'
-                            }`}
-                    >
-                        {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>}
-                    </button>
                 </div>
             </div>
         </div>

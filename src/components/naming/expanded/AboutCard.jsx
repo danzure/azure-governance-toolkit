@@ -132,12 +132,16 @@ export function GuidanceCard({ namingPattern, namingGuidanceText, t }) {
                     <span className={`text-[12px] font-semibold ${t.caption}`}>Deployment guidance</span>
                 </div>
                 {namingPattern && (
-                    <div className={`mb-1.5 px-2.5 py-1.5 rounded-sm font-mono text-[12px] flex items-center justify-between gap-2 ${t.codeBlock}`}>
-                        <span className="break-all">{namingPattern}</span>
+                    <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all mb-1.5">
+                        <div className="flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-fg-primary truncate pr-14">
+                            {namingPattern}
+                        </div>
                         <button
                             onClick={handleCopy}
-                            className={`shrink-0 flex items-center justify-center w-7 h-7 rounded-md border shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-colors ${isCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
-                            title="Copy deployment guidance"
+                            aria-label={isCopied ? 'Copied' : 'Copy name'}
+                            className={`absolute right-1 top-1/2 -translate-y-1/2 shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${isCopied 
+                                ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                         >
                             {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>

@@ -86,7 +86,7 @@ export default function DashboardPage() {
                                         </div>
                                         <div className="flex items-center gap-3">
                                             {tool.hasAi && (
-                                                <span className="flex items-center gap-1 bg-fluent-brand-bg/10 text-fluent-brand-bg border border-fluent-brand-bg/20 text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-sm">
+                                            <span className="flex items-center gap-1 bg-fluent-brand-bg/10 text-fluent-brand-fg border border-fluent-brand-bg/20 text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm">
                                                     <Sparkles className="w-3 h-3" />
                                                     AI Powered
                                                 </span>

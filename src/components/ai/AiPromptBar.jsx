@@ -81,7 +81,7 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
                     <span className="text-xs font-semibold text-fluent-brand-bg uppercase tracking-wider">
                         Smart Generate
                     </span>
-                    <span className="bg-fluent-bg-tertiary text-fluent-fg-secondary border border-fluent-stroke-subtle text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+                    <span className="bg-fluent-bg-tertiary text-fluent-fg-secondary border border-fluent-stroke-subtle text-[10px] px-1.5 py-0.5 rounded-[4px] font-bold">
                         EXPERIMENTAL
                     </span>
                 </div>
@@ -158,7 +158,7 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
                         key={index}
                         type="button"
                         onClick={() => setPrompt(preset)}
-                        className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-full shadow-soft transition-colors"
+                        className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-soft transition-colors"
                     >
                         {preset}
                     </button>

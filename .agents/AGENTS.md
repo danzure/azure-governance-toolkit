@@ -78,3 +78,16 @@ When creating or modifying UI components, you **must** adhere to the following T
 - **Animation Timings**: Use the standard snappy Fluent timing (`transition-all duration-200 ease-in-out`). Do not use slower animations (`duration-300`, `duration-500`) or bouncy spring curves.
 - **Micro-interactions**: Interactive toggle buttons must use the standard `active:scale-95` push effect.
 - **Focus Rings**: Ensure strong keyboard accessibility using standard focus rings tailored to the background (e.g., `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50` on light backgrounds, or `focus-visible:ring-white/50` on dark backgrounds).
+
+### 12. Badges, Tags & Chips
+- **Shape & Geometry**: Consistent with other Fluent 2 elements, badges, status tags, and chips must use standard rounded corners (e.g., `rounded-[4px]`). **Do not use fully rounded pill shapes (`rounded-full`)**.
+- **Sizing & Padding**: Use compact padding and standardized text sizes. For example: `px-2 py-0.5 text-[11px] font-medium` or `px-2 min-h-[20px] inline-flex items-center text-[12px] font-medium`.
+- **Colors**: Use appropriate semantic colours from the Fluent palette (e.g., `bg-fluent-bg-subtle text-fluent-fg-secondary` for neutral tags, or `bg-fluent-brand-bg/10 text-fluent-brand-fg` for branded tags).
+- **Indicator Dots**: Small circular indicator dots (e.g., `w-1.5 h-1.5 rounded-full`) used for status or list bullets are an exception and may remain fully rounded.
+
+### 13. Copyable Text Fields & Snippets
+To present read-only text (like generated resource names, IDs, or short policies) intended for the user to copy, maintain a unified Fluent 2 appearance:
+- **Snippet Container**: Use a clean, subtle read-only field appearance: `group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all`. For emphasis on primary generated assets, you may use a subtle brand tint (e.g. `bg-fluent-brand-bg/5`).
+- **Snippet Text**: Ensure the text stands out as copyable data by using a monospace font: `flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-fg-primary truncate`. If it represents a primary generated asset, you may use `text-fluent-brand-fg` for emphasis.
+- **Copy Button (Default State)**: Embed a copy button adjacent to or within the container. Use the standard "Icon Button (Action/Copy)" from Section 2, or a compact variation designed to sit inside the snippet container: `shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong`.
+- **Copy Button (Success/Copied State)**: When an item is copied, visually indicate success on the button using standard Fluent 2 positive colours: `bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]`. Ensure the icon swaps from `<Copy />` to `<Check />`.

@@ -45,70 +45,83 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
     };
 
     return (
-        <div className={`rounded-md border overflow-hidden flex flex-col h-full ${t.card}`}>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between px-4 pt-3 pb-2 shrink-0 gap-3 lg:gap-0">
-                <div className="flex items-center gap-1.5">
-                    <Code2 className={`w-3 h-3 ${t.muted}`} />
-                    <span className={`text-[12px] font-semibold ${t.caption}`}>Infrastructure as Code</span>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                    <div className="flex shrink-0 bg-fluent-bg-subtle rounded-sm p-0.5">
-                        <button
-                            onClick={(e) => { e.stopPropagation(); setIacTab('bicep'); }}
-                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
-                        >
-                            Bicep
-                        </button>
-                        <button
-                            onClick={(e) => { e.stopPropagation(); setIacTab('arm'); }}
-                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
-                        >
-                            ARM
-                        </button>
-                        <button
-                            onClick={(e) => { e.stopPropagation(); setIacTab('terraform'); }}
-                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
-                        >
-                            Terraform
-                        </button>
+        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full flex-1 min-h-0">
+            <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
+                <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
+                        <Code2 className="w-4 h-4" />
                     </div>
-                    <a
-                        href={docsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-card text-fluent-fg-primary text-[13px] font-medium hover:bg-fluent-bg-hover transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
-                        onClick={(e) => e.stopPropagation()}
-                        title="View documentation"
-                    >
-                        {iacTab === 'terraform' ? (
-                            <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
-                        ) : (
-                            <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 0h11v11H0z" fill="#f35325"/>
-                                <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                                <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                                <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                            </svg>
-                        )}
-                        {iacTab === 'terraform' ? 'Terraform Registry' : iacTab === 'bicep' ? 'Bicep Template' : 'ARM Template'}
-                        <ExternalLink className="w-3 h-3" />
-                    </a>
+                    <div className="flex flex-col">
+                        <span className="text-[15px]">Code Templates (IaC)</span>
+                        <span className="text-[12px] font-normal text-fluent-fg-secondary">Review and export your {iacTab === 'terraform' ? 'Terraform' : iacTab === 'bicep' ? 'Bicep' : 'ARM'} code</span>
+                    </div>
+                </div>
+                
+                <div className="flex items-center gap-2 w-full lg:w-auto">
+                    <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 lg:gap-2 w-full sm:w-auto">
+                        <div className="flex shrink-0 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md p-0.5 w-full sm:w-auto">
+                            <button
+                                onClick={(e) => { e.stopPropagation(); setIacTab('bicep'); }}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${iacTab === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                            >
+                                Bicep
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); setIacTab('arm'); }}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${iacTab === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                            >
+                                ARM
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); setIacTab('terraform'); }}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${iacTab === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                            >
+                                Terraform
+                            </button>
+                        </div>
+                        <div className="flex flex-row items-center gap-2 w-full sm:w-auto">
+                            <a
+                                href={docsUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] border transition-colors duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                onClick={(e) => e.stopPropagation()}
+                                title="View documentation"
+                            >
+                                {iacTab === 'terraform' ? (
+                                    <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
+                                ) : (
+                                    <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 0h11v11H0z" fill="#f35325"/>
+                                        <path d="M12 0h11v11H12z" fill="#81bc06"/>
+                                        <path d="M0 12h11v11H0z" fill="#05a6f0"/>
+                                        <path d="M12 12h11v11H12z" fill="#ffba08"/>
+                                    </svg>
+                                )}
+                                <span className="hidden sm:inline">{iacTab === 'terraform' ? 'Terraform Registry' : iacTab === 'bicep' ? 'Bicep Template' : 'ARM Template'}</span>
+                                <span className="sm:hidden">Docs</span>
+                                <ExternalLink className="w-3 h-3 shrink-0" />
+                            </a>
+                            
+                            <div className="w-px h-5 bg-fluent-stroke-subtle hidden sm:block"></div>
+                            
+                            <button
+                                onClick={handleCopyIac}
+                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
+                                title="Copy code"
+                            >
+                                {isIacCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                <span>{isIacCopied ? 'Copied' : 'Copy'}</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] bg-[#f3f2f1] dark:bg-[#1b1a19] flex-1 relative min-h-[14.5rem]">
-                <pre className={`absolute inset-0 text-[11px] font-mono whitespace-pre-wrap overflow-x-auto overflow-y-auto p-4 ${t.text}`}>
-                    {iacTemplate}
+            
+            <div className="bg-[#1E1E1E] w-full flex-1 relative min-h-[14.5rem]">
+                <pre className="absolute inset-0 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0">
+                    <code>{iacTemplate}</code>
                 </pre>
-            </div>
-            <div className="border-t border-fluent-stroke-subtle px-4 py-3 flex justify-end bg-fluent-bg-subtle shrink-0">
-                <button
-                    onClick={handleCopyIac}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
-                    title="Copy template"
-                >
-                    {isIacCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{isIacCopied ? 'Copied' : 'Copy'}</span>
-                </button>
             </div>
         </div>
     );

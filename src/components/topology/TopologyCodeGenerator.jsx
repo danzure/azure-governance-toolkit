@@ -160,29 +160,29 @@ export default function TopologyCodeGenerator({ topology }) {
                         <Code className="w-4 h-4" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[15px]">Auto-generated Template</span>
+                        <span className="text-[15px]">Code Templates (IaC)</span>
                         <span className="text-[12px] font-normal text-fluent-fg-secondary">Review and export your {format === 'terraform' ? 'Terraform' : format === 'bicep' ? 'Bicep' : 'ARM'} code</span>
                     </div>
                 </div>
                 
                 <div className="flex items-center gap-2 w-full lg:w-auto">
                     <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 lg:gap-2 w-full sm:w-auto">
-                        <div className="flex shrink-0 bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5 w-full sm:w-auto">
+                        <div className="flex shrink-0 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md p-0.5 w-full sm:w-auto">
                             <button
                                 onClick={() => setFormat('bicep')}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${format === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
                                 Bicep
                             </button>
                             <button
                                 onClick={() => setFormat('arm')}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${format === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
                                 ARM
                             </button>
                             <button
                                 onClick={() => setFormat('terraform')}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${format === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
                                 Terraform
                             </button>
@@ -192,7 +192,7 @@ export default function TopologyCodeGenerator({ topology }) {
                                 href={docsUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium"
+                                className="flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] border transition-colors duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
                                 title="View documentation"
                             >
                                 {format === 'terraform' ? (
@@ -214,7 +214,7 @@ export default function TopologyCodeGenerator({ topology }) {
                             
                             <button
                                 onClick={handleCopy}
-                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border ${copied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
+                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 ${copied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                 title="Copy code"
                             >
                                 {copied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}

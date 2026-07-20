@@ -13,7 +13,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
         <div className="flex flex-col items-center relative">
             {/* The Node Card */}
             <div className={`z-10 relative flex flex-col p-2 rounded-lg border border-fluent-stroke-subtle shadow-sm transition-all hover:z-50
-                ${isRoot ? 'bg-fluent-bg-subtle px-5 py-2 rounded-full items-center justify-center' : 'bg-fluent-bg-card hover:border-fluent-brand-bg/50'}
+                ${isRoot ? 'bg-fluent-bg-subtle px-5 py-2 rounded-md items-center justify-center' : 'bg-fluent-bg-card hover:border-fluent-brand-bg/50'}
             `}>
                 <div className="flex items-center w-full">
                     <img 
@@ -122,7 +122,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                 {node.children.length > 0 && (
                     <div 
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-5 h-5 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-full flex items-center justify-center cursor-pointer hover:bg-fluent-bg-subtle z-20 text-fluent-fg-tertiary shadow-sm transition-colors"
+                        className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-5 h-5 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-[4px] flex items-center justify-center cursor-pointer hover:bg-fluent-bg-subtle z-20 text-fluent-fg-tertiary shadow-sm transition-colors"
                         title={isExpanded ? "Collapse" : "Expand"}
                     >
                         {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}

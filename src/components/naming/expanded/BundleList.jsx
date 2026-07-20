@@ -29,17 +29,19 @@ export default function BundleList({ bundle, getBundleName, resource, isCopied, 
                 {bundle.map((item, idx) => {
                     const itemName = getBundleName(item);
                     return (
-                        <div key={idx} className={`flex items-center justify-between py-1 gap-2 ${idx > 0 ? `border-t ${t.divider}` : ''}`}>
-                            <span className={`text-[12px] font-medium shrink-0 w-32 truncate ${t.muted}`}>{item.name}</span>
-                            <div className={`text-[13px] font-mono truncate flex-1 ${t.strong}`}>
-                                <ValidationHighlight name={itemName} allowedCharsPattern={item.chars || resource.chars} />
+                        <div key={idx} className={`group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all ${idx > 0 ? 'mt-1' : ''}`}>
+                            <span className={`text-[12px] font-medium shrink-0 w-28 truncate ${t.muted}`}>{item.name}</span>
+                            <div className="flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-fg-primary truncate flex items-center pr-8">
+                                <span className="truncate min-w-0 block">
+                                    <ValidationHighlight name={itemName} allowedCharsPattern={item.chars || resource.chars} />
+                                </span>
                             </div>
                             <button
                                 onClick={(e) => { e.stopPropagation(); onCopy(itemName, item.name, e); }}
-                                className={`flex items-center justify-center w-7 h-7 rounded-md border shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-colors shrink-0 ${isCopied 
+                                aria-label={isCopied ? 'Copied' : 'Copy name'}
+                                className={`absolute right-1 top-1/2 -translate-y-1/2 shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${isCopied 
                                     ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
                                     : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
-                                title="Copy name"
                             >
                                 {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                             </button>

@@ -87,7 +87,7 @@ export default function ManagementGroupTopologyPage() {
                                         </p>
                                         <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
                                             <li><strong>Design Topology:</strong> Use the Topology Designer tab to visually build and organize your management group hierarchy. Add, rename, or remove groups as needed.</li>
-                                            <li><strong>Generate Code:</strong> Switch to the Infrastructure as Code tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
+                                            <li><strong>Generate Code:</strong> Switch to the Code Templates (IaC) tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
                                             <li><strong>Export & Deploy:</strong> Copy the generated code to use in your CI/CD pipelines or deploy directly to your Azure environment.</li>
                                         </ul>
                                     </div>
@@ -111,7 +111,7 @@ export default function ManagementGroupTopologyPage() {
                                         className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'code' ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium'}`}
                                     >
                                         <FileCode2 className="w-4 h-4" />
-                                        Infrastructure as Code
+                                        Code Templates (IaC)
                                     </button>
                                 </div>
                             </div>

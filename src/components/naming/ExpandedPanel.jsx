@@ -151,29 +151,29 @@ function ExpandedPanel({
 
     return (
         <div onClick={(e) => e.stopPropagation()} className="px-3 sm:px-5 py-3 sm:py-4 border-t cursor-default bg-fluent-bg-canvas border-fluent-stroke-subtle">
-            {/* Header — compact inline row with Generated Name */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-fluent-stroke-subtle">
+            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-4 pb-3 border-b border-fluent-stroke-subtle">
                 {/* Generated Name and Validation */}
-                <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className={`text-[14px] font-semibold font-mono min-w-0 flex items-center gap-2 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>
+                <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
+                    <div className={`flex-1 min-w-0 font-mono text-[13px] font-semibold pr-24 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'} truncate flex items-center gap-2`}>
                         <span className="truncate min-w-0 block">
                             <ValidationHighlight name={hasBundle && getBundleName ? getBundleName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                         </span>
                         {hasBundle && (
-                            <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm shrink-0">
+                            <span className="text-[11px] px-1.5 py-0.5 rounded font-bold bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle">
                                 +{bundle.length - 1}
                             </span>
                         )}
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
+                    
+                    <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-2 shrink-0 z-10 bg-transparent pr-0.5">
                         {validationIssues.length === 0 ? (
-                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#f1faf1] dark:bg-[#1b2b1b] border border-[#c6ebc9] dark:border-[#1e4620]">
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#f1faf1] dark:bg-[#1b2b1b] border border-[#c6ebc9] dark:border-[#1e4620] shadow-sm">
                                 <ShieldCheck className="w-3 h-3 text-[#107c10] dark:text-[#a3d4a3]" />
                                 <span className="text-[11px] font-medium text-[#0e700e] dark:text-[#a3d4a3]">Valid</span>
                             </div>
                         ) : (
                             <div className="relative group/validation-exp">
-                                <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full border cursor-help ${hasErrors ? 'bg-[#fdf3f4] dark:bg-[#2c1515] border-[#eeacb2] dark:border-[#442726]' : 'bg-[#fff8f0] dark:bg-[#2c2412] border-[#f5d9a8] dark:border-[#4a3c1e]'}`}>
+                                <div className={`flex items-center gap-1 px-2 py-0.5 rounded-[4px] border shadow-sm cursor-help ${hasErrors ? 'bg-[#fdf3f4] dark:bg-[#2c1515] border-[#eeacb2] dark:border-[#442726]' : 'bg-[#fff8f0] dark:bg-[#2c2412] border-[#f5d9a8] dark:border-[#4a3c1e]'}`}>
                                     {hasErrors
                                         ? <ShieldAlert className="w-3 h-3 text-[#c50f1f]" />
                                         : <AlertTriangle className="w-3 h-3 text-[#f7941d]" />
@@ -182,7 +182,7 @@ function ExpandedPanel({
                                         {validationIssues.length} {validationIssues.length === 1 ? 'issue' : 'issues'}
                                     </span>
                                 </div>
-                                <div className="absolute left-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation-exp:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
+                                <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation-exp:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
                                     {validationIssues.map((issue, i) => (
                                         <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
                                             <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-[#a80000]' : 'bg-[#ffaa44]'}`} />
@@ -203,7 +203,7 @@ function ExpandedPanel({
                                 }
                             }}
                             aria-label={isCopied ? 'Copied' : 'Copy name'}
-                            className={`flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
+                            className={`flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
                                 ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
                                 : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                         >
@@ -216,31 +216,33 @@ function ExpandedPanel({
                 <div className="flex items-center gap-4 flex-wrap">
                     {/* Topology inline */}
                     {showTopology && (
-                        <div className="flex items-center gap-2 flex-wrap">
-                            <span className={`text-[12px] leading-[26px] ${t.muted}`}>{isVNet ? 'Topology:' : 'Bundle:'}</span>
-                            <div className="relative">
-                                <select
-                                    value={topology}
-                                    onChange={(e) => setTopology?.(e.target.value)}
-                                    className="h-[26px] pl-2.5 pr-7 rounded-sm border appearance-none cursor-pointer text-[13px] focus:outline-none focus:border-fluent-brand-bg transition-colors bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-primary"
-                                >
-                                    {topologyOptions.map(opt => <option key={opt.value ?? opt.suffix} value={opt.value ?? opt.suffix}>{opt.label}</option>)}
-                                </select>
-                                <ChevronDown className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none text-fluent-fg-tertiary" />
+                        <div className="flex items-center gap-3 flex-wrap">
+                            <div className="flex items-center gap-2">
+                                <span className={`text-[12px] whitespace-nowrap ${t.muted}`}>{isVNet ? 'Topology:' : 'Bundle:'}</span>
+                                <div className="relative">
+                                    <select
+                                        value={topology}
+                                        onChange={(e) => setTopology?.(e.target.value)}
+                                        className="h-[26px] pl-2.5 pr-7 rounded-sm border appearance-none cursor-pointer text-[13px] focus:outline-none focus:border-fluent-brand-bg transition-colors bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-primary"
+                                    >
+                                        {topologyOptions.map(opt => <option key={opt.value ?? opt.suffix} value={opt.value ?? opt.suffix}>{opt.label}</option>)}
+                                    </select>
+                                    <ChevronDown className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none text-fluent-fg-tertiary" />
+                                </div>
                             </div>
                             {isHubSpoke && (
-                                <>
-                                    <span className={`text-[12px] leading-[26px] ${t.muted}`}>Spokes:</span>
+                                <div className="flex items-center gap-2">
+                                    <span className={`text-[12px] whitespace-nowrap ${t.muted}`}>Spokes:</span>
                                     <input type="number" min="0" max="20" value={spokeCount}
                                         onChange={(e) => setSpokeCount?.(Math.max(0, Math.min(20, parseInt(e.target.value) || 0)))}
                                         className="w-[56px] h-[26px] px-2 rounded-sm border text-[13px] focus:outline-none focus:border-fluent-brand-bg transition-colors bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-primary"
                                     />
-                                    <span className={`text-[12px] leading-[26px] ${t.muted}`}>from:</span>
+                                    <span className={`text-[12px] whitespace-nowrap ${t.muted}`}>from:</span>
                                     <input type="number" min="0" max="999" value={spokeStartValue}
                                         onChange={(e) => setSpokeStartValue?.(Math.max(0, parseInt(e.target.value) || 0))}
                                         className="w-[56px] h-[26px] px-2 rounded-sm border text-[13px] focus:outline-none focus:border-fluent-brand-bg transition-colors bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-primary"
                                     />
-                                </>
+                                </div>
                             )}
                         </div>
                     )}
