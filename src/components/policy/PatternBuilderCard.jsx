@@ -30,7 +30,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
             {/* About / Introduction */}
             <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-1">
                 <div
-                    className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                    className="px-3 py-1.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-fluent-bg-hover transition-colors"
                     onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
                     role="button"
                     aria-expanded={isGuidanceExpanded}

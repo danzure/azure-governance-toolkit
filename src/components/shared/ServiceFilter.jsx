@@ -114,7 +114,7 @@ const ServiceFilter = ({
                         className="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px] sm:text-[12px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
                     />
                     {searchTerm && (
-                        <button onClick={onClearSearch} aria-label="Clear search" className="p-1 sm:p-0.5 rounded-sm hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                        <button onClick={onClearSearch} aria-label="Clear search" className="p-1 sm:p-0.5 rounded-sm hover:bg-fluent-bg-hover transition-colors">
                             <X className="w-3.5 h-3.5 sm:w-3 sm:h-3 text-fluent-fg-tertiary" />
                         </button>
                     )}

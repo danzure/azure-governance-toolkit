@@ -23,7 +23,7 @@ export default function Header({ themePref, onSetTheme, onToggleMenu, title = "R
                 {isMobile && (
                     <button
                         onClick={onToggleMenu}
-                        className="p-1.5 -ml-1 rounded-md hover:bg-white/15 transition-colors shrink-0"
+                        className="p-1.5 -ml-1 rounded-md hover:bg-fluent-bg-hover transition-colors shrink-0"
                         aria-label="Toggle navigation menu"
                     >
                         <Menu className="w-5 h-5" />
@@ -36,35 +36,43 @@ export default function Header({ themePref, onSetTheme, onToggleMenu, title = "R
                 </div>
             </div>
             
-            {/* Theme Toggle Switch */}
+            {/* Fluent 2 Theme Toggle Switch */}
             <div
-                className="flex items-center p-0.5 rounded-md bg-black/20 dark:bg-black/30 border border-white/10 dark:border-white/5 shrink-0"
+                className="flex items-center gap-1 p-[3px] rounded-md bg-black/20 dark:bg-black/40 backdrop-blur-md border border-white/10 shadow-inner shrink-0 relative"
                 role="group"
                 aria-label="Theme preference"
             >
+                {/* Sliding Indicator */}
+                <div 
+                    className="absolute top-[3px] bottom-[3px] w-[28px] bg-white rounded-sm shadow-sm transition-all duration-200 ease-in-out"
+                    style={{ 
+                        left: themePref === 'light' ? '3px' : themePref === 'system' ? '35px' : '67px'
+                    }} 
+                />
+
                 <button
                     onClick={() => onSetTheme('light')}
-                    className={`flex items-center justify-center w-8 h-7 rounded-sm transition-all ${themePref === 'light' ? 'bg-white text-fluent-brand-bg dark:bg-white/20 dark:text-white shadow-sm' : 'text-white/70 hover:text-white hover:bg-white/10 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/10'}`}
+                    className={`relative flex items-center justify-center w-[28px] h-[26px] rounded-sm transition-colors duration-200 ease-in-out z-10 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${themePref === 'light' ? 'text-fluent-brand-bg' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
                     aria-label="Light mode"
                     title="Light mode"
                 >
-                    <Sun className="w-4 h-4" />
+                    <Sun className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'light' ? 'rotate-0' : '-rotate-90'}`} />
                 </button>
                 <button
                     onClick={() => onSetTheme('system')}
-                    className={`flex items-center justify-center w-8 h-7 rounded-sm transition-all ${themePref === 'system' ? 'bg-white text-fluent-brand-bg dark:bg-white/20 dark:text-white shadow-sm' : 'text-white/70 hover:text-white hover:bg-white/10 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/10'}`}
+                    className={`relative flex items-center justify-center w-[28px] h-[26px] rounded-sm transition-colors duration-200 ease-in-out z-10 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${themePref === 'system' ? 'text-fluent-brand-bg' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
                     aria-label="System mode"
                     title="System mode"
                 >
-                    <Monitor className="w-4 h-4" />
+                    <Monitor className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'system' ? 'scale-100' : 'scale-90'}`} />
                 </button>
                 <button
                     onClick={() => onSetTheme('dark')}
-                    className={`flex items-center justify-center w-8 h-7 rounded-sm transition-all ${themePref === 'dark' ? 'bg-white text-fluent-brand-bg dark:bg-white/20 dark:text-white shadow-sm' : 'text-white/70 hover:text-white hover:bg-white/10 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/10'}`}
+                    className={`relative flex items-center justify-center w-[28px] h-[26px] rounded-sm transition-colors duration-200 ease-in-out z-10 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${themePref === 'dark' ? 'text-fluent-brand-bg' : 'text-white/70 hover:text-white hover:bg-white/10'}`}
                     aria-label="Dark mode"
                     title="Dark mode"
                 >
-                    <Moon className="w-4 h-4" />
+                    <Moon className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'dark' ? 'rotate-0' : 'rotate-90'}`} />
                 </button>
             </div>
         </header>

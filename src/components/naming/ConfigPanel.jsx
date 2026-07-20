@@ -61,7 +61,7 @@ function ConfigPanel({
                 {/* Resource Naming Guidance - Pinned below header */}
                 <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-6">
                     <div 
-                        className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                        className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-fluent-bg-hover transition-colors"
                         onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
                         role="button"
                         aria-expanded={isGuidanceExpanded}
@@ -102,7 +102,7 @@ function ConfigPanel({
                 <div className="flex justify-center mt-1 mb-3">
                     <button
                         onClick={onToggleMinimize}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
+                        className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
                     >
                         <Settings2 className="w-4 h-4" />
                         {isMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
@@ -123,7 +123,7 @@ function ConfigPanel({
                                 </div>
                                 <button
                                     onClick={onResetDefaults}
-                                    className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium px-2.5 py-1.5 rounded-md transition-colors"
+                                    className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium px-2.5 py-1.5 rounded-md transition-colors"
                                     title="Reset to default naming configuration"
                                 >
                                     <RefreshCw className="w-3.5 h-3.5" />

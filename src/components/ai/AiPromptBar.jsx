@@ -89,7 +89,7 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
                     <button
                         type="button"
                         onClick={onResetAll}
-                        className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium px-2.5 py-1.5 rounded-md transition-colors"
+                        className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium px-2.5 py-1.5 rounded-md transition-colors"
                         title="Reset all settings and filters"
                     >
                         <RefreshCw className="w-3.5 h-3.5" />

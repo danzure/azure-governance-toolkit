@@ -65,7 +65,7 @@ export default function TagBuilder({ tags, setTags }) {
                     </div>
                 ) : (
                     tags.map((tag, index) => (
-                        <div key={tag.id} className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft dark:shadow-none hover:shadow-md hover:border-fluent-stroke-strong transition-all duration-200 p-4 relative group animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
+                        <div key={tag.id} className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft dark:shadow-none hover:shadow-depth hover:border-fluent-stroke-strong transition-all duration-200 p-4 relative group animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
                         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                             <button
                                 onClick={() => handleRemoveTag(tag.id)}

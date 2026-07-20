@@ -127,13 +127,13 @@ export default function TagOutputPanel({ tags }) {
                 <div className="flex items-center gap-2">
                     <button 
                         onClick={() => setActiveTab('json')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${activeTab === 'json' ? 'bg-white shadow-sm text-fluent-fg-primary dark:bg-fluent-bg-hover' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5'}`}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${activeTab === 'json' ? 'bg-fluent-info-bg text-fluent-brand-fg font-semibold shadow-sm' : 'bg-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'}`}
                     >
                         <FileJson className="w-4 h-4" /> JSON
                     </button>
                     <button 
                         onClick={() => setActiveTab('markdown')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${activeTab === 'markdown' ? 'bg-white shadow-sm text-fluent-fg-primary dark:bg-fluent-bg-hover' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5'}`}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${activeTab === 'markdown' ? 'bg-fluent-info-bg text-fluent-brand-fg font-semibold shadow-sm' : 'bg-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'}`}
                     >
                         <FileText className="w-4 h-4" /> Markdown
                     </button>
@@ -154,7 +154,7 @@ export default function TagOutputPanel({ tags }) {
             </div>
             
             <div className="flex-1 bg-[#1e1e1e] p-4 overflow-auto custom-scrollbar relative">
-                <pre className="text-gray-300 font-mono text-[13px] whitespace-pre overflow-x-auto custom-scrollbar">
+                <pre className="text-[#D4D4D4] font-mono text-[13px] whitespace-pre overflow-x-auto custom-scrollbar">
                     {outputContent}
                 </pre>
             </div>

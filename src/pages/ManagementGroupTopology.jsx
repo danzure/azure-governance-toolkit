@@ -60,7 +60,7 @@ export default function ManagementGroupTopologyPage() {
                     <div className="flex flex-col gap-4 flex-1 min-h-0">
                         <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-2 shrink-0">
                             <div
-                                className="px-3 py-2.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                                className="px-3 py-1.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-fluent-bg-hover transition-colors"
                                 onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
                                 role="button"
                                 aria-expanded={isGuidanceExpanded}
@@ -100,15 +100,15 @@ export default function ManagementGroupTopologyPage() {
                             <div className="flex mb-6 shrink-0">
                                 <div className="flex bg-fluent-bg-subtle rounded-md p-1 w-full sm:w-auto border border-fluent-stroke-subtle">
                                     <button
-                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'designer' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium'}`}
                                         onClick={() => setActiveTab('designer')}
+                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'designer' ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium'}`}
                                     >
                                         <Network className="w-4 h-4" />
                                         Topology Designer
                                     </button>
                                     <button
-                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'code' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-black/5 dark:hover:bg-white/5 font-medium'}`}
                                         onClick={() => setActiveTab('code')}
+                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'code' ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium'}`}
                                     >
                                         <FileCode2 className="w-4 h-4" />
                                         Infrastructure as Code

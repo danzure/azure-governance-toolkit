@@ -49,7 +49,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                         setIsExpanded(true);
                                         onAddChild(node.id);
                                     }}
-                                    className="p-1.5 flex items-center justify-center rounded-md text-blue-600 bg-blue-500/10 hover:bg-blue-500/20 transition-colors"
+                                    className="p-1.5 flex items-center justify-center rounded-md text-fluent-brand-fg bg-fluent-brand-bg/10 hover:bg-fluent-brand-bg/20 transition-colors"
                                 >
                                     <Plus className="w-4 h-4" />
                                 </button>
@@ -484,33 +484,33 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             </div>
 
             {/* Zoom Controls */}
-            <div className="absolute bottom-10 right-6 z-20 flex flex-col gap-2 bg-white dark:bg-[#292929] border border-[#d1d1d1] dark:border-[#525252] rounded-md shadow-sm p-0.5">
+            <div className="absolute bottom-10 right-6 z-20 flex flex-col gap-2 bg-fluent-bg-card border border-fluent-stroke-subtle rounded-md shadow-sm p-0.5">
                 <Tooltip position="left" content="Export as PNG">
                     <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); handleExportImage(); }}
                         disabled={isExporting}
-                        className={`p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center ${isExporting ? 'opacity-50 cursor-wait' : ''}`}
+                        className={`p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center ${isExporting ? 'opacity-50 cursor-wait' : ''}`}
                     >
                         <Download className="w-4 h-4" />
                     </button>
                 </Tooltip>
-                <div className="h-px bg-[#d1d1d1] dark:bg-[#525252] w-full"></div>
+                <div className="h-px bg-fluent-stroke-subtle w-full"></div>
                 <Tooltip position="left" content="Zoom In">
                     <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); handleZoomIn(); }}
-                        className="p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
+                        className="p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
                     >
                         <ZoomIn className="w-4 h-4" />
                     </button>
                 </Tooltip>
-                <div className="h-px bg-[#d1d1d1] dark:bg-[#525252] w-full"></div>
+                <div className="h-px bg-fluent-stroke-subtle w-full"></div>
                 <Tooltip position="left" content="Zoom Out">
                     <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); handleZoomOut(); }}
-                        className="p-1.5 hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
+                        className="p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
                     >
                         <ZoomOut className="w-4 h-4" />
                     </button>

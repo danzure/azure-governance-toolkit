@@ -170,19 +170,19 @@ export default function TopologyCodeGenerator({ topology }) {
                         <div className="flex shrink-0 bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5 w-full sm:w-auto">
                             <button
                                 onClick={() => setFormat('bicep')}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'bicep' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                             >
                                 Bicep
                             </button>
                             <button
                                 onClick={() => setFormat('arm')}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'arm' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                             >
                                 ARM
                             </button>
                             <button
                                 onClick={() => setFormat('terraform')}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'terraform' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all ${format === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                             >
                                 Terraform
                             </button>

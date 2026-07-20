@@ -67,11 +67,11 @@ export default function DashboardPage() {
                                     onClick={() => navigate(tool.path)}
                                     className={`
                                 relative group cursor-pointer overflow-hidden
-                                bg-white/70 dark:bg-[#242424]/70 backdrop-blur-xl rounded-xl p-5
-                                border border-black/5 dark:border-white/5
-                                shadow-sm hover:shadow-xl hover:-translate-y-1
-                                hover:border-black/10 dark:hover:border-white/10
-                                hover:bg-white/90 dark:hover:bg-[#292929]/90
+                                bg-fluent-bg-card/70 backdrop-blur-xl rounded-xl p-5
+                                border border-fluent-stroke-subtle shadow-soft transition-all duration-300
+                                group hover:shadow-depth hover:-translate-y-1
+                                hover:border-fluent-brand-bg/30
+                                hover:bg-fluent-bg-hover/90
                                 transition-all duration-200 ease-out
                                 flex flex-col h-full animate-slide-up stagger-${index + 1}
                             `}

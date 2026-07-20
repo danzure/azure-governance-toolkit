@@ -52,22 +52,22 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                     <span className={`text-[12px] font-semibold ${t.caption}`}>Infrastructure as Code</span>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                    <div className="flex shrink-0 bg-[#edebe9] dark:bg-[#323130] rounded-sm p-0.5">
+                    <div className="flex shrink-0 bg-fluent-bg-subtle rounded-sm p-0.5">
                         <button
                             onClick={(e) => { e.stopPropagation(); setIacTab('bicep'); }}
-                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'bicep' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                         >
                             Bicep
                         </button>
                         <button
                             onClick={(e) => { e.stopPropagation(); setIacTab('arm'); }}
-                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'arm' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                         >
                             ARM
                         </button>
                         <button
                             onClick={(e) => { e.stopPropagation(); setIacTab('terraform'); }}
-                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'terraform' ? 'bg-white dark:bg-[#484644] text-[#0078d4] dark:text-[#60cdff] shadow-sm' : 'text-[#605e5c] dark:text-[#c8c6c4] hover:text-[#323130] dark:hover:text-[#e1dfdd]'}`}
+                            className={`text-[12px] px-3 py-1 font-medium rounded-sm transition-all ${iacTab === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                         >
                             Terraform
                         </button>
@@ -76,7 +76,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                         href={docsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[13px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-card text-fluent-fg-primary text-[13px] font-medium hover:bg-fluent-bg-hover transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                         onClick={(e) => e.stopPropagation()}
                         title="View documentation"
                     >
@@ -100,10 +100,10 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                     {iacTemplate}
                 </pre>
             </div>
-            <div className="border-t border-[#e1dfdd] dark:border-[#3b3a39] px-4 py-3 flex justify-end bg-fluent-bg-canvas dark:bg-[#1b1a19] shrink-0">
+            <div className="border-t border-fluent-stroke-subtle px-4 py-3 flex justify-end bg-fluent-bg-subtle shrink-0">
                 <button
                     onClick={handleCopyIac}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-md border text-[13px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                     title="Copy template"
                 >
                     {isIacCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
