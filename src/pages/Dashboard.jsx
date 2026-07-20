@@ -45,22 +45,24 @@ export default function DashboardPage() {
             <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-6 animate-fade-in flex-1 flex flex-col justify-start gap-8">
                 
                 {/* Hero Section */}
-                <div className="relative overflow-hidden bg-primary-gradient dark:bg-none dark:bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle p-8 sm:p-10 shadow-soft w-full">
+                <div className="relative overflow-hidden bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle p-8 sm:p-12 shadow-soft w-full">
                     <div className="relative z-10 max-w-3xl">
-                        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-4 rounded-[4px] bg-white/20 dark:bg-fluent-brand-bg/10 border border-white/20 dark:border-fluent-brand-bg/20 shadow-sm backdrop-blur-md">
-                            <ShieldCheck className="w-3.5 h-3.5 text-white dark:text-fluent-brand-fg" />
-                            <span className="text-[11px] font-medium text-white dark:text-fluent-brand-fg tracking-wide uppercase">Governance Toolkit</span>
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-5 rounded-[4px] bg-fluent-cat-blue-bg border border-fluent-stroke-subtle shadow-sm backdrop-blur-md">
+                            <ShieldCheck className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                            <span className="text-[11px] font-semibold text-fluent-brand-fg tracking-wide uppercase">Governance Toolkit</span>
                         </div>
-                        <h1 className="text-3xl sm:text-4xl font-bold text-white dark:text-fluent-fg-primary mb-3 tracking-tight">
-                            Streamline Your Azure Cloud Governance
+                        <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-fluent-fg-primary mb-4 tracking-tight leading-[1.2]">
+                            Streamline Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-fluent-brand-bg to-fluent-brand-hover dark:from-fluent-brand-fg dark:to-fluent-brand-bg">Azure Cloud</span> Governance
                         </h1>
-                        <p className="text-[15px] sm:text-base text-white/90 dark:text-fluent-fg-secondary leading-relaxed">
+                        <p className="text-[15px] sm:text-[16px] text-fluent-fg-secondary leading-relaxed max-w-2xl">
                             A comprehensive suite designed to help teams build, manage, and scale their cloud environments with confidence. Align your deployments with organizational standards and industry best practices.
                         </p>
                     </div>
-                    {/* Abstract decorative elements */}
-                    <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[400px] h-[400px] bg-white/10 dark:bg-fluent-brand-bg/10 rounded-full blur-3xl pointer-events-none" />
-                    <div className="absolute bottom-0 right-1/4 translate-y-1/2 w-[250px] h-[250px] bg-white/10 dark:bg-fluent-brand-bg/10 rounded-full blur-2xl pointer-events-none" />
+                    
+                    {/* Soft Ambient Background Glows */}
+                    <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[600px] h-[600px] bg-fluent-brand-bg rounded-full blur-[80px] opacity-5 dark:opacity-10 pointer-events-none" />
+                    <div className="absolute bottom-0 right-1/4 translate-y-1/2 w-[400px] h-[400px] bg-fluent-brand-bg rounded-full blur-[60px] opacity-5 dark:opacity-10 pointer-events-none" />
+                    <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-fluent-brand-bg rounded-full blur-[60px] opacity-5 dark:opacity-10 pointer-events-none" />
                 </div>
 
                 {/* Tools Grid */}
@@ -80,24 +82,27 @@ export default function DashboardPage() {
                             className={`
                                 relative group cursor-pointer overflow-hidden
                                 bg-fluent-bg-card hover:bg-fluent-bg-hover
-                                rounded-lg p-4
+                                rounded-xl p-6
                                 border border-fluent-stroke-subtle shadow-soft dark:shadow-none
                                 hover:shadow-depth hover:border-fluent-stroke-strong 
-                                transition-all duration-200 ease-in-out
+                                transition-all duration-300 ease-out
                                 active:scale-[0.98]
                                 flex flex-col h-full animate-slide-up stagger-${index + 1}
                                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 focus-visible:border-fluent-brand-bg
                             `}
                         >
-                            <div className="flex flex-col h-full">
+                            {/* Ambient Hover Glow */}
+                            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[200px] h-[200px] bg-fluent-brand-bg rounded-full blur-[50px] opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500 pointer-events-none" />
+
+                            <div className="relative z-10 flex flex-col h-full">
                                 <div className="flex items-start justify-between mb-5">
                                     <img 
                                         src={tool.iconUrl} 
                                         alt={`${tool.title} icon`} 
-                                        className="w-10 h-10 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300 ease-out" 
+                                        className="w-11 h-11 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ease-out" 
                                     />
                                     {tool.hasAi && (
-                                        <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2 min-h-[20px] rounded-[4px] font-medium shadow-sm">
+                                        <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-brand-bg/30 transition-colors duration-300">
                                             <Sparkles className="w-3 h-3" />
                                             AI Powered
                                         </span>
@@ -105,15 +110,15 @@ export default function DashboardPage() {
                                 </div>
 
                                 <div className="flex-1">
-                                    <h2 className="text-[16px] font-semibold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200">
+                                    <h2 className="text-[17px] font-bold text-fluent-fg-primary mb-2 group-hover:text-fluent-brand-fg transition-colors duration-300">
                                         {tool.title}
                                     </h2>
-                                    <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
+                                    <p className="text-[13.5px] text-fluent-fg-secondary leading-relaxed">
                                         {tool.description}
                                     </p>
                                 </div>
 
-                                <div className="mt-5 flex items-center gap-1.5 text-[13px] font-medium text-fluent-brand-fg opacity-80 group-hover:opacity-100 transition-opacity duration-200">
+                                <div className="mt-6 flex items-center gap-1.5 text-[13px] font-semibold text-fluent-brand-fg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                                     <span>Get started</span>
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 ease-out" />
                                 </div>
