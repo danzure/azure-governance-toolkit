@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { trackPageView } from './utils/telemetry';
 
 import Header from './components/layout/Header';
 import NavigationMenu from './components/layout/NavigationMenu';
@@ -116,6 +117,11 @@ export default function App() {
     } else if (location.pathname === '/tagging-strategy') {
         headerTitle = "Tagging Strategy Builder";
     }
+
+    // Track page view on every route change
+    useEffect(() => {
+        trackPageView(headerTitle, location.pathname);
+    }, [location.pathname, headerTitle]);
 
     return (
         <div className="h-screen font-sans transition-colors duration-200 bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
