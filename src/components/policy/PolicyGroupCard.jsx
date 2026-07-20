@@ -75,8 +75,8 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                 </div>
                             )}
 
-                            <div className="mt-3 flex items-start sm:items-center gap-2 w-full min-w-0">
-                                <span className="font-mono text-[12px] text-fluent-brand-fg bg-fluent-info-bg px-1.5 py-0.5 rounded break-all border border-fluent-info-border dark:border-transparent flex-1 min-w-0">
+                            <div className="mt-3 group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-brand-bg/5 hover:bg-fluent-brand-bg/10 border-fluent-brand-bg/20 transition-all">
+                                <span className="flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-brand-fg truncate" title={activePolicy.name}>
                                     {activePolicy.name}
                                 </span>
                                 <button
@@ -84,9 +84,9 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                         e.stopPropagation();
                                         handleCopy(activePolicy.name, activePolicy.name);
                                     }}
-                                    className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-colors inline-flex items-center justify-center gap-1.5 border ${isCopied 
+                                    className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none ${isCopied 
                                         ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
-                                        : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
+                                        : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                                     title="Copy Name"
                                 >
                                     {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}

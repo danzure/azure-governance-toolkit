@@ -208,8 +208,8 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         <span className="text-[12px] font-medium text-fluent-fg-tertiary">Preview</span>
                     </div>
                     
-                    <div className="group/copy relative flex flex-1 items-center gap-2 px-3 py-1.5 min-h-[32px] min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
-                        <div className="flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-fg-primary truncate pr-20">
+                    <div className="group/copy relative flex flex-1 items-center gap-2 px-3 py-1.5 min-h-[32px] min-w-0 rounded-[4px] border bg-fluent-brand-bg/5 hover:bg-fluent-brand-bg/10 border-fluent-brand-bg/20 transition-all">
+                        <div className="flex-1 min-w-0 font-mono text-[13px] font-medium text-fluent-brand-fg truncate pr-20">
                             {generatedName}
                         </div>
                         <button
