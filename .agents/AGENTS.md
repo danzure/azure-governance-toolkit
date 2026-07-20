@@ -2,7 +2,7 @@
 
 ## Git Workflows
 
-Whenever you are asked to commit and sync changes, you **must** automatically bump the version in `package.json` before creating the commit. 
+Whenever you are asked to commit and sync changes, you **must** automatically bump the version in `package.json` before creating the commit. **Exception:** Do not bump the version in `package.json` if you are only updating non-application files (e.g., `README.md`, documentation, `.agents/AGENTS.md`).
 
 1. Increment the patch version (or minor/major if instructed otherwise) in `package.json`.
 2. Stage `package.json` along with the other modified files.
@@ -53,3 +53,8 @@ When creating or modifying UI components, you **must** adhere to the following T
 ### 8. Icons & Imagery
 - **Standardisation**: Consistently use the same standardized icons for buttons, actions, or other UI elements that share the same functionality across the application.
 - **Official Microsoft Icons**: Prioritise using official Microsoft icons (e.g., from Fluent UI System Icons or standard Microsoft design assets) where possible to maintain alignment with the Azure portal experience and Fluent UI design language.
+
+### 9. Code Snippets & Terminal Blocks
+- **Terminal/Code Container**: Use `bg-[#1E1E1E] w-full flex flex-col flex-1 h-full min-h-0` for the dark container background housing the code block.
+- **Terminal/Code Content (`<pre>`)**: Use `flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0` for the actual code text and scrollable area.
+- **Terminal Header/Toolbar**: Use `px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0` for the action bar situated above the terminal window.
