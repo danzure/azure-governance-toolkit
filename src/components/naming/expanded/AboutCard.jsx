@@ -159,5 +159,3 @@ GuidanceCard.propTypes = {
     t: PropTypes.object.isRequired,
 };
 
-// Default export for backward compatibility
-export default AboutBanner;

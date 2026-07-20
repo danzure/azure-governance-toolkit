@@ -58,4 +58,3 @@ AzureServiceIcon.propTypes = {
     className: PropTypes.string,
 };
 
-export { CATEGORY_ICONS };

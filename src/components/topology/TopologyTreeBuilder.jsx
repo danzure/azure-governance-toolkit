@@ -32,7 +32,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                     type="text"
                                     value={node.name}
                                     onChange={(e) => onUpdateName(node.id, e.target.value)}
-                                    className="w-full bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md pl-2 pr-7 py-1 focus:ring-1 focus:ring-fluent-brand-fg focus:border-fluent-brand-fg focus:outline-none text-fluent-fg-primary font-medium text-sm min-w-[140px] transition-all"
+                                    className="flex-1 min-w-[140px] w-full pl-2 pr-7 h-[32px] border rounded outline-none text-[13px] font-medium transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                     placeholder="Group Name"
                                     spellCheck="false"
                                 />
@@ -87,7 +87,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                 {!isRoot && node.subscriptions && node.subscriptions.length > 0 && (
                     <div className="flex flex-col gap-1.5 mt-3 w-full border-t border-fluent-stroke-subtle pt-2">
                         {node.subscriptions.map(sub => (
-                            <div key={sub.id} className="flex items-center bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded px-2 py-1 gap-2">
+                            <div key={sub.id} className="flex items-center bg-fluent-bg-card border border-fluent-stroke-strong rounded px-2.5 h-[32px] gap-2">
                                 <img 
                                     src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Subscriptions.svg" 
                                     alt="Subscription" 
@@ -98,7 +98,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                     type="text"
                                     value={sub.name}
                                     onChange={(e) => onUpdateSubscriptionName(node.id, sub.id, e.target.value)}
-                                    className="bg-transparent border-none text-xs text-fluent-fg-secondary flex-1 min-w-[120px] focus:outline-none focus:text-fluent-fg-primary"
+                                    className="bg-transparent border-none text-[13px] text-fluent-fg-secondary flex-1 min-w-[120px] focus:outline-none focus:text-fluent-fg-primary h-full"
                                     placeholder="Subscription ID or Name"
                                     spellCheck="false"
                                 />
@@ -414,7 +414,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
     };
 
     return (
-        <div className="relative bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-xl p-5 shadow-soft min-w-0 w-full flex flex-col flex-1 min-h-[600px]">
+        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden p-5 flex-1 min-h-[600px]">
             <div className="mb-4 flex flex-col md:flex-row justify-between items-start gap-4 shrink-0">
                 <div>
                     <h3 className="text-lg font-semibold text-fluent-fg-primary mb-1">Topology Builder</h3>
@@ -427,31 +427,31 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                     <span className="text-[11px] font-semibold text-fluent-fg-tertiary uppercase tracking-wider">Quick Templates</span>
                     <div className="flex flex-wrap gap-2">
                         <Tooltip align="right" content="Reset to standard Cloud Adoption Framework baseline, recommended for most businesses">
-                            <button onClick={() => applyTemplate('default')} className="px-3 py-1.5 bg-white dark:bg-[#292929] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] border border-[#d1d1d1] dark:border-[#525252] rounded-md text-[12px] font-medium text-fluent-fg-primary transition-colors flex items-center gap-2 shadow-sm">
+                            <button onClick={() => applyTemplate('default')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#d83b01]"></span>
                                 Default
                             </button>
                         </Tooltip>
                         <Tooltip align="right" content="Simple Production/Non-Prod split for independent setups (1-10 employees)">
-                            <button onClick={() => applyTemplate('independent')} className="px-3 py-1.5 bg-white dark:bg-[#292929] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] border border-[#d1d1d1] dark:border-[#525252] rounded-md text-[12px] font-medium text-fluent-fg-primary transition-colors flex items-center gap-2 shadow-sm">
+                            <button onClick={() => applyTemplate('independent')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#107c10]"></span>
                                 Independent
                             </button>
                         </Tooltip>
                         <Tooltip align="right" content="Workloads & Sandbox environments for small scale apps (10-100 employees)">
-                            <button onClick={() => applyTemplate('small')} className="px-3 py-1.5 bg-white dark:bg-[#292929] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] border border-[#d1d1d1] dark:border-[#525252] rounded-md text-[12px] font-medium text-fluent-fg-primary transition-colors flex items-center gap-2 shadow-sm">
+                            <button onClick={() => applyTemplate('small')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#0078d4]"></span>
                                 Small
                             </button>
                         </Tooltip>
                         <Tooltip align="right" content="Standard Cloud Adoption Framework layout (100-1000 employees)">
-                            <button onClick={() => applyTemplate('medium')} className="px-3 py-1.5 bg-white dark:bg-[#292929] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] border border-[#d1d1d1] dark:border-[#525252] rounded-md text-[12px] font-medium text-fluent-fg-primary transition-colors flex items-center gap-2 shadow-sm">
+                            <button onClick={() => applyTemplate('medium')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#8764b8]"></span>
                                 Medium
                             </button>
                         </Tooltip>
                         <Tooltip align="right" content="Enterprise scale with dedicated Platform and Landing Zone separations (1000+ employees)">
-                            <button onClick={() => applyTemplate('large')} className="px-3 py-1.5 bg-white dark:bg-[#292929] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] border border-[#d1d1d1] dark:border-[#525252] rounded-md text-[12px] font-medium text-fluent-fg-primary transition-colors flex items-center gap-2 shadow-sm">
+                            <button onClick={() => applyTemplate('large')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#5c2d91]"></span>
                                 Large
                             </button>

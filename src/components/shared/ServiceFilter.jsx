@@ -132,7 +132,7 @@ const ServiceFilter = ({
                         aria-label="Scroll categories left"
                         aria-hidden={!canScrollLeft}
                         tabIndex={canScrollLeft ? 0 : -1}
-                        className={`hidden sm:flex shrink-0 p-0.5 rounded transition-all text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary ${!canScrollLeft ? 'opacity-0 pointer-events-none w-0 p-0 overflow-hidden' : ''}`}
+                        className={`hidden sm:flex shrink-0 p-0.5 rounded transition-colors text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary ${!canScrollLeft ? 'opacity-0 pointer-events-none w-0 p-0 overflow-hidden' : ''}`}
                     >
                         <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -159,7 +159,7 @@ const ServiceFilter = ({
                                     role="tab"
                                     aria-selected={activeCategory === cat}
                                     className={`
-                                        shrink-0 px-3 py-1.5 sm:px-2.5 sm:py-1 text-[13px] sm:text-[12px] font-medium rounded-full sm:rounded transition-all duration-150
+                                        shrink-0 px-3 py-1.5 sm:px-2.5 sm:py-1 text-[13px] sm:text-[12px] font-medium rounded-full sm:rounded transition-colors duration-150
                                         focus:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg
                                         ${activeCategory === cat
                                             ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold'
@@ -180,7 +180,7 @@ const ServiceFilter = ({
                         aria-label="Scroll categories right"
                         aria-hidden={!canScrollRight}
                         tabIndex={canScrollRight ? 0 : -1}
-                        className={`hidden sm:flex shrink-0 p-0.5 rounded transition-all text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary ${!canScrollRight ? 'opacity-0 pointer-events-none w-0 p-0 overflow-hidden' : ''}`}
+                        className={`hidden sm:flex shrink-0 p-0.5 rounded transition-colors text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary ${!canScrollRight ? 'opacity-0 pointer-events-none w-0 p-0 overflow-hidden' : ''}`}
                     >
                         <ChevronRight className="w-4 h-4" />
                     </button>

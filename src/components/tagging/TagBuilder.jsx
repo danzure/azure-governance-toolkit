@@ -40,7 +40,7 @@ export default function TagBuilder({ tags, setTags }) {
     );
 
     return (
-        <div className="bg-fluent-bg-card rounded-xl p-5 border border-fluent-stroke-subtle shadow-soft flex flex-col h-full">
+        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full p-5">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[16px] font-semibold text-fluent-fg-primary flex items-center gap-2">
                     <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg" alt="Tags" className="w-5 h-5" />
@@ -51,7 +51,7 @@ export default function TagBuilder({ tags, setTags }) {
                 </h2>
                 <button
                     onClick={handleAddTag}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-fluent-brand-bg text-white rounded-md text-[13px] font-medium hover:bg-fluent-brand-hover transition-colors shadow-sm"
+                    className="px-3 h-[32px] bg-fluent-brand-bg text-white rounded-[4px] text-[13px] font-medium hover:bg-fluent-brand-hover transition-colors shadow-sm inline-flex items-center gap-1.5"
                 >
                     <Plus className="w-4 h-4" />
                     Add Tag
@@ -65,11 +65,11 @@ export default function TagBuilder({ tags, setTags }) {
                     </div>
                 ) : (
                     tags.map((tag, index) => (
-                        <div key={tag.id} className="p-4 border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-subtle relative group animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
+                        <div key={tag.id} className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft dark:shadow-none hover:shadow-md hover:border-fluent-stroke-strong transition-all duration-200 p-4 relative group animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
                         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                             <button
                                 onClick={() => handleRemoveTag(tag.id)}
-                                className="p-1.5 text-fluent-fg-tertiary hover:text-fluent-state-danger hover:bg-fluent-bg-canvas rounded-md transition-colors"
+                                className="shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-state-danger"
                                 title="Remove Tag"
                             >
                                 <Trash2 className="w-4 h-4" />
@@ -85,7 +85,7 @@ export default function TagBuilder({ tags, setTags }) {
                                         placeholder="e.g. Environment, CostCenter"
                                         value={tag.name}
                                         onChange={(e) => handleUpdateTag(tag.id, 'name', e.target.value)}
-                                        className="w-full px-3 py-1.5 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md text-[14px] text-fluent-fg-primary focus:outline-none focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg transition-all"
+                                        className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                     />
                                 </div>
 
@@ -95,7 +95,7 @@ export default function TagBuilder({ tags, setTags }) {
                                         <select
                                             value={tag.requirement}
                                             onChange={(e) => handleUpdateTag(tag.id, 'requirement', e.target.value)}
-                                            className="w-full px-3 py-1.5 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md text-[14px] text-fluent-fg-primary focus:outline-none focus:border-fluent-brand-bg transition-all"
+                                            className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
                                         >
                                             <option value="Mandatory">Mandatory</option>
                                             <option value="Optional">Optional</option>
@@ -108,7 +108,7 @@ export default function TagBuilder({ tags, setTags }) {
                                         <select
                                             value={tag.effect}
                                             onChange={(e) => handleUpdateTag(tag.id, 'effect', e.target.value)}
-                                            className="w-full px-3 py-1.5 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md text-[14px] text-fluent-fg-primary focus:outline-none focus:border-fluent-brand-bg transition-all"
+                                            className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
                                         >
                                             <option value="Audit">Audit</option>
                                             <option value="Deny">Deny</option>
@@ -124,7 +124,7 @@ export default function TagBuilder({ tags, setTags }) {
                                         placeholder="e.g. dev, test, prod"
                                         value={tag.allowedValues}
                                         onChange={(e) => handleUpdateTag(tag.id, 'allowedValues', e.target.value)}
-                                        className="w-full px-3 py-1.5 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md text-[14px] text-fluent-fg-primary focus:outline-none focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg transition-all"
+                                        className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                     />
                                 </div>
                             </div>

@@ -293,7 +293,7 @@ export const CA_CATEGORIES = [
     'Zero Trust'
 ];
 
-export const TITLE_OVERRIDES = {
+const TITLE_OVERRIDES = {
     'RequireMFA': 'Require Multi-factor Authentication',
     'RequirePhishResist': 'Require Phishing-Resistant Multi-factor Authentication',
     'RequireMfaForRisk': 'Require Multi-factor Authentication for Risk',

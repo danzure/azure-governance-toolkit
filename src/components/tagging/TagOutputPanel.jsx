@@ -122,7 +122,7 @@ export default function TagOutputPanel({ tags }) {
     };
 
     return (
-        <div className="bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle shadow-soft flex flex-col h-full overflow-hidden">
+        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full">
             <div className="flex items-center justify-between border-b border-fluent-stroke-subtle bg-fluent-bg-subtle px-4 py-3">
                 <div className="flex items-center gap-2">
                     <button 
@@ -140,12 +140,15 @@ export default function TagOutputPanel({ tags }) {
                 </div>
                 <button
                     onClick={handleCopy}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium text-fluent-brand-fg hover:text-fluent-brand-hover transition-colors"
+                    className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center gap-1.5 border ${copiedId === 'output'
+                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
+                        : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'
+                        }`}
                 >
                     {copiedId === 'output' ? (
-                        <><Check className="w-4 h-4 text-green-500" /> Copied!</>
+                        <><Check className="w-3.5 h-3.5" /> <span>Copied</span></>
                     ) : (
-                        <><Copy className="w-4 h-4" /> Copy Output</>
+                        <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>
                     )}
                 </button>
             </div>

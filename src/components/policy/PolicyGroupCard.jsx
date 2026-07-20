@@ -37,7 +37,14 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
     };
 
     return (
-        <div className="group flex flex-col bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft dark:shadow-none hover:shadow-md hover:border-fluent-stroke-strong transition-all duration-200">
+        <div 
+            className="group flex flex-col bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft dark:shadow-none hover:shadow-depth hover:border-fluent-stroke-strong transition-colors duration-200 transform-gpu cursor-pointer"
+            onClick={() => {
+                if (activePolicy.settings) {
+                    setIsExpanded(!isExpanded);
+                }
+            }}
+        >
             <div className="p-4 flex flex-col lg:flex-row gap-4 lg:gap-6 lg:items-center">
 
                 {/* Left Side: Name, Target Dropdown, Badges */}
@@ -53,9 +60,10 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                             {/* Target Dropdown */}
                             {policies.length > 1 ? (
                                 <select
-                                    className="mt-2 w-full max-w-[300px] px-2 h-[28px] border rounded text-[12px] font-medium bg-fluent-bg-canvas border-fluent-stroke-subtle text-fluent-fg-primary outline-none focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg/20 transition-all cursor-pointer"
+                                    className="mt-2 min-w-0 w-full max-w-[300px] px-2.5 h-[32px] border rounded outline-none text-[13px] transition-colors duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
                                     value={activeIndex}
                                     onChange={(e) => setSelectedIdx(Number(e.target.value))}
+                                    onClick={(e) => e.stopPropagation()}
                                 >
                                     {policies.map((p, idx) => (
                                         <option key={p.name} value={idx}>{formatTarget(p.name)}</option>
@@ -72,10 +80,13 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                     {activePolicy.name}
                                 </span>
                                 <button
-                                    onClick={() => handleCopy(activePolicy.name, activePolicy.name)}
-                                    className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCopy(activePolicy.name, activePolicy.name);
+                                    }}
+                                    className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-colors inline-flex items-center justify-center gap-1.5 border ${isCopied 
                                         ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
-                                        : 'border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39]'}`}
+                                        : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
                                     title="Copy Name"
                                 >
                                     {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -106,8 +117,11 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                     <div className="flex items-center gap-4 mt-auto">
                         {activePolicy.settings && (
                             <button
-                                onClick={() => setIsExpanded(!isExpanded)}
-                                className="w-fit text-fluent-fg-primary hover:text-fluent-brand-fg flex items-center gap-1.5 text-[12px] font-medium transition-colors"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsExpanded(!isExpanded);
+                                }}
+                                className="px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-colors inline-flex items-center justify-center gap-1.5 w-fit"
                             >
                                 <Settings className="w-3.5 h-3.5" />
                                 {isExpanded ? 'Hide Settings' : 'View Settings'}
@@ -119,7 +133,7 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                                 href={activePolicy.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#d1d1d1] dark:border-[#525252] bg-white dark:bg-[#292929] text-[#242424] dark:text-[#ffffff] text-[12px] font-medium hover:bg-[#f5f5f5] dark:hover:bg-[#3b3a39] transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                                className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -145,7 +159,10 @@ const PolicyGroupCard = ({ requirement, policies, copiedId, handleCopy, globalEx
                 const licenseRequired = requiresP2 ? 'Microsoft Entra ID P2' : 'Microsoft Entra ID P1';
 
                 return (
-                    <div className="border-t border-fluent-stroke-subtle bg-fluent-bg-canvas rounded-b-lg p-4 animate-slide-up">
+                    <div 
+                        className="border-t border-fluent-stroke-subtle bg-fluent-bg-canvas rounded-b-lg p-4 animate-slide-up cursor-default"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <div className="flex flex-col md:flex-row gap-4">
                             
                             {/* Assignments Column */}

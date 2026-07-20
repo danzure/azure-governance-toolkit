@@ -6,7 +6,7 @@
  * that automatically handle both light and dark mode themes.
  * Designed to align with the official Microsoft Fluent UI semantic color palette.
  */
-export const CATEGORY_COLORS = {
+const CATEGORY_COLORS = {
     'General': { bgClass: 'bg-fluent-cat-blue-bg', textClass: 'text-fluent-cat-blue-fg' },
     'Compute': { bgClass: 'bg-fluent-cat-blue-bg', textClass: 'text-fluent-cat-blue-fg' },
     'Networking': { bgClass: 'bg-fluent-cat-orange-bg', textClass: 'text-fluent-cat-orange-fg' },

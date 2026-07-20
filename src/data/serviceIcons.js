@@ -300,13 +300,3 @@ export function getServiceIconUrl(resourceName) {
     return null;
 }
 
-/**
- * Returns just the icon filename slug (without .svg extension) from the
- * primary benc-uk source. Returns null for resources using alternate sources.
- *
- * @param {string} resourceName - The `name` field from RESOURCE_DATA_RAW
- * @returns {string|null}
- */
-export function getServiceIconSlug(resourceName) {
-    return SERVICE_ICON_MAP[resourceName] || null;
-}

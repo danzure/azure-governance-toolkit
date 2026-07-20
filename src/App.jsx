@@ -10,11 +10,11 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { Suspense, lazy } from 'react';
 
 // Lazy loaded Pages
-const DashboardPage = lazy(() => import('./pages/DashboardPage'));
-const ResourceNamingPage = lazy(() => import('./pages/ResourceNamingPage'));
-const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccessPage'));
-const ManagementGroupTopologyPage = lazy(() => import('./pages/ManagementGroupTopologyPage'));
-const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategyPage'));
+const DashboardPage = lazy(() => import('./pages/Dashboard'));
+const ResourceNamingPage = lazy(() => import('./pages/ResourceNaming'));
+const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccess'));
+const ManagementGroupTopologyPage = lazy(() => import('./pages/ManagementGroupTopology'));
+const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategy'));
 
 /**
  * Main Layout & Routing Component
