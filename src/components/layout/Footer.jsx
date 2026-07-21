@@ -17,7 +17,7 @@ export default function Footer() {
                 <div className="flex items-center gap-3.5">
                     {/* Brand logo */}
                     <div className="flex items-center justify-center w-9 h-9 transition-transform duration-300 hover:scale-105 active:scale-95">
-                        <img src="/favicon-32x32.png" alt="atozazure logo" className="w-8 h-8 object-contain" />
+                        <img src="/atozazure-favicon-192x192.png" alt="atozazure logo" className="w-8 h-8 object-contain" />
                     </div>
 
                     <div className="flex flex-col justify-center gap-1">
