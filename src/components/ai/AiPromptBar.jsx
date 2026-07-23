@@ -79,7 +79,7 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
             <div className="flex items-center justify-between mb-1.5 ml-1">
                 <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-fluent-brand-bg uppercase tracking-wider">
-                        Smart Generate
+                        AI Generate
                     </span>
                     <span className="bg-fluent-bg-tertiary text-fluent-fg-secondary border border-fluent-stroke-subtle text-[10px] px-1.5 py-0.5 rounded-[4px] font-bold">
                         EXPERIMENTAL
