@@ -19,7 +19,7 @@ import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, 
  * @param {Object} props.t - Shared tailwind class tokens for consistent themeing.
  * @returns {JSX.Element}
  */
-export default function ResourceTemplateCard({ resource, genName, bundle, getBundleName, t }) {
+export default function ResourceTemplateCard({ resource, genName, bundle, getBundleName }) {
     const [iacTab, setIacTab] = useState('bicep');
     const [isIacCopied, setIsIacCopied] = useState(false);
 
@@ -132,5 +132,4 @@ ResourceTemplateCard.propTypes = {
     genName: PropTypes.string.isRequired,
     bundle: PropTypes.array,
     getBundleName: PropTypes.func.isRequired,
-    t: PropTypes.object.isRequired,
 };

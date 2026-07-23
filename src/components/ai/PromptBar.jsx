@@ -3,12 +3,12 @@ import { Sparkles, ArrowRight, Loader2, X, RefreshCw } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 /**
- * AiPromptBar Component
+ * PromptBar Component
  * 
  * A premium natural language input bar that calls the Azure OpenAI backend
  * to automatically generate Resource Naming configurations based on user intent.
  */
-const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSearchTerm, setActiveCategory, onResetAll }, ref) => {
+const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSearchTerm, setActiveCategory, onResetAll }, ref) => {
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -168,7 +168,7 @@ const AiPromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setS
     );
 });
 
-AiPromptBar.propTypes = {
+PromptBar.propTypes = {
     setWorkload: PropTypes.func.isRequired,
     setEnvValue: PropTypes.func.isRequired,
     setRegionValue: PropTypes.func.isRequired,
@@ -177,6 +177,6 @@ AiPromptBar.propTypes = {
     onResetAll: PropTypes.func
 };
 
-AiPromptBar.displayName = 'AiPromptBar';
+PromptBar.displayName = 'PromptBar';
 
-export default AiPromptBar;
+export default PromptBar;

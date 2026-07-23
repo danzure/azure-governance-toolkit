@@ -63,34 +63,4 @@ export function trackPageView(name, uri) {
     appInsights?.trackPageView({ name, uri });
 }
 
-/**
- * Track a custom event (e.g. feature usage, button clicks).
- * @param {string} name        – event name, e.g. "resource_name_generated"
- * @param {Object} [properties] – optional key-value bag of extra data
- */
-export function trackEvent(name, properties) {
-    appInsights?.trackEvent({ name }, properties);
-}
 
-/**
- * Track a custom metric value.
- * @param {string} name   – metric name
- * @param {number} average – the value to record
- */
-export function trackMetric(name, average) {
-    appInsights?.trackMetric({ name, average });
-}
-
-/**
- * Manually flush any queued telemetry (e.g. before the page unloads).
- */
-export function flushTelemetry() {
-    appInsights?.flush();
-}
-
-/**
- * Return the underlying SDK instance (for advanced usage).
- */
-export function getAppInsights() {
-    return appInsights;
-}

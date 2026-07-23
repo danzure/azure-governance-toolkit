@@ -309,7 +309,6 @@ function ExpandedPanel({
                     genName={genName} 
                     bundle={bundle} 
                     getBundleName={getBundleName} 
-                    t={t} 
                 />
             </div>
         </div>
