@@ -56,7 +56,7 @@ export default function Header({ themePref, onSetTheme, onToggleMenu, title = "R
                     aria-label="Light mode"
                     title="Light mode"
                 >
-                    <Sun className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'light' ? 'rotate-0' : '-rotate-90'}`} />
+                    <Sun className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'light' ? 'scale-100' : 'scale-90'}`} />
                 </button>
                 <button
                     onClick={() => onSetTheme('system')}
@@ -72,7 +72,7 @@ export default function Header({ themePref, onSetTheme, onToggleMenu, title = "R
                     aria-label="Dark mode"
                     title="Dark mode"
                 >
-                    <Moon className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'dark' ? 'rotate-0' : 'rotate-90'}`} />
+                    <Moon className={`w-4 h-4 transition-transform duration-200 ease-in-out ${themePref === 'dark' ? 'scale-100' : 'scale-90'}`} />
                 </button>
             </div>
         </header>

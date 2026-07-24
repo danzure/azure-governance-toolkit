@@ -58,7 +58,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
         <div
             id={id}
             onClick={() => onToggle(resource.name, isExpanded)}
-            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-fluent-brand-bg shadow-depth border-transparent dark:border-transparent' : 'hover:shadow-depth hover:border-fluent-stroke-strong shadow-soft'} bg-fluent-bg-card border-fluent-stroke-subtle ${hasErrors ? 'border-l-4 border-l-[#a80000]' : hasWarnings ? 'border-l-4 border-l-[#ffaa44]' : ''}`}
+            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-all duration-300 h-full ${isExpanded ? 'ring-2 ring-fluent-brand-bg shadow-depth border-transparent dark:border-transparent' : `hover:shadow-depth shadow-soft ${hasErrors ? 'hover:border-fluent-state-danger' : hasWarnings ? 'hover:border-fluent-cat-orange-fg' : 'hover:border-fluent-stroke-strong'}`} bg-fluent-bg-card ${hasErrors ? 'border-fluent-state-danger' : hasWarnings ? 'border-fluent-cat-orange-fg' : 'border-fluent-stroke-subtle'}`}
         >
             <div className="p-3 sm:p-4 flex flex-col h-full gap-3 min-w-0">
                 <div className="flex items-start justify-between gap-3 min-w-0">
@@ -74,16 +74,18 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                         </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                        {validationIssues.length > 0 && (
-                            <div className="relative group/validation">
-                                {hasErrors
-                                    ? <ShieldAlert className="w-4 h-4 text-[#a80000]" aria-label={`${validationIssues.length} validation issue(s)`} />
-                                    : <AlertTriangle className="w-4 h-4 text-[#ffaa44]" aria-label={`${validationIssues.length} validation warning(s)`} />
-                                }
-                                <div className="absolute right-0 top-6 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
+                        {validationIssues.length > 0 && !isExpanded && (
+                            <div className="relative group/validation animate-scale-in">
+                                <div className={`flex items-center justify-center w-6 h-6 rounded-[4px] cursor-help shadow-sm transition-all duration-200 hover:brightness-95 dark:hover:brightness-110 active:scale-95 ${hasErrors ? 'bg-fluent-cat-red-bg text-fluent-state-danger' : 'bg-fluent-cat-orange-bg text-fluent-cat-orange-fg'}`}>
+                                    {hasErrors
+                                        ? <ShieldAlert className="w-3.5 h-3.5" strokeWidth={2.5} aria-label={`${validationIssues.length} validation issue(s)`} />
+                                        : <AlertTriangle className="w-3.5 h-3.5" strokeWidth={2.5} aria-label={`${validationIssues.length} validation warning(s)`} />
+                                    }
+                                </div>
+                                <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
                                     {validationIssues.map((issue, i) => (
                                         <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
-                                            <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-[#a80000]' : 'bg-[#ffaa44]'}`} />
+                                            <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-fluent-state-danger' : 'bg-fluent-cat-orange-fg'}`} />
                                             <span>{issue.message}</span>
                                         </div>
                                     ))}
@@ -113,7 +115,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                 {!isExpanded && (
                     <div className="mt-auto pt-2 min-w-0 w-full">
                         <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
-                            <div className={`flex-1 min-w-0 font-mono text-[13px] font-medium pr-16 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'} truncate flex items-center gap-2`}>
+                            <div className={`flex-1 min-w-0 font-mono text-[13px] font-medium pr-16 ${isTooLong ? 'text-fluent-state-danger' : 'text-fluent-fg-primary'} truncate flex items-center gap-2`}>
                                 <span className="truncate min-w-0 block">
                                     <ValidationHighlight name={hasBundle ? getGeneratedName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                                 </span>
@@ -145,7 +147,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                         
                         <div className="flex justify-between items-center text-[11px] mt-2 px-0.5 opacity-70 shrink-0">
                             <span className="text-fluent-fg-tertiary">Max: {resource.maxLength || 64}</span>
-                            <span className={`font-bold ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'}`}>{genName.length} chars</span>
+                            <span className={`font-bold ${isTooLong ? 'text-fluent-state-danger' : 'text-fluent-fg-primary'}`}>{genName.length} chars</span>
                         </div>
                     </div>
                 )}
