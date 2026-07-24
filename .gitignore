@@ -34,3 +34,12 @@ diff.txt
 
 # Azure Functions API
 api/local.settings.json
+
+# ESLint
+.eslintcache
+
+# Testing
+coverage/
+
+# OS Files
+Thumbs.db
