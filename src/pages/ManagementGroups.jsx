@@ -4,7 +4,7 @@ import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
 import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator';
 import useLocalStorage from '../hooks/useLocalStorage';
 
-export default function ManagementGroupTopologyPage() {
+export default function ManagementGroupsPage() {
     const [activeTab, setActiveTab] = useState('designer');
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
     const [topology, setTopology] = useLocalStorage('azres_topology', [

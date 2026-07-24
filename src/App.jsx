@@ -16,7 +16,7 @@ import { Suspense, lazy } from 'react';
 const DashboardPage = lazy(() => import('./pages/Dashboard'));
 const ResourceNamingPage = lazy(() => import('./pages/ResourceNaming'));
 const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccess'));
-const ManagementGroupTopologyPage = lazy(() => import('./pages/ManagementGroupTopology'));
+const ManagementGroupsPage = lazy(() => import('./pages/ManagementGroups'));
 const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategy'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
@@ -173,7 +173,7 @@ export default function App() {
                                 <Route path="/" element={<DashboardPage />} />
                                 <Route path="/resource-naming" element={<ResourceNamingPage />} />
                                 <Route path="/conditional-access" element={<ConditionalAccessPage />} />
-                                <Route path="/management-groups" element={<ManagementGroupTopologyPage />} />
+                                <Route path="/management-groups" element={<ManagementGroupsPage />} />
                                 <Route path="/tagging-strategy" element={<TaggingStrategyPage />} />
                                 <Route path="*" element={<NotFoundPage />} />
                             </Routes>
