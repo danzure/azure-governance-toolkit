@@ -68,11 +68,11 @@ When creating or modifying UI components, you **must** adhere to the following T
 - **Terminal/Code Content (`<pre>`)**: Use `flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0` for the actual code text and scrollable area.
 - **Terminal Header/Toolbar**: Use `px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0` for the action bar situated above the terminal window.
 
-### 10. Common States (Disabled, Error, Success)
+### 10. Common States (Disabled, Error, Success, Loading)
 - **Disabled State**: Apply `disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-fluent-bg-subtle disabled:border-fluent-stroke-subtle disabled:text-fluent-fg-tertiary` to inputs and buttons when inactive to clearly indicate they cannot be interacted with.
 - **Error/Invalid State**: Use `border-fluent-state-danger` for borders and `text-fluent-state-danger` for error text or icons to provide clear validation feedback.
 - **Success/Valid State**: Use `text-fluent-state-success` and `border-fluent-state-success` for positive feedback, such as successful form submissions or active integrations.
-- **Loading State**: Use a subtle pulse animation (`animate-pulse`) on containers or a spinner with `text-fluent-brand-bg` for loading states to maintain user context without aggressive visual changes.
+- **Loading State (Skeletons & Spinners)**: Use a subtle pulse animation (`animate-pulse`) on containers for skeleton loading states. For centralized page or component loading (e.g., React Suspense fallbacks), use a Fluent 2 standard spinner constructed with `w-8 h-8 rounded-full border-[3px] border-fluent-brand-bg/20 border-t-fluent-brand-bg animate-spin` alongside descriptive text, rather than plain text strings. Ensure loaders maintain user context without aggressive visual changes.
 
 ### 11. Segmented Controls, Toggles & Sliders
 - **Shape & Geometry**: Always use standard Fluent 2 geometry (e.g., `rounded-md` for outer containers, `rounded-sm` for inner selected items). **Do not use Apple-style or Material-style fully rounded pill shapes (`rounded-full`)** for toggles or segmented controls.

@@ -1,0 +1,16 @@
+{
+  "name": "atozazure | Azure Governance Toolkit",
+  "short_name": "atozazure",
+  "description": "Streamline your Azure environment with atozazure. Discover our comprehensive suite of tools for Resource Naming, Conditional Access, Management Group topologies, and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078D4",
+  "icons": [
+    {
+      "src": "/atozazure-favicon-192x192.png?v=2",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

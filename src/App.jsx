@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { trackPageView } from './utils/telemetry';
 
 import Header from './components/layout/Header';
@@ -7,6 +7,8 @@ import NavigationMenu from './components/layout/NavigationMenu';
 import Footer from './components/layout/Footer';
 import ScrollToTopButton from './components/layout/ScrollToTopButton';
 import useLocalStorage from './hooks/useLocalStorage';
+import ErrorBoundary from './components/layout/ErrorBoundary';
+import PageLoader from './components/layout/PageLoader';
 
 import { Suspense, lazy } from 'react';
 
@@ -16,6 +18,7 @@ const ResourceNamingPage = lazy(() => import('./pages/ResourceNaming'));
 const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccess'));
 const ManagementGroupTopologyPage = lazy(() => import('./pages/ManagementGroupTopology'));
 const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategy'));
+const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 /**
  * Main Layout & Routing Component
@@ -107,20 +110,34 @@ export default function App() {
     const handleCloseMobileNav = useCallback(() => setIsMobileNavOpen(false), []);
 
     // Determine header subtitle based on current route
-    let headerTitle = "Dashboard";
-    if (location.pathname === '/azure-resources') {
+    let headerTitle;
+    if (location.pathname === '/') {
+        headerTitle = "Dashboard";
+    } else if (location.pathname === '/resource-naming') {
         headerTitle = "Azure Resource Naming Tool";
     } else if (location.pathname === '/conditional-access') {
         headerTitle = "Conditional Access Policy Builder";
-    } else if (location.pathname === '/management-group-topology') {
+    } else if (location.pathname === '/management-groups') {
         headerTitle = "Management Group Topology Designer";
     } else if (location.pathname === '/tagging-strategy') {
         headerTitle = "Tagging Strategy Builder";
+    } else {
+        headerTitle = "Page Not Found";
     }
 
-    // Track page view on every route change
+    // Track page view and handle route changes (title & scroll)
     useEffect(() => {
+        // Update browser tab title
+        document.title = `${headerTitle} | Azure Governance Toolkit`;
+
+        // Log telemetry
         trackPageView(headerTitle, location.pathname);
+
+        // Reset scroll position for the main content area
+        const mainContainer = document.getElementById('main-scroll-container');
+        if (mainContainer) {
+            mainContainer.scrollTo({ top: 0, behavior: 'instant' });
+        }
     }, [location.pathname, headerTitle]);
 
     return (
@@ -149,17 +166,19 @@ export default function App() {
                     onClose={handleCloseMobileNav}
                 />
 
-                <main id="main-scroll-container" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overscroll-y-none">
-                    <Suspense fallback={<div className="flex-1 flex items-center justify-center p-8 text-fluent-fg-secondary">Loading page...</div>}>
-                        <Routes>
-                            <Route path="/" element={<DashboardPage />} />
-                            <Route path="/azure-resources" element={<ResourceNamingPage />} />
-                            <Route path="/conditional-access" element={<ConditionalAccessPage />} />
-                            <Route path="/management-group-topology" element={<ManagementGroupTopologyPage />} />
-                            <Route path="/tagging-strategy" element={<TaggingStrategyPage />} />
-                            <Route path="*" element={<Navigate to="/" replace />} />
-                        </Routes>
-                    </Suspense>
+                <main id="main-scroll-container" tabIndex="-1" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overscroll-y-none outline-none">
+                    <ErrorBoundary>
+                        <Suspense fallback={<PageLoader />}>
+                            <Routes>
+                                <Route path="/" element={<DashboardPage />} />
+                                <Route path="/resource-naming" element={<ResourceNamingPage />} />
+                                <Route path="/conditional-access" element={<ConditionalAccessPage />} />
+                                <Route path="/management-groups" element={<ManagementGroupTopologyPage />} />
+                                <Route path="/tagging-strategy" element={<TaggingStrategyPage />} />
+                                <Route path="*" element={<NotFoundPage />} />
+                            </Routes>
+                        </Suspense>
+                    </ErrorBoundary>
                     {location.pathname === '/' && <Footer />}
                 </main>
             </div>

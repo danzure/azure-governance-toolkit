@@ -57,7 +57,7 @@ export function initTelemetry() {
 /**
  * Track a page view.  Called on every React Router navigation.
  * @param {string} name  – friendly page name, e.g. "Dashboard"
- * @param {string} uri   – the route path, e.g. "/azure-resources"
+ * @param {string} uri   – the route path, e.g. "/resource-naming"
  */
 export function trackPageView(name, uri) {
     appInsights?.trackPageView({ name, uri });

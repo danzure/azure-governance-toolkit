@@ -10,7 +10,7 @@ export default function DashboardPage() {
             title: 'Azure Resource Naming Tool',
             description: 'Generate standard compliant names for 100+ Azure services based on the Cloud Adoption Framework.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg',
-            path: '/azure-resources',
+            path: '/resource-naming',
             bgClass: 'bg-transparent',
             hasAi: true,
         },
@@ -24,10 +24,10 @@ export default function DashboardPage() {
         },
         {
             id: 'management-group-topology',
-            title: 'Management Group Topology Designer',
+            title: 'Management Group Topology',
             description: 'Visually design your Azure Management Group hierarchy using enterprise best-practice topologies.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
-            path: '/management-group-topology',
+            path: '/management-groups',
             bgClass: 'bg-transparent',
         },
         {
