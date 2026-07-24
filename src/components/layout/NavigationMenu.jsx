@@ -85,7 +85,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                 </NavLink>
 
                 <NavLink
-                    to="/azure-resources"
+                    to="/resource-naming"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Azure Resources" : undefined}
                     className={({ isActive }) =>
@@ -141,7 +141,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                 </NavLink>
 
                 <NavLink
-                    to="/management-group-topology"
+                    to="/management-groups"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Management Group Topology" : undefined}
                     className={({ isActive }) =>
