@@ -154,7 +154,7 @@ function ExpandedPanel({
             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-4 pb-3 border-b border-fluent-stroke-subtle">
                 {/* Generated Name and Validation */}
                 <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
-                    <div className={`flex-1 min-w-0 font-mono text-[13px] font-semibold pr-24 ${isTooLong ? 'text-[#a80000]' : 'text-fluent-fg-primary'} truncate flex items-center gap-2`}>
+                    <div className={`flex-1 min-w-0 font-mono text-[13px] font-semibold pr-24 ${isTooLong ? 'text-fluent-state-danger' : 'text-fluent-fg-primary'} truncate flex items-center gap-2`}>
                         <span className="truncate min-w-0 block">
                             <ValidationHighlight name={hasBundle && getBundleName ? getBundleName(bundle[0]) : genName} allowedCharsPattern={hasBundle ? bundle[0].chars : resource.chars} />
                         </span>
@@ -167,25 +167,25 @@ function ExpandedPanel({
                     
                     <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-2 shrink-0 z-10 bg-transparent pr-0.5">
                         {validationIssues.length === 0 ? (
-                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#f1faf1] dark:bg-[#1b2b1b] border border-[#c6ebc9] dark:border-[#1e4620] shadow-sm">
-                                <ShieldCheck className="w-3 h-3 text-[#107c10] dark:text-[#a3d4a3]" />
-                                <span className="text-[11px] font-medium text-[#0e700e] dark:text-[#a3d4a3]">Valid</span>
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-fluent-cat-green-bg border border-transparent shadow-sm">
+                                <ShieldCheck className="w-3 h-3 text-fluent-cat-green-fg" />
+                                <span className="text-[11px] font-medium text-fluent-cat-green-fg">Valid</span>
                             </div>
                         ) : (
-                            <div className="relative group/validation-exp">
-                                <div className={`flex items-center gap-1 px-2 py-0.5 rounded-[4px] border shadow-sm cursor-help ${hasErrors ? 'bg-[#fdf3f4] dark:bg-[#2c1515] border-[#eeacb2] dark:border-[#442726]' : 'bg-[#fff8f0] dark:bg-[#2c2412] border-[#f5d9a8] dark:border-[#4a3c1e]'}`}>
+                            <div className="relative group/validation-exp animate-scale-in">
+                                <div className={`flex items-center gap-1.5 px-2 py-1 rounded-[4px] shadow-sm cursor-help transition-all duration-200 hover:brightness-95 dark:hover:brightness-110 active:scale-95 ${hasErrors ? 'bg-fluent-cat-red-bg text-fluent-state-danger' : 'bg-fluent-cat-orange-bg text-fluent-cat-orange-fg'}`}>
                                     {hasErrors
-                                        ? <ShieldAlert className="w-3 h-3 text-[#c50f1f]" />
-                                        : <AlertTriangle className="w-3 h-3 text-[#f7941d]" />
+                                        ? <ShieldAlert className="w-3.5 h-3.5" strokeWidth={2.5} />
+                                        : <AlertTriangle className="w-3.5 h-3.5" strokeWidth={2.5} />
                                     }
-                                    <span className={`text-[11px] font-medium ${hasErrors ? 'text-[#a80000] dark:text-[#f1bbbc]' : 'text-[#8a6d3b] dark:text-[#f5d9a8]'}`}>
+                                    <span className="text-[11px] font-medium">
                                         {validationIssues.length} {validationIssues.length === 1 ? 'issue' : 'issues'}
                                     </span>
                                 </div>
                                 <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation-exp:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
                                     {validationIssues.map((issue, i) => (
                                         <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
-                                            <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-[#a80000]' : 'bg-[#ffaa44]'}`} />
+                                            <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-fluent-state-danger' : 'bg-fluent-cat-orange-fg'}`} />
                                             <span>{issue.message}</span>
                                         </div>
                                     ))}

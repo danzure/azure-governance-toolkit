@@ -1,13 +1,14 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wand2, Download } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wand2, Download, AlertTriangle } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
 import { generateName } from '../../utils/nameGenerator';
 import { toPng } from 'html-to-image';
 
-const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscription, onRemoveSubscription, onUpdateSubscriptionName, onGenerateSubName }) => {
+const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscription, onRemoveSubscription, onUpdateSubscriptionName, onGenerateSubName, validationErrors }) => {
     const [isExpanded, setIsExpanded] = useState(true);
     const isRoot = level === 0;
+    const validationError = validationErrors?.[node.id];
 
     return (
         <div className="flex flex-col items-center relative">
@@ -27,17 +28,29 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                         {isRoot ? (
                              <span className="text-[13px] font-semibold text-fluent-fg-secondary pr-2">{node.name}</span>
                         ) : (
-                            <>
+                            <div className="relative flex-1 flex items-center w-full min-w-[140px]">
                                 <input
                                     type="text"
                                     value={node.name}
                                     onChange={(e) => onUpdateName(node.id, e.target.value)}
-                                    className="flex-1 min-w-[140px] w-full pl-2 pr-7 h-[32px] border rounded outline-none text-[13px] font-medium transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                    className={`flex-1 w-full pl-2 pr-7 h-[32px] border rounded outline-none text-[13px] font-medium transition-all duration-200 focus:ring-2 bg-fluent-bg-card text-fluent-fg-primary placeholder:text-fluent-fg-tertiary ${validationError ? 'border-fluent-state-danger focus:border-fluent-state-danger focus:ring-fluent-state-danger/20 text-fluent-state-danger' : 'border-fluent-stroke-strong focus:border-fluent-brand-bg focus:ring-fluent-brand-bg/20'}`}
                                     placeholder="Group Name"
                                     spellCheck="false"
                                 />
-                                <Edit2 className="w-3 h-3 text-fluent-fg-tertiary absolute right-2 pointer-events-none opacity-50" />
-                            </>
+                                {validationError ? (
+                                    <div className="absolute z-30 right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                                        <div className="animate-scale-in">
+                                            <Tooltip align="center" position="top" content={validationError}>
+                                                <div className="flex items-center justify-center w-6 h-6 rounded-[4px] bg-fluent-cat-red-bg text-fluent-state-danger cursor-help shadow-sm transition-all duration-200 hover:brightness-95 dark:hover:brightness-110 active:scale-95">
+                                                    <AlertTriangle className="w-3.5 h-3.5" strokeWidth={2.5} />
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Edit2 className="w-3 h-3 text-fluent-fg-tertiary absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" />
+                                )}
+                            </div>
                         )}
                     </div>
 
@@ -167,6 +180,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                         onRemoveSubscription={onRemoveSubscription}
                                         onUpdateSubscriptionName={onUpdateSubscriptionName}
                                         onGenerateSubName={onGenerateSubName}
+                                        validationErrors={validationErrors}
                                     />
                                 </div>
                             </div>
@@ -191,7 +205,8 @@ TreeNode.propTypes = {
     onAddSubscription: PropTypes.func.isRequired,
     onRemoveSubscription: PropTypes.func.isRequired,
     onUpdateSubscriptionName: PropTypes.func.isRequired,
-    onGenerateSubName: PropTypes.func.isRequired
+    onGenerateSubName: PropTypes.func.isRequired,
+    validationErrors: PropTypes.object
 };
 
 export default function TopologyTreeBuilder({ topology, setTopology }) {
@@ -213,6 +228,48 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             return node;
         });
     };
+
+    const getAllNodes = (nodes) => {
+        let result = [];
+        nodes.forEach(node => {
+            result.push(node);
+            if (node.children) {
+                result = result.concat(getAllNodes(node.children));
+            }
+        });
+        return result;
+    };
+
+    const getValidationErrors = (nodes) => {
+        const errors = {};
+        const allNodes = getAllNodes(nodes);
+        const nameCounts = {};
+        
+        allNodes.forEach(n => {
+            if (n.id === 'root') return; // Skip root node uniqueness
+            const name = n.name.trim().toLowerCase();
+            if (name) {
+                nameCounts[name] = (nameCounts[name] || 0) + 1;
+            }
+        });
+
+        allNodes.forEach(n => {
+            if (n.id === 'root') return; // Don't validate root node
+            const name = n.name.trim();
+            if (!name) {
+                errors[n.id] = "Name cannot be empty.";
+            } else if (name.length > 90) {
+                errors[n.id] = "Name cannot exceed 90 characters.";
+            } else if (/[<>*%&:\\?+/]/.test(name)) {
+                errors[n.id] = "Name contains invalid characters.";
+            } else if (nameCounts[name.toLowerCase()] > 1) {
+                errors[n.id] = "Name must be unique in this topology.";
+            }
+        });
+        return errors;
+    };
+
+    const validationErrors = getValidationErrors(topology);
 
     const handleUpdateName = (id, newName) => {
         setTopology(prev => updateNode(prev, id, node => ({ ...node, name: newName })));
@@ -478,6 +535,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                             onRemoveSubscription={handleRemoveSubscription}
                             onUpdateSubscriptionName={handleUpdateSubscriptionName}
                             onGenerateSubName={handleGenerateSubName}
+                            validationErrors={validationErrors}
                         />
                     ))}
                 </div>

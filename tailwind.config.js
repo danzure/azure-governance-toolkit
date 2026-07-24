@@ -30,6 +30,7 @@ export default {
                     'info-bg': 'var(--colorInfoBackground)',
                     'info-border': 'var(--colorInfoBorder)',
                     'info-text': 'var(--colorInfoText)',
+                    'state-danger': 'var(--colorStateDanger)',
                     
                     // Category specific colors
                     'cat-blue-bg': 'var(--colorCategoryBlueBg)',

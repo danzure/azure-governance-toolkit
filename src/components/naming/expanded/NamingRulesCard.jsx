@@ -19,7 +19,7 @@ function NamingRuleRow({ label, description, children, isLast = false, t }) {
         <div className={`flex items-center justify-between py-1.5 ${isLast ? '' : `border-b ${t.divider}`}`}>
             <div className="flex flex-col gap-0 min-w-0 mr-3">
                 <span className={`text-[13px] font-medium leading-tight ${t.strong}`}>{label}</span>
-                <span className="text-[12px] text-[#a19f9d] leading-tight">{description}</span>
+                <span className="text-[12px] text-fluent-fg-tertiary leading-tight">{description}</span>
             </div>
             <div className="shrink-0">{children}</div>
         </div>
@@ -60,7 +60,7 @@ export default function NamingRulesCard({ resource, scopeDesc, selectedSubResour
                     <NamingRuleRow label="Uniqueness Scope" description="The level at which the name must be unique." t={t}>
                         <div className="flex flex-col items-end gap-0.5 text-right">
                             <span className={`text-[14px] font-semibold ${t.strong}`}>{resource.scope || 'Resource group'}</span>
-                            <span className="text-[12px] max-w-[200px] leading-tight text-[#a19f9d]">{scopeDesc}</span>
+                            <span className="text-[12px] max-w-[200px] leading-tight text-fluent-fg-tertiary">{scopeDesc}</span>
                         </div>
                     </NamingRuleRow>
 
