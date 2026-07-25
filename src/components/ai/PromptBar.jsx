@@ -117,8 +117,8 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         disabled={isLoading}
-                        placeholder={isLoading ? "Analyzing intent and matching to CAF..." : "Describe your cloud architecture (e.g., 'A production data analytics environment for Finance in West Europe')..."}
-                        className="flex-1 h-full bg-transparent !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[15px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary disabled:opacity-50 pr-20"
+                        placeholder={isLoading ? "Analyzing intent and matching to CAF..." : "Describe your cloud architecture (e.g., 'Data analytics in West Europe')..."}
+                        className="flex-1 h-full bg-transparent !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[15px] text-ellipsis text-fluent-fg-primary placeholder:text-fluent-fg-tertiary disabled:opacity-50 pr-20"
                     />
 
                     <div className="absolute right-2 flex items-center gap-1">
