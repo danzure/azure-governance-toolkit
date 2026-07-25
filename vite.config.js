@@ -9,10 +9,10 @@ export default defineConfig({
         sourcemap: false,
         rollupOptions: {
             output: {
-                manualChunks(id) {
-                    if (id.includes('node_modules')) {
-                        return 'vendor';
-                    }
+                manualChunks: {
+                    'react-core': ['react', 'react-dom', 'react-router-dom'],
+                    'app-insights': ['@microsoft/applicationinsights-web'],
+                    'icons': ['lucide-react']
                 }
             }
         }
