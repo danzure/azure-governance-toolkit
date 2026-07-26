@@ -198,6 +198,20 @@ const SERVICE_ICON_MAP = {
     'DevOps organization':              'Azure-DevOps',
     'DevTest Labs':                     'DevTest-Labs',
     'Managed DevOps Pools':             'Azure-DevOps',
+
+    // ── Newly Added Services ─────────────────────────────────────────────────
+    'Azure Monitor workspace':          'Monitor',
+    'Elastic SAN':                      null,               // → PLAYER
+    'Dev Box project':                  null,               // → PLAYER
+    'Dev Center':                       null,               // → PLAYER
+    'Kubernetes Fleet Manager':         null,               // → PLAYER
+    'Load Testing':                     null,               // → PLAYER
+    'Communication Services':           null,               // → PLAYER
+    'Azure Local':                      null,               // → ALT
+    'Language service':                 null,               // → PLAYER
+    'Speech service':                   null,               // → PLAYER
+    'Network security perimeter':       null,               // → PLAYER
+    'Fabric Capacity':                  null,               // → ALT
 };
 
 
@@ -217,6 +231,8 @@ const SERVICE_ICON_MAP_ALT = {
     'Template Spec':                    'Templates',
     'App Configuration store':          'App Configuration',
     'DNS private resolver':             'Private DNS zones',
+    'Azure Local':                      'Azure Stack Edge _ Data Box Gateway',
+    'Fabric Capacity':                  'Power BI Embedded',
 };
 
 
@@ -255,6 +271,15 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Application Group':                'other/00327-icon-service-Azure-Virtual-Desktop',
     'Scaling Plan':                     'other/00327-icon-service-Azure-Virtual-Desktop',
     'Azure Managed Grafana':            'other/02905-icon-service-Azure-Managed-Grafana',
+    'Elastic SAN':                      'other/03190-icon-service-Elastic-SAN',
+    'Dev Box project':                  'other/03250-icon-service-Microsoft-Dev-Box',
+    'Dev Center':                       'other/03250-icon-service-Microsoft-Dev-Box',
+    'Kubernetes Fleet Manager':         'other/03134-icon-service-Kubernetes-Fleet-Manager',
+    'Load Testing':                     'other/02944-icon-service-Azure-Load-Testing',
+    'Communication Services':           'other/00968-icon-service-Azure-Communication-Services',
+    'Language service':                 'ai + machine learning/02876-icon-service-Language',
+    'Speech service':                   'ai + machine learning/00797-icon-service-Speech-Services',
+    'Network security perimeter':       'other/02939-icon-service-Network-Security-Perimeters',
 };
 
 
