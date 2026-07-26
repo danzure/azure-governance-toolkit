@@ -66,10 +66,15 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                         <AzureServiceIcon resourceName={resource.name} category={resource.category} className="w-8 h-8 shrink-0" />
                         <div className="flex flex-col min-w-0">
                             <h3 className="text-[14px] font-semibold truncate text-fluent-fg-primary">{resource.name} <span className="font-normal text-fluent-fg-tertiary">({resource.abbrev})</span></h3>
-                            <div className="flex items-center mt-1">
+                            <div className="flex items-center mt-1 gap-1.5 flex-wrap">
                                 <span
                                     className={`text-[11px] px-2 py-0.5 rounded-[4px] font-medium ${categoryColors.bgClass} ${categoryColors.textClass}`}
                                 >{resource.category}</span>
+                                {resource.retired && (
+                                    <span className="text-[11px] px-2 py-0.5 rounded-[4px] font-medium bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
+                                        Retired
+                                    </span>
+                                )}
                             </div>
                         </div>
                     </div>
