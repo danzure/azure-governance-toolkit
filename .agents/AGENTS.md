@@ -130,8 +130,12 @@ To present read-only text (like generated resource names, IDs, or short policies
 
 ### 6. Application-Specific Logic
 
-#### 6.1 New Services Badge
-When adding new services to the `constants.js` database, you **must**:
-1. Add the `isNew: true` property to the newly added service objects.
-2. Remove the `isNew: true` property from any previously updated services that are no longer the most recently added items, so the "New" badge is only applied to the latest additions.
-3. Add/Update relevant icons in `src/assets/icons/` for any new services. Ensure the filename matches the service name and use the existing heroicons for vector images or the provided templates for SVG assets. If no exact icon exists then apply the closest match. Never use generic or AI-generated icons.
+#### 6.1 Adding & Updating Services
+When adding new services or updating existing services in the `constants.js` database, you **must**:
+1. **Prevent Duplicates**: Before adding a new service, always search the entirety of `constants.js` to ensure the service does not already exist. Do not add duplicate entries.
+2. **"New" Badge Application**: Add the `isNew: true` property **only** to genuinely newly added services that did not exist previously. Do **not** apply this badge to existing services that are merely being updated or refactored.
+3. Remove the `isNew: true` property from any previously added services that are no longer the most recent additions, ensuring the badge remains exclusive to the latest entries.
+4. Add/Update relevant icons in `src/assets/icons/` for any new services. Ensure the filename matches the service name and use the existing heroicons for vector images or the provided templates for SVG assets. If no exact icon exists then apply the closest match. Never use generic or AI-generated icons.
+5. **Documentation & Pricing Links**: Always include a valid `learnUrl` pointing to the official Microsoft Learn documentation overview for the service, and a `pricingUrl` pointing to the specific Azure Pricing Calculator page for the service. Validate that these links do not return a 404 before committing.
+6. **Service Lifecycle States**: Use the `legacy: true` property to label services that are still available but have a newer recommended alternative. Services should only be marked as `retired: true` if they are no longer supported or have been deprecated.
+7. **Content Separation**: Ensure a strict separation of concerns between descriptive and operational text. The 'About this service' fields (`desc` and `longDesc`) must strictly explain what the service is and what it does. The 'Deployment guidance' fields (`bestPractice` and `namingGuidance`) should contain all operational advice, including recommendations on how best to deploy the service, and must clearly identify newer recommended alternatives if the current service is marked as `legacy` or `retired`.

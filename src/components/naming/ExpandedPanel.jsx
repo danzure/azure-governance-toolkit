@@ -290,16 +290,16 @@ function ExpandedPanel({
             {/* Two Column Layout: Rules + Guidance | IaC Template */}
             <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-3 mt-3">
                 <div className="flex flex-col gap-3 min-w-0 h-full">
+                    <GuidanceCard 
+                        namingPattern={guidanceName} 
+                        namingGuidanceText={namingGuidanceText} 
+                        t={t} 
+                    />
+
                     <NamingRulesCard 
                         resource={resource} 
                         scopeDesc={scopeDesc} 
                         selectedSubResource={selectedSubResource} 
-                        t={t} 
-                    />
-
-                    <GuidanceCard 
-                        namingPattern={guidanceName} 
-                        namingGuidanceText={namingGuidanceText} 
                         t={t} 
                     />
                 </div>

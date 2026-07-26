@@ -48,6 +48,11 @@ export function generateName(resource, config, selectedSubResource = null) {
         return `ado-${orgName}`;
     }
 
+    // Special handling for App Service
+    if (resource.name === 'App Service') {
+        return `${cleanWorkload}.azurewebsites.net`;
+    }
+
     const regAbbrev = regionAbbrev || 'uks';
     const suffix = (instance || '001').padStart(3, '0');
 

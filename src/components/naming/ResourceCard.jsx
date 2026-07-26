@@ -75,6 +75,11 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                         New
                                     </span>
                                 )}
+                                {resource.legacy && (
+                                    <span className="text-[11px] px-2 py-0.5 rounded-[4px] font-medium bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
+                                        Legacy
+                                    </span>
+                                )}
                                 {resource.retired && (
                                     <span className="text-[11px] px-2 py-0.5 rounded-[4px] font-medium bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
                                         Retired
