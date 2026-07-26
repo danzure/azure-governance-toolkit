@@ -137,7 +137,8 @@ export default function ResourceNamingPage() {
         
         return RESOURCE_DATA_SORTED.filter(rt => {
             // Short-circuit category match first 
-            const matchesCategory = activeCategory === 'All' || rt.category === activeCategory;
+            const matchesCategory = activeCategory === 'All' || 
+                (Array.isArray(rt.category) ? rt.category.includes(activeCategory) : rt.category === activeCategory);
             if (!matchesCategory) return false;
             
             // Short-circuit empty search
