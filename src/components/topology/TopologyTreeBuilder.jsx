@@ -520,7 +520,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             <div className="overflow-auto flex-1 w-full pb-8">
                 <div 
                     ref={treeRef}
-                    className="w-max min-w-full pt-4 px-8 pb-4 flex justify-center origin-top transition-transform duration-200"
+                    className="w-max min-w-full py-4 px-8 flex justify-center origin-top transition-transform duration-200"
                     style={{ transform: `scale(${zoomLevel})` }}
                 >
                     {topology.map(rootNode => (
