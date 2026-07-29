@@ -242,7 +242,7 @@ export default function ResourceNamingPage() {
 
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 space-y-4 sm:space-y-5">
                 {/* Compact service toolbar: search + category tabs */}
-                <div className="sticky top-0 z-30 pt-2 pb-3 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
+                <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
                     <ServiceFilter
                         activeCategory={activeCategory}
                         onCategoryChange={setActiveCategory}

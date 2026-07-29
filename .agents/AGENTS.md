@@ -46,6 +46,7 @@ Before completing any UI task or component redesign, you **must** actively look 
   - **Component Internals (tight)**: `gap-1.5` (6px) or `gap-2` (8px).
   - **Form Fields & Related Elements**: `gap-4` (16px) or `space-y-4`.
   - **Page Sections**: `gap-6` (24px) or `gap-8` (32px).
+- **Symmetrical Padding for Alignment**: Always use symmetrical vertical padding (e.g., `py-1`, `py-2`) instead of asymmetrical padding (e.g., `pt-1 pb-2`) on container elements (especially flex containers). This guarantees perfect vertical centering alignment when using `items-center`.
 
 #### 1.5 Shadows & Microanimations
 - **Shadows**: Use `shadow-soft` for standard cards, `shadow-depth` for hover/active states, and `shadow-flyout` for panels/modals.

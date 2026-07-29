@@ -124,7 +124,7 @@ export default function ConditionalAccessPage() {
                     </button>
                 </div>
 
-                <div className="sticky top-0 z-30 pt-2 pb-3 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
+                <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
                     <ServiceFilter
                         activeCategory={activeCategory}
                         onCategoryChange={setActiveCategory}
