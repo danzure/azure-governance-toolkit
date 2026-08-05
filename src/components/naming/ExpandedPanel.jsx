@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { ChevronDown, Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck } from 'lucide-react';
 import PropTypes from 'prop-types';
 
-import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES } from '../../data/constants';
+import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES, FUNC_TOPOLOGIES, ACA_TOPOLOGIES, APIM_TOPOLOGIES, AGW_TOPOLOGIES, LOGIC_APP_TOPOLOGIES } from '../../data/constants';
 import { validateName } from '../../utils/nameValidator';
 import ValidationHighlight from './ValidationHighlight';
 
@@ -60,6 +60,11 @@ const TOPOLOGY_MAP = {
     'SQL server': SQL_TOPOLOGIES,
     'App Service': WEB_TOPOLOGIES,
     'Machine Learning workspace': ML_TOPOLOGIES,
+    'Function app': FUNC_TOPOLOGIES,
+    'Container App': ACA_TOPOLOGIES,
+    'API Management': APIM_TOPOLOGIES,
+    'Application Gateway': AGW_TOPOLOGIES,
+    'Logic App': LOGIC_APP_TOPOLOGIES,
 };
 
 const NAME_PATTERN_RE = /^Name pattern:\s*([^.]+)\.\s*/;

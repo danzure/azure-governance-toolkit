@@ -160,6 +160,124 @@ export function getBundleResources(resource, topology, spokeOptions = {}) {
         ];
     }
 
+    if (resource.name === 'Function app' && topology === 'bundle') {
+        return [
+            { ...resource, name: 'Function App' },
+            {
+                ...resource,
+                abbrev: 'asp',
+                name: 'App Service Plan',
+                chars: 'a-z, A-Z, 0-9, -',
+                maxLength: 40,
+                scope: 'Resource group'
+            },
+            {
+                ...resource,
+                abbrev: 'st',
+                name: 'Storage Account',
+                chars: 'a-z, 0-9',
+                maxLength: 24,
+                scope: 'Global'
+            },
+            {
+                ...resource,
+                abbrev: 'appi',
+                name: 'Application Insights',
+                chars: 'a-z, A-Z, 0-9, -, _, .',
+                maxLength: 260,
+                scope: 'Resource group'
+            }
+        ];
+    }
+
+    if (resource.name === 'Logic App' && topology === 'bundle') {
+        return [
+            { ...resource, name: 'Logic App' },
+            {
+                ...resource,
+                abbrev: 'asp',
+                name: 'App Service Plan',
+                chars: 'a-z, A-Z, 0-9, -',
+                maxLength: 40,
+                scope: 'Resource group'
+            },
+            {
+                ...resource,
+                abbrev: 'st',
+                name: 'Storage Account',
+                chars: 'a-z, 0-9',
+                maxLength: 24,
+                scope: 'Global'
+            }
+        ];
+    }
+
+    if (resource.name === 'API Management' && topology === 'bundle') {
+        return [
+            { ...resource, name: 'API Management' },
+            {
+                ...resource,
+                abbrev: 'appi',
+                name: 'Application Insights',
+                chars: 'a-z, A-Z, 0-9, -, _, .',
+                maxLength: 260,
+                scope: 'Resource group'
+            },
+            {
+                ...resource,
+                abbrev: 'log',
+                name: 'Log Analytics Workspace',
+                chars: 'a-z, A-Z, 0-9, -',
+                maxLength: 63,
+                scope: 'Global'
+            }
+        ];
+    }
+
+    if (resource.name === 'Application Gateway' && topology === 'bundle') {
+        return [
+            { ...resource, name: 'Application Gateway' },
+            {
+                ...resource,
+                abbrev: 'pip',
+                name: 'Public IP',
+                chars: 'a-z, A-Z, 0-9, -, _, .',
+                maxLength: 80,
+                scope: 'Resource group'
+            },
+            {
+                ...resource,
+                abbrev: 'agwwaf',
+                name: 'WAF Policy',
+                chars: 'a-z, A-Z, 0-9, -, _',
+                maxLength: 128,
+                scope: 'Resource group'
+            }
+        ];
+    }
+
+    if (resource.name === 'Container App' && topology === 'bundle') {
+        return [
+            { ...resource, name: 'Container App' },
+            {
+                ...resource,
+                abbrev: 'cae',
+                name: 'Container Apps Environment',
+                chars: 'a-z, A-Z, 0-9, -',
+                maxLength: 60,
+                scope: 'Resource group'
+            },
+            {
+                ...resource,
+                abbrev: 'log',
+                name: 'Log Analytics Workspace',
+                chars: 'a-z, A-Z, 0-9, -',
+                maxLength: 63,
+                scope: 'Global'
+            }
+        ];
+    }
+
     // Default: Single resource (no bundle)
     return null;
 }
