@@ -302,7 +302,7 @@ const TITLE_OVERRIDES = {
     'AppProtection': 'Require App Protection',
     'AppEnforced': 'App Enforced Restrictions',
     'Block': 'Block Unknown Platforms',
-    'BlockHighRiskAgentIdentities': 'Block high-risk agent identities',
+    'BlockHighRiskAgentIdentities': 'Block High-Risk Agent Identities',
     'BlockInsiderRisk': 'Block Insider Risk',
     'BlockLegacyAuth': 'Block Legacy Authentication',
     'SessionControl': 'Session Control',

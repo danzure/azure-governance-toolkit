@@ -97,10 +97,10 @@ export default function ConditionalAccessPage() {
         <div className="flex flex-col min-w-0 w-full">
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col">
                 <div className="mb-8">
-                    <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
+                    <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
                         Conditional Access Naming Generator
                     </h1>
-                    <p className="text-[13px] md:text-[14px] text-fluent-fg-secondary max-w-3xl">
+                    <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
                         Design and generate standardized Microsoft Entra Conditional Access policy names.
                     </p>
                 </div>
@@ -117,14 +117,14 @@ export default function ConditionalAccessPage() {
                     </div>
                     <button
                         onClick={() => setGlobalExpandState(!globalExpandState)}
-                        className="px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-colors inline-flex items-center justify-center gap-1.5"
+                        className="px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all active:scale-[0.98] inline-flex items-center justify-center gap-1.5"
                     >
                         <Settings className="w-3.5 h-3.5" />
                         {globalExpandState ? 'Collapse All Settings' : 'Expand All Settings'}
                     </button>
                 </div>
 
-                <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
+                <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle">
                     <ServiceFilter
                         activeCategory={activeCategory}
                         onCategoryChange={setActiveCategory}
