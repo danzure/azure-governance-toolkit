@@ -86,6 +86,7 @@ const SERVICE_ICON_MAP = {
     'ExpressRoute circuit':             'ExpressRoute-Circuits',
     'Virtual WAN':                      'Virtual-WANs',
     'Virtual hub':                      'Virtual-WANs',
+    'Virtual Network routing appliance':'Route-Tables',
     'NAT Gateway':                      'NAT',
     'Route table':                      'Route-Tables',
     'Traffic Manager':                  'Traffic-Manager-Profiles',

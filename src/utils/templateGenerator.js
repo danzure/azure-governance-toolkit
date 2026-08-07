@@ -26,6 +26,7 @@ const RESOURCE_MAP = {
     'ExpressRoute circuit': { tf: 'azurerm_express_route_circuit', bicep: 'Microsoft.Network/expressRouteCircuits@2023-11-01' },
     'Virtual WAN': { tf: 'azurerm_virtual_wan', bicep: 'Microsoft.Network/virtualWans@2023-11-01' },
     'Virtual hub': { tf: 'azurerm_virtual_hub', bicep: 'Microsoft.Network/virtualHubs@2023-11-01' },
+    'Virtual Network routing appliance': { tf: 'azurerm_network_virtual_appliance', bicep: 'Microsoft.Network/networkVirtualAppliances@2023-11-01' },
     'NAT Gateway': { tf: 'azurerm_nat_gateway', bicep: 'Microsoft.Network/natGateways@2023-11-01' },
     'Route table': { tf: 'azurerm_route_table', bicep: 'Microsoft.Network/routeTables@2023-11-01' },
     'Traffic Manager': { tf: 'azurerm_traffic_manager_profile', bicep: 'Microsoft.Network/trafficManagerProfiles@2022-04-01-preview' },
