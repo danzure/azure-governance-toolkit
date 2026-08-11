@@ -133,7 +133,7 @@ To present read-only text (like generated resource names, IDs, or short policies
 
 #### 6.1 Adding & Updating Services
 When adding new services or updating existing services in the `constants.js` database, you **must**:
-1. **Prevent Duplicates**: Before adding a new service, always search the entirety of `constants.js` to ensure the service does not already exist. Do not add duplicate entries.
+1. **Prevent Duplicates**: Before adding a new service, **always** thoroughly search the entirety of `constants.js` to ensure the service does not already exist. Do not add duplicate entries. If a basic text search fails, verify by checking the specific category manually or searching for alternative names/abbreviations. It is critical to confirm the service is genuinely missing before appending.
 2. **"New" Badge Application**: Add the `isNew: true` property **only** to genuinely newly added services that did not exist previously. Do **not** apply this badge to existing services that are merely being updated or refactored.
 3. Remove the `isNew: true` property from any previously added services that are no longer the most recent additions, ensuring the badge remains exclusive to the latest entries.
 4. Add/Update relevant icons in `src/assets/icons/` for any new services. Ensure the filename matches the service name and use the existing heroicons for vector images or the provided templates for SVG assets. If no exact icon exists then apply the closest match. Never use generic or AI-generated icons.
