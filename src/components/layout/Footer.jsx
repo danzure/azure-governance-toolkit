@@ -42,9 +42,9 @@ export default function Footer() {
 
                     <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                         <Tooltip
-                            content="Enjoying the toolkit? A coffee helps keep the servers running and the tools free for everyone! ☕"
+                            content="Enjoying the toolkit? A coffee helps support development and keep the tools free for everyone! ☕"
                             position="top"
-                            align="center"
+                            align="left"
                         >
                             <a
                                 href="https://buymeacoffee.com/danielpowley"

@@ -66,58 +66,61 @@ export default function TagBuilder({ tags, setTags }) {
                 ) : (
                     tags.map((tag, index) => (
                         <div key={tag.id} className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft dark:shadow-none hover:shadow-depth hover:border-fluent-stroke-strong transition-all duration-200 p-4 relative group animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
-                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                            <button
-                                onClick={() => handleRemoveTag(tag.id)}
-                                className="shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-state-danger"
-                                title="Remove Tag"
-                            >
-                                <Trash2 className="w-4 h-4" />
-                            </button>
-                        </div>
+                            <div className="flex flex-col gap-3.5">
+                                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+                                    <div className="flex-1 min-w-0 w-full">
+                                        <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Tag Name</label>
+                                        <input
+                                            type="text"
+                                            placeholder="e.g. Environment, CostCenter"
+                                            value={tag.name}
+                                            onChange={(e) => handleUpdateTag(tag.id, 'name', e.target.value)}
+                                            className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                        />
+                                    </div>
 
-                        <div className="flex flex-col gap-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mr-6">
+                                    <div className="flex items-end gap-2 w-full sm:w-auto shrink-0">
+                                        <div className="flex-1 sm:w-[125px]">
+                                            <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Requirement</label>
+                                            <select
+                                                value={tag.requirement}
+                                                onChange={(e) => handleUpdateTag(tag.id, 'requirement', e.target.value)}
+                                                className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
+                                            >
+                                                <option value="Mandatory">Mandatory</option>
+                                                <option value="Optional">Optional</option>
+                                            </select>
+                                        </div>
+                                        <div className="flex-1 sm:w-[135px]">
+                                            <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">
+                                                Policy Effect
+                                            </label>
+                                            <select
+                                                value={tag.effect}
+                                                onChange={(e) => handleUpdateTag(tag.id, 'effect', e.target.value)}
+                                                className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
+                                            >
+                                                <option value="Audit">Audit</option>
+                                                <option value="Deny">Deny</option>
+                                                <option value="Modify">Modify (Append)</option>
+                                            </select>
+                                        </div>
+                                        <div className="shrink-0">
+                                            <Tooltip content="Remove tag" position="top" align="center">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleRemoveTag(tag.id)}
+                                                    className="h-[32px] w-[32px] rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-state-danger hover:bg-fluent-bg-hover transition-all inline-flex items-center justify-center active:scale-95"
+                                                    aria-label="Remove tag"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </Tooltip>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Tag Name</label>
-                                    <input
-                                        type="text"
-                                        placeholder="e.g. Environment, CostCenter"
-                                        value={tag.name}
-                                        onChange={(e) => handleUpdateTag(tag.id, 'name', e.target.value)}
-                                        className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Requirement</label>
-                                        <select
-                                            value={tag.requirement}
-                                            onChange={(e) => handleUpdateTag(tag.id, 'requirement', e.target.value)}
-                                            className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
-                                        >
-                                            <option value="Mandatory">Mandatory</option>
-                                            <option value="Optional">Optional</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">
-                                            Policy Effect
-                                        </label>
-                                        <select
-                                            value={tag.effect}
-                                            onChange={(e) => handleUpdateTag(tag.id, 'effect', e.target.value)}
-                                            className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
-                                        >
-                                            <option value="Audit">Audit</option>
-                                            <option value="Deny">Deny</option>
-                                            <option value="Modify">Modify (Append)</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="md:col-span-2">
                                     <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Allowed Values (Comma separated, leave blank for any)</label>
                                     <input
                                         type="text"
@@ -129,9 +132,8 @@ export default function TagBuilder({ tags, setTags }) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))
-            )}
+                    ))
+                )}
             </div>
         </div>
     );
