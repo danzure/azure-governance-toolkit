@@ -319,3 +319,146 @@ export const getReadableTitle = (requirement) => {
         .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
         .trim();
 };
+
+export const getCategoryColorClass = (category) => {
+    switch (category) {
+        case 'Secure foundation':
+            return 'bg-fluent-cat-blue-bg text-fluent-cat-blue-fg border-fluent-stroke-subtle';
+        case 'Zero Trust':
+            return 'bg-fluent-cat-purple-bg text-fluent-cat-purple-fg border-fluent-stroke-subtle';
+        case 'Protect administrator':
+            return 'bg-fluent-cat-orange-bg text-fluent-cat-orange-fg border-fluent-stroke-subtle';
+        case 'Remote work':
+            return 'bg-fluent-cat-teal-bg text-fluent-cat-teal-fg border-fluent-stroke-subtle';
+        case 'Emerging threats':
+            return 'bg-fluent-cat-red-bg text-fluent-cat-red-fg border-fluent-stroke-subtle';
+        case 'AI Agents':
+            return 'bg-fluent-cat-cyan-bg text-fluent-cat-cyan-fg border-fluent-stroke-subtle';
+        default:
+            return 'bg-fluent-bg-subtle text-fluent-fg-secondary border-fluent-stroke-subtle';
+    }
+};
+
+export const getPolicyMetadata = (policy) => {
+    if (!policy) return { license: 'Microsoft Entra ID P1', licenseBadgeClass: 'bg-fluent-cat-blue-bg text-fluent-cat-blue-fg', prerequisite: null, cleanDesc: '', isPreview: false };
+    
+    const text = `${policy.name} ${policy.desc} ${policy.settings ? policy.settings.map(s => s.value).join(' ') : ''}`.toLowerCase();
+    
+    let license = 'Microsoft Entra ID P1';
+    let licenseBadgeClass = 'bg-fluent-cat-blue-bg text-fluent-cat-blue-fg';
+    let isPreview = false;
+    
+    if (text.includes('insider risk')) {
+        license = 'Microsoft Purview + Entra ID P2';
+        licenseBadgeClass = 'bg-fluent-cat-magenta-bg text-fluent-cat-magenta-fg';
+    } else if (text.includes('workload identit') || text.includes('service principal')) {
+        license = 'Entra Workload ID + P1';
+        licenseBadgeClass = 'bg-fluent-cat-purple-bg text-fluent-cat-purple-fg';
+    } else if (text.includes('agent risk') || text.includes('ai agent')) {
+        license = 'Microsoft Entra ID P2';
+        licenseBadgeClass = 'bg-fluent-cat-cyan-bg text-fluent-cat-cyan-fg';
+        isPreview = true;
+    } else if (text.includes('sign-in risk') || text.includes('user risk') || text.includes('risk-based') || text.includes('p2')) {
+        license = 'Microsoft Entra ID P2';
+        licenseBadgeClass = 'bg-fluent-cat-purple-bg text-fluent-cat-purple-fg';
+    } else if (text.includes('intune') || text.includes('compliant') || text.includes('app protection')) {
+        license = 'Microsoft Intune + Entra ID P1';
+        licenseBadgeClass = 'bg-fluent-cat-teal-bg text-fluent-cat-teal-fg';
+    }
+
+    if (policy.name.includes('AIAgents') || text.includes('(preview)')) {
+        isPreview = true;
+    }
+
+    // Extract prerequisites if mentioned in desc
+    const prereqMatch = policy.desc.match(/PREREQUISITES?:\s*([^.\n]+(?:\.[^.\n]+)?\.?)/i);
+    const prerequisite = prereqMatch ? prereqMatch[1].trim() : null;
+
+    // Clean description without screaming PREREQUISITES text
+    const cleanDesc = policy.desc.replace(/PREREQUISITES?:\s*[^.\n]+(?:\.[^.\n]+)?\.?/i, '').trim();
+
+    return {
+        license,
+        licenseBadgeClass,
+        prerequisite,
+        cleanDesc,
+        isPreview
+    };
+};
+
+export const generateDeploymentScripts = (policy) => {
+    if (!policy) return { powershell: '', json: '' };
+
+    const isBlock = policy.name.toLowerCase().includes('block');
+    const isCompliant = policy.name.toLowerCase().includes('compliant');
+    const isPhishResist = policy.name.toLowerCase().includes('phishresist');
+    const isPasswordChange = policy.name.toLowerCase().includes('passwordchange');
+    const isAdmin = policy.name.includes('Admins');
+    const isGuest = policy.name.includes('Guests');
+    const isWorkload = policy.name.includes('Workload');
+    const isAgent = policy.name.includes('AIAgents');
+
+    let builtInControls = 'mfa';
+    if (isBlock) builtInControls = 'block';
+    else if (isCompliant) builtInControls = 'compliantDevice';
+    else if (isPasswordChange) builtInControls = 'passwordChange, mfa';
+
+    const psScript = `# Microsoft Graph PowerShell Deployment
+# Module: Microsoft.Graph.Identity.SignIns
+# Connect-MgGraph -Scopes "Policy.ReadWrite.ConditionalAccess"
+
+$policyParams = @{
+    DisplayName = "${policy.name}"
+    State = "reportOnly" # Start in reportOnly mode to evaluate impact safely
+    Conditions = @{
+        ClientAppTypes = @("all")
+        Applications = @{
+            IncludeApplications = @(${policy.name.includes('MsAdminPortals') ? '"79f1804b-a9e2-4a8b-881e-1450e6dae4e4"' : policy.name.includes('AzurePortal') ? '"c44b4083-3bb0-49c1-b47d-974e53cbdf3c"' : '"All"'})
+        }
+        Users = @{
+            IncludeUsers = @(${isAdmin || isWorkload || isAgent ? '' : isGuest ? '"GuestsOrExternalUsers"' : '"All"'})
+            ${isAdmin ? 'IncludeRoles = @("62e90394-69f5-4237-9190-012177145e10", "194ae4cb-b126-40b2-bd5b-6091b380977d") # Global Admin, Security Admin' : ''}
+            ExcludeUsers = @("<BREAK-GLASS-EMERGENCY-ACCOUNT-OBJECT-ID>")
+        }
+        ${policy.name.toLowerCase().includes('risk') ? (policy.name.toLowerCase().includes('user') ? 'UserRiskLevels = @("high")' : 'SignInRiskLevels = @("high", "medium")') : ''}
+    }
+    GrantControls = @{
+        Operator = "OR"
+        BuiltInControls = @("${builtInControls}")
+        ${isPhishResist ? 'AuthenticationStrength = @{ Id = "00000000-0000-0000-0000-000000000004" } # Phishing-resistant MFA' : ''}
+    }
+}
+
+New-MgIdentityConditionalAccessPolicy -BodyParameter $policyParams`;
+
+    const jsonPayload = JSON.stringify({
+        displayName: policy.name,
+        state: "reportOnly",
+        conditions: {
+            clientAppTypes: ["all"],
+            applications: {
+                includeApplications: policy.name.includes('MsAdminPortals') ? ["79f1804b-a9e2-4a8b-881e-1450e6dae4e4"] : policy.name.includes('AzurePortal') ? ["c44b4083-3bb0-49c1-b47d-974e53cbdf3c"] : ["All"]
+            },
+            users: {
+                includeUsers: isAdmin || isWorkload || isAgent ? [] : isGuest ? ["GuestsOrExternalUsers"] : ["All"],
+                includeRoles: isAdmin ? ["62e90394-69f5-4237-9190-012177145e10", "194ae4cb-b126-40b2-bd5b-6091b380977d"] : [],
+                excludeUsers: ["<BREAK-GLASS-EMERGENCY-ACCOUNT-OBJECT-ID>"]
+            },
+            ...(policy.name.toLowerCase().includes('risk') && {
+                ...(policy.name.toLowerCase().includes('user') ? { userRiskLevels: ["high"] } : { signInRiskLevels: ["high", "medium"] })
+            })
+        },
+        grantControls: {
+            operator: "OR",
+            builtInControls: [builtInControls],
+            ...(isPhishResist && {
+                authenticationStrength: {
+                    id: "00000000-0000-0000-0000-000000000004"
+                }
+            })
+        }
+    }, null, 2);
+
+    return { powershell: psScript, json: jsonPayload };
+};
+

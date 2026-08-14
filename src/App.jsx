@@ -141,7 +141,7 @@ export default function App() {
     }, [location.pathname, headerTitle]);
 
     return (
-        <div className="h-screen font-sans transition-colors duration-200 bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
+        <div className="h-screen font-sans bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
             <Header
                 themePref={themePref}
                 onSetTheme={handleSetTheme}
@@ -166,7 +166,7 @@ export default function App() {
                     onClose={handleCloseMobileNav}
                 />
 
-                <main id="main-scroll-container" tabIndex="-1" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overscroll-y-none outline-none">
+                <main id="main-scroll-container" tabIndex="-1" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overscroll-y-none outline-none will-change-transform">
                     <ErrorBoundary>
                         <Suspense fallback={<PageLoader />}>
                             <Routes>

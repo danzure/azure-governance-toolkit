@@ -26,7 +26,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
     }, [prefix, persona, action, customAction, resource, customResource, platform]);
 
     return (
-        <div className="animate-slide-up flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
             {/* About / Introduction */}
             <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-1">
                 <div

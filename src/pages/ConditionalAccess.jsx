@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Shield, Settings } from 'lucide-react';
+import { Shield, Settings2 } from 'lucide-react';
 import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/conditionalAccessData';
 import PatternBuilderCard from '../components/policy/PatternBuilderCard';
 import ServiceFilter from '../components/shared/ServiceFilter';
@@ -95,7 +95,7 @@ export default function ConditionalAccessPage() {
 
     return (
         <div className="flex flex-col min-w-0 w-full">
-            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col">
+            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 flex-1 flex flex-col">
                 <div className="mb-8">
                     <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
                         Conditional Access Naming Generator
@@ -108,23 +108,23 @@ export default function ConditionalAccessPage() {
                 <PatternBuilderCard copiedId={copiedId} handleCopy={handleCopy} />
             </div>
 
-            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-6 pb-12 space-y-5">
+            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-6 pb-12 flex flex-col gap-4">
                 {/* Pre-made Policies Section - styled like ResourceCards */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4 transform-gpu">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
                     <div className="flex items-center gap-2">
                         <Shield className="w-4 h-4 text-fluent-brand-fg" />
                         <h2 className="text-[16px] font-semibold text-fluent-fg-primary">Common Microsoft Defaults</h2>
                     </div>
                     <button
                         onClick={() => setGlobalExpandState(!globalExpandState)}
-                        className="px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all active:scale-[0.98] inline-flex items-center justify-center gap-1.5"
+                        className="px-3 h-[32px] rounded-[4px] border border-fluent-stroke-strong bg-fluent-bg-card text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-fg-primary hover:bg-fluent-bg-hover transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 text-[13px] font-medium shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
                     >
-                        <Settings className="w-3.5 h-3.5" />
-                        {globalExpandState ? 'Collapse All Settings' : 'Expand All Settings'}
+                        <Settings2 className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                        {globalExpandState ? 'Collapse All Blueprints' : 'Expand All Blueprints'}
                     </button>
                 </div>
 
-                <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle">
+                <div className="sticky top-0 z-30 py-2.5 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle" style={{ contain: 'layout style', backfaceVisibility: 'hidden' }}>
                     <ServiceFilter
                         activeCategory={activeCategory}
                         onCategoryChange={setActiveCategory}
