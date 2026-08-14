@@ -51,7 +51,6 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group relative flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] text-[12.5px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg hover:opacity-90 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98 shadow-xs"
-                                title="Support hosting costs on Buy Me a Coffee"
                             >
                                 <Coffee className="w-3.5 h-3.5 text-fluent-cat-yellow-fg shrink-0 group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300 ease-out" />
                                 <span>Buy me a Coffee</span>
@@ -69,9 +68,8 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] text-[12.5px] font-medium bg-fluent-cat-blue-bg text-fluent-cat-blue-fg hover:opacity-90 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98 shadow-xs"
-                            title="About me"
                         >
-                            <User className="w-3.5 h-3.5 text-fluent-cat-blue-fg shrink-0 group-hover:scale-110 transition-transform duration-300 ease-out" />
+                            <User className="w-3.5 h-3.5 text-fluent-cat-blue-fg shrink-0 group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300 ease-out" />
                             <span>About me</span>
                         </a>
                     </div>

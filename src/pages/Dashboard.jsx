@@ -17,7 +17,7 @@ export default function DashboardPage() {
         {
             id: 'azure-resources',
             title: 'Azure Resource Naming Tool',
-            description: 'Generate standard compliant names for 100+ Azure services based on the Cloud Adoption Framework.',
+            description: 'Instantly generate standard-compliant names for 100+ Azure resources using Cloud Adoption Framework guidelines.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg',
             path: '/resource-naming',
             bgClass: 'bg-transparent',
@@ -26,7 +26,7 @@ export default function DashboardPage() {
         {
             id: 'conditional-access',
             title: 'Conditional Access Policy Builder',
-            description: 'Design, document, and build Conditional Access policies with standard naming conventions for custom and pre-made policies.',
+            description: 'Design, build, and document secure Conditional Access policies using standardized naming conventions.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg',
             path: '/conditional-access',
             bgClass: 'bg-transparent',
@@ -34,7 +34,7 @@ export default function DashboardPage() {
         {
             id: 'management-group-topology',
             title: 'Management Group Topology',
-            description: 'Visually design your Azure Management Group hierarchy using enterprise best-practice topologies.',
+            description: 'Visually architect your Azure Management Group hierarchy utilizing enterprise best-practice topologies.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
             path: '/management-groups',
             bgClass: 'bg-transparent',
@@ -42,7 +42,7 @@ export default function DashboardPage() {
         {
             id: 'tagging-strategy',
             title: 'Tagging Strategy Builder',
-            description: 'Define organizational tags and automatically generate Azure Policy compliance rules.',
+            description: 'Define organizational tagging strategies and automatically generate Azure Policy compliance rules.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg',
             path: '/tagging-strategy',
             bgClass: 'bg-transparent',
@@ -180,7 +180,7 @@ export default function DashboardPage() {
                             </div>
                             <div>
                                 <h3 className="text-[15px] font-semibold text-fluent-fg-secondary mb-1">More tools coming soon</h3>
-                                <p className="text-[13px]">We're constantly working on new utilities.</p>
+                                <p className="text-[13px]">Stay tuned for updates.</p>
                             </div>
                         </div>
                     </div>

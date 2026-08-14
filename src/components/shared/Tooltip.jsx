@@ -35,7 +35,7 @@ export default function Tooltip({ content, align = 'left', position = 'bottom', 
     return (
         <div className={`relative group ${className}`}>
             {children}
-            <div className={`absolute px-2.5 py-1.5 text-[11px] rounded shadow-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-fg-primary w-max max-w-[250px] whitespace-normal leading-tight ${positionClasses}`}>
+            <div className={`absolute z-50 px-2.5 py-1.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle shadow-flyout text-[12px] text-fluent-fg-primary font-medium pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity w-max max-w-[320px] whitespace-normal leading-tight text-center ${positionClasses}`}>
                 {content}
             </div>
         </div>
