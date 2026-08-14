@@ -1,28 +1,29 @@
-import { Github, Linkedin, Coffee } from 'lucide-react';
+import { User, Coffee } from 'lucide-react';
+import Tooltip from '../shared/Tooltip';
 
 /**
  * Footer Component
  * 
  * Styled according to Microsoft Fluent UI 2 guidelines.
- * Displays copyright info, brand mark, and secondary navigation links with subtle interactive effects.
+ * Displays copyright info, brand mark, support callout, and navigation links.
  */
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
         <footer className="mt-auto w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
-            <div className="max-w-[1600px] mx-auto px-3 sm:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
+            <div className="max-w-[1600px] mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
 
                 {/* Left Side: Brand & Copyright */}
-                <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-3 shrink-0">
                     {/* Brand logo */}
-                    <div className="flex items-center justify-center w-9 h-9 transition-transform duration-300 hover:scale-105 active:scale-95">
-                        <img src="/atozazure-favicon-192x192.png" alt="atozazure logo" className="w-8 h-8 object-contain" />
+                    <div className="flex items-center justify-center w-8 h-8 transition-transform duration-300 hover:scale-105 active:scale-95">
+                        <img src="/atozazure-favicon-192x192.png" alt="atozazure logo" className="w-7 h-7 object-contain" />
                     </div>
 
-                    <div className="flex flex-col justify-center gap-1">
+                    <div className="flex flex-col justify-center gap-0.5">
                         <div className="flex items-center gap-1.5 leading-none">
-                            <span className="font-semibold text-[14px] text-fluent-fg-primary tracking-tight">
+                            <span className="font-semibold text-[13px] sm:text-[14px] text-fluent-fg-primary tracking-tight">
                                 atozazure
                             </span>
                             <span className="text-[12px] text-fluent-fg-tertiary opacity-70 font-normal leading-none">|</span>
@@ -36,40 +37,44 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Right Side: Links styled like Fluent UI 2 buttons */}
-                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                {/* Right Side: Navigation Links with Tooltip */}
+                <div className="flex flex-wrap items-center justify-center md:justify-end gap-2.5 sm:gap-3.5">
 
-                    <a
-                        href="https://buymeacoffee.com/danielpowley"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
-                    >
-                        <Coffee className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>Buy me a Coffee</span>
-                    </a>
+                    <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                        <Tooltip
+                            content="Enjoying the toolkit? A coffee helps keep the servers running and the tools free for everyone! ☕"
+                            position="top"
+                            align="center"
+                        >
+                            <a
+                                href="https://buymeacoffee.com/danielpowley"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] text-[12.5px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg hover:opacity-90 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98 shadow-xs"
+                                title="Support hosting costs on Buy Me a Coffee"
+                            >
+                                <Coffee className="w-3.5 h-3.5 text-fluent-cat-yellow-fg shrink-0 group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300 ease-out" />
+                                <span>Buy me a Coffee</span>
 
-                    <a
-                        href="https://github.com/danzure/azure-governance-toolkit"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
-                    >
-                        <Github className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>GitHub</span>
-                    </a>
+                                {/* Subtle glowing indicator dot */}
+                                <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fluent-cat-yellow-fg opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-fluent-cat-yellow-fg"></span>
+                                </span>
+                            </a>
+                        </Tooltip>
 
-                    <a
-                        href="https://www.linkedin.com/in/danielpowley92/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] font-medium text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-brand-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98"
-                    >
-                        <Linkedin className="w-4 h-4 text-fluent-fg-tertiary" />
-                        <span>LinkedIn</span>
-                    </a>
-
-
+                        <a
+                            href="https://atozazure.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] text-[12.5px] font-medium bg-fluent-cat-blue-bg text-fluent-cat-blue-fg hover:opacity-90 border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg transition-all duration-150 active:scale-98 shadow-xs"
+                            title="About me"
+                        >
+                            <User className="w-3.5 h-3.5 text-fluent-cat-blue-fg shrink-0 group-hover:scale-110 transition-transform duration-300 ease-out" />
+                            <span>About me</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>
