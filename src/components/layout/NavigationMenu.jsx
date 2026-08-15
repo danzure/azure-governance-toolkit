@@ -19,7 +19,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
     // On mobile: fixed overlay that slides in/out
     // On desktop: inline sidebar that expands/collapses
     const mobileClasses = isMobile
-        ? `fixed inset-y-0 left-0 z-50 w-[280px] transform transition-transform duration-300 ease-in-out pt-[48px] ${isExpanded ? 'translate-x-0' : '-translate-x-full'}`
+        ? `fixed inset-y-0 left-0 z-50 w-[280px] transform transition-transform duration-300 ease-in-out pt-[48px] pb-[env(safe-area-inset-bottom,0px)] ${isExpanded ? 'translate-x-0' : '-translate-x-full'}`
         : `relative transition-[width] duration-300 ease-in-out ${isExpanded ? 'w-[280px]' : 'w-[64px]'}`;
 
     const handleNavClick = () => {

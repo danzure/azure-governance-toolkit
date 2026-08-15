@@ -12,7 +12,7 @@ export default function Footer() {
 
     return (
         <footer className="mt-auto w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
-            <div className="max-w-[1600px] mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+            <div className="max-w-[1600px] mx-auto px-3 sm:px-6 pt-2.5 sm:pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-3 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
 
                 {/* Left Side: Brand & Copyright */}
                 <div className="flex items-center gap-3 shrink-0">
@@ -44,7 +44,7 @@ export default function Footer() {
                         <Tooltip
                             content="Enjoying the toolkit? A coffee helps support development and keep the tools free for everyone! ☕"
                             position="top"
-                            align="left"
+                            align="start-mobile-end-desktop"
                         >
                             <a
                                 href="https://buymeacoffee.com/danielpowley"

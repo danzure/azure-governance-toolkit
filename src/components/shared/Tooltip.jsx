@@ -11,21 +11,25 @@ import PropTypes from 'prop-types';
  * @param {React.ReactNode} props.children - Element the tooltip is attached to.
  * @returns {JSX.Element}
  */
-export default function Tooltip({ content, align = 'left', textAlign, position = 'bottom', className = '', children }) {
+export default function Tooltip({ content, align = 'left', textAlign, position = 'bottom', className = '', tooltipClassName = '', children }) {
     if (!content) return children;
 
     const alignClasses = {
         left: 'left-0',
         center: 'left-1/2 -translate-x-1/2',
-        right: 'right-0'
+        right: 'right-0',
+        'start-mobile-end-desktop': 'left-0 md:left-auto md:right-0 md:translate-x-0',
+        'center-mobile-end-desktop': 'left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0',
     };
+
+    const resolvedAlign = alignClasses[align] || align;
 
     let positionClasses = '';
     
     if (position === 'bottom') {
-        positionClasses = `top-full mt-2 ${alignClasses[align]}`;
+        positionClasses = `top-full mt-2 ${resolvedAlign}`;
     } else if (position === 'top') {
-        positionClasses = `bottom-full mb-2 ${alignClasses[align]}`;
+        positionClasses = `bottom-full mb-2 ${resolvedAlign}`;
     } else if (position === 'left') {
         positionClasses = `right-full mr-2 top-1/2 -translate-y-1/2`;
     } else if (position === 'right') {
@@ -43,7 +47,7 @@ export default function Tooltip({ content, align = 'left', textAlign, position =
     return (
         <div className={`relative group ${className}`}>
             {children}
-            <div className={`absolute z-50 px-2.5 py-1.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle shadow-flyout text-[12px] text-fluent-fg-primary font-medium pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity w-max max-w-[320px] whitespace-normal leading-tight ${resolvedTextAlign} ${positionClasses}`}>
+            <div className={`absolute z-50 px-2.5 py-1.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle shadow-flyout text-[12px] text-fluent-fg-primary font-medium pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity w-max max-w-[min(290px,calc(100vw-24px))] sm:max-w-[320px] whitespace-normal leading-snug ${resolvedTextAlign} ${positionClasses} ${tooltipClassName}`}>
                 {content}
             </div>
         </div>
@@ -52,9 +56,10 @@ export default function Tooltip({ content, align = 'left', textAlign, position =
 
 Tooltip.propTypes = {
     content: PropTypes.string.isRequired,
-    align: PropTypes.oneOf(['left', 'center', 'right']),
+    align: PropTypes.oneOf(['left', 'center', 'right', 'start-mobile-end-desktop', 'center-mobile-end-desktop']),
     textAlign: PropTypes.oneOf(['left', 'center', 'right']),
     position: PropTypes.oneOf(['bottom', 'top', 'left', 'right']),
     className: PropTypes.string,
+    tooltipClassName: PropTypes.string,
     children: PropTypes.node.isRequired,
 };
