@@ -4,6 +4,8 @@ import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wan
 import Tooltip from '../shared/Tooltip';
 import { generateName } from '../../utils/nameGenerator';
 import { toPng } from 'html-to-image';
+import mgIcon from '../../assets/icons/Management-Groups.svg';
+import subIcon from '../../assets/icons/Subscriptions.svg';
 
 const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscription, onRemoveSubscription, onUpdateSubscriptionName, onGenerateSubName, validationErrors }) => {
     const [isExpanded, setIsExpanded] = useState(true);
@@ -14,19 +16,18 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
         <div className="flex flex-col items-center relative">
             {/* The Node Card */}
             <div className={`z-10 relative flex flex-col p-2 rounded-lg border border-fluent-stroke-subtle shadow-sm transition-all hover:z-50
-                ${isRoot ? 'bg-fluent-bg-subtle px-5 py-2 rounded-md items-center justify-center' : 'bg-fluent-bg-card hover:border-fluent-brand-bg/50'}
+                ${isRoot ? 'bg-fluent-bg-subtle px-4 py-2 rounded-md min-w-[220px] min-h-[48px] justify-center' : 'bg-fluent-bg-card hover:border-fluent-brand-bg/50'}
             `}>
                 <div className="flex items-center w-full">
                     <img 
-                        src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg" 
+                        src={mgIcon} 
                         alt="Management Group" 
-                        crossOrigin="anonymous"
-                        className="w-5 h-5 mr-3 object-contain opacity-80"
+                        className="w-5 h-5 mr-3 shrink-0 object-contain opacity-80"
                     />
 
-                    <div className="flex-1 flex items-center relative mr-2">
+                    <div className="flex-1 flex items-center relative mr-2 min-w-0">
                         {isRoot ? (
-                             <span className="text-[13px] font-semibold text-fluent-fg-secondary pr-2">{node.name}</span>
+                             <span className="text-[13px] font-semibold text-fluent-fg-secondary pr-2 whitespace-nowrap">{node.name}</span>
                         ) : (
                             <div className="relative flex-1 flex items-center w-full min-w-[140px]">
                                 <input
@@ -75,9 +76,8 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                     className="p-1.5 flex items-center justify-center rounded-md bg-amber-500/10 hover:bg-amber-500/20 transition-colors"
                                 >
                                     <img 
-                                        src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Subscriptions.svg" 
+                                        src={subIcon} 
                                         alt="Subscription" 
-                                        crossOrigin="anonymous"
                                         className="w-4 h-4 object-contain opacity-90"
                                     />
                                 </button>
@@ -102,9 +102,8 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                         {node.subscriptions.map(sub => (
                             <div key={sub.id} className="flex items-center bg-fluent-bg-card border border-fluent-stroke-strong rounded px-2.5 h-[32px] gap-2">
                                 <img 
-                                    src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Subscriptions.svg" 
+                                    src={subIcon} 
                                     alt="Subscription" 
-                                    crossOrigin="anonymous"
                                     className="w-3.5 h-3.5 shrink-0 object-contain opacity-70"
                                 />
                                 <input 
@@ -443,12 +442,18 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             element.style.transform = 'scale(1)';
             
             // Wait for DOM to update
-            await new Promise(r => setTimeout(r, 100));
+            await new Promise(r => setTimeout(r, 150));
             
+            const isDark = document.documentElement.classList.contains('dark');
             const dataUrl = await toPng(element, {
-                backgroundColor: document.documentElement.classList.contains('dark') ? '#292929' : '#ffffff',
-                cacheBust: true,
+                backgroundColor: isDark ? '#202020' : '#ffffff',
+                cacheBust: false,
+                skipFonts: true,
+                fontEmbedCSS: '',
                 pixelRatio: 2,
+                onImageErrorHandler: (err) => {
+                    console.warn('Image loading warning during export:', err);
+                },
                 style: {
                     transform: 'scale(1)',
                     transition: 'none'
@@ -462,7 +467,9 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             const link = document.createElement('a');
             link.href = dataUrl;
             link.download = `azure-topology-${new Date().toISOString().split('T')[0]}.png`;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         } catch (err) {
             console.error('Failed to export topology image', err);
         } finally {
