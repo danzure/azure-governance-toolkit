@@ -1,0 +1,879 @@
+{
+  "resources": [
+    {
+      "name": "Action group",
+      "abbrev": "ag",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "API Management",
+      "abbrev": "apim",
+      "category": "Web"
+    },
+    {
+      "name": "App Service",
+      "abbrev": "app",
+      "category": "Web"
+    },
+    {
+      "name": "App Service plan",
+      "abbrev": "asp",
+      "category": "Web"
+    },
+    {
+      "name": "Application Gateway",
+      "abbrev": "agw",
+      "category": "Networking"
+    },
+    {
+      "name": "Application Gateway WAF policy",
+      "abbrev": "waf",
+      "category": "Security"
+    },
+    {
+      "name": "Application Group",
+      "abbrev": "vdag",
+      "category": "Desktop Virtualization"
+    },
+    {
+      "name": "Application Insights",
+      "abbrev": "appi",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Application security group",
+      "abbrev": "asg",
+      "category": "Networking"
+    },
+    {
+      "name": "Automation account",
+      "abbrev": "aa",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Availability set",
+      "abbrev": "avail",
+      "category": "Compute"
+    },
+    {
+      "name": "Azure AI Search",
+      "abbrev": "srch",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Azure AI services",
+      "abbrev": "ais",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Azure AI services account",
+      "abbrev": "ais",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Azure Bot Service",
+      "abbrev": "bot",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Azure Cache for Redis",
+      "abbrev": "redis",
+      "category": "Databases"
+    },
+    {
+      "name": "Azure Files share",
+      "abbrev": "share",
+      "category": "Storage"
+    },
+    {
+      "name": "Azure Firewall",
+      "abbrev": "afw",
+      "category": "Networking"
+    },
+    {
+      "name": "Azure OpenAI",
+      "abbrev": "oai",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Azure OpenAI service",
+      "abbrev": "oai",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Azure Spring Apps",
+      "abbrev": "spring",
+      "category": "Compute"
+    },
+    {
+      "name": "Bastion host",
+      "abbrev": "bas",
+      "category": "Networking"
+    },
+    {
+      "name": "Batch account",
+      "abbrev": "ba",
+      "category": "Compute"
+    },
+    {
+      "name": "Blueprint",
+      "abbrev": "bp",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Compute gallery",
+      "abbrev": "gal",
+      "category": "Compute"
+    },
+    {
+      "name": "Container App",
+      "abbrev": "aca",
+      "category": "Containers"
+    },
+    {
+      "name": "Container Apps Environment",
+      "abbrev": "cae",
+      "category": "Containers"
+    },
+    {
+      "name": "Container instance",
+      "abbrev": "ci",
+      "category": "Containers"
+    },
+    {
+      "name": "Container registry",
+      "abbrev": "cr",
+      "category": "Containers"
+    },
+    {
+      "name": "Cosmos DB account",
+      "abbrev": "cosmos",
+      "category": "Databases"
+    },
+    {
+      "name": "Cost Management export",
+      "abbrev": "cme",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Data Explorer cluster",
+      "abbrev": "dec",
+      "category": "Analytics"
+    },
+    {
+      "name": "Data Factory",
+      "abbrev": "adf",
+      "category": "Integration"
+    },
+    {
+      "name": "Data Lake Storage",
+      "abbrev": "dls",
+      "category": "Storage"
+    },
+    {
+      "name": "Databricks workspace",
+      "abbrev": "dbw",
+      "category": "Analytics"
+    },
+    {
+      "name": "DDoS protection plan",
+      "abbrev": "ddos",
+      "category": "Networking"
+    },
+    {
+      "name": "Device Provisioning Service",
+      "abbrev": "dps",
+      "category": "IoT"
+    },
+    {
+      "name": "DevOps organization",
+      "abbrev": "ado",
+      "category": "DevOps"
+    },
+    {
+      "name": "DevTest Labs",
+      "abbrev": "dtl",
+      "category": "DevOps"
+    },
+    {
+      "name": "Digital Twins",
+      "abbrev": "dt",
+      "category": "IoT"
+    },
+    {
+      "name": "Disk encryption set",
+      "abbrev": "des",
+      "category": "Compute"
+    },
+    {
+      "name": "Event Grid domain",
+      "abbrev": "evgd",
+      "category": "Integration"
+    },
+    {
+      "name": "Event Grid topic",
+      "abbrev": "evgt",
+      "category": "Integration"
+    },
+    {
+      "name": "Event Hub",
+      "abbrev": "evh",
+      "category": "Integration"
+    },
+    {
+      "name": "Event Hub namespace",
+      "abbrev": "evhns",
+      "category": "Integration"
+    },
+    {
+      "name": "ExpressRoute circuit",
+      "abbrev": "erc",
+      "category": "Networking"
+    },
+    {
+      "name": "Firewall policy",
+      "abbrev": "afwp",
+      "category": "Networking"
+    },
+    {
+      "name": "Foundry IQ",
+      "abbrev": "fiq",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Front Door",
+      "abbrev": "fd",
+      "category": "Networking"
+    },
+    {
+      "name": "Function app",
+      "abbrev": "func",
+      "category": "Compute"
+    },
+    {
+      "name": "Host Pool",
+      "abbrev": "vdpool",
+      "category": "Desktop Virtualization"
+    },
+    {
+      "name": "Image",
+      "abbrev": "img",
+      "category": "Compute"
+    },
+    {
+      "name": "IoT Hub",
+      "abbrev": "iot",
+      "category": "IoT"
+    },
+    {
+      "name": "Key vault",
+      "abbrev": "kv",
+      "category": "Security"
+    },
+    {
+      "name": "Key Vault Managed HSMs",
+      "abbrev": "kvmhsm",
+      "category": "Security"
+    },
+    {
+      "name": "Kubernetes (AKS)",
+      "abbrev": "aks",
+      "category": "Containers"
+    },
+    {
+      "name": "Kubernetes Fleet Manager",
+      "abbrev": "flt",
+      "category": "Containers"
+    },
+    {
+      "name": "Load balancer",
+      "abbrev": "lb",
+      "category": "Networking"
+    },
+    {
+      "name": "Log Analytics workspace",
+      "abbrev": "log",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Logic App",
+      "abbrev": "logic",
+      "category": "Integration"
+    },
+    {
+      "name": "Machine Learning workspace",
+      "abbrev": "mlw",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Managed disk",
+      "abbrev": "disk",
+      "category": "Compute"
+    },
+    {
+      "name": "Managed identity (user)",
+      "abbrev": "id",
+      "category": "Security"
+    },
+    {
+      "name": "Management group",
+      "abbrev": "mg",
+      "category": "General"
+    },
+    {
+      "name": "Microsoft Foundry hub",
+      "abbrev": "hub",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Microsoft Foundry project",
+      "abbrev": "proj",
+      "category": "AI + ML"
+    },
+    {
+      "name": "Microsoft Foundry resource",
+      "abbrev": "aif",
+      "category": "AI + ML"
+    },
+    {
+      "name": "MySQL server",
+      "abbrev": "mysql",
+      "category": "Databases"
+    },
+    {
+      "name": "NAT Gateway",
+      "abbrev": "ngw",
+      "category": "Networking"
+    },
+    {
+      "name": "NetApp account",
+      "abbrev": "anf",
+      "category": "Storage"
+    },
+    {
+      "name": "NetApp capacity pool",
+      "abbrev": "anfpool",
+      "category": "Storage"
+    },
+    {
+      "name": "NetApp volume",
+      "abbrev": "anfvol",
+      "category": "Storage"
+    },
+    {
+      "name": "Network security group",
+      "abbrev": "nsg",
+      "category": "Networking"
+    },
+    {
+      "name": "Network watcher",
+      "abbrev": "nw",
+      "category": "Networking"
+    },
+    {
+      "name": "Notification Hub",
+      "abbrev": "ntf",
+      "category": "Integration"
+    },
+    {
+      "name": "Policy assignment",
+      "abbrev": "pa",
+      "category": "General"
+    },
+    {
+      "name": "Policy definition",
+      "abbrev": "policy",
+      "category": "General"
+    },
+    {
+      "name": "PostgreSQL server",
+      "abbrev": "psql",
+      "category": "Databases"
+    },
+    {
+      "name": "Power BI Embedded",
+      "abbrev": "pbi",
+      "category": "Analytics"
+    },
+    {
+      "name": "Private endpoint (Database)",
+      "abbrev": "pe",
+      "category": "Networking"
+    },
+    {
+      "name": "Private endpoint (Services)",
+      "abbrev": "pe",
+      "category": "Networking"
+    },
+    {
+      "name": "Private endpoint (Storage)",
+      "abbrev": "pe",
+      "category": "Networking"
+    },
+    {
+      "name": "Private Link service",
+      "abbrev": "pls",
+      "category": "Networking"
+    },
+    {
+      "name": "Proximity placement group",
+      "abbrev": "ppg",
+      "category": "Compute"
+    },
+    {
+      "name": "Public IP",
+      "abbrev": "pip",
+      "category": "Networking"
+    },
+    {
+      "name": "Public IP prefix",
+      "abbrev": "ippre",
+      "category": "Networking"
+    },
+    {
+      "name": "Recovery Services vault",
+      "abbrev": "rsv",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Relay",
+      "abbrev": "relay",
+      "category": "Integration"
+    },
+    {
+      "name": "Resource group",
+      "abbrev": "rg",
+      "category": "General"
+    },
+    {
+      "name": "Route table",
+      "abbrev": "rt",
+      "category": "Networking"
+    },
+    {
+      "name": "Scaling Plan",
+      "abbrev": "vdscaling",
+      "category": "Desktop Virtualization"
+    },
+    {
+      "name": "Service Bus namespace",
+      "abbrev": "sbns",
+      "category": "Integration"
+    },
+    {
+      "name": "Service Bus queue",
+      "abbrev": "sbq",
+      "category": "Integration"
+    },
+    {
+      "name": "Service Bus topic",
+      "abbrev": "sbt",
+      "category": "Integration"
+    },
+    {
+      "name": "SignalR service",
+      "abbrev": "sigr",
+      "category": "Integration"
+    },
+    {
+      "name": "SQL database",
+      "abbrev": "sqldb",
+      "category": "Databases"
+    },
+    {
+      "name": "SQL elastic pool",
+      "abbrev": "sqlep",
+      "category": "Databases"
+    },
+    {
+      "name": "SQL Managed Instance",
+      "abbrev": "sqlmi",
+      "category": "Databases"
+    },
+    {
+      "name": "SQL server",
+      "abbrev": "sql",
+      "category": "Databases"
+    },
+    {
+      "name": "Static Web App",
+      "abbrev": "stapp",
+      "category": "Web"
+    },
+    {
+      "name": "Storage account",
+      "abbrev": "st",
+      "category": "Storage"
+    },
+    {
+      "name": "Stream Analytics Job",
+      "abbrev": "asa",
+      "category": "Analytics"
+    },
+    {
+      "name": "Subnet",
+      "abbrev": "snet",
+      "category": "Networking"
+    },
+    {
+      "name": "Subscription",
+      "abbrev": "sub",
+      "category": "General"
+    },
+    {
+      "name": "Synapse dedicated SQL pool",
+      "abbrev": "syndp",
+      "category": "Analytics"
+    },
+    {
+      "name": "Synapse workspace",
+      "abbrev": "synw",
+      "category": "Analytics"
+    },
+    {
+      "name": "Template Spec",
+      "abbrev": "ts",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Traffic Manager",
+      "abbrev": "traf",
+      "category": "Networking"
+    },
+    {
+      "name": "Virtual hub",
+      "abbrev": "vhub",
+      "category": "Networking"
+    },
+    {
+      "name": "Virtual Machine - Linux",
+      "abbrev": "vml",
+      "category": "Compute"
+    },
+    {
+      "name": "Virtual Machine - Windows",
+      "abbrev": "vmw",
+      "category": "Compute"
+    },
+    {
+      "name": "Virtual network",
+      "abbrev": "vnet",
+      "category": "Networking"
+    },
+    {
+      "name": "Virtual Network routing appliance",
+      "abbrev": "vnra",
+      "category": "Networking"
+    },
+    {
+      "name": "Virtual WAN",
+      "abbrev": "vwan",
+      "category": "Networking"
+    },
+    {
+      "name": "VM scale set",
+      "abbrev": "vmss",
+      "category": "Compute"
+    },
+    {
+      "name": "VPN Gateway",
+      "abbrev": "vgw",
+      "category": "Networking"
+    },
+    {
+      "name": "Workspace",
+      "abbrev": "vdws",
+      "category": "Desktop Virtualization"
+    }
+  ],
+  "environments": [
+    {
+      "label": "Production (prod)",
+      "value": "prod"
+    },
+    {
+      "label": "Development (dev)",
+      "value": "dev"
+    },
+    {
+      "label": "Staging (stg)",
+      "value": "stg"
+    },
+    {
+      "label": "Test (test)",
+      "value": "test"
+    },
+    {
+      "label": "UAT (uat)",
+      "value": "uat"
+    },
+    {
+      "label": "QA (qa)",
+      "value": "qa"
+    },
+    {
+      "label": "Shared (shrd)",
+      "value": "shrd"
+    },
+    {
+      "label": "Sandbox (sbx)",
+      "value": "sbx"
+    },
+    {
+      "label": "DR (dr)",
+      "value": "dr"
+    }
+  ],
+  "regions": [
+    {
+      "label": "France Central",
+      "value": "francecentral",
+      "abbrev": "frc"
+    },
+    {
+      "label": "France South",
+      "value": "francesouth",
+      "abbrev": "frs"
+    },
+    {
+      "label": "Germany North",
+      "value": "germanynorth",
+      "abbrev": "gn"
+    },
+    {
+      "label": "Germany West Central",
+      "value": "germanywestcentral",
+      "abbrev": "gwc"
+    },
+    {
+      "label": "Italy North",
+      "value": "italynorth",
+      "abbrev": "itn"
+    },
+    {
+      "label": "North Europe",
+      "value": "northeurope",
+      "abbrev": "neu"
+    },
+    {
+      "label": "Norway East",
+      "value": "norwayeast",
+      "abbrev": "noe"
+    },
+    {
+      "label": "Norway West",
+      "value": "norwaywest",
+      "abbrev": "now"
+    },
+    {
+      "label": "Poland Central",
+      "value": "polandcentral",
+      "abbrev": "plc"
+    },
+    {
+      "label": "Spain Central",
+      "value": "spaincentral",
+      "abbrev": "spc"
+    },
+    {
+      "label": "Sweden Central",
+      "value": "swedencentral",
+      "abbrev": "sdc"
+    },
+    {
+      "label": "Switzerland North",
+      "value": "switzerlandnorth",
+      "abbrev": "swn"
+    },
+    {
+      "label": "Switzerland West",
+      "value": "switzerlandwest",
+      "abbrev": "sww"
+    },
+    {
+      "label": "UK South",
+      "value": "uksouth",
+      "abbrev": "uks"
+    },
+    {
+      "label": "UK West",
+      "value": "ukwest",
+      "abbrev": "ukw"
+    },
+    {
+      "label": "West Europe",
+      "value": "westeurope",
+      "abbrev": "weu"
+    },
+    {
+      "label": "Brazil South",
+      "value": "brazilsouth",
+      "abbrev": "brs"
+    },
+    {
+      "label": "Brazil Southeast",
+      "value": "brazilsoutheast",
+      "abbrev": "brse"
+    },
+    {
+      "label": "Canada Central",
+      "value": "canadacentral",
+      "abbrev": "cac"
+    },
+    {
+      "label": "Canada East",
+      "value": "canadaeast",
+      "abbrev": "cae"
+    },
+    {
+      "label": "Central US",
+      "value": "centralus",
+      "abbrev": "cus"
+    },
+    {
+      "label": "East US",
+      "value": "eastus",
+      "abbrev": "eus"
+    },
+    {
+      "label": "East US 2",
+      "value": "eastus2",
+      "abbrev": "eus2"
+    },
+    {
+      "label": "Mexico Central",
+      "value": "mexicocentral",
+      "abbrev": "mxc"
+    },
+    {
+      "label": "North Central US",
+      "value": "northcentralus",
+      "abbrev": "ncus"
+    },
+    {
+      "label": "South Central US",
+      "value": "southcentralus",
+      "abbrev": "scus"
+    },
+    {
+      "label": "West Central US",
+      "value": "westcentralus",
+      "abbrev": "wcus"
+    },
+    {
+      "label": "West US",
+      "value": "westus",
+      "abbrev": "wus"
+    },
+    {
+      "label": "West US 2",
+      "value": "westus2",
+      "abbrev": "wus2"
+    },
+    {
+      "label": "West US 3",
+      "value": "westus3",
+      "abbrev": "wus3"
+    },
+    {
+      "label": "Australia Central",
+      "value": "australiacentral",
+      "abbrev": "auc"
+    },
+    {
+      "label": "Australia East",
+      "value": "australiaeast",
+      "abbrev": "aue"
+    },
+    {
+      "label": "Australia Southeast",
+      "value": "australiasoutheast",
+      "abbrev": "ause"
+    },
+    {
+      "label": "Central India",
+      "value": "centralindia",
+      "abbrev": "inc"
+    },
+    {
+      "label": "China East",
+      "value": "chinaeast",
+      "abbrev": "che"
+    },
+    {
+      "label": "China North",
+      "value": "chinanorth",
+      "abbrev": "chn"
+    },
+    {
+      "label": "East Asia",
+      "value": "eastasia",
+      "abbrev": "ea"
+    },
+    {
+      "label": "Japan East",
+      "value": "japaneast",
+      "abbrev": "jpe"
+    },
+    {
+      "label": "Japan West",
+      "value": "japanwest",
+      "abbrev": "jpw"
+    },
+    {
+      "label": "Korea Central",
+      "value": "koreacentral",
+      "abbrev": "krc"
+    },
+    {
+      "label": "Korea South",
+      "value": "koreasouth",
+      "abbrev": "krs"
+    },
+    {
+      "label": "South India",
+      "value": "southindia",
+      "abbrev": "ins"
+    },
+    {
+      "label": "Southeast Asia",
+      "value": "southeastasia",
+      "abbrev": "sea"
+    },
+    {
+      "label": "West India",
+      "value": "westindia",
+      "abbrev": "inw"
+    },
+    {
+      "label": "Israel Central",
+      "value": "israelcentral",
+      "abbrev": "ilc"
+    },
+    {
+      "label": "Qatar Central",
+      "value": "qatarcentral",
+      "abbrev": "qac"
+    },
+    {
+      "label": "South Africa North",
+      "value": "southafricanorth",
+      "abbrev": "san"
+    },
+    {
+      "label": "South Africa West",
+      "value": "southafricawest",
+      "abbrev": "saw"
+    },
+    {
+      "label": "UAE Central",
+      "value": "uaecentral",
+      "abbrev": "uac"
+    },
+    {
+      "label": "UAE North",
+      "value": "uaenorth",
+      "abbrev": "uan"
+    }
+  ]
+}

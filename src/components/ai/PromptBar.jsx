@@ -1,17 +1,28 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
-import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 /**
  * PromptBar Component
  * 
- * A premium natural language input bar that calls the Azure OpenAI backend
+ * A natural language input bar that calls the Azure OpenAI backend
  * to automatically generate Resource Naming configurations based on user intent.
  */
-const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSearchTerm, setActiveCategory, onResetAll }, ref) => {
+const PromptBar = forwardRef(({
+    setWorkload,
+    setEnvValue,
+    setRegionValue,
+    setSearchTerm,
+    setOrgPrefix,
+    setShowOrg,
+    setInstance,
+    setActiveCategory,
+    onResetAll
+}, ref) => {
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [lastResult, setLastResult] = useState(null);
     const scrollContainerRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
@@ -54,6 +65,14 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
         }
     };
 
+    const handleReset = () => {
+        setLastResult(null);
+        setError(null);
+        if (onResetAll) {
+            onResetAll();
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!prompt.trim()) return;
@@ -62,9 +81,6 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
         setError(null);
 
         try {
-            // Note: In development with swa-cli or when deployed, /api routes to our Azure Functions
-            // If running Vite and Functions separately without a proxy, we need the full localhost URL.
-            // For this setup, we assume Vite proxy or absolute URL for local dev.
             const apiUrl = import.meta.env.DEV ? 'http://localhost:7071/api/generateResourceName' : '/api/generateResourceName';
             
             const response = await fetch(apiUrl, {
@@ -74,19 +90,50 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
             });
 
             if (!response.ok) {
-                throw new Error('Failed to generate configuration');
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.details || errData.error || 'Failed to generate configuration');
             }
 
             const data = await response.json();
             
             // Apply the AI configuration to the parent state
-            if (data.workload !== undefined) setWorkload(data.workload);
-            if (data.envValue) setEnvValue(data.envValue);
-            if (data.regionValue) setRegionValue(data.regionValue);
-            if (data.searchTerm) setSearchTerm(data.searchTerm);
+            if (data.workload !== undefined && setWorkload) setWorkload(data.workload);
+            if (data.envValue && setEnvValue) setEnvValue(data.envValue);
+            if (data.regionValue && setRegionValue) setRegionValue(data.regionValue);
+            if (data.searchTerm && setSearchTerm) setSearchTerm(data.searchTerm);
+            
+            if (setOrgPrefix && data.orgPrefix !== undefined) {
+                setOrgPrefix(data.orgPrefix);
+                if (setShowOrg) {
+                    setShowOrg(Boolean(data.orgPrefix));
+                }
+            }
+
+            if (setInstance && data.instance) {
+                setInstance(data.instance);
+            }
             
             // Clear any active filters so the results are visible
             if (setActiveCategory) setActiveCategory('All');
+
+            // Store summary for feedback card
+            if (data.architectureSummary || data.explanation || data.searchTerm) {
+                const resourceList = (data.searchTerm || '')
+                    .split(',')
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+
+                setLastResult({
+                    summary: data.architectureSummary,
+                    explanation: data.explanation,
+                    resources: resourceList,
+                    workload: data.workload,
+                    env: data.envValue,
+                    region: data.regionValue,
+                    instance: data.instance,
+                    orgPrefix: data.orgPrefix
+                });
+            }
 
             // Clear the input after success
             setPrompt('');
@@ -96,23 +143,23 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
 
         } catch (err) {
             console.error('AI Request Error:', err);
-            setError('Something went wrong. Please try again.');
+            setError(err.message || 'Something went wrong. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
 
     const presets = [
-        "Production E-Commerce Web App with Azure SQL Backend in West Europe",
-        "Enterprise Data Analytics Environment for Finance in UK South",
+        "Production E-Commerce Web App with Azure SQL Backend in West Europe for Contoso",
+        "Enterprise Data Analytics Platform for Finance in UK South instance 02",
+        "Generative AI and RAG Platform with AI Search in Sweden Central",
+        "Core Hub and Spoke Network with Azure Firewall and VPN Gateway in North Europe",
+        "Staging Microservices AKS Cluster with Container Registry in East US 2",
         "Azure Virtual Desktop for Remote Workers in UK South",
-        "Core Hub and Spoke Networking in UK West",
         "Serverless API Architecture for Mobile App in North Europe",
         "Machine Learning Workspace for Data Science in West Europe",
         "Staging API Management Gateway with Azure Functions in North Europe",
-        "Development Firewall and VPN Gateway Hub in UK South",
-        "Disaster Recovery Storage and Data Factory in UK West",
-        "Production AKS Microservices Environment in North Europe"
+        "Production Container Apps Environment with Cosmos DB in UK West"
     ];
 
     return (
@@ -129,7 +176,7 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
                 {onResetAll && (
                     <button
                         type="button"
-                        onClick={onResetAll}
+                        onClick={handleReset}
                         className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium px-2.5 h-[26px] rounded-[4px] transition-all duration-200 ease-in-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
                         title="Reset all settings and filters"
                     >
@@ -158,7 +205,7 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         disabled={isLoading}
-                        placeholder={isLoading ? "Analyzing intent..." : "Describe your cloud architecture..."}
+                        placeholder={isLoading ? "Analyzing architecture & intent..." : "Describe your cloud architecture (e.g. Production Web App with Azure SQL in West Europe for Contoso)..."}
                         className="flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary disabled:opacity-50 disabled:cursor-not-allowed pr-20"
                     />
 
@@ -190,6 +237,51 @@ const PromptBar = forwardRef(({ setWorkload, setEnvValue, setRegionValue, setSea
                 </div>
             </form>
             {error && <p className="text-fluent-state-danger text-[13px] mt-2 ml-2">{error}</p>}
+
+            {/* AI Architecture Resolution Feedback Banner */}
+            {lastResult && (
+                <div className="mt-3 relative bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle p-3.5 shadow-soft animate-fade-in flex flex-col gap-2.5">
+                    <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-[4px] bg-fluent-info-bg text-fluent-brand-fg flex items-center justify-center shrink-0">
+                                <CheckCircle2 className="w-4 h-4" />
+                            </div>
+                            <span className="text-[13px] font-semibold text-fluent-fg-primary">
+                                {lastResult.summary || 'Architecture Configuration Applied'}
+                            </span>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setLastResult(null)}
+                            className="text-fluent-fg-tertiary hover:text-fluent-fg-primary p-1 rounded hover:bg-fluent-bg-hover transition-colors"
+                            aria-label="Dismiss AI Summary"
+                        >
+                            <X className="w-3.5 h-3.5" />
+                        </button>
+                    </div>
+
+                    {lastResult.explanation && (
+                        <div className="flex items-start gap-2 text-[12px] text-fluent-fg-secondary bg-fluent-bg-subtle px-3 py-2 rounded-[4px] border border-fluent-stroke-subtle">
+                            <Lightbulb className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0 mt-0.5" />
+                            <span>{lastResult.explanation}</span>
+                        </div>
+                    )}
+
+                    {lastResult.resources && lastResult.resources.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                            <span className="text-[11px] font-medium text-fluent-fg-secondary mr-1">Matched Services:</span>
+                            {lastResult.resources.map((resName, idx) => (
+                                <span
+                                    key={idx}
+                                    className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-bg-subtle text-fluent-fg-primary border border-fluent-stroke-subtle"
+                                >
+                                    {resName}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
 
             {/* Pinned Presets */}
             <div className="mt-3 ml-1 flex items-center w-full gap-2">
@@ -253,6 +345,9 @@ PromptBar.propTypes = {
     setEnvValue: PropTypes.func.isRequired,
     setRegionValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
+    setOrgPrefix: PropTypes.func,
+    setShowOrg: PropTypes.func,
+    setInstance: PropTypes.func,
     setActiveCategory: PropTypes.func,
     onResetAll: PropTypes.func
 };

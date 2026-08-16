@@ -235,6 +235,9 @@ export default function ResourceNamingPage() {
                     setEnvValue={setEnvValue}
                     setRegionValue={setRegionValue}
                     setSearchTerm={setSearchTerm}
+                    setOrgPrefix={setOrgPrefix}
+                    setShowOrg={setShowOrg}
+                    setInstance={setInstance}
                     setActiveCategory={setActiveCategory}
                     onResetAll={handleResetDefaults}
                 />
