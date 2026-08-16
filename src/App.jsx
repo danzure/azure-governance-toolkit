@@ -141,7 +141,7 @@ export default function App() {
     }, [location.pathname, headerTitle]);
 
     return (
-        <div className="h-screen h-dvh font-sans bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
+        <div className="fixed inset-0 font-sans bg-fluent-bg-canvas text-fluent-fg-primary flex flex-col overflow-hidden">
             <Header
                 themePref={themePref}
                 onSetTheme={handleSetTheme}

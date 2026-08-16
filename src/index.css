@@ -120,12 +120,12 @@ html,
 body,
 #root {
     height: 100%;
-    min-height: 100%;
-    min-height: 100dvh;
+    width: 100%;
+    overflow: hidden;
 }
 
 body {
-    @apply font-sans antialiased text-[#242424] overscroll-y-none;
+    @apply font-sans antialiased text-[#242424] overscroll-none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
