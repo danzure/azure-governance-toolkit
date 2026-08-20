@@ -213,6 +213,7 @@ const SERVICE_ICON_MAP = {
     'Speech service':                   null,               // → PLAYER
     'Network security perimeter':       null,               // → PLAYER
     'Fabric Capacity':                  null,               // → ALT
+    'Azure Virtual Network Manager':    null,               // → PLAYER
 };
 
 
@@ -281,6 +282,7 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Language service':                 'ai + machine learning/02876-icon-service-Language',
     'Speech service':                   'ai + machine learning/00797-icon-service-Speech-Services',
     'Network security perimeter':       'other/02939-icon-service-Network-Security-Perimeters',
+    'Virtual Network Manager':          'other/02237-icon-service-Network-Managers',
 };
 
 
