@@ -1,5 +1,6 @@
-import { useState, useMemo, memo } from 'react';
-import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
+import { useState, useMemo, memo, useCallback } from 'react';
+import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronRight, ExternalLink, Code2, Terminal, FileText } from 'lucide-react';
+import { generateConditionalAccessTerraform, generateConditionalAccessJSON } from '../../utils/caExportUtils';
 
 const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9-]/g;
 const selectClasses = "px-2.5 h-[32px] min-w-0 w-full sm:w-auto sm:min-w-[120px] sm:flex-1 border rounded outline-none text-[13px] transition-colors duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis";
@@ -15,6 +16,11 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
     const [platform, setPlatform] = useState('AnyPlatform');
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
 
+    // IaC Export State
+    const [isExportExpanded, setIsExportExpanded] = useState(false);
+    const [exportFormat, setExportFormat] = useState('terraform');
+    const [exportCopied, setExportCopied] = useState(false);
+
     /**
      * Memoized generation of the final policy name string.
      * Incorporates custom action values if 'Custom' is selected.
@@ -24,6 +30,27 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
         const finalResource = resource === 'Custom' ? (customResource || 'Custom') : resource;
         return `${prefix}-${persona}-${finalResource}-${platform}-${finalAction}`;
     }, [prefix, persona, action, customAction, resource, customResource, platform]);
+
+    const iacCode = useMemo(() => {
+        const finalAction = action === 'Custom' ? (customAction || 'Custom') : action;
+        const finalResource = resource === 'Custom' ? (customResource || 'Custom') : resource;
+        if (exportFormat === 'terraform') {
+            return generateConditionalAccessTerraform(generatedName, persona, finalResource, platform, finalAction);
+        } else {
+            return generateConditionalAccessJSON(generatedName, persona, finalResource, platform, finalAction);
+        }
+    }, [exportFormat, generatedName, persona, resource, customResource, platform, action, customAction]);
+
+    const handleCopyIaC = useCallback(async (e) => {
+        e.stopPropagation();
+        try {
+            await navigator.clipboard.writeText(iacCode);
+            setExportCopied(true);
+            setTimeout(() => setExportCopied(false), 2000);
+        } catch (err) {
+            console.error('Copy script failed', err);
+        }
+    }, [iacCode]);
 
     return (
         <div className="flex flex-col gap-3">
@@ -202,7 +229,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                 </div>
 
                 {/* Live Preview — streamlined card integrated footer */}
-                <div className="px-3 py-2 sm:px-4 sm:py-3 flex items-center gap-3 border-t border-fluent-stroke-subtle bg-fluent-bg-canvas dark:bg-fluent-bg-subtle">
+                <div className="px-3 py-2 sm:px-4 sm:py-3 flex flex-wrap sm:flex-nowrap items-center gap-3 border-t border-fluent-stroke-subtle bg-fluent-bg-canvas dark:bg-fluent-bg-subtle">
                     <div className="flex items-center gap-2 shrink-0">
                         <Eye className="w-3.5 h-3.5 text-fluent-brand-fg" />
                         <span className="text-[12px] font-medium text-fluent-fg-tertiary">Preview</span>
@@ -222,7 +249,57 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                             {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>}
                         </button>
                     </div>
+
+                    <button
+                        onClick={() => setIsExportExpanded(!isExportExpanded)}
+                        className={`shrink-0 flex items-center justify-center gap-1.5 px-3 h-[32px] rounded-[4px] border text-[12px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${isExportExpanded ? 'bg-fluent-bg-subtle border-fluent-stroke-strong text-fluent-fg-primary' : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
+                    >
+                        <Code2 className="w-3.5 h-3.5" />
+                        <span>{isExportExpanded ? 'Hide IaC' : 'Export IaC'}</span>
+                    </button>
                 </div>
+
+                {isExportExpanded && (
+                    <div className="border-t border-fluent-stroke-subtle bg-fluent-bg-canvas flex flex-col">
+                        <div className="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle">
+                            <div className="flex shrink-0 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md p-0.5 w-full sm:w-auto">
+                                <button
+                                    onClick={() => setExportFormat('terraform')}
+                                    className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 inline-flex items-center justify-center gap-1.5 ${exportFormat === 'terraform' 
+                                        ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' 
+                                        : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                                >
+                                    <Terminal className="w-3.5 h-3.5" />
+                                    Terraform
+                                </button>
+                                <button
+                                    onClick={() => setExportFormat('json')}
+                                    className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 inline-flex items-center justify-center gap-1.5 ${exportFormat === 'json' 
+                                        ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' 
+                                        : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                                >
+                                    <FileText className="w-3.5 h-3.5" />
+                                    JSON Payload
+                                </button>
+                            </div>
+                            <button
+                                onClick={handleCopyIaC}
+                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 ${exportCopied 
+                                    ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                    : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
+                                title="Copy deployment code"
+                            >
+                                {exportCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                <span>{exportCopied ? 'Copied' : 'Copy Code'}</span>
+                            </button>
+                        </div>
+                        <div className="bg-[#1E1E1E] w-full relative">
+                            <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0 max-h-[300px]">
+                                <code>{iacCode}</code>
+                            </pre>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
