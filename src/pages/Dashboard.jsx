@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, ShieldCheck, BookOpen, Layers, Shield, LayoutTemplate, ExternalLink, ChevronLeft, ChevronRight, Plus, Eye, Award } from 'lucide-react';
+import { ArrowRight, Sparkles, ShieldCheck, BookOpen, Layers, Shield, LayoutTemplate, ExternalLink, ChevronLeft, ChevronRight, Plus, Eye, Award, Star } from 'lucide-react';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
@@ -38,6 +38,15 @@ export default function DashboardPage() {
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
             path: '/management-groups',
             bgClass: 'bg-transparent',
+        },
+        {
+            id: 'rbac-designer',
+            title: 'RBAC Custom Role Designer',
+            description: 'Design and generate JSON definitions for Azure Custom Roles by selecting specific resource provider operations.',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg',
+            path: '/rbac-designer',
+            bgClass: 'bg-transparent',
+            isNew: true,
         },
         {
             id: 'tagging-strategy',
@@ -135,12 +144,20 @@ export default function DashboardPage() {
                                         alt={`${tool.title} icon`}
                                         className="w-10 h-10 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ease-out"
                                     />
-                                    {tool.hasAi && (
-                                        <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-brand-bg/30 transition-colors duration-300">
-                                            <Sparkles className="w-3 h-3" />
-                                            AI Powered
-                                        </span>
-                                    )}
+                                    <div className="flex gap-2">
+                                        {tool.isNew && (
+                                            <span className="inline-flex items-center gap-1.5 bg-fluent-brand-bg text-white text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm transition-colors duration-300">
+                                                <Star className="w-3 h-3 fill-current" />
+                                                New
+                                            </span>
+                                        )}
+                                        {tool.hasAi && (
+                                            <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-brand-bg/30 transition-colors duration-300">
+                                                <Sparkles className="w-3 h-3" />
+                                                AI Powered
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <div className="flex-1">

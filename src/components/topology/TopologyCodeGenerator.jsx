@@ -153,7 +153,7 @@ export default function TopologyCodeGenerator({ topology }) {
     };
 
     return (
-        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full flex-1 min-h-0">
+        <div className="relative bg-fluent-bg-canvas dark:bg-fluent-bg-subtle w-full flex flex-col overflow-hidden h-full flex-1 min-h-0">
             <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">

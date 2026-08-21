@@ -18,6 +18,7 @@ const ResourceNamingPage = lazy(() => import('./pages/ResourceNaming'));
 const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccess'));
 const ManagementGroupsPage = lazy(() => import('./pages/ManagementGroups'));
 const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategy'));
+const RbacDesignerPage = lazy(() => import('./pages/RbacDesigner'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 /**
@@ -121,6 +122,8 @@ export default function App() {
         headerTitle = "Management Group Topology Designer";
     } else if (location.pathname === '/tagging-strategy') {
         headerTitle = "Tagging Strategy Builder";
+    } else if (location.pathname === '/rbac-designer') {
+        headerTitle = "RBAC Custom Role Designer";
     } else {
         headerTitle = "Page Not Found";
     }
@@ -175,6 +178,7 @@ export default function App() {
                                 <Route path="/conditional-access" element={<ConditionalAccessPage />} />
                                 <Route path="/management-groups" element={<ManagementGroupsPage />} />
                                 <Route path="/tagging-strategy" element={<TaggingStrategyPage />} />
+                                <Route path="/rbac-designer" element={<RbacDesignerPage />} />
                                 <Route path="*" element={<NotFoundPage />} />
                             </Routes>
                         </Suspense>

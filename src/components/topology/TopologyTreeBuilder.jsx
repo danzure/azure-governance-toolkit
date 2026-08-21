@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wand2, Download, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wand2, Download, AlertTriangle, Code2, Network } from 'lucide-react';
+import TopologyCodeGenerator from './TopologyCodeGenerator';
 import Tooltip from '../shared/Tooltip';
 import { generateName } from '../../utils/nameGenerator';
 import { toPng } from 'html-to-image';
@@ -212,6 +213,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
     const [zoomLevel, setZoomLevel] = useState(1);
     const treeRef = useRef(null);
     const [isExporting, setIsExporting] = useState(false);
+    const [isExportExpanded, setIsExportExpanded] = useState(false);
     
     const handleZoomIn = () => setZoomLevel(prev => Math.min(prev + 0.1, 1.5));
     const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 0.1, 0.5));
@@ -478,8 +480,8 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
     };
 
     return (
-        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden p-5 flex-1 min-h-[600px]">
-            <div className="mb-4 flex flex-col md:flex-row justify-between items-start gap-4 shrink-0">
+        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden flex-1 min-h-[600px]">
+            <div className="p-5 pb-4 flex flex-col md:flex-row justify-between items-start gap-4 shrink-0 border-b border-fluent-stroke-subtle">
                 <div>
                     <h3 className="text-lg font-semibold text-fluent-fg-primary mb-1">Topology Builder</h3>
                     <p className="text-sm text-fluent-fg-secondary">
@@ -487,100 +489,129 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                     </p>
                 </div>
                 
-                <div className="flex flex-col items-start md:items-end shrink-0 gap-2">
-                    <span className="text-[11px] font-semibold text-fluent-fg-tertiary uppercase tracking-wider">Quick Templates</span>
-                    <div className="flex flex-wrap gap-2">
-                        <Tooltip align="right" content="Reset to standard Cloud Adoption Framework baseline, recommended for most businesses">
-                            <button onClick={() => applyTemplate('default')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#d83b01]"></span>
-                                Default
-                            </button>
-                        </Tooltip>
-                        <Tooltip align="right" content="Simple Production/Non-Prod split for independent setups (1-10 employees)">
-                            <button onClick={() => applyTemplate('independent')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#107c10]"></span>
-                                Independent
-                            </button>
-                        </Tooltip>
-                        <Tooltip align="right" content="Workloads & Sandbox environments for small scale apps (10-100 employees)">
-                            <button onClick={() => applyTemplate('small')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#0078d4]"></span>
-                                Small
-                            </button>
-                        </Tooltip>
-                        <Tooltip align="right" content="Standard Cloud Adoption Framework layout (100-1000 employees)">
-                            <button onClick={() => applyTemplate('medium')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#8764b8]"></span>
-                                Medium
-                            </button>
-                        </Tooltip>
-                        <Tooltip align="right" content="Enterprise scale with dedicated Platform and Landing Zone separations (1000+ employees)">
-                            <button onClick={() => applyTemplate('large')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#5c2d91]"></span>
-                                Large
-                            </button>
-                        </Tooltip>
+                <div className="flex flex-col items-start md:items-end shrink-0 gap-3">
+                    <div className="flex shrink-0 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md p-0.5 w-full sm:w-auto">
+                        <button
+                            onClick={() => setIsExportExpanded(false)}
+                            className={`flex-1 sm:flex-none text-[12px] px-4 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 flex items-center gap-1.5 ${!isExportExpanded ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                        >
+                            <Network className="w-3.5 h-3.5" />
+                            Designer
+                        </button>
+                        <button
+                            onClick={() => setIsExportExpanded(true)}
+                            className={`flex-1 sm:flex-none text-[12px] px-4 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 flex items-center gap-1.5 ${isExportExpanded ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                        >
+                            <Code2 className="w-3.5 h-3.5" />
+                            IaC Code
+                        </button>
                     </div>
-                </div>
-            </div>
-            
-            <div className="overflow-auto flex-1 w-full pb-8">
-                <div 
-                    ref={treeRef}
-                    className="w-max min-w-full py-4 px-8 flex justify-center origin-top transition-transform duration-200"
-                    style={{ transform: `scale(${zoomLevel})` }}
-                >
-                    {topology.map(rootNode => (
-                        <TreeNode
-                            key={rootNode.id}
-                            node={rootNode}
-                            level={0}
-                            onAddChild={handleAddChild}
-                            onRemove={handleRemove}
-                            onUpdateName={handleUpdateName}
-                            onAddSubscription={handleAddSubscription}
-                            onRemoveSubscription={handleRemoveSubscription}
-                            onUpdateSubscriptionName={handleUpdateSubscriptionName}
-                            onGenerateSubName={handleGenerateSubName}
-                            validationErrors={validationErrors}
-                        />
-                    ))}
+                    
+                    {!isExportExpanded && (
+                        <div className="flex flex-col items-start md:items-end shrink-0 gap-2">
+                            <span className="text-[11px] font-semibold text-fluent-fg-tertiary uppercase tracking-wider">Quick Templates</span>
+                            <div className="flex flex-wrap gap-2">
+                                <Tooltip align="right" content="Reset to standard Cloud Adoption Framework baseline, recommended for most businesses">
+                                    <button onClick={() => applyTemplate('default')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#d83b01]"></span>
+                                        Default
+                                    </button>
+                                </Tooltip>
+                                <Tooltip align="right" content="Simple Production/Non-Prod split for independent setups (1-10 employees)">
+                                    <button onClick={() => applyTemplate('independent')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#107c10]"></span>
+                                        Independent
+                                    </button>
+                                </Tooltip>
+                                <Tooltip align="right" content="Workloads & Sandbox environments for small scale apps (10-100 employees)">
+                                    <button onClick={() => applyTemplate('small')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#0078d4]"></span>
+                                        Small
+                                    </button>
+                                </Tooltip>
+                                <Tooltip align="right" content="Standard Cloud Adoption Framework layout (100-1000 employees)">
+                                    <button onClick={() => applyTemplate('medium')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#8764b8]"></span>
+                                        Medium
+                                    </button>
+                                </Tooltip>
+                                <Tooltip align="right" content="Enterprise scale with dedicated Platform and Landing Zone separations (1000+ employees)">
+                                    <button onClick={() => applyTemplate('large')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#5c2d91]"></span>
+                                        Large
+                                    </button>
+                                </Tooltip>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* Zoom Controls */}
-            <div className="absolute bottom-10 right-6 z-20 flex flex-col gap-2 bg-fluent-bg-card border border-fluent-stroke-subtle rounded-md shadow-sm p-0.5">
-                <Tooltip position="left" content="Export as PNG">
-                    <button
-                        type="button"
-                        onClick={(e) => { e.preventDefault(); handleExportImage(); }}
-                        disabled={isExporting}
-                        className={`p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center ${isExporting ? 'opacity-50 cursor-wait' : ''}`}
-                    >
-                        <Download className="w-4 h-4" />
-                    </button>
-                </Tooltip>
-                <div className="h-px bg-fluent-stroke-subtle w-full"></div>
-                <Tooltip position="left" content="Zoom In">
-                    <button
-                        type="button"
-                        onClick={(e) => { e.preventDefault(); handleZoomIn(); }}
-                        className="p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
-                    >
-                        <ZoomIn className="w-4 h-4" />
-                    </button>
-                </Tooltip>
-                <div className="h-px bg-fluent-stroke-subtle w-full"></div>
-                <Tooltip position="left" content="Zoom Out">
-                    <button
-                        type="button"
-                        onClick={(e) => { e.preventDefault(); handleZoomOut(); }}
-                        className="p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
-                    >
-                        <ZoomOut className="w-4 h-4" />
-                    </button>
-                </Tooltip>
-            </div>
+            {isExportExpanded ? (
+                <div className="flex flex-col flex-1 w-full animate-fade-in">
+                    <TopologyCodeGenerator topology={topology} />
+                </div>
+            ) : (
+                <>
+                    <div className="overflow-auto flex-1 w-full pb-8 pt-4 animate-fade-in">
+                        <div 
+                            ref={treeRef}
+                            className="w-max min-w-full py-4 px-8 flex justify-center origin-top transition-transform duration-200"
+                            style={{ transform: `scale(${zoomLevel})` }}
+                        >
+                            {topology.map(rootNode => (
+                                <TreeNode
+                                    key={rootNode.id}
+                                    node={rootNode}
+                                    level={0}
+                                    onAddChild={handleAddChild}
+                                    onRemove={handleRemove}
+                                    onUpdateName={handleUpdateName}
+                                    onAddSubscription={handleAddSubscription}
+                                    onRemoveSubscription={handleRemoveSubscription}
+                                    onUpdateSubscriptionName={handleUpdateSubscriptionName}
+                                    onGenerateSubName={handleGenerateSubName}
+                                    validationErrors={validationErrors}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Zoom Controls */}
+                    <div className="absolute bottom-14 right-6 z-20 flex flex-col gap-2 bg-fluent-bg-card border border-fluent-stroke-subtle rounded-md shadow-sm p-0.5 animate-fade-in">
+                        <Tooltip position="left" content="Export as PNG">
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); handleExportImage(); }}
+                                disabled={isExporting}
+                                className={`p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center ${isExporting ? 'opacity-50 cursor-wait' : ''}`}
+                            >
+                                <Download className="w-4 h-4" />
+                            </button>
+                        </Tooltip>
+                        <div className="h-px bg-fluent-stroke-subtle w-full"></div>
+                        <Tooltip position="left" content="Zoom In">
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); handleZoomIn(); }}
+                                className="p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
+                            >
+                                <ZoomIn className="w-4 h-4" />
+                            </button>
+                        </Tooltip>
+                        <div className="h-px bg-fluent-stroke-subtle w-full"></div>
+                        <Tooltip position="left" content="Zoom Out">
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); handleZoomOut(); }}
+                                className="p-1.5 hover:bg-fluent-bg-hover text-fluent-fg-primary transition-colors rounded-sm flex items-center justify-center"
+                            >
+                                <ZoomOut className="w-4 h-4" />
+                            </button>
+                        </Tooltip>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

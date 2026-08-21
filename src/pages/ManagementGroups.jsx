@@ -5,7 +5,6 @@ import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator'
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function ManagementGroupsPage() {
-    const [activeTab, setActiveTab] = useState('designer');
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
     const [topology, setTopology] = useLocalStorage('azres_topology', [
         {
@@ -44,7 +43,7 @@ export default function ManagementGroupsPage() {
     ]);
 
     return (
-        <div className="flex flex-col flex-1 w-full overflow-x-hidden overflow-y-auto">
+        <div className="flex flex-col flex-1 w-full overflow-x-hidden overflow-y-scroll">
             <div className="max-w-[1600px] w-full mx-auto px-3 sm:px-6 pt-4 sm:pt-6 pb-12 animate-fade-in flex-1 flex flex-col">
                 <div className="mb-8 shrink-0">
                     <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
@@ -121,36 +120,7 @@ export default function ManagementGroupsPage() {
                         </div>
 
                         <div className="flex flex-col w-full flex-1">
-                            {/* Tabs Header */}
-                            <div className="flex mb-6 shrink-0">
-                                <div className="flex bg-fluent-bg-subtle rounded-md p-1 w-full sm:w-auto border border-fluent-stroke-subtle">
-                                    <button
-                                        onClick={() => setActiveTab('designer')}
-                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'designer' ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium'}`}
-                                    >
-                                        <Network className="w-4 h-4" />
-                                        Topology Designer
-                                    </button>
-                                    <button
-                                        onClick={() => setActiveTab('code')}
-                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 text-[14px] transition-all outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg rounded-sm ${activeTab === 'code' ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium'}`}
-                                    >
-                                        <FileCode2 className="w-4 h-4" />
-                                        Code Templates (IaC)
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Tab Content */}
-                            {activeTab === 'designer' ? (
-                                <div className="flex flex-col w-full animate-fade-in flex-1">
-                                    <TopologyTreeBuilder topology={topology} setTopology={setTopology} />
-                                </div>
-                            ) : (
-                                <div className="flex flex-col w-full animate-fade-in flex-1">
-                                    <TopologyCodeGenerator topology={topology} />
-                                </div>
-                            )}
+                            <TopologyTreeBuilder topology={topology} setTopology={setTopology} />
                         </div>
                     </div>
                 </div>
