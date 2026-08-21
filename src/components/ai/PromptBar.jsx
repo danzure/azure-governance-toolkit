@@ -150,16 +150,16 @@ const PromptBar = forwardRef(({
     };
 
     const presets = [
-        "Production E-Commerce Web App with Azure SQL Backend in West Europe for Contoso",
-        "Enterprise Data Analytics Platform for Finance in UK South instance 02",
-        "Generative AI and RAG Platform with AI Search in Sweden Central",
-        "Core Hub and Spoke Network with Azure Firewall and VPN Gateway in North Europe",
-        "Staging Microservices AKS Cluster with Container Registry in East US 2",
-        "Azure Virtual Desktop for Remote Workers in UK South",
-        "Serverless API Architecture for Mobile App in North Europe",
-        "Machine Learning Workspace for Data Science in West Europe",
-        "Staging API Management Gateway with Azure Functions in North Europe",
-        "Production Container Apps Environment with Cosmos DB in UK West"
+        "Secure Enterprise RAG pattern with OpenAI and AI Search in UK South",
+        "Real-time IoT data pipeline using Event Hubs and Stream Analytics",
+        "Mission-critical AKS microservices with geo-replication in West Europe",
+        "Zero-trust Hub and Spoke networking topology with Azure Firewall",
+        "Dev/Test environment for Spring Boot application with PostgreSQL",
+        "Modern Data Warehouse with Azure Databricks and Data Lake Storage",
+        "Serverless event-driven processing with Azure Functions and Cosmos DB",
+        "Machine Learning Operations (MLOps) workspace with compute clusters",
+        "Global disaster recovery setup with Traffic Manager and App Service",
+        "Highly available E-Commerce platform for Contoso Retail"
     ];
 
     return (

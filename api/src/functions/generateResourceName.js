@@ -34,56 +34,56 @@ You MUST analyze the user prompt and return a strict JSON object with these fiel
 8. "explanation": A concise 1-2 sentence CAF naming recommendation or architectural best-practice tip for this workload.
 
 SOLUTIONS ARCHITECTURE EXAMPLES:
-- For "Production E-Commerce Web App with Azure SQL Backend in West Europe for Contoso":
+- For "Highly available E-Commerce platform for Contoso Retail":
   {
     "workload": "ecommerce",
     "orgPrefix": "ctso",
     "envValue": "prod",
-    "regionValue": "westeurope",
+    "regionValue": "uksouth",
     "instance": "001",
     "searchTerm": "App Service plan, App Service, SQL server, SQL database, Key vault, Application Insights, Azure Cache for Redis",
-    "architectureSummary": "3-tier scalable web application with App Service, Azure SQL, Redis Cache, and Key Vault.",
+    "architectureSummary": "Highly available e-commerce application with App Service, Azure SQL, Redis Cache, and Key Vault.",
     "explanation": "Ensure Azure SQL and Redis are secured via Private Endpoints and secrets are managed via Key Vault."
   }
-- For "Enterprise Data Analytics Platform for Finance in UK South instance 02":
+- For "Modern Data Warehouse with Azure Databricks and Data Lake Storage":
   {
-    "workload": "findata",
+    "workload": "datawhouse",
     "orgPrefix": "",
     "envValue": "prod",
     "regionValue": "uksouth",
-    "instance": "002",
-    "searchTerm": "Data Factory, Data Lake Storage, Synapse workspace, Key vault, Log Analytics workspace, Storage account",
-    "architectureSummary": "Modern Data Platform with Data Factory ingestion, Data Lake storage, and Synapse analytics.",
+    "instance": "001",
+    "searchTerm": "Azure Databricks workspace, Data Lake Storage, Data Factory, Key vault, Log Analytics workspace",
+    "architectureSummary": "Modern Data Platform with Data Factory ingestion, Data Lake storage, and Azure Databricks.",
     "explanation": "Data Lake storage accounts require globally unique lowercase names (3-24 chars, no hyphens)."
   }
-- For "Core Hub and Spoke Network with Firewall and VPN in North Europe":
+- For "Zero-trust Hub and Spoke networking topology with Azure Firewall":
   {
     "workload": "corenet",
     "orgPrefix": "",
     "envValue": "prod",
-    "regionValue": "northeurope",
+    "regionValue": "uksouth",
     "instance": "001",
-    "searchTerm": "Virtual network, Azure Firewall, Firewall policy, VPN Gateway, ExpressRoute circuit, Public IP, Bastion host",
+    "searchTerm": "Virtual network, Azure Firewall, Firewall policy, VPN Gateway, Public IP, Bastion host",
     "architectureSummary": "Centralized Hub and Spoke network perimeter with Azure Firewall, VPN Gateway, and Bastion.",
     "explanation": "Deploy GatewaySubnet and AzureFirewallSubnet dedicated subnets adhering to CAF naming."
   }
-- For "Staging Microservices AKS Cluster with Container Registry in East US 2":
+- For "Mission-critical AKS microservices with geo-replication in West Europe":
   {
     "workload": "microservices",
     "orgPrefix": "",
-    "envValue": "stg",
-    "regionValue": "eastus2",
+    "envValue": "prod",
+    "regionValue": "westeurope",
     "instance": "001",
     "searchTerm": "Kubernetes (AKS), Container registry, Virtual network, Public IP, Managed identity (user), Log Analytics workspace, Key vault",
     "architectureSummary": "Secure AKS container cluster with Container Registry and managed identity integration.",
     "explanation": "Container Registry names must be globally unique alphanumeric strings (5-50 chars) without hyphens."
   }
-- For "Dev AI Search and Azure OpenAI platform in Sweden Central":
+- For "Secure Enterprise RAG pattern with OpenAI and AI Search in UK South":
   {
     "workload": "genai",
     "orgPrefix": "",
-    "envValue": "dev",
-    "regionValue": "swedencentral",
+    "envValue": "prod",
+    "regionValue": "uksouth",
     "instance": "001",
     "searchTerm": "Azure AI Search, Azure AI services account, Storage account, Key vault, Application Insights",
     "architectureSummary": "Generative AI and RAG architecture with AI Search and Azure AI services.",
