@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { ShieldCheck, Info, ChevronDown, ChevronRight, ExternalLink, RotateCcw } from 'lucide-react';
+import { ShieldCheck, Info, ChevronDown, ChevronUp, ExternalLink, RotateCcw } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
 import RoleExportPanel from '../components/rbac/RoleExportPanel';
 import Tooltip from '../components/shared/Tooltip';
@@ -142,7 +142,7 @@ export default function RbacDesignerPage() {
                             <p className="text-fluent-fg-primary text-[13px]">
                                 How to use this tool
                             </p>
-                            {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
+                            {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
                         </div>
                         {isGuidanceExpanded && (
                             <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
@@ -182,47 +182,70 @@ export default function RbacDesignerPage() {
 
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-[13px] font-semibold text-fluent-fg-primary block">Assignable Scopes</label>
-                                <div className="flex items-center w-full h-[32px] border rounded transition-all duration-200 focus-within:border-fluent-brand-bg focus-within:ring-2 focus-within:ring-fluent-brand-bg/20 bg-fluent-bg-canvas border-fluent-stroke-strong overflow-visible relative">
-                                    <input 
-                                        type="text"
-                                        value={assignableScopes}
-                                        onChange={(e) => setAssignableScopes(e.target.value)}
-                                        placeholder="e.g. /subscriptions/00000000-0000-0000-0000-000000000000"
-                                        className="flex-1 min-w-0 px-3 h-full outline-none text-[13px] font-mono bg-transparent text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
-                                    />
-                                    <div ref={examplesRef} className="h-full border-l border-fluent-stroke-subtle bg-fluent-bg-subtle flex items-center shrink-0 relative">
-                                        <button 
-                                            type="button"
-                                            onClick={() => setIsExamplesOpen(!isExamplesOpen)}
-                                            className="h-full px-3 text-[12px] bg-transparent border-none text-fluent-fg-secondary hover:text-fluent-brand-fg outline-none cursor-pointer font-medium flex items-center gap-1.5 focus:ring-0"
-                                        >
-                                            Examples...
-                                            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isExamplesOpen ? 'rotate-180' : ''}`} />
-                                        </button>
-                                        
-                                        {isExamplesOpen && (
-                                            <div className="absolute top-[100%] right-0 mt-1 w-56 bg-fluent-bg-card border border-fluent-stroke-subtle rounded shadow-flyout z-50 overflow-hidden animate-fade-in">
+                                <div className="relative" ref={examplesRef}>
+                                    <div
+                                        onClick={() => setIsExamplesOpen(!isExamplesOpen)}
+                                        onKeyDown={(e) => {
+                                            if (['Enter', ' ', 'ArrowDown'].includes(e.key) && !isExamplesOpen) {
+                                                e.preventDefault();
+                                                setIsExamplesOpen(true);
+                                            } else if (e.key === 'Escape' && isExamplesOpen) {
+                                                e.preventDefault();
+                                                setIsExamplesOpen(false);
+                                            }
+                                        }}
+                                        tabIndex={0}
+                                        role="combobox"
+                                        aria-expanded={isExamplesOpen}
+                                        aria-haspopup="listbox"
+                                        aria-label="Assignable Scopes"
+                                        className={`w-full flex items-center justify-between px-3 h-[32px] cursor-pointer transition-all border rounded text-[14px] outline-none bg-fluent-bg-card ${isExamplesOpen ? 'border-b-2 border-b-fluent-brand-bg border-x-transparent border-t-transparent' : 'border-fluent-stroke-strong hover:border-fluent-fg-primary'}`}
+                                    >
+                                        <div className="flex items-center gap-1.5 truncate">
+                                            <span className={`text-[13px] font-mono truncate ${assignableScopes ? 'text-fluent-fg-primary' : 'text-fluent-fg-tertiary'}`}>
+                                                {assignableScopes || 'Select or type scopes...'}
+                                            </span>
+                                        </div>
+                                        <ChevronDown className={`w-3 h-3 shrink-0 transition-transform duration-200 ${isExamplesOpen ? 'rotate-180 text-fluent-brand-fg' : 'text-fluent-fg-tertiary'}`} aria-hidden="true" />
+                                    </div>
+                                    
+                                    {isExamplesOpen && (
+                                        <div className="absolute top-[100%] left-0 right-0 z-[100] shadow-flyout border rounded overflow-hidden mt-1 bg-fluent-bg-card border-fluent-stroke-subtle animate-fade-in">
+                                            <div className="p-2 border-b border-fluent-stroke-subtle">
+                                                <input
+                                                    autoFocus
+                                                    type="text"
+                                                    value={assignableScopes}
+                                                    onChange={(e) => setAssignableScopes(e.target.value)}
+                                                    placeholder="e.g. /subscriptions/00000000-0000-0000-0000-000000000000"
+                                                    className="w-full px-2 py-1.5 text-[13px] font-mono border border-fluent-brand-bg outline-none bg-fluent-bg-canvas text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
+                                                />
+                                            </div>
+                                            <div className="max-h-[300px] overflow-y-auto scroll-smooth">
+                                                <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10 bg-fluent-bg-canvas/90 text-fluent-fg-tertiary">
+                                                    EXAMPLES
+                                                </div>
                                                 {[
                                                     { label: 'Root (Tenant)', value: '/' },
                                                     { label: 'Management Group', value: '/providers/Microsoft.Management/managementGroups/my-mg' },
                                                     { label: 'Subscription', value: '/subscriptions/00000000-0000-0000-0000-000000000000' },
                                                     { label: 'Resource Group', value: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg' }
                                                 ].map(ex => (
-                                                    <button
+                                                    <div
                                                         key={ex.label}
-                                                        type="button"
                                                         onClick={() => {
                                                             setAssignableScopes(ex.value);
                                                             setIsExamplesOpen(false);
                                                         }}
-                                                        className="w-full text-left px-3 py-2 text-[12px] text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary transition-colors cursor-pointer"
+                                                        className="flex flex-col justify-center px-3 py-2 cursor-pointer transition-colors hover:bg-fluent-bg-hover"
                                                     >
-                                                        {ex.label}
-                                                    </button>
+                                                        <span className="text-[13px] font-medium text-fluent-fg-primary">{ex.label}</span>
+                                                        <span className="text-[11px] font-mono text-fluent-fg-secondary truncate mt-0.5">{ex.value}</span>
+                                                    </div>
                                                 ))}
                                             </div>
-                                        )}
-                                    </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             

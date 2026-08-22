@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import { ChevronDown, Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck } from 'lucide-react';
 import PropTypes from 'prop-types';
+import FluentDropdown from '../shared/FluentDropdown';
 
 import { VNET_TOPOLOGIES, AVD_TOPOLOGIES, AKS_TOPOLOGIES, SQL_TOPOLOGIES, WEB_TOPOLOGIES, ML_TOPOLOGIES, FUNC_TOPOLOGIES, ACA_TOPOLOGIES, APIM_TOPOLOGIES, AGW_TOPOLOGIES, LOGIC_APP_TOPOLOGIES } from '../../data/constants';
 import { validateName } from '../../utils/nameValidator';
@@ -224,16 +225,14 @@ function ExpandedPanel({
                         <div className="flex items-center gap-3 flex-wrap">
                             <div className="flex items-center gap-2">
                                 <span className={`text-[12px] whitespace-nowrap ${t.muted}`}>{isVNet ? 'Topology:' : 'Bundle:'}</span>
-                                <div className="relative">
-                                    <select
-                                        value={topology}
-                                        onChange={(e) => setTopology?.(e.target.value)}
-                                        className="h-[26px] pl-2.5 pr-7 rounded-sm border appearance-none cursor-pointer text-[13px] focus:outline-none focus:border-fluent-brand-bg transition-colors bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-primary"
-                                    >
-                                        {topologyOptions.map(opt => <option key={opt.value ?? opt.suffix} value={opt.value ?? opt.suffix}>{opt.label}</option>)}
-                                    </select>
-                                    <ChevronDown className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none text-fluent-fg-tertiary" />
-                                </div>
+                                <FluentDropdown
+                                    value={topology}
+                                    onChange={(val) => setTopology?.(val)}
+                                    options={topologyOptions}
+                                    size="compact"
+                                    ariaLabel={isVNet ? 'Topology' : 'Bundle'}
+                                    className="min-w-[130px]"
+                                />
                             </div>
                             {isHubSpoke && (
                                 <div className="flex items-center gap-2">
@@ -256,16 +255,14 @@ function ExpandedPanel({
                     {resource.subResources?.length > 0 && (
                         <div className="flex items-center gap-2">
                             <span className={`text-[12px] leading-[26px] ${t.muted}`}>Target:</span>
-                            <div className="relative">
-                                <select
-                                    value={selectedSubResource || ''}
-                                    onChange={(e) => onSubResourceChange?.(e.target.value)}
-                                    className="h-[26px] pl-2.5 pr-7 rounded-sm border appearance-none cursor-pointer text-[13px] focus:outline-none focus:border-fluent-brand-bg transition-colors bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-primary"
-                                >
-                                    {resource.subResources.map(opt => <option key={opt.suffix} value={opt.suffix}>{opt.label}</option>)}
-                                </select>
-                                <ChevronDown className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none text-fluent-fg-tertiary" />
-                            </div>
+                            <FluentDropdown
+                                value={selectedSubResource || (resource.subResources?.[0]?.suffix ?? '')}
+                                onChange={(val) => onSubResourceChange?.(val)}
+                                options={resource.subResources}
+                                size="compact"
+                                ariaLabel="Target Sub-resource"
+                                className="min-w-[140px]"
+                            />
                             {currentSubResource?.dnsZone && (
                                 <code className={`px-1.5 py-0.5 rounded-sm font-mono text-[12px] ${t.code}`}>{currentSubResource.dnsZone}</code>
                             )}
@@ -292,7 +289,7 @@ function ExpandedPanel({
                 t={t} 
             />
 
-            {/* Two Column Layout: Rules + Guidance | IaC Template */}
+            {/* Two Column Layout: Rules + Guidance | IAC Template */}
             <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-3 mt-3">
                 <div className="flex flex-col gap-3 min-w-0 h-full">
                     <GuidanceCard 

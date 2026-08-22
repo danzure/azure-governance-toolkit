@@ -147,7 +147,7 @@ export default function SearchableSelect({ items, value, onChange, label, placeh
     // Shared dropdown panel renderer
     const renderDropdown = (fontSize) => (
         <div
-            className="absolute top-[100%] left-0 right-0 z-[100] shadow-lg border rounded overflow-hidden mt-1 bg-fluent-bg-card border-fluent-stroke-subtle"
+            className="absolute top-[100%] left-0 right-0 z-[100] shadow-flyout border rounded overflow-hidden mt-1 bg-fluent-bg-card border-fluent-stroke-subtle animate-fade-in"
             role="presentation"
         >
             <div className="p-2 border-b border-opacity-10 border-current">

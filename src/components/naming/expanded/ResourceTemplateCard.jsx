@@ -52,7 +52,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                         <Code2 className="w-4 h-4" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[15px]">Code Templates (IaC)</span>
+                        <span className="text-[15px]">IAC Template</span>
                         <span className="text-[12px] font-normal text-fluent-fg-secondary">Review and export your {iacTab === 'terraform' ? 'Terraform' : iacTab === 'bicep' ? 'Bicep' : 'ARM'} code</span>
                     </div>
                 </div>

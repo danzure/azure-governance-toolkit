@@ -1,9 +1,65 @@
 import { useState, useMemo, memo, useCallback } from 'react';
-import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronRight, ExternalLink, Code2, Terminal, FileText } from 'lucide-react';
+import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronUp, ExternalLink, Code2, Terminal, FileText } from 'lucide-react';
 import { generateConditionalAccessTerraform, generateConditionalAccessJSON } from '../../utils/caExportUtils';
+import FluentDropdown from '../shared/FluentDropdown';
 
 const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9-]/g;
-const selectClasses = "px-2.5 h-[32px] min-w-0 w-full sm:w-auto sm:min-w-[120px] sm:flex-1 border rounded outline-none text-[13px] transition-colors duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis";
+
+const PERSONA_OPTIONS = [
+    { value: 'AllUsers', label: 'All Users' },
+    { value: 'Admins', label: 'Administrators' },
+    { value: 'Guests', label: 'Guests / Externals' },
+    { value: 'Internal', label: 'Internal Users' },
+    { value: 'ServiceAccts', label: 'Service Accounts' },
+    { value: 'AIAgents', label: 'AI Agents' },
+    { value: 'VIPs', label: 'VIPs / Executives' },
+    { value: 'Vendors', label: 'Vendors' },
+    { value: 'BreakGlass', label: 'Break Glass Accounts' }
+];
+
+const RESOURCE_OPTIONS = [
+    { value: 'AllApps', label: 'All Cloud Apps' },
+    { value: 'O365', label: 'Office 365 Suite' },
+    { value: 'AzurePortal', label: 'Azure Management' },
+    { value: 'MsAdminPortals', label: 'MS Admin Portals' },
+    { value: 'Exo', label: 'Exchange Online' },
+    { value: 'Spo', label: 'SharePoint Online' },
+    { value: 'Teams', label: 'Microsoft Teams' },
+    { value: 'Intune', label: 'Microsoft Intune' },
+    { value: 'Avd', label: 'Azure Virtual Desktop' },
+    { value: 'Defender', label: 'Microsoft Defender' },
+    { value: 'HighRiskApps', label: 'High Risk Apps' },
+    { value: 'SecurityInfo', label: 'Security Info Registration' },
+    { value: 'Custom', label: 'Custom App...' }
+];
+
+const PLATFORM_OPTIONS = [
+    { value: 'AnyPlatform', label: 'Any Platform' },
+    { value: 'UnknownPlatform', label: 'Unknown / Unsupported' },
+    { value: 'Windows', label: 'Windows' },
+    { value: 'macOS', label: 'macOS' },
+    { value: 'iOS', label: 'iOS' },
+    { value: 'Android', label: 'Android' },
+    { value: 'Linux', label: 'Linux' }
+];
+
+const ACTION_OPTIONS = [
+    { value: 'RequireMFA', label: 'Require Multi-factor Authentication' },
+    { value: 'RequirePhishResist', label: 'Require Phishing-Resistant Multi-factor Authentication' },
+    { value: 'RequireMfaForRisk', label: 'Require Multi-factor Authentication for Risk' },
+    { value: 'RequirePasswordChange', label: 'Require Password Change' },
+    { value: 'RequireCompliant', label: 'Require Compliant Device' },
+    { value: 'AppProtection', label: 'Require App Protection' },
+    { value: 'AppEnforced', label: 'App Enforced Restrictions' },
+    { value: 'Block', label: 'Block Unknown Platforms' },
+    { value: 'BlockHighRisk', label: 'Block High Risk' },
+    { value: 'BlockInsiderRisk', label: 'Block Insider Risk' },
+    { value: 'BlockLegacyAuth', label: 'Block Legacy Auth' },
+    { value: 'BlockInteractive', label: 'Block Interactive Sign-in' },
+    { value: 'SessionControl', label: 'Session Control' },
+    { value: 'TermsOfUse', label: 'Terms of Use' },
+    { value: 'Custom', label: 'Custom Requirement...' }
+];
 
 function PatternBuilderCard({ copiedId, handleCopy }) {
     // Policy naming parts
@@ -74,7 +130,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         <p className="text-fluent-fg-primary text-[13px]">
                             How to use this tool
                         </p>
-                        {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
+                        {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
                     </div>
                     {isGuidanceExpanded && (
                         <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
@@ -109,21 +165,13 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         />
 
                         <span>that applies to</span>
-                        <select
+                        <FluentDropdown
                             value={persona}
-                            onChange={(e) => setPersona(e.target.value)}
-                            className={selectClasses}
-                        >
-                            <option value="AllUsers">All Users</option>
-                            <option value="Admins">Administrators</option>
-                            <option value="Guests">Guests / Externals</option>
-                            <option value="Internal">Internal Users</option>
-                            <option value="ServiceAccts">Service Accounts</option>
-                            <option value="AIAgents">AI Agents</option>
-                            <option value="VIPs">VIPs / Executives</option>
-                            <option value="Vendors">Vendors</option>
-                            <option value="BreakGlass">Break Glass Accounts</option>
-                        </select>
+                            onChange={setPersona}
+                            options={PERSONA_OPTIONS}
+                            ariaLabel="Target Persona"
+                            className="w-full sm:w-auto sm:min-w-[140px]"
+                        />
 
                         <span>when they access</span>
                         {resource === 'Custom' ? (
@@ -146,41 +194,23 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                 </button>
                             </div>
                         ) : (
-                            <select
+                            <FluentDropdown
                                 value={resource}
-                                onChange={(e) => setResource(e.target.value)}
-                                className={selectClasses}
-                            >
-                                <option value="AllApps">All Cloud Apps</option>
-                                <option value="O365">Office 365 Suite</option>
-                                <option value="AzurePortal">Azure Management</option>
-                                <option value="MsAdminPortals">MS Admin Portals</option>
-                                <option value="Exo">Exchange Online</option>
-                                <option value="Spo">SharePoint Online</option>
-                                <option value="Teams">Microsoft Teams</option>
-                                <option value="Intune">Microsoft Intune</option>
-                                <option value="Avd">Azure Virtual Desktop</option>
-                                <option value="Defender">Microsoft Defender</option>
-                                <option value="HighRiskApps">High Risk Apps</option>
-                                <option value="SecurityInfo">Security Info Registration</option>
-                                <option value="Custom">Custom App...</option>
-                            </select>
+                                onChange={setResource}
+                                options={RESOURCE_OPTIONS}
+                                ariaLabel="Target Resource"
+                                className="w-full sm:w-auto sm:min-w-[150px]"
+                            />
                         )}
 
                         <span>from</span>
-                        <select
+                        <FluentDropdown
                             value={platform}
-                            onChange={(e) => setPlatform(e.target.value)}
-                            className={selectClasses}
-                        >
-                            <option value="AnyPlatform">Any Platform</option>
-                            <option value="UnknownPlatform">Unknown / Unsupported</option>
-                            <option value="Windows">Windows</option>
-                            <option value="macOS">macOS</option>
-                            <option value="iOS">iOS</option>
-                            <option value="Android">Android</option>
-                            <option value="Linux">Linux</option>
-                        </select>
+                            onChange={setPlatform}
+                            options={PLATFORM_OPTIONS}
+                            ariaLabel="Client Platform"
+                            className="w-full sm:w-auto sm:min-w-[140px]"
+                        />
 
                         <span>and enforces</span>
                         {action === 'Custom' ? (
@@ -203,27 +233,13 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                 </button>
                             </div>
                         ) : (
-                            <select
+                            <FluentDropdown
                                 value={action}
-                                onChange={(e) => setAction(e.target.value)}
-                                className={selectClasses}
-                            >
-                                <option value="RequireMFA">Require Multi-factor Authentication</option>
-                                <option value="RequirePhishResist">Require Phishing-Resistant Multi-factor Authentication</option>
-                                <option value="RequireMfaForRisk">Require Multi-factor Authentication for Risk</option>
-                                <option value="RequirePasswordChange">Require Password Change</option>
-                                <option value="RequireCompliant">Require Compliant Device</option>
-                                <option value="AppProtection">Require App Protection</option>
-                                <option value="AppEnforced">App Enforced Restrictions</option>
-                                <option value="Block">Block Unknown Platforms</option>
-                                <option value="BlockHighRisk">Block High Risk</option>
-                                <option value="BlockInsiderRisk">Block Insider Risk</option>
-                                <option value="BlockLegacyAuth">Block Legacy Auth</option>
-                                <option value="BlockInteractive">Block Interactive Sign-in</option>
-                                <option value="SessionControl">Session Control</option>
-                                <option value="TermsOfUse">Terms of Use</option>
-                                <option value="Custom">Custom Requirement...</option>
-                            </select>
+                                onChange={setAction}
+                                options={ACTION_OPTIONS}
+                                ariaLabel="Enforced Action"
+                                className="w-full sm:w-auto sm:min-w-[200px]"
+                            />
                         )}
                     </div>
                 </div>
@@ -255,7 +271,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         className={`shrink-0 flex items-center justify-center gap-1.5 px-3 h-[32px] rounded-[4px] border text-[12px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${isExportExpanded ? 'bg-fluent-bg-subtle border-fluent-stroke-strong text-fluent-fg-primary' : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
                     >
                         <Code2 className="w-3.5 h-3.5" />
-                        <span>{isExportExpanded ? 'Hide IaC' : 'Export IaC'}</span>
+                        <span>{isExportExpanded ? 'Hide IAC Template' : 'Export IAC Template'}</span>
                     </button>
                 </div>
 

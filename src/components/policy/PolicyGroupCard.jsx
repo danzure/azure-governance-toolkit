@@ -23,6 +23,7 @@ import {
     FileText, 
     Shield 
 } from 'lucide-react';
+import FluentDropdown from '../shared/FluentDropdown';
 import { 
     getReadableTitle, 
     getCategoryColorClass, 
@@ -245,21 +246,18 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                         {/* Target Scope Dropdown or Single Target Badge and Categories */}
                         <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                             {policies.length > 1 ? (
-                                <div className="flex items-center gap-2 w-full sm:w-auto">
+                                <div className="flex items-center gap-2 w-full sm:w-auto" onClick={(e) => e.stopPropagation()}>
                                     <span className="text-[12px] font-medium text-fluent-fg-tertiary shrink-0">Scope:</span>
-                                    <select
-                                        className="px-2.5 h-[32px] min-w-0 max-w-full sm:max-w-[320px] border rounded outline-none text-[13px] font-medium transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
+                                    <FluentDropdown
+                                        options={policies.map((p, idx) => ({
+                                            value: idx,
+                                            label: `${formatTarget(p.name)} (${idx + 1}/${policies.length})`
+                                        }))}
                                         value={activeIndex}
-                                        onChange={(e) => setSelectedIdx(Number(e.target.value))}
-                                        onClick={(e) => e.stopPropagation()}
-                                        aria-label="Select policy scope variant"
-                                    >
-                                        {policies.map((p, idx) => (
-                                            <option key={p.name} value={idx}>
-                                                {formatTarget(p.name)} ({idx + 1}/{policies.length})
-                                            </option>
-                                        ))}
-                                    </select>
+                                        onChange={(val) => setSelectedIdx(Number(val))}
+                                        ariaLabel="Select policy scope variant"
+                                        className="w-full sm:w-auto sm:min-w-[240px]"
+                                    />
                                 </div>
                             ) : (
                                 <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[12px] font-medium bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
@@ -387,7 +385,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                     : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
                                 <Code2 className="w-3.5 h-3.5" />
-                                Deployment Code (IaC)
+                                IAC Template
                             </button>
                         </div>
 
@@ -500,10 +498,10 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                             <div className="px-4 py-3 sm:px-5 sm:py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
-                                        <Terminal className="w-4 h-4" />
+                                        <Code2 className="w-4 h-4" />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[14px] sm:text-[15px]">Deployment Code (IaC)</span>
+                                        <span className="text-[14px] sm:text-[15px]">IAC Template</span>
                                         <span className="text-[12px] font-normal text-fluent-fg-secondary">
                                             Review and export your {scriptFormat === 'powershell' ? 'Microsoft Graph PowerShell' : 'Graph API JSON'} script
                                         </span>

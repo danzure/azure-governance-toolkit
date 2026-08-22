@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, ChevronDown, ChevronRight, Info } from 'lucide-react';
+import { ExternalLink, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import TagBuilder from '../components/tagging/TagBuilder';
 import TagOutputPanel from '../components/tagging/TagOutputPanel';
 
@@ -46,7 +46,7 @@ export default function TaggingStrategyPage() {
                                 <p className="text-fluent-fg-primary text-[13px]">
                                     How to use this tool
                                 </p>
-                                {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 ml-0.5" /> : <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
+                                {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
                             </div>
 
                         {isGuidanceExpanded && (

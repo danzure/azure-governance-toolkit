@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, Network, FileCode2, ChevronDown, ChevronRight, Info, BookOpen } from 'lucide-react';
+import { ExternalLink, Network, FileCode2, ChevronDown, ChevronUp, Info, BookOpen } from 'lucide-react';
 import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
 import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -77,7 +77,7 @@ export default function ManagementGroupsPage() {
                                         Tool Guidance & CAF Best Practices
                                     </p>
                                     <div className="flex-1" />
-                                    {isGuidanceExpanded ? <ChevronDown className="w-3.5 h-3.5 text-fluent-fg-tertiary" /> : <ChevronRight className="w-3.5 h-3.5 text-fluent-fg-tertiary" />}
+                                    {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 text-fluent-fg-tertiary" /> : <ChevronDown className="w-3.5 h-3.5 text-fluent-fg-tertiary" />}
                                 </div>
 
                                 {isGuidanceExpanded && (
@@ -93,7 +93,7 @@ export default function ManagementGroupsPage() {
                                             </p>
                                             <ul className="list-disc pl-4 ml-1 flex flex-col gap-1">
                                                 <li><strong>Design Topology:</strong> Use the Topology Designer tab to visually build and organize your management group hierarchy. Add, rename, or remove groups as needed.</li>
-                                                <li><strong>Generate Code:</strong> Switch to the Code Templates (IaC) tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
+                                                <li><strong>Generate Code:</strong> Switch to the IAC Template tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
                                                 <li><strong>Export & Deploy:</strong> Copy the generated code to use in your CI/CD pipelines or deploy directly to your Azure environment.</li>
                                             </ul>
                                         </div>

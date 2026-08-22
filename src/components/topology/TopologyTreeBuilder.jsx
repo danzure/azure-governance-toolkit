@@ -503,7 +503,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                             className={`flex-1 sm:flex-none text-[12px] px-4 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 flex items-center gap-1.5 ${isExportExpanded ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                         >
                             <Code2 className="w-3.5 h-3.5" />
-                            IaC Code
+                            IAC Template
                         </button>
                     </div>
                     

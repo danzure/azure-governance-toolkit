@@ -1,5 +1,6 @@
 import { Plus, Trash2, Info } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
+import FluentDropdown from '../shared/FluentDropdown';
 
 /**
  * TagBuilder Component
@@ -82,28 +83,25 @@ export default function TagBuilder({ tags, setTags }) {
                                     <div className="flex items-end gap-2 w-full sm:w-auto shrink-0">
                                         <div className="flex-1 sm:w-[125px]">
                                             <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">Requirement</label>
-                                            <select
+                                            <FluentDropdown
                                                 value={tag.requirement}
-                                                onChange={(e) => handleUpdateTag(tag.id, 'requirement', e.target.value)}
-                                                className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
-                                            >
-                                                <option value="Mandatory">Mandatory</option>
-                                                <option value="Optional">Optional</option>
-                                            </select>
+                                                onChange={(val) => handleUpdateTag(tag.id, 'requirement', val)}
+                                                options={['Mandatory', 'Optional']}
+                                                ariaLabel="Tag Requirement"
+                                                className="w-full"
+                                            />
                                         </div>
-                                        <div className="flex-1 sm:w-[135px]">
+                                        <div className="flex-1 sm:w-[155px]">
                                             <label className="block text-[12px] font-semibold text-fluent-fg-secondary mb-1">
                                                 Policy Effect
                                             </label>
-                                            <select
+                                            <FluentDropdown
                                                 value={tag.effect}
-                                                onChange={(e) => handleUpdateTag(tag.id, 'effect', e.target.value)}
-                                                className="px-2.5 h-[32px] min-w-0 w-full border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong hover:border-fluent-fg-primary focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 cursor-pointer text-ellipsis"
-                                            >
-                                                <option value="Audit">Audit</option>
-                                                <option value="Deny">Deny</option>
-                                                <option value="Modify">Modify (Append)</option>
-                                            </select>
+                                                onChange={(val) => handleUpdateTag(tag.id, 'effect', val)}
+                                                options={['Audit', 'Deny', 'Modify (Append)']}
+                                                ariaLabel="Policy Effect"
+                                                className="w-full"
+                                            />
                                         </div>
                                         <div className="shrink-0">
                                             <Tooltip content="Remove tag" position="top" align="center">

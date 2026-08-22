@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Copy, Check, ExternalLink, Code } from 'lucide-react';
+import { Copy, Check, ExternalLink, Code2 } from 'lucide-react';
 
 export default function TopologyCodeGenerator({ topology }) {
     const [format, setFormat] = useState('bicep');
@@ -157,10 +157,10 @@ export default function TopologyCodeGenerator({ topology }) {
             <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
-                        <Code className="w-4 h-4" />
+                        <Code2 className="w-4 h-4" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[15px]">Code Templates (IaC)</span>
+                        <span className="text-[15px]">IAC Template</span>
                         <span className="text-[12px] font-normal text-fluent-fg-secondary">Review and export your {format === 'terraform' ? 'Terraform' : format === 'bicep' ? 'Bicep' : 'ARM'} code</span>
                     </div>
                 </div>
