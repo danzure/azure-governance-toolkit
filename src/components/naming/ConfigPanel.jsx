@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { ChevronDown, ChevronUp, ChevronRight, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, ExternalLink, Settings2, RefreshCw } from 'lucide-react';
+import { ChevronDown, ChevronUp, Edit3, Eye, EyeOff, ArrowLeft, ArrowRight, Copy, Check, Layers, Info, ExternalLink, Settings2, RefreshCw } from 'lucide-react';
 import SearchableSelect from '../shared/SearchableSelect';
 import Tooltip from '../shared/Tooltip';
 import { AZURE_REGIONS, ENVIRONMENTS } from '../../data/constants';

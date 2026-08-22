@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { ChevronDown, Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Copy, Check, ShieldAlert, AlertTriangle, ShieldCheck } from 'lucide-react';
 import PropTypes from 'prop-types';
 import FluentDropdown from '../shared/FluentDropdown';
 

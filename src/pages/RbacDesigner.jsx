@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { ShieldCheck, Info, Edit3, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Sparkles } from 'lucide-react';
+import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Sparkles } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
-import Tooltip from '../components/shared/Tooltip';
 import { RBAC_ROLE_TEMPLATES } from '../data/rbacData';
 
 export default function RbacDesignerPage() {

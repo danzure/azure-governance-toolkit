@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Copy, Check, Terminal, FileText } from 'lucide-react';
+import { Copy, Check, FileText } from 'lucide-react';
 
 export default function RoleExportPanel({ roleName, description, assignableScopes, actions, notActions }) {
     const [copied, setCopied] = useState(false);

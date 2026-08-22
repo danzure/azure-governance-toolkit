@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { ExternalLink, Network, FileCode2, ChevronDown, ChevronUp, Info, BookOpen } from 'lucide-react';
+import { ExternalLink, Network, ChevronDown, ChevronUp, Info, BookOpen } from 'lucide-react';
 import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
-import TopologyCodeGenerator from '../components/topology/TopologyCodeGenerator';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function ManagementGroupsPage() {
