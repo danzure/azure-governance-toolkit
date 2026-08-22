@@ -1,8 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { ShieldCheck, Info, ChevronDown, ChevronUp, ExternalLink, RotateCcw } from 'lucide-react';
+import { ShieldCheck, Info, Edit3, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Sparkles } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
-import RoleExportPanel from '../components/rbac/RoleExportPanel';
 import Tooltip from '../components/shared/Tooltip';
+import { RBAC_ROLE_TEMPLATES } from '../data/rbacData';
 
 export default function RbacDesignerPage() {
     const [roleName, setRoleName] = useState('');
@@ -26,6 +26,7 @@ export default function RbacDesignerPage() {
 
     const handleAddAction = useCallback((op) => {
         setActions(prev => prev.includes(op) ? prev : [...prev, op]);
+        setNotActions(prev => prev.filter(a => a !== op));
     }, []);
 
     const handleRemoveAction = useCallback((op) => {
@@ -34,10 +35,24 @@ export default function RbacDesignerPage() {
 
     const handleAddNotAction = useCallback((op) => {
         setNotActions(prev => prev.includes(op) ? prev : [...prev, op]);
+        setActions(prev => prev.filter(a => a !== op));
     }, []);
 
     const handleRemoveNotAction = useCallback((op) => {
         setNotActions(prev => prev.filter(a => a !== op));
+    }, []);
+
+    const handleClearPermissions = useCallback(() => {
+        setActions([]);
+        setNotActions([]);
+    }, []);
+
+    const handleClearActions = useCallback(() => {
+        setActions([]);
+    }, []);
+
+    const handleClearNotActions = useCallback(() => {
+        setNotActions([]);
     }, []);
 
     // Convert comma separated string to array for export
@@ -45,64 +60,23 @@ export default function RbacDesignerPage() {
         return scopesString.split(',').map(s => s.trim()).filter(Boolean);
     };
 
-    const applyTemplate = (type) => {
-        if (type === 'vmOperator') {
-            setRoleName('Virtual Machine Operator');
-            setDescription('Can start, stop, restart, and monitor virtual machines, and read related network interfaces.');
-            setAssignableScopes('/subscriptions/00000000-0000-0000-0000-000000000000');
-            setActions([
-                'Microsoft.Compute/virtualMachines/start/action',
-                'Microsoft.Compute/virtualMachines/restart/action',
-                'Microsoft.Compute/virtualMachines/deallocate/action',
-                'Microsoft.Compute/virtualMachines/read',
-                'Microsoft.Compute/virtualMachines/instanceView/read',
-                'Microsoft.Network/networkInterfaces/read'
-            ]);
-            setNotActions([]);
-        } else if (type === 'networkAdmin') {
-            setRoleName('Network Administrator');
-            setDescription('Can manage all network resources but cannot delete virtual networks.');
-            setAssignableScopes('/subscriptions/00000000-0000-0000-0000-000000000000');
-            setActions([
-                'Microsoft.Network/*'
-            ]);
-            setNotActions([
-                'Microsoft.Network/virtualNetworks/delete'
-            ]);
-        } else if (type === 'resourceReader') {
-            setRoleName('Global Resource Reader (No Secrets)');
-            setDescription('Read-only access to all resources except Key Vault secrets and keys.');
-            setAssignableScopes('/subscriptions/00000000-0000-0000-0000-000000000000');
-            setActions([
-                '*/read'
-            ]);
-            setNotActions([
-                'Microsoft.KeyVault/vaults/secrets/read',
-                'Microsoft.KeyVault/vaults/keys/read'
-            ]);
-        } else if (type === 'kvSecretUser') {
-            setRoleName('Key Vault Secret User');
-            setDescription('Read secrets from Key Vaults but cannot manage or create them.');
-            setAssignableScopes('/subscriptions/00000000-0000-0000-0000-000000000000');
-            setActions([
-                'Microsoft.KeyVault/vaults/read',
-                'Microsoft.KeyVault/vaults/secrets/read'
-            ]);
-            setNotActions([]);
-        } else if (type === 'aksAdmin') {
-            setRoleName('AKS Cluster Admin');
-            setDescription('Full management access to AKS clusters including credential retrieval.');
-            setAssignableScopes('/subscriptions/00000000-0000-0000-0000-000000000000');
-            setActions([
-                'Microsoft.ContainerService/managedClusters/*'
-            ]);
-            setNotActions([]);
-        } else if (type === 'clear') {
+    const applyTemplate = (templateId) => {
+        if (templateId === 'clear') {
             setRoleName('');
             setDescription('');
             setAssignableScopes('');
             setActions([]);
             setNotActions([]);
+            return;
+        }
+
+        const template = RBAC_ROLE_TEMPLATES.find(t => t.id === templateId);
+        if (template) {
+            setRoleName(template.name);
+            setDescription(template.description);
+            setAssignableScopes(template.assignableScopes);
+            setActions(template.actions);
+            setNotActions(template.notActions);
         }
     };
 
@@ -164,7 +138,7 @@ export default function RbacDesignerPage() {
                     {/* Role Metadata Configuration */}
                     <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-2 mb-2 border-b border-fluent-stroke-subtle pb-2">
-                            <Info className="w-5 h-5 text-fluent-brand-fg" />
+                            <Edit3 className="w-5 h-5 text-fluent-brand-fg" />
                             <h3 className="text-[16px] font-semibold text-fluent-fg-primary">Role Properties</h3>
                         </div>
                         
@@ -261,73 +235,60 @@ export default function RbacDesignerPage() {
                         </div>
 
                         {/* Examples Toolbar */}
-                        <div className="flex flex-wrap items-center gap-2 mt-2">
-                            <p className="text-[12px] font-semibold shrink-0 text-fluent-fg-secondary mr-2">Try a template:</p>
-                            <button
-                                type="button"
-                                onClick={() => applyTemplate('vmOperator')}
-                                className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
-                            >
-                                Virtual Machine Operator
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => applyTemplate('networkAdmin')}
-                                className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
-                            >
-                                Network Administrator
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => applyTemplate('resourceReader')}
-                                className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
-                            >
-                                Safe Reader
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => applyTemplate('kvSecretUser')}
-                                className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
-                            >
-                                Key Vault Secrets User
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => applyTemplate('aksAdmin')}
-                                className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
-                            >
-                                AKS Cluster Admin
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => applyTemplate('clear')}
-                                className="whitespace-nowrap flex-shrink-0 flex items-center gap-1.5 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-state-danger hover:border-fluent-state-danger hover:bg-fluent-bg-card px-3 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98] ml-auto"
-                            >
-                                <RotateCcw className="w-3.5 h-3.5" />
-                                Clear Fields
-                            </button>
+                        <div className="flex flex-col gap-2 mt-2 pt-3 border-t border-fluent-stroke-subtle">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-1.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                    <p className="text-[12px] font-semibold text-fluent-fg-secondary">Try a pre-configured role template:</p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => applyTemplate('clear')}
+                                    className="whitespace-nowrap flex-shrink-0 flex items-center gap-1.5 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-state-danger hover:border-fluent-state-danger hover:bg-fluent-bg-card px-2.5 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
+                                >
+                                    <RotateCcw className="w-3.5 h-3.5" />
+                                    Clear Fields
+                                </button>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-1.5">
+                                {RBAC_ROLE_TEMPLATES.map((tmpl) => {
+                                    const isSelected = roleName === tmpl.name;
+                                    return (
+                                        <button
+                                            key={tmpl.id}
+                                            type="button"
+                                            onClick={() => applyTemplate(tmpl.id)}
+                                            title={`${tmpl.description} (${tmpl.category})`}
+                                            className={`whitespace-nowrap flex-shrink-0 text-left text-[12px] px-2.5 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98] border ${
+                                                isSelected 
+                                                    ? 'bg-fluent-info-bg text-fluent-brand-fg font-semibold border-fluent-info-border shadow-sm' 
+                                                    : 'bg-fluent-bg-subtle border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card'
+                                            }`}
+                                        >
+                                            {tmpl.name}
+                                        </button>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
 
-                    {/* Permissions Selector */}
+                    {/* Permissions Selector with Integrated JSON Output */}
                     <PermissionsSelector 
+                        roleName={roleName}
+                        description={description}
+                        assignableScopes={parseScopes(assignableScopes)}
                         actions={actions}
                         notActions={notActions}
                         onAddAction={handleAddAction}
                         onRemoveAction={handleRemoveAction}
                         onAddNotAction={handleAddNotAction}
                         onRemoveNotAction={handleRemoveNotAction}
+                        onClearPermissions={handleClearPermissions}
+                        onClearActions={handleClearActions}
+                        onClearNotActions={handleClearNotActions}
                     />
                 </div>
-
-                {/* Export Panel */}
-                <RoleExportPanel 
-                    roleName={roleName}
-                    description={description}
-                    assignableScopes={parseScopes(assignableScopes)}
-                    actions={actions}
-                    notActions={notActions}
-                />
             </div>
         </div>
     );
