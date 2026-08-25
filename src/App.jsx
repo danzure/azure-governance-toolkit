@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { trackPageView } from './utils/telemetry';
+import { getRouteSEO, applySEO } from './utils/seo';
 
 import Header from './components/layout/Header';
 import NavigationMenu from './components/layout/NavigationMenu';
@@ -110,28 +111,14 @@ export default function App() {
     }, [isMobile, setIsNavExpanded]);
     const handleCloseMobileNav = useCallback(() => setIsMobileNavOpen(false), []);
 
-    // Determine header subtitle based on current route
-    let headerTitle;
-    if (location.pathname === '/') {
-        headerTitle = "Dashboard";
-    } else if (location.pathname === '/resource-naming') {
-        headerTitle = "Azure Resource Naming Tool";
-    } else if (location.pathname === '/conditional-access') {
-        headerTitle = "Conditional Access Policy Builder";
-    } else if (location.pathname === '/management-groups') {
-        headerTitle = "Management Group Topology Designer";
-    } else if (location.pathname === '/tagging-strategy') {
-        headerTitle = "Tagging Strategy Builder";
-    } else if (location.pathname === '/rbac-designer') {
-        headerTitle = "RBAC Custom Role Designer";
-    } else {
-        headerTitle = "Page Not Found";
-    }
+    // Determine SEO metadata & header subtitle based on current route
+    const currentSEO = getRouteSEO(location.pathname);
+    const headerTitle = currentSEO.headerTitle;
 
-    // Track page view and handle route changes (title & scroll)
+    // Track page view and handle route changes (SEO, telemetry & scroll)
     useEffect(() => {
-        // Update browser tab title
-        document.title = `${headerTitle} | Azure Governance Toolkit`;
+        // Apply full SEO metadata to DOM (title, description, canonical link, OpenGraph, Twitter Card)
+        applySEO(location.pathname);
 
         // Log telemetry
         trackPageView(headerTitle, location.pathname);

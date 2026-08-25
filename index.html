@@ -41,6 +41,108 @@
   <noscript>
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/segoe-ui-4" />
   </noscript>
+
+  <!-- Structured Data (JSON-LD) for Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://app.atozazure.com/#organization",
+        "name": "atozazure",
+        "url": "https://atozazure.com",
+        "logo": "https://app.atozazure.com/atozazure-favicon-192x192.png?v=2"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://app.atozazure.com/#website",
+        "url": "https://app.atozazure.com/",
+        "name": "atozazure | Azure Governance Toolkit",
+        "description": "Comprehensive suite of free tools for Azure Resource Naming (CAF), Conditional Access Policies, Management Group Topologies, Tagging Strategies, and Custom RBAC Role Design.",
+        "publisher": {
+          "@id": "https://app.atozazure.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://app.atozazure.com/#naming-tool",
+        "name": "Azure Resource Naming Tool",
+        "url": "https://app.atozazure.com/resource-naming",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Generate standardized Azure resource names conforming to Microsoft Cloud Adoption Framework (CAF) guidelines with real-time validation and IaC exports."
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://app.atozazure.com/#conditional-access",
+        "name": "Azure Conditional Access Policy Builder",
+        "url": "https://app.atozazure.com/conditional-access",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Design, configure, and export Microsoft Entra ID Conditional Access policies using Zero Trust baseline templates."
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://app.atozazure.com/#management-groups",
+        "name": "Azure Management Group Topology Designer",
+        "url": "https://app.atozazure.com/management-groups",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Architect and export Azure Enterprise-Scale Landing Zone management group hierarchies to Bicep and Terraform."
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://app.atozazure.com/#tagging-strategy",
+        "name": "Azure Tagging Strategy Builder",
+        "url": "https://app.atozazure.com/tagging-strategy",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Define and generate Azure Policy governance rules for tagging taxonomies across cloud environments."
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://app.atozazure.com/#rbac-designer",
+        "name": "Azure Custom RBAC Role Designer",
+        "url": "https://app.atozazure.com/rbac-designer",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Build, validate, and export Azure Custom Role Definitions with least-privilege permissions for ARM, Bicep, Terraform, and Azure CLI."
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
