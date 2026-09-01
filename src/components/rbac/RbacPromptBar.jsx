@@ -153,13 +153,13 @@ const RbacPromptBar = forwardRef(({
 
     return (
         <div className="w-full mb-2 group relative z-30">
-            <div className="flex items-center justify-between mb-1.5 ml-1">
-                <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-y-1 mb-1.5 ml-1">
+                <div className="flex flex-wrap items-baseline gap-2">
                     <span className="text-[13px] font-semibold text-fluent-brand-fg uppercase tracking-wider">
                         AI Role Designer
                     </span>
-                    <span className="bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle text-[10px] px-1.5 py-0.5 rounded-[4px] font-bold">
-                        SMART GENERATE
+                    <span className="text-[11px] sm:text-[12px] text-fluent-fg-secondary">
+                        — AI-generated configurations should be reviewed before deployment.
                     </span>
                 </div>
                 {onResetAll && (
