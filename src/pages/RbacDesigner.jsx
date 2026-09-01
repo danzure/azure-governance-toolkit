@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Sparkles, Settings2 } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
-import RbacPromptBar from '../components/rbac/RbacPromptBar';
+import RbacPromptBar from '../components/ai/RbacPromptBar';
 import { RBAC_ROLE_TEMPLATES } from '../data/rbacData';
 
 export default function RbacDesignerPage() {

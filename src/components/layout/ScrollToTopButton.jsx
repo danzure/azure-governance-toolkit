@@ -1,6 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ArrowUp } from 'lucide-react';
 
+/**
+ * ScrollToTopButton Component
+ * 
+ * Floating action button that appears when the main content container is scrolled down,
+ * smoothly returning the viewport to the top when clicked.
+ * 
+ * @returns {JSX.Element|null}
+ */
 export default function ScrollToTopButton() {
     const [showScrollTop, setShowScrollTop] = useState(false);
 

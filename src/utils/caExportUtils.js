@@ -1,3 +1,24 @@
+/**
+ * Conditional Access IaC and JSON Export Utilities
+ * 
+ * Generates Terraform HCL and Microsoft Graph API-compliant JSON definitions
+ * for Entra ID Conditional Access policies based on selected parameters:
+ * - Persona: All, Admins, Guests, AIAgents
+ * - Resource: All, O365, AzurePortal
+ * - Platform: AnyPlatform, Android, iOS, Windows, macOS, Linux
+ * - Action/Requirement: RequireMFA, RequireCompliant, RequirePhishResist, RequirePasswordChange, Block, SessionControl
+ */
+
+/**
+ * Generates a Terraform azurerm_conditional_access_policy resource configuration.
+ * 
+ * @param {string} policyName - Name for the Conditional Access policy
+ * @param {string} persona - Target user/workload persona (e.g. 'Admins', 'Guests', 'AIAgents', 'All')
+ * @param {string} resource - Target cloud application (e.g. 'O365', 'AzurePortal', 'All')
+ * @param {string} platform - Target device platform (e.g. 'Windows', 'macOS', 'AnyPlatform')
+ * @param {string} action - Enforced control action (e.g. 'RequireMFA', 'Block', 'SessionControl')
+ * @returns {string} Terraform HCL block
+ */
 export function generateConditionalAccessTerraform(policyName, persona, resource, platform, action) {
     const isBlock = action.startsWith('Block');
     const isSession = action === 'SessionControl';
@@ -55,8 +76,19 @@ export function generateConditionalAccessTerraform(policyName, persona, resource
 }`;
 }
 
+/**
+ * Generates a Microsoft Graph API-compliant JSON payload for Entra ID Conditional Access.
+ * 
+ * @param {string} policyName - Name for the Conditional Access policy
+ * @param {string} persona - Target user/workload persona (e.g. 'Admins', 'Guests', 'AIAgents', 'All')
+ * @param {string} resource - Target cloud application (e.g. 'O365', 'AzurePortal', 'All')
+ * @param {string} platform - Target device platform (e.g. 'Windows', 'macOS', 'AnyPlatform')
+ * @param {string} action - Enforced control action (e.g. 'RequireMFA', 'Block', 'SessionControl')
+ * @returns {string} Formatted JSON string
+ */
 export function generateConditionalAccessJSON(policyName, persona, resource, platform, action) {
     const isBlock = action.startsWith('Block');
+    const isSession = action === 'SessionControl';
     
     let grantControl = ["mfa"];
     if (isBlock) grantControl = ["block"];
@@ -67,6 +99,7 @@ export function generateConditionalAccessJSON(policyName, persona, resource, pla
     let usersInclude = ["All"];
     if (persona === 'Admins') usersInclude = ["Role: Global Administrator"];
     else if (persona === 'Guests') usersInclude = ["GuestsOrExternalUsers"];
+    else if (persona === 'AIAgents') usersInclude = ["ServicePrincipals"];
 
     let appsInclude = ["All"];
     if (resource === 'O365') appsInclude = ["Office365"];
@@ -93,10 +126,20 @@ export function generateConditionalAccessJSON(policyName, persona, resource, pla
                 excludePlatforms: []
             }
         },
-        grantControls: {
-            operator: isBlock ? "OR" : "AND",
-            builtInControls: grantControl
-        }
+        ...(isSession ? {
+            sessionControls: {
+                signInFrequency: {
+                    value: 1,
+                    type: "hours",
+                    isEnabled: true
+                }
+            }
+        } : {
+            grantControls: {
+                operator: isBlock ? "OR" : "AND",
+                builtInControls: grantControl
+            }
+        })
     };
 
     return JSON.stringify(payload, null, 2);

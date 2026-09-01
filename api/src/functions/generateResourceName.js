@@ -330,3 +330,8 @@ app.http('generateResourceName', {
         }
     }
 });
+
+module.exports = {
+    normalizeAiResponse
+};
+

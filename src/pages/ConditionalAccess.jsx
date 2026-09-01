@@ -1,9 +1,9 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { Shield, Settings2 } from 'lucide-react';
 import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/conditionalAccessData';
-import PatternBuilderCard from '../components/policy/PatternBuilderCard';
+import PatternBuilderCard from '../components/ca/PatternBuilderCard';
 import ServiceFilter from '../components/shared/ServiceFilter';
-import PolicyGroupCard from '../components/policy/PolicyGroupCard';
+import PolicyGroupCard from '../components/ca/PolicyGroupCard';
 
 // Pre-compute groupings outside the render lifecycle for performance
 const INITIAL_GROUPS = {};

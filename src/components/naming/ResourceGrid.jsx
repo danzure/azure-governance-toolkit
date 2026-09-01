@@ -1,7 +1,21 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import ResourceCard from './ResourceCard';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
+/**
+ * ResourceGrid Component
+ * 
+ * Renders the responsive grid of Azure resource naming cards with infinite scroll,
+ * staggered enter animations, expanded detailed view management, and sub-resource state tracking.
+ * 
+ * @param {Object} props
+ * @param {Array<Object>} props.resources - Filtered array of Azure resource definitions
+ * @param {Function} props.generateName - Name generator callback
+ * @param {string|null} props.copiedId - Active copied item identifier for UI feedback
+ * @param {Function} props.onCopy - Clipboard copy callback handler
+ * @returns {JSX.Element}
+ */
 export default function ResourceGrid({ resources, generateName, copiedId, onCopy }) {
     const [expandedCard, setExpandedCard] = useState(null);
     const [subResourceSelections, setSubResourceSelections] = useLocalStorage('azres_subResources', {});
@@ -108,3 +122,11 @@ export default function ResourceGrid({ resources, generateName, copiedId, onCopy
         </>
     );
 }
+
+ResourceGrid.propTypes = {
+    resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+    generateName: PropTypes.func.isRequired,
+    copiedId: PropTypes.string,
+    onCopy: PropTypes.func.isRequired
+};
+

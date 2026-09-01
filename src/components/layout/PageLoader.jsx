@@ -1,4 +1,12 @@
 
+/**
+ * PageLoader Component
+ * 
+ * Standard Fluent 2 loading state spinner used as the React Suspense fallback
+ * during lazy-loaded route transitions.
+ * 
+ * @returns {JSX.Element}
+ */
 export default function PageLoader() {
     return (
         <div className="flex-1 flex flex-col items-center justify-center p-8 h-full min-h-[400px] animate-fade-in">

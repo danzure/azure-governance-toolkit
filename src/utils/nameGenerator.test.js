@@ -335,4 +335,24 @@ describe('generateName', () => {
         // No hyphens since chars is undefined → allowsHyphens is false
         expect(result).toBe('rgwebproduks001');
     });
+
+    // ─── Pattern Override ───────────────────────────────────────────
+
+    it('handles patternOverride with single and multiple placeholders', () => {
+        const resource = makeResource({ abbrev: 'app' });
+        const configSingle = {
+            ...defaultConfig,
+            patternOverride: 'custom_{env}_{region}_{instance}'
+        };
+        const resultSingle = generateName(resource, configSingle);
+        expect(resultSingle).toBe('custom_prod_uks_001');
+
+        // Test multiple instances of same placeholder
+        const configMultiple = {
+            ...defaultConfig,
+            patternOverride: '{env}-myapp-{env}-{region}-{instance}'
+        };
+        const resultMultiple = generateName(resource, configMultiple);
+        expect(resultMultiple).toBe('prod-myapp-prod-uks-001');
+    });
 });

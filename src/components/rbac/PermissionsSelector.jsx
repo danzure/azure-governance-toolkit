@@ -1,8 +1,31 @@
 import { useState, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Search, Plus, Minus, ShieldCheck, X, Code2, Copy, Check, ListFilter, RotateCcw } from 'lucide-react';
 import { COMMON_RBAC_PROVIDERS } from '../../data/rbacData';
 import SearchableSelect from '../shared/SearchableSelect';
 
+/**
+ * PermissionsSelector Component
+ * 
+ * Interactive Azure Resource Provider operations picker and Custom Role definition viewer.
+ * Provides granular operation search, provider filtering, Actions vs NotActions assignments,
+ * and live Azure Role JSON generation with clipboard copy functionality.
+ * 
+ * @param {Object} props
+ * @param {string} [props.roleName] - Name of the custom role
+ * @param {string} [props.description] - Description of the custom role
+ * @param {string[]} [props.assignableScopes] - List of target assignable scopes
+ * @param {string[]} [props.actions] - Array of permitted Azure control plane operations
+ * @param {string[]} [props.notActions] - Array of explicitly restricted operations
+ * @param {Function} props.onAddAction - Callback to add an operation to Actions
+ * @param {Function} props.onRemoveAction - Callback to remove an operation from Actions
+ * @param {Function} props.onAddNotAction - Callback to add an operation to NotActions
+ * @param {Function} props.onRemoveNotAction - Callback to remove an operation from NotActions
+ * @param {Function} [props.onClearPermissions] - Callback to clear both Actions and NotActions
+ * @param {Function} [props.onClearActions] - Callback to clear all Actions
+ * @param {Function} [props.onClearNotActions] - Callback to clear all NotActions
+ * @returns {JSX.Element}
+ */
 export default function PermissionsSelector({ 
     roleName = '', 
     description = '', 
@@ -430,5 +453,21 @@ export default function PermissionsSelector({
         </div>
     );
 }
+
+PermissionsSelector.propTypes = {
+    roleName: PropTypes.string,
+    description: PropTypes.string,
+    assignableScopes: PropTypes.arrayOf(PropTypes.string),
+    actions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    notActions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onAddAction: PropTypes.func.isRequired,
+    onRemoveAction: PropTypes.func.isRequired,
+    onAddNotAction: PropTypes.func.isRequired,
+    onRemoveNotAction: PropTypes.func.isRequired,
+    onClearPermissions: PropTypes.func,
+    onClearActions: PropTypes.func,
+    onClearNotActions: PropTypes.func
+};
+
 
 

@@ -1,14 +1,15 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { generateResourceNameFallback } from '../../utils/namingAiFallback';
 
 /**
- * PromptBar Component
+ * NamingPromptBar Component
  * 
- * A natural language input bar that calls the Azure OpenAI backend
+ * A natural language input bar that calls the Azure OpenAI backend (or smart fallback)
  * to automatically generate Resource Naming configurations based on user intent.
  */
-const PromptBar = forwardRef(({
+const NamingPromptBar = forwardRef(({
     setWorkload,
     setEnvValue,
     setRegionValue,
@@ -73,9 +74,51 @@ const PromptBar = forwardRef(({
         }
     };
 
+    const applyNamingData = (data) => {
+        // Apply the AI configuration to the parent state
+        if (data.workload !== undefined && setWorkload) setWorkload(data.workload);
+        if (data.envValue && setEnvValue) setEnvValue(data.envValue);
+        if (data.regionValue && setRegionValue) setRegionValue(data.regionValue);
+        if (data.searchTerm && setSearchTerm) setSearchTerm(data.searchTerm);
+        
+        if (setOrgPrefix && data.orgPrefix !== undefined) {
+            setOrgPrefix(data.orgPrefix);
+            if (setShowOrg) {
+                setShowOrg(Boolean(data.orgPrefix));
+            }
+        }
+
+        if (setInstance && data.instance) {
+            setInstance(data.instance);
+        }
+        
+        // Clear any active filters so the results are visible
+        if (setActiveCategory) setActiveCategory('All');
+
+        // Store summary for feedback card
+        if (data.architectureSummary || data.explanation || data.searchTerm) {
+            const resourceList = (data.searchTerm || '')
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean);
+
+            setLastResult({
+                summary: data.architectureSummary,
+                explanation: data.explanation,
+                resources: resourceList,
+                workload: data.workload,
+                env: data.envValue,
+                region: data.regionValue,
+                instance: data.instance,
+                orgPrefix: data.orgPrefix
+            });
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!prompt.trim()) return;
+        const trimmedPrompt = prompt.trim();
+        if (!trimmedPrompt) return;
 
         setIsLoading(true);
         setError(null);
@@ -83,57 +126,26 @@ const PromptBar = forwardRef(({
         try {
             const apiUrl = import.meta.env.DEV ? 'http://localhost:7071/api/generateResourceName' : '/api/generateResourceName';
             
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt.trim() })
-            });
-
-            if (!response.ok) {
-                const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.details || errData.error || 'Failed to generate configuration');
-            }
-
-            const data = await response.json();
-            
-            // Apply the AI configuration to the parent state
-            if (data.workload !== undefined && setWorkload) setWorkload(data.workload);
-            if (data.envValue && setEnvValue) setEnvValue(data.envValue);
-            if (data.regionValue && setRegionValue) setRegionValue(data.regionValue);
-            if (data.searchTerm && setSearchTerm) setSearchTerm(data.searchTerm);
-            
-            if (setOrgPrefix && data.orgPrefix !== undefined) {
-                setOrgPrefix(data.orgPrefix);
-                if (setShowOrg) {
-                    setShowOrg(Boolean(data.orgPrefix));
-                }
-            }
-
-            if (setInstance && data.instance) {
-                setInstance(data.instance);
-            }
-            
-            // Clear any active filters so the results are visible
-            if (setActiveCategory) setActiveCategory('All');
-
-            // Store summary for feedback card
-            if (data.architectureSummary || data.explanation || data.searchTerm) {
-                const resourceList = (data.searchTerm || '')
-                    .split(',')
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-
-                setLastResult({
-                    summary: data.architectureSummary,
-                    explanation: data.explanation,
-                    resources: resourceList,
-                    workload: data.workload,
-                    env: data.envValue,
-                    region: data.regionValue,
-                    instance: data.instance,
-                    orgPrefix: data.orgPrefix
+            let data;
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: trimmedPrompt })
                 });
+
+                if (response.ok) {
+                    data = await response.json();
+                } else {
+                    // Fall back to client-side heuristic engine if API is unconfigured / unavailable
+                    data = generateResourceNameFallback(trimmedPrompt);
+                }
+            } catch {
+                // Fetch failed (network error/port 7071 offline) - use client-side heuristic engine
+                data = generateResourceNameFallback(trimmedPrompt);
             }
+
+            applyNamingData(data);
 
             // Clear the input after success
             setPrompt('');
@@ -340,7 +352,7 @@ const PromptBar = forwardRef(({
     );
 });
 
-PromptBar.propTypes = {
+NamingPromptBar.propTypes = {
     setWorkload: PropTypes.func.isRequired,
     setEnvValue: PropTypes.func.isRequired,
     setRegionValue: PropTypes.func.isRequired,
@@ -352,6 +364,6 @@ PromptBar.propTypes = {
     onResetAll: PropTypes.func
 };
 
-PromptBar.displayName = 'PromptBar';
+NamingPromptBar.displayName = 'NamingPromptBar';
 
-export default PromptBar;
+export default NamingPromptBar;

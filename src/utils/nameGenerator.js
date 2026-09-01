@@ -71,15 +71,15 @@ export function generateName(resource, config, selectedSubResource = null) {
     let skipParts = {};
     if (processedPattern) {
         if (processedPattern.includes('{env}')) {
-            processedPattern = processedPattern.replace('{env}', envValue);
+            processedPattern = processedPattern.replaceAll('{env}', envValue);
             skipParts['Environment'] = true;
         }
         if (processedPattern.includes('{region}')) {
-            processedPattern = processedPattern.replace('{region}', regAbbrev);
+            processedPattern = processedPattern.replaceAll('{region}', regAbbrev);
             skipParts['Region'] = true;
         }
         if (processedPattern.includes('{instance}')) {
-            processedPattern = processedPattern.replace('{instance}', suffix);
+            processedPattern = processedPattern.replaceAll('{instance}', suffix);
             skipParts['Instance'] = true;
         }
     }
