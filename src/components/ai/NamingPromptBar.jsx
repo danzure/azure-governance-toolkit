@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, forwardRef } from 'react';
 import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { generateResourceNameFallback } from '../../utils/namingAiFallback';
+import { trackEvent, trackException } from '../../utils/telemetry';
 
 /**
  * NamingPromptBar Component
@@ -136,13 +137,16 @@ const NamingPromptBar = forwardRef(({
 
                 if (response.ok) {
                     data = await response.json();
+                    trackEvent('AI_Generate_Resource_Name', { source: 'api', promptLength: trimmedPrompt.length });
                 } else {
                     // Fall back to client-side heuristic engine if API is unconfigured / unavailable
                     data = generateResourceNameFallback(trimmedPrompt);
+                    trackEvent('AI_Generate_Resource_Name', { source: 'client_fallback', promptLength: trimmedPrompt.length });
                 }
             } catch {
                 // Fetch failed (network error/port 7071 offline) - use client-side heuristic engine
                 data = generateResourceNameFallback(trimmedPrompt);
+                trackEvent('AI_Generate_Resource_Name', { source: 'client_fallback_network_error', promptLength: trimmedPrompt.length });
             }
 
             applyNamingData(data);
@@ -155,6 +159,7 @@ const NamingPromptBar = forwardRef(({
 
         } catch (err) {
             console.error('AI Request Error:', err);
+            trackException(err, { component: 'NamingPromptBar', promptLength: trimmedPrompt.length });
             setError(err.message || 'Something went wrong. Please try again.');
         } finally {
             setIsLoading(false);

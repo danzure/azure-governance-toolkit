@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
+import { trackException } from '../../utils/telemetry';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -13,6 +14,10 @@ class ErrorBoundary extends React.Component {
 
     componentDidCatch(error, errorInfo) {
         console.error("Uncaught rendering error:", error, errorInfo);
+        trackException(error, {
+            componentStack: errorInfo?.componentStack,
+            errorBoundary: 'RootErrorBoundary'
+        });
     }
 
     handleRefresh = () => {

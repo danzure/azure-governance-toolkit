@@ -55,12 +55,55 @@ export function initTelemetry() {
 }
 
 /**
- * Track a page view.  Called on every React Router navigation.
- * @param {string} name  – friendly page name, e.g. "Dashboard"
- * @param {string} uri   – the route path, e.g. "/resource-naming"
+ * Track a page view. Called on every React Router navigation.
+ * @param {string} name – friendly page name, e.g. "Dashboard"
+ * @param {string} uri – the route path, e.g. "/resource-naming"
  */
 export function trackPageView(name, uri) {
     appInsights?.trackPageView({ name, uri });
+}
+
+/**
+ * Track a custom user event (e.g. AI generation, resource export, copy action).
+ * @param {string} name – Event name, e.g. "Generate_Resource_Name"
+ * @param {Record<string, any>} [properties] – Additional custom dimensions
+ */
+export function trackEvent(name, properties = {}) {
+    appInsights?.trackEvent({ name, properties });
+}
+
+/**
+ * Track an application exception.
+ * @param {Error|unknown} exception – Error object or message
+ * @param {Record<string, any>} [properties] – Additional context/dimensions
+ * @param {number} [severityLevel=3] – AI severity level (0=Verbose, 1=Information, 2=Warning, 3=Error, 4=Critical)
+ */
+export function trackException(exception, properties = {}, severityLevel = 3) {
+    if (!exception) return;
+    const errorObj = exception instanceof Error ? exception : new Error(String(exception));
+    appInsights?.trackException({
+        exception: errorObj,
+        properties,
+        severityLevel
+    });
+}
+
+/**
+ * Track a diagnostic trace message.
+ * @param {string} message – Log message
+ * @param {Record<string, any>} [properties] – Additional context
+ * @param {number} [severityLevel=1] – Severity level
+ */
+export function trackTrace(message, properties = {}, severityLevel = 1) {
+    appInsights?.trackTrace({ message, properties, severityLevel });
+}
+
+/**
+ * Get the underlying ApplicationInsights instance if direct access is needed.
+ * @returns {ApplicationInsights|null}
+ */
+export function getAppInsights() {
+    return appInsights;
 }
 
 

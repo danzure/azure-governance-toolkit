@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, forwardRef } from 'react';
 import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, ShieldCheck } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { generateRbacRoleFallback } from '../../utils/rbacAiFallback';
+import { trackEvent, trackException } from '../../utils/telemetry';
 
 /**
  * RbacPromptBar Component
@@ -113,13 +114,16 @@ const RbacPromptBar = forwardRef(({
 
                 if (response.ok) {
                     data = await response.json();
+                    trackEvent('AI_Generate_RBAC_Role', { source: 'api', promptLength: trimmedPrompt.length });
                 } else {
                     // Fall back to client-side heuristic engine if API is unconfigured / unavailable
                     data = generateRbacRoleFallback(trimmedPrompt);
+                    trackEvent('AI_Generate_RBAC_Role', { source: 'client_fallback', promptLength: trimmedPrompt.length });
                 }
             } catch {
                 // Fetch failed (network/offline) - use client-side heuristic engine
                 data = generateRbacRoleFallback(trimmedPrompt);
+                trackEvent('AI_Generate_RBAC_Role', { source: 'client_fallback_network_error', promptLength: trimmedPrompt.length });
             }
 
             applyRoleData(data);
@@ -132,6 +136,7 @@ const RbacPromptBar = forwardRef(({
 
         } catch (err) {
             console.error('RBAC AI Generation Error:', err);
+            trackException(err, { component: 'RbacPromptBar', promptLength: trimmedPrompt.length });
             setError(err.message || 'Something went wrong. Please try again.');
         } finally {
             setIsLoading(false);
