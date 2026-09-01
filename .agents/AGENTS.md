@@ -211,7 +211,21 @@ When adding new services or updating existing services in the `constants.js` dat
 #### 6.2 Adding New Tools
 When adding a new tool to the application, you **must**:
 1. Add a card for the new tool to the Dashboard.
-2. Ensure the new tool card includes a badge to highlight that the tool is new.
-3. Organise all cards for each tool on the dashboard alphabetically.
-4. Organise the navigation links in the sidebar alphabetically (keeping Dashboard at the top).
-5. Implement a collapsible 'How to use this tool' informational block at the top of the tool's page (similar to existing tools) to explain its purpose and usage.
+2. Ensure the new tool card includes a badge to highlight that the tool is new (`isNew: true`).
+3. If the tool includes AI or smart generation capabilities, set `hasAi: true` on its tool entry in `src/pages/Dashboard.jsx` to render the `'AI Powered'` badge.
+4. Organise all cards for each tool on the dashboard alphabetically.
+5. Organise the navigation links in the sidebar alphabetically (keeping Dashboard at the top).
+6. Implement a collapsible 'How to use this tool' informational block at the top of the tool's page (similar to existing tools) to explain its purpose and usage.
+
+#### 6.3 AI-Powered Tool Layout & Interaction Standards
+When building or refactoring tools with AI or smart natural language prompt capabilities (e.g., Resource Naming, RBAC Custom Role Designer), you **must** adhere to the following unified layout structure:
+1. **AI Prompt Bar as Primary Interaction Point**: Place the AI Prompt Bar component prominently at the top of the tool's workspace, directly beneath the collapsible "How to use this tool" guidance block. It must serve as the primary and fastest route for user interaction.
+2. **Collapsible Manual Configuration**:
+   - Wrap manual property inputs, parameter builders, and pre-configured templates inside a collapsible panel that is **collapsed by default** (`isConfigMinimized = true`).
+   - Provide a centered toggle button displaying `Show manual configuration` / `Hide manual configuration` (or tool-specific naming) with the `Settings2` icon and `ChevronDown` / `ChevronUp`.
+   - When opened, animate the manual configuration card using `animate-slide-up`.
+3. **Primary Workspace & Results Below**: Position the main operational view (e.g., resource grids, permissions selectors, live JSON exports) directly beneath the AI prompt bar and manual configuration toggle.
+4. **Interactive AI Feedback Banner**: Always include an AI resolution banner displaying the summary, least-privilege / CAF governance rationale, and quick-filter badges upon successful AI generation.
+5. **Keyboard Accessibility**: Ensure `Ctrl+K` focuses the AI Prompt Bar and `Escape` blurs/clears it.
+6. **Dashboard 'AI Powered' Badge**: Always set `hasAi: true` on the tool's metadata entry in `src/pages/Dashboard.jsx` so the `'AI Powered'` chip is visible on the dashboard card.
+

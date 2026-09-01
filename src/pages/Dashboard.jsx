@@ -46,6 +46,7 @@ export default function DashboardPage() {
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg',
             path: '/rbac-designer',
             bgClass: 'bg-transparent',
+            hasAi: true,
             isNew: true,
         },
         {

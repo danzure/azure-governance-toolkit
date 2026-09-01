@@ -1,9 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Sparkles } from 'lucide-react';
+import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Sparkles, Settings2 } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
+import RbacPromptBar from '../components/rbac/RbacPromptBar';
 import { RBAC_ROLE_TEMPLATES } from '../data/rbacData';
 
 export default function RbacDesignerPage() {
+    const [isConfigMinimized, setIsConfigMinimized] = useState(true);
     const [roleName, setRoleName] = useState('');
     const [description, setDescription] = useState('');
     const [assignableScopes, setAssignableScopes] = useState('');
@@ -12,6 +14,7 @@ export default function RbacDesignerPage() {
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
     const [isExamplesOpen, setIsExamplesOpen] = useState(false);
     const examplesRef = useRef(null);
+    const aiInputRef = useRef(null);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -22,6 +25,29 @@ export default function RbacDesignerPage() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    // Keyboard shortcuts handler:
+    // - Escape: Unfocus AI prompt bar or close flyouts
+    // - Ctrl+K: Focus AI Prompt Bar
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                if (document.activeElement === aiInputRef.current) {
+                    aiInputRef.current?.blur();
+                } else if (isExamplesOpen) {
+                    setIsExamplesOpen(false);
+                }
+            }
+
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                aiInputRef.current?.focus();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isExamplesOpen, aiInputRef]);
 
     const handleAddAction = useCallback((op) => {
         setActions(prev => prev.includes(op) ? prev : [...prev, op]);
@@ -81,10 +107,10 @@ export default function RbacDesignerPage() {
 
     return (
         <div className="flex flex-col min-w-0 w-full">
-            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 flex-1 flex flex-col gap-6 pb-12">
+            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 flex-1 flex flex-col gap-4 sm:gap-5 pb-12">
                 
                 {/* Header */}
-                <div className="flex flex-col gap-3 mb-2">
+                <div className="flex flex-col gap-3 mb-1">
                     <div>
                         <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
                             RBAC Custom Role Designer
@@ -123,8 +149,9 @@ export default function RbacDesignerPage() {
                                     This tool generates standardized JSON definitions for <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Azure Custom Roles <ExternalLink className="w-3 h-3 ml-0.5" /></a> based on your selected actions and data actions.
                                 </p>
                                 <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
-                                    <li><strong>Define Properties:</strong> Set a clear role name, description, and the assignable scopes where the role can be applied.</li>
-                                    <li><strong>Select Permissions:</strong> Search and add specific operations to allow (Actions) or explicitly deny (NotActions) from the available resource providers.</li>
+                                    <li><strong>Describe Intent:</strong> Type what your custom role needs to do in the AI prompt bar to generate permissions automatically.</li>
+                                    <li><strong>Define Properties:</strong> Customize role name, description, and assignable scopes under manual configuration.</li>
+                                    <li><strong>Select Permissions:</strong> Search and refine specific operations to allow (Actions) or explicitly deny (NotActions).</li>
                                     <li><strong>Export Definition:</strong> Copy or download the generated JSON role definition to deploy directly to Azure.</li>
                                 </ul>
                             </div>
@@ -132,13 +159,47 @@ export default function RbacDesignerPage() {
                     </div>
                 </div>
 
-                {/* Unified Designer Configuration */}
-                <div className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-4 flex flex-col gap-8">
-                    {/* Role Metadata Configuration */}
-                    <div className="flex flex-col gap-4">
-                        <div className="flex items-center gap-2 mb-2 border-b border-fluent-stroke-subtle pb-2">
-                            <Edit3 className="w-5 h-5 text-fluent-brand-fg" />
-                            <h3 className="text-[16px] font-semibold text-fluent-fg-primary">Role Properties</h3>
+                {/* AI Smart Role Generator (Primary Interaction Point) */}
+                <RbacPromptBar
+                    ref={aiInputRef}
+                    setRoleName={setRoleName}
+                    setDescription={setDescription}
+                    setAssignableScopes={setAssignableScopes}
+                    setActions={setActions}
+                    setNotActions={setNotActions}
+                    onResetAll={() => applyTemplate('clear')}
+                />
+
+                {/* Manual Configuration Toggle */}
+                <div className="flex justify-center -mt-1 mb-1">
+                    <button
+                        type="button"
+                        onClick={() => setIsConfigMinimized(prev => !prev)}
+                        className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
+                    >
+                        <Settings2 className="w-4 h-4" />
+                        {isConfigMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
+                        {isConfigMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                    </button>
+                </div>
+
+                {/* Collapsible Role Properties & Templates Card */}
+                {!isConfigMinimized && (
+                    <div className="animate-slide-up bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-4 flex flex-col gap-4">
+                        <div className="flex items-center justify-between border-b border-fluent-stroke-subtle pb-2">
+                            <div className="flex items-center gap-2">
+                                <Edit3 className="w-4 h-4 text-fluent-brand-fg" />
+                                <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Role Properties</h3>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => applyTemplate('clear')}
+                                className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-state-danger font-medium px-2 py-1 rounded transition-colors"
+                                title="Reset all role properties"
+                            >
+                                <RotateCcw className="w-3.5 h-3.5" />
+                                Clear Fields
+                            </button>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -233,21 +294,11 @@ export default function RbacDesignerPage() {
                             </div>
                         </div>
 
-                        {/* Examples Toolbar */}
-                        <div className="flex flex-col gap-2 mt-2 pt-3 border-t border-fluent-stroke-subtle">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-1.5">
-                                    <Sparkles className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                    <p className="text-[12px] font-semibold text-fluent-fg-secondary">Try a pre-configured role template:</p>
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => applyTemplate('clear')}
-                                    className="whitespace-nowrap flex-shrink-0 flex items-center gap-1.5 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-state-danger hover:border-fluent-state-danger hover:bg-fluent-bg-card px-2.5 py-1 rounded-[4px] shadow-sm transition-all duration-200 ease-in-out active:scale-[0.98]"
-                                >
-                                    <RotateCcw className="w-3.5 h-3.5" />
-                                    Clear Fields
-                                </button>
+                        {/* Pre-configured role templates */}
+                        <div className="flex flex-col gap-2 pt-3 border-t border-fluent-stroke-subtle">
+                            <div className="flex items-center gap-1.5">
+                                <Sparkles className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                <p className="text-[12px] font-semibold text-fluent-fg-secondary">Try a pre-configured role template:</p>
                             </div>
                             <div className="flex flex-wrap items-center gap-1.5">
                                 {RBAC_ROLE_TEMPLATES.map((tmpl) => {
@@ -271,8 +322,10 @@ export default function RbacDesignerPage() {
                             </div>
                         </div>
                     </div>
+                )}
 
-                    {/* Permissions Selector with Integrated JSON Output */}
+                {/* Permissions Selector & Custom Role JSON Preview */}
+                <div className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-4 flex flex-col">
                     <PermissionsSelector 
                         roleName={roleName}
                         description={description}
@@ -292,3 +345,4 @@ export default function RbacDesignerPage() {
         </div>
     );
 }
+
