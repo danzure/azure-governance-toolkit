@@ -9,7 +9,7 @@
 
 export const ROUTE_SEO = {
     '/': {
-        title: 'atozazure | The Ultimate Azure Governance Toolkit',
+        title: 'atozazure | Azure Governance Toolkit',
         headerTitle: 'Dashboard',
         description: 'Streamline your Azure cloud governance with atozazure. Discover our comprehensive suite of free tools for Resource Naming (CAF), Conditional Access, Management Group topologies, Tagging strategy, and Custom RBAC roles.',
         keywords: 'azure resource naming, Azure Resource Naming, Azure resource naming tool, Azure naming convention, Microsoft Cloud Adoption Framework, CAF naming, Azure governance, Azure Conditional Access templates, Entra ID Conditional Access, Azure Management Groups designer, Azure Landing Zones, Azure tagging strategy, Azure policy tag rules, Azure custom RBAC role generator, Azure role definitions, Bicep, Terraform Azure',

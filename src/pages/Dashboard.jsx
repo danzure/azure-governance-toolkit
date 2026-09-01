@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, ShieldCheck, BookOpen, Layers, Shield, LayoutTemplate, ExternalLink, ChevronLeft, ChevronRight, Plus, Eye, Award, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, BookOpen, Layers, Shield, LayoutTemplate, ExternalLink, ChevronLeft, ChevronRight, Plus, Star } from 'lucide-react';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
@@ -59,17 +59,56 @@ export default function DashboardPage() {
         }
     ];
 
+    const frameworks = [
+        {
+            title: 'Azure Landing Zones',
+            category: 'Architecture',
+            description: 'Scalable multi-subscription architecture with management group hierarchies, networking topologies, and landing zone guardrails.',
+            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/',
+            icon: Layers,
+            bgClass: 'bg-fluent-cat-green-bg',
+            fgClass: 'text-fluent-cat-green-fg',
+        },
+        {
+            title: 'Cloud Adoption Framework',
+            category: 'Governance',
+            description: 'Proven guidance for standardized resource naming conventions, metadata tagging strategies, and cloud operating models.',
+            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming',
+            icon: BookOpen,
+            bgClass: 'bg-fluent-cat-blue-bg',
+            fgClass: 'text-fluent-cat-blue-fg',
+        },
+        {
+            title: 'Well-Architected Framework',
+            category: 'Optimization',
+            description: 'Architectural tenets to optimize workload reliability, security, cost efficiency, performance, and operational excellence.',
+            url: 'https://learn.microsoft.com/en-us/azure/well-architected/',
+            icon: LayoutTemplate,
+            bgClass: 'bg-fluent-cat-orange-bg',
+            fgClass: 'text-fluent-cat-orange-fg',
+        },
+        {
+            title: 'Zero Trust Architecture',
+            category: 'Security',
+            description: 'Proactive security model enforcing continuous explicit verification, least-privileged access, and Conditional Access defense.',
+            url: 'https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview',
+            icon: Shield,
+            bgClass: 'bg-fluent-cat-purple-bg',
+            fgClass: 'text-fluent-cat-purple-fg',
+        },
+    ];
+
     return (
         <div className="flex flex-col flex-1 w-full min-w-0 bg-fluent-bg-canvas">
-            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-3 sm:py-4 animate-fade-in flex-1 flex flex-col justify-start gap-3 sm:gap-4">
+            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 sm:py-3.5 animate-fade-in flex-1 flex flex-col justify-start gap-2.5 sm:gap-3">
 
                 {/* Hero Section */}
-                <div className="relative overflow-hidden bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle p-5 sm:p-6 shadow-soft w-full shrink-0">
+                <div className="relative overflow-hidden bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle p-4 sm:p-5 shadow-soft w-full shrink-0">
                     <div className="relative z-10 max-w-3xl">
-                        <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-fluent-fg-primary mb-2 tracking-tight leading-[1.2]">
+                        <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-bold text-fluent-fg-primary mb-1.5 tracking-tight leading-[1.2]">
                             Streamline Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-fluent-brand-bg to-fluent-brand-hover dark:from-fluent-brand-fg dark:to-fluent-brand-bg">Azure Cloud</span> Governance
                         </h1>
-                        <p className="text-[15px] sm:text-[16px] text-fluent-fg-secondary leading-relaxed max-w-2xl">
+                        <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary leading-relaxed max-w-2xl">
                             Welcome to <strong className="font-semibold text-fluent-fg-primary">atozazure</strong>! An interactive toolkit designed to guide you through building, managing, and scaling Azure environments with confidence. Explore these practical utilities to help aid in aligning your cloud deployments and policies with industry best practices.
                         </p>
                     </div>
@@ -81,8 +120,8 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Tools Header & Controls */}
-                <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-[17px] font-semibold tracking-tight text-fluent-fg-primary">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-[16px] font-semibold tracking-tight text-fluent-fg-primary">
                         Available Tools
                     </h2>
                     <div className="hidden sm:flex items-center gap-2">
@@ -106,7 +145,7 @@ export default function DashboardPage() {
                 {/* Tools Grid */}
                 <div 
                     ref={scrollContainerRef}
-                    className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide scroll-smooth"
+                    className="flex overflow-x-auto gap-3.5 pb-2 snap-x snap-mandatory scrollbar-hide scroll-smooth"
                 >
                     {tools.map((tool, index) => (
                         <div
@@ -129,8 +168,8 @@ export default function DashboardPage() {
                                 transition-all duration-300 ease-out
                                 active:scale-[0.98]
                                 flex flex-col shrink-0 snap-start
-                                w-[80vw] sm:w-[320px] lg:w-[350px]
-                                min-h-[260px]
+                                w-[80vw] sm:w-[310px] lg:w-[340px]
+                                min-h-[240px]
                                 animate-slide-up stagger-${index + 1}
                                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 focus-visible:border-fluent-brand-bg
                             `}
@@ -139,11 +178,11 @@ export default function DashboardPage() {
                             <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[200px] h-[200px] bg-fluent-brand-bg rounded-full blur-[50px] opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500 pointer-events-none" />
 
                             <div className="relative z-10 flex flex-col h-full">
-                                <div className="flex items-start justify-between mb-3">
+                                <div className="flex items-start justify-between mb-2.5">
                                     <img
                                         src={tool.iconUrl}
                                         alt={`${tool.title} icon`}
-                                        className="w-10 h-10 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ease-out"
+                                        className="w-9 h-9 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ease-out"
                                     />
                                     <div className="flex gap-2">
                                         {tool.isNew && (
@@ -162,15 +201,15 @@ export default function DashboardPage() {
                                 </div>
 
                                 <div className="flex-1">
-                                    <h2 className="text-[17px] font-bold text-fluent-fg-primary mb-1 group-hover:text-fluent-brand-fg transition-colors duration-300">
+                                    <h2 className="text-[16px] font-bold text-fluent-fg-primary mb-1 group-hover:text-fluent-brand-fg transition-colors duration-300">
                                         {tool.title}
                                     </h2>
-                                    <p className="text-[13.5px] text-fluent-fg-secondary leading-relaxed">
+                                    <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
                                         {tool.description}
                                     </p>
                                 </div>
 
-                                <div className="mt-3 flex items-center gap-1.5 text-[13px] font-semibold text-fluent-brand-fg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="mt-2.5 flex items-center gap-1.5 text-[12.5px] font-semibold text-fluent-brand-fg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                                     <span>Get started</span>
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 ease-out" />
                                 </div>
@@ -187,140 +226,75 @@ export default function DashboardPage() {
                             border-2 border-dashed border-fluent-stroke-subtle
                             flex flex-col items-center justify-center text-center
                             shrink-0 snap-start
-                            w-[80vw] sm:w-[320px] lg:w-[350px]
-                            min-h-[260px]
+                            w-[80vw] sm:w-[310px] lg:w-[340px]
+                            min-h-[240px]
                             animate-slide-up stagger-5
                         "
                     >
-                        <div className="flex flex-col items-center gap-3 text-fluent-fg-tertiary">
-                            <div className="w-12 h-12 rounded-full bg-fluent-bg-subtle flex items-center justify-center">
-                                <Plus className="w-6 h-6 opacity-50" />
+                        <div className="flex flex-col items-center gap-2.5 text-fluent-fg-tertiary">
+                            <div className="w-10 h-10 rounded-full bg-fluent-bg-subtle flex items-center justify-center">
+                                <Plus className="w-5 h-5 opacity-50" />
                             </div>
                             <div>
-                                <h3 className="text-[15px] font-semibold text-fluent-fg-secondary mb-1">More tools coming soon</h3>
-                                <p className="text-[13px]">Stay tuned for updates.</p>
+                                <h3 className="text-[14px] font-semibold text-fluent-fg-secondary mb-0.5">More tools coming soon</h3>
+                                <p className="text-[12.5px]">Stay tuned for updates.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Informational Sections */}
-                <div className="mt-2 pt-6 border-t border-fluent-stroke-subtle shrink-0">
-                    <div className="flex flex-col gap-6">
-                        {/* About */}
-                        <div className="w-full">
-                            <h2 className="text-[17px] font-semibold tracking-tight text-fluent-fg-primary mb-1">
-                                Key Benefits
-                            </h2>
-                            <div className="space-y-1.5">
-                                <p className="text-[13.5px] text-fluent-fg-secondary leading-relaxed">
-                                    A structured approach to Azure governance helps you build better, more reliable cloud environments:
-                                </p>
-                                <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 pt-2">
-                                    <li className="flex flex-col gap-1.5 p-3.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm">
-                                        <div className="flex items-center gap-2">
-                                            <Layers className="w-4 h-4 text-fluent-brand-fg shrink-0" />
-                                            <strong className="text-[13.5px] font-semibold text-fluent-fg-primary">Consistency</strong>
-                                        </div>
-                                        <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
-                                            Generate standardized naming conventions and maintain clear, well-structured resource hierarchies.
-                                        </p>
-                                    </li>
-                                    <li className="flex flex-col gap-1.5 p-3.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm">
-                                        <div className="flex items-center gap-2">
-                                            <ShieldCheck className="w-4 h-4 text-fluent-brand-fg shrink-0" />
-                                            <strong className="text-[13.5px] font-semibold text-fluent-fg-primary">Security</strong>
-                                        </div>
-                                        <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
-                                            Design and implement robust access policies aligned with core security principles from the start.
-                                        </p>
-                                    </li>
-                                    <li className="flex flex-col gap-1.5 p-3.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm">
-                                        <div className="flex items-center gap-2">
-                                            <Eye className="w-4 h-4 text-fluent-brand-fg shrink-0" />
-                                            <strong className="text-[13.5px] font-semibold text-fluent-fg-primary">Visibility</strong>
-                                        </div>
-                                        <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
-                                            Use effective tagging strategies to easily track, organize, and manage your cloud resources.
-                                        </p>
-                                    </li>
-                                    <li className="flex flex-col gap-1.5 p-3.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm">
-                                        <div className="flex items-center gap-2">
-                                            <Award className="w-4 h-4 text-fluent-brand-fg shrink-0" />
-                                            <strong className="text-[13.5px] font-semibold text-fluent-fg-primary">Best Practices</strong>
-                                        </div>
-                                        <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
-                                            Confidently align your projects and deployments with proven Microsoft architectural guidelines.
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Resources Grid */}
-                        <div className="w-full flex flex-col pt-6 border-t border-fluent-stroke-subtle">
-                            <h2 className="text-[17px] font-semibold tracking-tight text-fluent-fg-primary mb-2 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" className="w-5 h-5 shrink-0">
-                                    <rect x="1" y="1" width="9" height="9" fill="#f25022" />
-                                    <rect x="11" y="1" width="9" height="9" fill="#7fba00" />
-                                    <rect x="1" y="11" width="9" height="9" fill="#00a4ef" />
-                                    <rect x="11" y="11" width="9" height="9" fill="#ffb900" />
-                                </svg>
+                {/* Reference Frameworks Section */}
+                <div className="mt-1 pt-3.5 border-t border-fluent-stroke-subtle shrink-0">
+                    <div className="flex flex-col gap-2">
+                        <div>
+                            <h2 className="text-[16px] font-semibold tracking-tight text-fluent-fg-primary">
                                 Microsoft Reference Frameworks
                             </h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-4">
-                                <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2.5 p-2.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shadow-sm hover:shadow-soft">
-                                    <div className="w-8 h-8 rounded bg-fluent-cat-blue-bg flex items-center justify-center text-fluent-cat-blue-fg shrink-0">
-                                        <BookOpen className="w-3.5 h-3.5" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="text-[13.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors flex items-center gap-1.5">
-                                            Cloud Adoption Framework
-                                            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        </div>
-                                        <div className="text-[12px] text-fluent-fg-tertiary mt-0.5 leading-snug">Proven guidance and best practices for adopting the cloud.</div>
-                                    </div>
-                                </a>
+                            <p className="text-[12.5px] text-fluent-fg-secondary mt-0.5">
+                                A structured approach to Azure governance built on official Microsoft architectures and best practices:
+                            </p>
+                        </div>
 
-                                <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2.5 p-2.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shadow-sm hover:shadow-soft">
-                                    <div className="w-8 h-8 rounded bg-fluent-cat-green-bg flex items-center justify-center text-fluent-cat-green-fg shrink-0">
-                                        <Layers className="w-3.5 h-3.5" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="text-[13.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors flex items-center gap-1.5">
-                                            Azure Landing Zones
-                                            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        </div>
-                                        <div className="text-[12px] text-fluent-fg-tertiary mt-0.5 leading-snug">An architectural approach for scalable Azure environments.</div>
-                                    </div>
-                                </a>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5">
+                            {frameworks.map((item) => {
+                                const IconComponent = item.icon;
+                                return (
+                                    <a
+                                        key={item.title}
+                                        href={item.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group relative flex flex-col justify-between p-4 sm:p-4.5 rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-200 shadow-soft dark:shadow-none hover:shadow-depth active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 min-h-[165px]"
+                                    >
+                                        <div className="flex flex-col">
+                                            <div className="flex items-center justify-between gap-2 mb-2.5">
+                                                <div className="flex items-center gap-2.5 min-w-0">
+                                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${item.bgClass} ${item.fgClass}`}>
+                                                        <IconComponent className="w-4 h-4" />
+                                                    </div>
+                                                    <span className={`text-[11px] font-medium px-2 py-0.5 rounded-[4px] ${item.bgClass} ${item.fgClass} shrink-0`}>
+                                                        {item.category}
+                                                    </span>
+                                                </div>
+                                                <ExternalLink className="w-3.5 h-3.5 text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors shrink-0" />
+                                            </div>
 
-                                <a href="https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2.5 p-2.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shadow-sm hover:shadow-soft">
-                                    <div className="w-8 h-8 rounded bg-fluent-cat-purple-bg flex items-center justify-center text-fluent-cat-purple-fg shrink-0">
-                                        <Shield className="w-3.5 h-3.5" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="text-[13.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors flex items-center gap-1.5">
-                                            Zero Trust Architecture
-                                            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        </div>
-                                        <div className="text-[12px] text-fluent-fg-tertiary mt-0.5 leading-snug">A proactive, integrated approach to security across your digital estate.</div>
-                                    </div>
-                                </a>
+                                            <h3 className="text-[14px] sm:text-[14.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors mb-1.5 truncate">
+                                                {item.title}
+                                            </h3>
 
-                                <a href="https://learn.microsoft.com/en-us/azure/well-architected/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2.5 p-2.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shadow-sm hover:shadow-soft">
-                                    <div className="w-8 h-8 rounded bg-fluent-cat-orange-bg flex items-center justify-center text-fluent-cat-orange-fg shrink-0">
-                                        <LayoutTemplate className="w-3.5 h-3.5" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="text-[13.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors flex items-center gap-1.5">
-                                            Well-Architected Framework
-                                            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <p className="text-[12.5px] sm:text-[13px] text-fluent-fg-secondary leading-relaxed">
+                                                {item.description}
+                                            </p>
                                         </div>
-                                        <div className="text-[12px] text-fluent-fg-tertiary mt-0.5 leading-snug">Guiding tenets for improving the quality, reliability, and efficiency of workloads.</div>
-                                    </div>
-                                </a>
-                            </div>
+
+                                        <div className="mt-3 pt-2.5 border-t border-fluent-stroke-subtle flex items-center justify-between text-[12px] font-medium text-fluent-brand-fg opacity-85 group-hover:opacity-100 transition-opacity">
+                                            <span>Explore guidance</span>
+                                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
+                                        </div>
+                                    </a>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
