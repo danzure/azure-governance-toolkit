@@ -68,6 +68,7 @@ const SERVICE_ICON_MAP = {
     'Batch account':                    null,               // → PLAYER (official icon)
     'Azure Spring Apps':                null,               // → ALT
     'Service Fabric cluster':           'Service-Fabric-Clusters',
+    'Azure Arc-enabled server':         'Azure-Arc',
 
     // ── Networking ───────────────────────────────────────────────────────────
     'Virtual network':                  null,               // → PLAYER (official icon)
@@ -99,6 +100,8 @@ const SERVICE_ICON_MAP = {
     'Network watcher':                  'Network-Watcher',
     'DDoS protection plan':             'DDoS-Protection-Plans',
     'DNS private resolver':             null,               // → ALT
+    'IP group':                         'IP-Groups',
+    'Local network gateway':            null,               // → ALT
 
     // ── Storage ──────────────────────────────────────────────────────────────
     'Storage account':                  'Storage-Accounts',
@@ -107,13 +110,17 @@ const SERVICE_ICON_MAP = {
     'NetApp account':                   'Azure-NetApp-Files',
     'NetApp capacity pool':             'Azure-NetApp-Files',
     'NetApp volume':                    'Azure-NetApp-Files',
+    'Backup vault':                     null,               // → PLAYER
+    'Storage Sync Service':             'Storage-Sync-Services',
 
     // ── Web ──────────────────────────────────────────────────────────────────
     'App Service plan':                 'App-Service-Plans',
     'App Service':                      'App-Services',
+    'App Service Environment':          'App-Service-Environments',
     'Static Web App':                   null,               // → PLAYER (official icon)
     'Web PubSub':                       'Web-Environment',
     'App Configuration store':          null,               // → ALT
+    'Azure Maps account':               'Azure-Maps-Accounts',
 
     // ── Databases ────────────────────────────────────────────────────────────
     'SQL server':                       'SQL-Server',
@@ -125,6 +132,7 @@ const SERVICE_ICON_MAP = {
     'PostgreSQL server':                'Azure-Database-PostgreSQL-Server',
     'Azure Cache for Redis':            'Cache-Redis',
     'Azure Managed Redis':              'Cache-Redis',
+    'Database Migration Service':       'Azure-Database-Migration-Services',
 
     // ── Containers ───────────────────────────────────────────────────────────
     'Kubernetes (AKS)':                 'Kubernetes-Services',
@@ -132,6 +140,8 @@ const SERVICE_ICON_MAP = {
     'Container instance':               'Container-Instances',
     'Container App':                    'Container-Instances',
     'Container Apps Environment':       'Container-Instances',
+    'Container Apps job':               'Container-Instances',
+    'Azure Arc-enabled Kubernetes cluster': 'Azure-Arc',
 
     // ── Security & Identity ──────────────────────────────────────────────────
     'Key vault':                        'Key-Vaults',
@@ -148,6 +158,9 @@ const SERVICE_ICON_MAP = {
     'Event Hub':                        'Event-Hubs',
     'Event Grid topic':                 'Event-Grid-Topics',
     'Event Grid domain':                'Event-Grid-Domains',
+    'Event Grid namespace':             'Event-Grid-Topics',
+    'Event Grid system topic':          'Event-Grid-Topics',
+    'Integration account':              'Integration-Accounts',
     'Logic App':                        'Logic-Apps',
     'SignalR service':                  null,               // → ALT
     'Notification Hub':                 'Notification-Hubs',
@@ -160,15 +173,20 @@ const SERVICE_ICON_MAP = {
     'Recovery Services vault':          'Recovery-Services-Vaults',
     'Action group':                     'Alerts',
     'Azure Managed Grafana':            null,               // → PLAYER
+    'Azure Chaos Studio experiment':    null,               // → PLAYER
+    'Data collection rule':             'Monitor',
+    'Data collection endpoint':         'Monitor',
+    'Azure Migrate project':            'Azure-Migrate',
 
     // ── AI & Machine Learning ────────────────────────────────────────────────
     'Azure AI Search':                  'Search-Services',
     'Azure Bot Service':                'Bot-Services',
     'Machine Learning workspace':       null,               // → ALT
+    'Azure OpenAI Service':             null,               // → MASKATI
     'Azure OpenAI':                     null,               // → MASKATI
     'Azure AI services':                null,               // → MASKATI
-    'Azure OpenAI service':             null,               // → MASKATI
     'Azure AI services account':        null,               // → MASKATI
+    'Azure AI Video Indexer':           null,               // → PLAYER
     'Microsoft Foundry resource':       null,               // → MASKATI
     'Microsoft Foundry hub':            null,               // → MASKATI
     'Microsoft Foundry project':        null,               // → MASKATI
@@ -179,6 +197,7 @@ const SERVICE_ICON_MAP = {
     'Synapse workspace':                'Azure-Synapse-Analytics',
     'Synapse dedicated SQL pool':       'Azure-Synapse-Analytics',
     'Databricks workspace':             null,               // → ALT
+    'Azure Databricks Access Connector':null,               // → ALT
     'Data Explorer cluster':            'Azure-Data-Explorer-Clusters',
     'Stream Analytics Job':             'Stream-Analytics-Jobs',
     'Power BI Embedded':                null,               // → ALT
@@ -213,7 +232,7 @@ const SERVICE_ICON_MAP = {
     'Speech service':                   null,               // → PLAYER
     'Network security perimeter':       null,               // → PLAYER
     'Fabric Capacity':                  null,               // → ALT
-    'Azure Virtual Network Manager':    null,               // → PLAYER
+    'Virtual Network Manager':          null,               // → PLAYER
 };
 
 
@@ -229,10 +248,12 @@ const SERVICE_ICON_MAP_ALT = {
     'Managed identity (user)':          'Managed Identities',
     'SignalR service':                  'SignalR',
     'Databricks workspace':             'Azure Databricks',
+    'Azure Databricks Access Connector':'Azure Databricks',
     'Power BI Embedded':                'Power BI Embedded',
     'Template Spec':                    'Templates',
     'App Configuration store':          'App Configuration',
     'DNS private resolver':             'Private DNS zones',
+    'Local network gateway':            'Local network gateways',
     'Azure Local':                      'Azure Stack Edge _ Data Box Gateway',
     'Fabric Capacity':                  'Power BI Embedded',
 };
@@ -252,6 +273,7 @@ const SERVICE_ICON_MAP_MASKATI = {
     'Azure AI services':                'AIServices',
     'Azure OpenAI service':             'OpenAI',
     'Azure OpenAI':                     'OpenAI',
+    'Azure OpenAI Service':             'OpenAI',
 };
 
 
@@ -283,6 +305,9 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Speech service':                   'ai + machine learning/00797-icon-service-Speech-Services',
     'Network security perimeter':       'other/02939-icon-service-Network-Security-Perimeters',
     'Virtual Network Manager':          'other/02237-icon-service-Network-Managers',
+    'Azure Chaos Studio experiment':    'other/02223-icon-service-Azure-Chaos-Studio',
+    'Azure AI Video Indexer':           'other/01800-icon-service-Azure-Video-Indexer',
+    'Backup vault':                     'other/02361-icon-service-Backup-Vault',
 };
 
 
@@ -327,4 +352,3 @@ export function getServiceIconUrl(resourceName) {
 
     return null;
 }
-
