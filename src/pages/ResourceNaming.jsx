@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { Info, ExternalLink, ChevronDown, ChevronUp, Settings2 } from 'lucide-react';
 
 import ConfigPanel from '../components/naming/ConfigPanel';
 import ResourceGrid from '../components/naming/ResourceGrid';
@@ -11,7 +12,7 @@ import { generateName as generateResourceName } from '../utils/nameGenerator';
 import { AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '../data/constants';
 
 /**
- * Main Application Component
+ * Main Resource Naming Page Component
  * 
  * Manages global state for the Azure Resource Naming Tool, including:
  * - Theme preferences (Light/Dark mode)
@@ -21,6 +22,7 @@ import { AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '../data/constan
  */
 export default function ResourceNamingPage() {
     const [isConfigMinimized, setIsConfigMinimized] = useState(true);
+    const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
 
     const [workload, setWorkload] = useLocalStorage('azres_workload', '');
     const [envValue, setEnvValue] = useLocalStorage('azres_env', 'prod');
@@ -36,18 +38,14 @@ export default function ResourceNamingPage() {
     const aiInputRef = useRef(null);
 
     // Debounce search term to prevent expensive filtering on every keystroke
-    // Delays search execution by 300ms until user stops typing
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     // Keyboard shortcuts handler
-    // - Escape: Close expanded cards, clear search, or unfocus AI prompt
-    // - Ctrl+K: Focus AI Prompt Bar
-    // - Forward Slash (/): Focus Grid Search
     useEffect(() => {
         const handleKeyDown = (e) => {
             // Escape to close expanded card or clear search
             if (e.key === 'Escape') {
-                if (document.querySelector('.col-span-full')) return; // A card is expanded, let ResourceGrid handle it
+                if (document.querySelector('.col-span-full')) return;
                 
                 if (document.activeElement === aiInputRef.current) {
                     aiInputRef.current?.blur();
@@ -74,14 +72,10 @@ export default function ResourceNamingPage() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [searchTerm, aiInputRef, searchInputRef]);
 
-
-
     // Stable callback references for memoised child components
     const handleToggleMinimize = useCallback(() => setIsConfigMinimized(prev => !prev), []);
     const handleSearchChange = useCallback((e) => setSearchTerm(e.target.value), []);
     const handleClearSearch = useCallback(() => setSearchTerm(''), []);
-
-
 
     const currentRegion = useMemo(() => AZURE_REGIONS.find(r => r.value === regionValue) || AZURE_REGIONS.find(r => !r.type), [regionValue]);
     const formattedInstance = useMemo(() => (instance || '001').padStart(3, '0'), [instance]);
@@ -103,7 +97,6 @@ export default function ResourceNamingPage() {
 
     /**
      * Generates a compliant Azure resource name based on configuration and resource specific rules.
-     * Delegates to the pure generateName utility with current state as config.
      */
     const generateName = useCallback((resource, selectedSubResource = null, instanceOverride = null, patternOverride = null) => {
         return generateResourceName(resource, {
@@ -149,15 +142,8 @@ export default function ResourceNamingPage() {
             
             // Check if any of the search terms match the resource
             return terms.some(term => {
-                // 1. If it's a perfect match for THIS specific resource, always show it
                 if (nameLower === term || abbrevLower === term) return true;
-                
-                // 2. If this term was a perfect match for SOME OTHER resource, 
-                // do NOT use it to lazily/partially match this one.
-                // (e.g. searching exact "Workspace" shouldn't show "Databricks Workspace")
                 if (exactMatchTerms.has(term)) return false;
-                
-                // 3. Otherwise, perform a standard partial match
                 return nameLower.includes(term) || abbrevLower.includes(term);
             });
         });
@@ -205,66 +191,130 @@ export default function ResourceNamingPage() {
     }, [setWorkload, setEnvValue, setRegionValue, setInstance, setOrgPrefix, setNamingOrder, setShowOrg, setActiveCategory]);
 
     return (
-        <div className="flex flex-col min-w-0 w-full">
-            <ConfigPanel
-                isMinimized={isConfigMinimized}
-                onToggleMinimize={handleToggleMinimize}
-                workload={workload}
-                setWorkload={setWorkload}
-                envValue={envValue}
-                setEnvValue={setEnvValue}
-                regionValue={regionValue}
-                setRegionValue={setRegionValue}
-                instance={instance}
-                onInstanceChange={handleInstanceChange}
-                orgPrefix={orgPrefix}
-                setOrgPrefix={setOrgPrefix}
-                showOrg={showOrg}
-                setShowOrg={setShowOrg}
-                namingOrder={namingOrder}
-                onMoveItem={moveItem}
-                liveSchemaStr={liveSchemaStr}
-                copiedId={copiedId}
-                onCopy={handleCopySchema}
-                onResetDefaults={handleResetDefaults}
-            >
-                {/* AI Magic Fill is now the primary interaction point */}
-                <NamingPromptBar 
-                    ref={aiInputRef}
-                    setWorkload={setWorkload}
-                    setEnvValue={setEnvValue}
-                    setRegionValue={setRegionValue}
-                    setSearchTerm={setSearchTerm}
-                    setOrgPrefix={setOrgPrefix}
-                    setShowOrg={setShowOrg}
-                    setInstance={setInstance}
-                    setActiveCategory={setActiveCategory}
-                    onResetAll={handleResetDefaults}
-                />
-            </ConfigPanel>
-
-            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 space-y-4 sm:space-y-5">
-                {/* Compact service toolbar: search + category tabs */}
-                <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
-                    <ServiceFilter
-                        activeCategory={activeCategory}
-                        onCategoryChange={setActiveCategory}
-                        categories={CATEGORIES}
-                        searchTerm={searchTerm}
-                        onSearchChange={handleSearchChange}
-                        onClearSearch={handleClearSearch}
-                        searchInputRef={searchInputRef}
-                    />
+        <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 flex-1 flex flex-col gap-4 sm:gap-5 pb-12">
+            
+            {/* Header */}
+            <div className="flex flex-col gap-3 mb-1">
+                <div>
+                    <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
+                        Azure Resource Naming Tool
+                    </h1>
+                    <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
+                        Generate consistent, standards-compliant Azure resource names aligned with Microsoft's Cloud Adoption Framework (CAF).
+                    </p>
                 </div>
+            </div>
 
-                {/* Resource Grid */}
-                <ResourceGrid
-                    resources={filteredResources}
-                    generateName={generateName}
+            {/* About / Guidance Accordion */}
+            <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-1">
+                <div 
+                    className="px-3 py-1.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-fluent-bg-hover transition-colors"
+                    onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
+                    role="button"
+                    aria-expanded={isGuidanceExpanded}
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setIsGuidanceExpanded(!isGuidanceExpanded);
+                        }
+                    }}
+                >
+                    <div className="flex items-center gap-2">
+                        <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
+                        <p className="text-fluent-fg-primary text-[13px]">
+                            How to use this tool
+                        </p>
+                        {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                    </div>
+                        
+                    {isGuidanceExpanded && (
+                        <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
+                            <p>
+                                This tool generates Azure resource names aligned with Microsoft's <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions.
+                            </p>
+                            <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
+                                <li><strong>Describe Architecture:</strong> Type your target architecture into the AI prompt bar to auto-populate naming parameters and filter resources.</li>
+                                <li><strong>Configure Parameters:</strong> Manually customize your organization prefix, workload name, environment, and region if needed.</li>
+                                <li><strong>Build Pattern:</strong> Toggle and reorder individual naming components to match your specific organizational requirements.</li>
+                                <li><strong>Select Resources:</strong> Search and choose Azure services from the grid below to instantly generate and copy compliant names.</li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* AI Smart Naming Generator (Hero Interaction Point) */}
+            <NamingPromptBar 
+                ref={aiInputRef}
+                setWorkload={setWorkload}
+                setEnvValue={setEnvValue}
+                setRegionValue={setRegionValue}
+                setSearchTerm={setSearchTerm}
+                setOrgPrefix={setOrgPrefix}
+                setShowOrg={setShowOrg}
+                setInstance={setInstance}
+                setActiveCategory={setActiveCategory}
+                onResetAll={handleResetDefaults}
+            />
+
+            {/* Manual Configuration Toggle */}
+            <div className="flex justify-center -mt-1 mb-1">
+                <button
+                    type="button"
+                    onClick={handleToggleMinimize}
+                    className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
+                >
+                    <Settings2 className="w-4 h-4" />
+                    {isConfigMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
+                    {isConfigMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                </button>
+            </div>
+
+            {/* Collapsible Configuration Parameters Card */}
+            {!isConfigMinimized && (
+                <ConfigPanel
+                    workload={workload}
+                    setWorkload={setWorkload}
+                    envValue={envValue}
+                    setEnvValue={setEnvValue}
+                    regionValue={regionValue}
+                    setRegionValue={setRegionValue}
+                    instance={instance}
+                    onInstanceChange={handleInstanceChange}
+                    orgPrefix={orgPrefix}
+                    setOrgPrefix={setOrgPrefix}
+                    showOrg={showOrg}
+                    setShowOrg={setShowOrg}
+                    namingOrder={namingOrder}
+                    onMoveItem={moveItem}
+                    liveSchemaStr={liveSchemaStr}
                     copiedId={copiedId}
-                    onCopy={copyToClipboard}
+                    onCopy={handleCopySchema}
+                    onResetDefaults={handleResetDefaults}
+                />
+            )}
+
+            {/* Compact service toolbar: search + category tabs */}
+            <div className="sticky top-0 z-30 py-2 -mt-2 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle shadow-sm">
+                <ServiceFilter
+                    activeCategory={activeCategory}
+                    onCategoryChange={setActiveCategory}
+                    categories={CATEGORIES}
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onClearSearch={handleClearSearch}
+                    searchInputRef={searchInputRef}
                 />
             </div>
+
+            {/* Resource Grid */}
+            <ResourceGrid
+                resources={filteredResources}
+                generateName={generateName}
+                copiedId={copiedId}
+                onCopy={copyToClipboard}
+            />
         </div>
     );
 }

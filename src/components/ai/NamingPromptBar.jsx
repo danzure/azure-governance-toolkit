@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
-import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb } from 'lucide-react';
+import { Sparkles, ArrowRight, Loader2, X, RefreshCw, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, Layers } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { generateResourceNameFallback } from '../../utils/namingAiFallback';
 import { trackEvent, trackException } from '../../utils/telemetry';
@@ -184,7 +184,7 @@ const NamingPromptBar = forwardRef(({
             <div className="flex flex-wrap items-center justify-between gap-y-1 mb-1.5 ml-1">
                 <div className="flex flex-wrap items-baseline gap-2">
                     <span className="text-[13px] font-semibold text-fluent-brand-fg uppercase tracking-wider">
-                        AI Architecture Designer
+                        AI Naming Designer
                     </span>
                     <span className="text-[11px] sm:text-[12px] text-fluent-fg-secondary">
                         — AI-generated configurations should be reviewed before deployment.
@@ -195,7 +195,7 @@ const NamingPromptBar = forwardRef(({
                         type="button"
                         onClick={handleReset}
                         className="text-[12px] flex items-center gap-1.5 text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover font-medium px-2.5 h-[26px] rounded-[4px] transition-all duration-200 ease-in-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
-                        title="Reset all settings and filters"
+                        title="Reset naming configuration"
                     >
                         <RefreshCw className="w-3.5 h-3.5" />
                         Reset All
@@ -263,9 +263,43 @@ const NamingPromptBar = forwardRef(({
                             <div className="w-6 h-6 rounded-[4px] bg-fluent-info-bg text-fluent-brand-fg flex items-center justify-center shrink-0">
                                 <CheckCircle2 className="w-4 h-4" />
                             </div>
-                            <span className="text-[13px] font-semibold text-fluent-fg-primary">
-                                {lastResult.summary || 'Architecture Configuration Applied'}
-                            </span>
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-[13px] font-semibold text-fluent-fg-primary">
+                                    {lastResult.summary || 'Architecture Configuration Applied'}
+                                </span>
+                                <div className="flex items-center gap-1.5 flex-wrap">
+                                    {lastResult.env && (
+                                        <span className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-cat-blue-bg text-fluent-cat-blue-fg uppercase">
+                                            {lastResult.env}
+                                        </span>
+                                    )}
+                                    {lastResult.region && (
+                                        <span className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
+                                            {lastResult.region}
+                                        </span>
+                                    )}
+                                    {lastResult.workload && (
+                                        <span className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-info-bg text-fluent-info-text border border-fluent-info-border">
+                                            {lastResult.workload}
+                                        </span>
+                                    )}
+                                    {lastResult.instance && (
+                                        <span className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
+                                            #{lastResult.instance}
+                                        </span>
+                                    )}
+                                    {lastResult.orgPrefix && (
+                                        <span className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-bg-subtle text-fluent-fg-secondary border border-fluent-stroke-subtle">
+                                            Org: {lastResult.orgPrefix}
+                                        </span>
+                                    )}
+                                    {lastResult.resources && lastResult.resources.length > 0 && (
+                                        <span className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-cat-green-bg text-fluent-cat-green-fg">
+                                            {lastResult.resources.length} Services Matched
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                         <button
                             type="button"
@@ -286,8 +320,11 @@ const NamingPromptBar = forwardRef(({
 
                     {lastResult.resources && lastResult.resources.length > 0 && (
                         <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                            <span className="text-[11px] font-medium text-fluent-fg-secondary mr-1">Matched Services:</span>
-                            {lastResult.resources.map((resName, idx) => (
+                            <div className="flex items-center gap-1 text-[11px] font-medium text-fluent-fg-secondary mr-1">
+                                <Layers className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                <span>Matched Services:</span>
+                            </div>
+                            {lastResult.resources.slice(0, 5).map((resName, idx) => (
                                 <span
                                     key={idx}
                                     className="px-2 py-0.5 text-[11px] font-medium rounded-[4px] bg-fluent-bg-subtle text-fluent-fg-primary border border-fluent-stroke-subtle"
@@ -295,6 +332,11 @@ const NamingPromptBar = forwardRef(({
                                     {resName}
                                 </span>
                             ))}
+                            {lastResult.resources.length > 5 && (
+                                <span className="text-[11px] text-fluent-fg-secondary font-medium">
+                                    +{lastResult.resources.length - 5} more
+                                </span>
+                            )}
                         </div>
                     )}
                 </div>
