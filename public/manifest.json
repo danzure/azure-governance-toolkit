@@ -1,16 +1,26 @@
 {
-  "name": "atozazure | Azure Governance Toolkit",
+  "name": "atozazure | The Ultimate Azure Governance Toolkit",
   "short_name": "atozazure",
-  "description": "Streamline your Azure environment with atozazure. Discover our comprehensive suite of tools for Resource Naming, Conditional Access, Management Group topologies, and more.",
+  "id": "https://app.atozazure.com/",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#0078D4",
+  "description": "Streamline your Azure cloud governance with atozazure. Discover our comprehensive suite of free tools for Resource Naming (CAF), Conditional Access, Management Group topologies, Tagging strategy, and Custom RBAC roles.",
+  "categories": [
+    "productivity",
+    "utilities",
+    "developer"
+  ],
   "icons": [
     {
       "src": "/atozazure-favicon-192x192.png?v=2",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
+

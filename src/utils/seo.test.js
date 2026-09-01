@@ -22,12 +22,19 @@ describe('SEO Utilities', () => {
             },
             createElement: (tag) => {
                 const attributes = {};
+                let textContent = '';
                 return {
                     tagName: tag.toUpperCase(),
                     setAttribute: (key, val) => {
                         attributes[key] = val;
                     },
                     getAttribute: (key) => attributes[key] || null,
+                    get textContent() {
+                        return textContent;
+                    },
+                    set textContent(val) {
+                        textContent = val;
+                    },
                     matches: (sel) => {
                         if (sel.startsWith('meta[')) {
                             const match = sel.match(/meta\[([a-zA-Z0-9_-]+)="([^"]+)"\]/);
@@ -40,6 +47,10 @@ describe('SEO Utilities', () => {
                             if (match) {
                                 return tag.toLowerCase() === 'link' && attributes[match[1]] === match[2];
                             }
+                        }
+                        if (sel.startsWith('script#')) {
+                            const id = sel.replace('script#', '');
+                            return tag.toLowerCase() === 'script' && attributes['id'] === id;
                         }
                         return false;
                     },
@@ -70,7 +81,9 @@ describe('SEO Utilities', () => {
             expect(seo.title).toContain('atozazure');
             expect(seo.headerTitle).toBeTruthy();
             expect(seo.description.length).toBeGreaterThan(30);
+            expect(seo.keywords.length).toBeGreaterThan(20);
             expect(seo.canonical).toMatch(/^https:\/\/app\.atozazure\.com/);
+            expect(seo.breadcrumbs.length).toBeGreaterThanOrEqual(1);
         });
     });
 
@@ -80,7 +93,7 @@ describe('SEO Utilities', () => {
         expect(seo.headerTitle).toBe('Page Not Found');
     });
 
-    it('applies title, meta description, canonical link, and Open Graph tags to DOM', () => {
+    it('applies title, meta description, keywords, canonical link, Open Graph, and JSON-LD to DOM', () => {
         applySEO('/resource-naming');
 
         expect(document.title).toBe(ROUTE_SEO['/resource-naming'].title);
@@ -88,6 +101,14 @@ describe('SEO Utilities', () => {
         const descMeta = document.querySelector('meta[name="description"]');
         expect(descMeta).not.toBeNull();
         expect(descMeta.getAttribute('content')).toBe(ROUTE_SEO['/resource-naming'].description);
+
+        const keywordsMeta = document.querySelector('meta[name="keywords"]');
+        expect(keywordsMeta).not.toBeNull();
+        expect(keywordsMeta.getAttribute('content')).toBe(ROUTE_SEO['/resource-naming'].keywords);
+
+        const robotsMeta = document.querySelector('meta[name="robots"]');
+        expect(robotsMeta).not.toBeNull();
+        expect(robotsMeta.getAttribute('content')).toContain('index, follow');
 
         const canonicalLink = document.querySelector('link[rel="canonical"]');
         expect(canonicalLink).not.toBeNull();
@@ -104,5 +125,13 @@ describe('SEO Utilities', () => {
         const twitterTitle = document.querySelector('meta[name="twitter:title"]');
         expect(twitterTitle).not.toBeNull();
         expect(twitterTitle.getAttribute('content')).toBe(ROUTE_SEO['/resource-naming'].title);
+
+        const breadcrumbScript = document.querySelector('script#seo-breadcrumb-jsonld');
+        expect(breadcrumbScript).not.toBeNull();
+        const parsedBreadcrumbs = JSON.parse(breadcrumbScript.textContent);
+        expect(parsedBreadcrumbs['@type']).toBe('BreadcrumbList');
+        expect(parsedBreadcrumbs.itemListElement).toHaveLength(2);
+        expect(parsedBreadcrumbs.itemListElement[1].name).toBe('Azure Resource Naming Tool');
     });
 });
+

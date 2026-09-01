@@ -8,41 +8,56 @@
   <link rel="manifest" href="/manifest.json" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <link rel="canonical" href="https://app.atozazure.com/" />
+  
+  <!-- Preconnect & DNS-Prefetch for Fast Asset Delivery -->
   <link rel="preconnect" href="https://dc.services.visualstudio.com" crossorigin />
   <link rel="dns-prefetch" href="https://dc.services.visualstudio.com" />
   <link rel="preconnect" href="https://js.monitor.azure.com" crossorigin />
   <link rel="dns-prefetch" href="https://js.monitor.azure.com" />
   <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.cdnfonts.com" />
-  <meta name="theme-color" content="#0078D4" />
-  <meta name="description"
-    content="Streamline your Azure environment with atozazure. Discover our comprehensive suite of tools for Resource Naming, Conditional Access, Management Group topologies, and more." />
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="atozazure" />
-  <title>atozazure | The Ultimate Azure Governance Toolkit</title>
 
-  <!-- Open Graph -->
+  <!-- Core Search Engine Meta Directives -->
+  <title>atozazure | The Ultimate Azure Governance Toolkit</title>
+  <meta name="description"
+    content="Streamline your Azure cloud governance with atozazure. Discover our comprehensive suite of free tools for Resource Naming (CAF), Conditional Access policies, Management Group topologies, Tagging strategy, and Custom RBAC roles." />
+  <meta name="keywords"
+    content="azure resource naming, Azure Resource Naming, Azure resource naming tool, Azure naming convention, Microsoft Cloud Adoption Framework, CAF naming, Azure governance, Azure Conditional Access templates, Entra ID Conditional Access, Azure Management Groups designer, Azure Landing Zones, Azure tagging strategy, Azure policy tag rules, Azure custom RBAC role generator, Azure role definitions, Bicep, Terraform Azure" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="Daniel Powley / atozazure" />
+  <meta name="application-name" content="atozazure Governance Toolkit" />
+  <meta name="apple-mobile-web-app-title" content="atozazure" />
+  <meta name="theme-color" content="#0078D4" />
+
+  <!-- Open Graph / Facebook / LinkedIn Meta Tags -->
   <meta property="og:title" content="atozazure | Azure Governance Toolkit" />
   <meta property="og:description"
-    content="Streamline your Azure environment with atozazure. Discover our comprehensive suite of tools for Resource Naming, Conditional Access, Management Group topologies, and more." />
+    content="Streamline your Azure cloud governance with atozazure. Discover our free suite of tools for CAF Resource Naming, Entra ID Conditional Access, Management Group topologies, Tagging strategy, and Custom RBAC roles." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://app.atozazure.com" />
+  <meta property="og:url" content="https://app.atozazure.com/" />
+  <meta property="og:site_name" content="atozazure | Azure Governance Toolkit" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:image" content="https://app.atozazure.com/atozazure-favicon-192x192.png?v=2" />
-  <meta property="og:site_name" content="app.atozazure" />
+  <meta property="og:image:width" content="192" />
+  <meta property="og:image:height" content="192" />
+  <meta property="og:image:alt" content="atozazure - Azure Cloud Governance Toolkit Logo" />
 
-  <!-- Twitter Card -->
+  <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="atozazure | Azure Governance Toolkit" />
   <meta name="twitter:description"
-    content="Streamline your Azure environment with atozazure. Discover our comprehensive suite of tools for Resource Naming, Conditional Access, Management Group topologies, and more." />
+    content="Streamline your Azure cloud governance with atozazure. Discover our free suite of tools for CAF Resource Naming, Entra ID Conditional Access, Management Group topologies, Tagging strategy, and Custom RBAC roles." />
   <meta name="twitter:image" content="https://app.atozazure.com/atozazure-favicon-192x192.png?v=2" />
+  <meta name="twitter:image:alt" content="atozazure - Azure Cloud Governance Toolkit Logo" />
+
   <link rel="preload" href="https://fonts.cdnfonts.com/css/segoe-ui-4" as="style"
     onload="this.onload=null;this.rel='stylesheet'" />
   <noscript>
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/segoe-ui-4" />
   </noscript>
 
-  <!-- Structured Data (JSON-LD) for Schema.org -->
+  <!-- Comprehensive Structured Data (JSON-LD) for Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,7 +67,11 @@
         "@id": "https://app.atozazure.com/#organization",
         "name": "atozazure",
         "url": "https://atozazure.com",
-        "logo": "https://app.atozazure.com/atozazure-favicon-192x192.png?v=2"
+        "logo": "https://app.atozazure.com/atozazure-favicon-192x192.png?v=2",
+        "sameAs": [
+          "https://github.com/danzure",
+          "https://buymeacoffee.com/danielpowley"
+        ]
       },
       {
         "@type": "WebSite",
@@ -63,82 +82,211 @@
         "publisher": {
           "@id": "https://app.atozazure.com/#organization"
         },
-        "inLanguage": "en-US"
+        "inLanguage": "en-US",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://app.atozazure.com/resource-naming?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://app.atozazure.com/#navigation",
+        "name": "Governance Toolkit Tools",
+        "hasPart": [
+          {
+            "@type": "WebPage",
+            "name": "Azure Resource Naming Tool",
+            "url": "https://app.atozazure.com/resource-naming",
+            "description": "Generate standardized Cloud Adoption Framework (CAF) Azure resource names with live regex validation and IaC export."
+          },
+          {
+            "@type": "WebPage",
+            "name": "Conditional Access Policy Builder",
+            "url": "https://app.atozazure.com/conditional-access",
+            "description": "Design Microsoft Entra ID Conditional Access policies with Zero Trust baseline templates."
+          },
+          {
+            "@type": "WebPage",
+            "name": "Management Group Topology Designer",
+            "url": "https://app.atozazure.com/management-groups",
+            "description": "Architect Azure Enterprise-Scale Landing Zone hierarchies and export to Bicep and Terraform."
+          },
+          {
+            "@type": "WebPage",
+            "name": "Tagging Strategy Builder",
+            "url": "https://app.atozazure.com/tagging-strategy",
+            "description": "Define cloud tagging taxonomies and automatically generate Azure Policy JSON rules."
+          },
+          {
+            "@type": "WebPage",
+            "name": "RBAC Custom Role Designer",
+            "url": "https://app.atozazure.com/rbac-designer",
+            "description": "Design custom Azure RBAC role definitions with least-privilege provider permissions."
+          }
+        ]
       },
       {
         "@type": "WebApplication",
         "@id": "https://app.atozazure.com/#naming-tool",
         "name": "Azure Resource Naming Tool",
+        "alternateName": "Azure CAF Resource Name Generator",
         "url": "https://app.atozazure.com/resource-naming",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "keywords": "azure resource naming, Azure Resource Naming, Azure resource naming tool, Azure naming convention, Microsoft Cloud Adoption Framework naming, CAF naming conventions, Azure resource abbreviations, Azure naming generator, Terraform Azure resource names, Bicep resource naming, Azure naming standards",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         },
+        "featureList": [
+          "Cloud Adoption Framework (CAF) standard resource abbreviations",
+          "Real-time character length and regex constraint validation",
+          "Customizable component ordering (Workload, Environment, Region, Instance, Org)",
+          "Bicep, Terraform, ARM, and CLI IaC bundle exports",
+          "Smart AI Natural Language Magic Fill"
+        ],
         "description": "Generate standardized Azure resource names conforming to Microsoft Cloud Adoption Framework (CAF) guidelines with real-time validation and IaC exports."
       },
       {
         "@type": "WebApplication",
         "@id": "https://app.atozazure.com/#conditional-access",
         "name": "Azure Conditional Access Policy Builder",
+        "alternateName": "Entra ID Conditional Access Naming & Template Generator",
         "url": "https://app.atozazure.com/conditional-access",
         "applicationCategory": "SecurityApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "keywords": "azure conditional access, Conditional Access policy builder, Microsoft Entra ID Conditional Access, Zero Trust baseline policies, Conditional Access naming convention, Azure MFA policy templates, emergency break-glass account exclusion, Entra ID policy JSON export, Azure identity governance",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         },
+        "featureList": [
+          "Microsoft Zero Trust security baseline blueprints",
+          "Standardized policy naming convention generator",
+          "Emergency break-glass account exclusion patterns",
+          "Ready-to-deploy JSON policy export"
+        ],
         "description": "Design, configure, and export Microsoft Entra ID Conditional Access policies using Zero Trust baseline templates."
       },
       {
         "@type": "WebApplication",
         "@id": "https://app.atozazure.com/#management-groups",
         "name": "Azure Management Group Topology Designer",
+        "alternateName": "Azure Enterprise-Scale Landing Zone Hierarchy Designer",
         "url": "https://app.atozazure.com/management-groups",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "keywords": "azure management groups, Azure landing zone topology designer, Enterprise Scale Landing Zones ESLZ, Azure management group hierarchy builder, Bicep management groups, Terraform azurerm_management_group, Azure cloud architecture diagram, Azure landing zone hierarchy, Azure tenant root group",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         },
+        "featureList": [
+          "Interactive visual tree topology builder",
+          "Enterprise-Scale Landing Zone (ESLZ) reference architectures",
+          "Instant Bicep and Terraform hierarchy code generation",
+          "Granular subscription and policy scope placement"
+        ],
         "description": "Architect and export Azure Enterprise-Scale Landing Zone management group hierarchies to Bicep and Terraform."
       },
       {
         "@type": "WebApplication",
         "@id": "https://app.atozazure.com/#tagging-strategy",
         "name": "Azure Tagging Strategy Builder",
+        "alternateName": "Azure Policy Tag Governance Matrix Generator",
         "url": "https://app.atozazure.com/tagging-strategy",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "keywords": "azure tagging strategy, Azure policy tag governance, cloud tagging taxonomy, Azure CAF tagging conventions, Azure tag policy generator JSON, mandatory tag enforcement, FinOps cloud cost allocation tags, Azure resource tagging, Azure compliance policy",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         },
+        "featureList": [
+          "CAF-aligned organizational tagging taxonomy matrix",
+          "Automatic Azure Policy JSON generator (Audit, Deny, Modify)",
+          "Markdown documentation export for cloud governance wikis",
+          "Pre-populated FinOps cost center, environment, and owner tags"
+        ],
         "description": "Define and generate Azure Policy governance rules for tagging taxonomies across cloud environments."
       },
       {
         "@type": "WebApplication",
         "@id": "https://app.atozazure.com/#rbac-designer",
         "name": "Azure Custom RBAC Role Designer",
+        "alternateName": "Azure Least-Privilege Custom Role Builder",
         "url": "https://app.atozazure.com/rbac-designer",
         "applicationCategory": "SecurityApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "keywords": "azure custom rbac role, Azure RBAC custom role designer, Azure custom role builder, Azure role definition JSON, least privilege Azure permissions, Azure RBAC generator, Bicep custom role definition, Terraform azurerm_role_definition, Microsoft Entra permissions, Azure IAM governance",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         },
+        "featureList": [
+          "Interactive Azure resource provider operation selector",
+          "Least-privilege permission scoping (Actions, NotActions, DataActions)",
+          "ARM, Bicep, Terraform, and Azure CLI syntax generation",
+          "Live JSON role definition validation"
+        ],
         "description": "Build, validate, and export Azure Custom Role Definitions with least-privilege permissions for ARM, Bicep, Terraform, and Azure CLI."
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://app.atozazure.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the Microsoft Cloud Adoption Framework (CAF) Azure resource naming convention?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Microsoft Cloud Adoption Framework (CAF) naming convention is an industry standard for organizing Azure resources. It combines standardized component abbreviations (Resource Type, Workload, Environment, Region, and Instance number) to ensure consistency, prevent character limit violations, and simplify cloud resource management."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do Microsoft Entra ID Conditional Access policy templates protect Azure workloads?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Conditional Access policies enforce Zero Trust security principles by evaluating user identity, device health, location, and client app before granting access. Standardized naming and baseline templates ensure comprehensive coverage (e.g. requiring MFA, blocking legacy authentication, and protecting admin roles) while safely excluding emergency break-glass accounts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is an Azure Management Group topology and how does it support Landing Zones?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Azure Management Groups provide hierarchical governance above subscriptions. A properly architected topology—such as Azure Enterprise-Scale Landing Zones (ESLZ)—allows organizations to centrally assign Azure Policies, RBAC permissions, and compliance guardrails across Landing Zones, Platform, and Sandbox subscriptions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is an Azure Tagging Strategy critical for cloud governance and FinOps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A robust Azure tagging strategy attaches vital metadata (Environment, Cost Center, Owner, Workload, Disaster Recovery tier) to resources. This powers automated cost allocation, chargeback reporting, resource lifecycle automation, and compliance auditing enforced via Azure Policy."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you create Azure Custom RBAC Role definitions with least-privilege permissions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Custom RBAC roles in Azure define granular permissions by combining specific resource provider Actions, NotActions, DataActions, and AssignableScopes. Building roles with least-privilege access minimizes security blast radius while enabling DevOps teams to operate effectively."
+            }
+          }
+        ]
       }
     ]
   }
@@ -147,7 +295,62 @@
 
 <body>
   <div id="root"></div>
+
+  <!-- Search Engine Crawler Fallback & Semantic Static Outline -->
+  <noscript>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; line-height: 1.6; color: #1f2937;">
+      <header>
+        <h1>atozazure | The Ultimate Azure Governance Toolkit</h1>
+        <p>A free, open-access suite of cloud governance utilities designed to help cloud architects, DevOps engineers, and security teams build and scale Microsoft Azure environments with confidence.</p>
+      </header>
+
+      <nav aria-label="Main Governance Tools">
+        <h2>Available Cloud Governance Tools</h2>
+        <ul>
+          <li>
+            <h3><a href="/resource-naming">Azure Resource Naming Tool (CAF Compliant)</a></h3>
+            <p>Generate standardized names for 100+ Azure services following Microsoft Cloud Adoption Framework (CAF) guidelines. Includes real-time regex validation and IaC exports for Terraform, Bicep, ARM, and Azure CLI.</p>
+          </li>
+          <li>
+            <h3><a href="/conditional-access">Microsoft Entra ID Conditional Access Policy Builder</a></h3>
+            <p>Design, build, and document Zero Trust Conditional Access policies using standardized naming conventions and best-practice baseline blueprints.</p>
+          </li>
+          <li>
+            <h3><a href="/management-groups">Azure Management Group Topology Designer</a></h3>
+            <p>Visually architect Azure Enterprise-Scale Landing Zone management group hierarchies and export ready-to-deploy Bicep and Terraform code.</p>
+          </li>
+          <li>
+            <h3><a href="/tagging-strategy">Azure Tagging Strategy Builder & Policy Generator</a></h3>
+            <p>Define comprehensive cloud tagging taxonomies and automatically generate Azure Policy JSON rules (Audit, Deny, Modify) for compliance enforcement.</p>
+          </li>
+          <li>
+            <h3><a href="/rbac-designer">Azure Custom RBAC Role Designer & Permissions Generator</a></h3>
+            <p>Construct least-privilege Azure Custom Role definitions by selecting granular resource provider actions and export to JSON, Bicep, and Terraform.</p>
+          </li>
+        </ul>
+      </nav>
+
+      <section>
+        <h2>Frequently Asked Questions on Azure Governance</h2>
+        <dl>
+          <dt><strong>What is the Microsoft Cloud Adoption Framework (CAF) naming standard?</strong></dt>
+          <dd>The CAF naming standard structures Azure resource names using consistent components such as resource type prefixes, workload identifiers, environment codes, Azure region abbreviations, and instance counters.</dd>
+          
+          <dt><strong>How do Management Groups help manage Azure Subscriptions?</strong></dt>
+          <dd>Management Groups allow organizational policies, role-based access control (RBAC), and budgets to be enforced hierarchically across multiple subscriptions in enterprise landing zones.</dd>
+          
+          <dt><strong>Why enforce tagging with Azure Policy?</strong></dt>
+          <dd>Tagging enforcement ensures cost transparency, automated chargeback reporting, owner accountability, and compliance across all cloud resources.</dd>
+        </dl>
+      </section>
+
+      <footer>
+        <p>&copy; atozazure. Created by Daniel Powley. Built for the Azure community.</p>
+      </footer>
+    </div>
+  </noscript>
+
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
-</html>
+</html>
