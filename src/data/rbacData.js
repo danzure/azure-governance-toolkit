@@ -1,3 +1,10 @@
+/**
+ * Azure Resource Provider RBAC Permissions Database
+ * 
+ * Provides an exhaustive and curated registry of standard Azure Resource Providers,
+ * operations, actions, notActions, dataActions, and role templates for custom Azure RBAC generation.
+ */
+
 export const COMMON_RBAC_PROVIDERS = [
     {
         provider: 'Microsoft.ApiManagement',
@@ -10,17 +17,30 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.ApiManagement/service/apis/read',
             'Microsoft.ApiManagement/service/apis/write',
             'Microsoft.ApiManagement/service/apis/delete',
+            'Microsoft.ApiManagement/service/apis/operations/read',
+            'Microsoft.ApiManagement/service/apis/operations/write',
+            'Microsoft.ApiManagement/service/apis/operations/delete',
             'Microsoft.ApiManagement/service/products/read',
             'Microsoft.ApiManagement/service/products/write',
             'Microsoft.ApiManagement/service/products/delete',
             'Microsoft.ApiManagement/service/subscriptions/read',
             'Microsoft.ApiManagement/service/subscriptions/write',
+            'Microsoft.ApiManagement/service/subscriptions/delete',
             'Microsoft.ApiManagement/service/subscriptions/listSecrets/action',
             'Microsoft.ApiManagement/service/users/read',
             'Microsoft.ApiManagement/service/users/write',
+            'Microsoft.ApiManagement/service/users/delete',
             'Microsoft.ApiManagement/service/policies/read',
             'Microsoft.ApiManagement/service/policies/write',
-            'Microsoft.ApiManagement/service/gateways/read'
+            'Microsoft.ApiManagement/service/policies/delete',
+            'Microsoft.ApiManagement/service/namedValues/read',
+            'Microsoft.ApiManagement/service/namedValues/write',
+            'Microsoft.ApiManagement/service/namedValues/delete',
+            'Microsoft.ApiManagement/service/namedValues/listValue/action',
+            'Microsoft.ApiManagement/service/gateways/read',
+            'Microsoft.ApiManagement/service/gateways/write',
+            'Microsoft.ApiManagement/service/gateways/delete',
+            'Microsoft.ApiManagement/service/getssotoken/action'
         ]
     },
     {
@@ -30,15 +50,26 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.App/containerApps/read',
             'Microsoft.App/containerApps/write',
             'Microsoft.App/containerApps/delete',
+            'Microsoft.App/containerApps/listSecrets/action',
+            'Microsoft.App/containerApps/authConfigs/read',
+            'Microsoft.App/containerApps/authConfigs/write',
             'Microsoft.App/containerApps/revisions/read',
             'Microsoft.App/containerApps/revisions/restart/action',
             'Microsoft.App/containerApps/revisions/activate/action',
             'Microsoft.App/containerApps/revisions/deactivate/action',
+            'Microsoft.App/jobs/read',
+            'Microsoft.App/jobs/write',
+            'Microsoft.App/jobs/delete',
+            'Microsoft.App/jobs/start/action',
+            'Microsoft.App/jobs/stop/action',
+            'Microsoft.App/jobs/executions/read',
             'Microsoft.App/managedEnvironments/read',
             'Microsoft.App/managedEnvironments/write',
             'Microsoft.App/managedEnvironments/delete',
             'Microsoft.App/managedEnvironments/daprComponents/read',
-            'Microsoft.App/managedEnvironments/daprComponents/write'
+            'Microsoft.App/managedEnvironments/daprComponents/write',
+            'Microsoft.App/managedEnvironments/certificates/read',
+            'Microsoft.App/managedEnvironments/certificates/write'
         ]
     },
     {
@@ -53,7 +84,11 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.AppConfiguration/configurationStores/regenerateKey/action',
             'Microsoft.AppConfiguration/configurationStores/ListKeyValue/action',
             'Microsoft.AppConfiguration/configurationStores/keyValues/read',
-            'Microsoft.AppConfiguration/configurationStores/keyValues/write'
+            'Microsoft.AppConfiguration/configurationStores/keyValues/write',
+            'Microsoft.AppConfiguration/configurationStores/keyValues/delete',
+            'Microsoft.AppConfiguration/configurationStores/featureflags/read',
+            'Microsoft.AppConfiguration/configurationStores/featureflags/write',
+            'Microsoft.AppConfiguration/configurationStores/featureflags/delete'
         ]
     },
     {
@@ -81,7 +116,16 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Authorization/policyDefinitions/write',
             'Microsoft.Authorization/policyDefinitions/delete',
             'Microsoft.Authorization/policySetDefinitions/read',
-            'Microsoft.Authorization/policySetDefinitions/write'
+            'Microsoft.Authorization/policySetDefinitions/write',
+            'Microsoft.Authorization/policySetDefinitions/delete',
+            'Microsoft.Authorization/policyExemptions/read',
+            'Microsoft.Authorization/policyExemptions/write',
+            'Microsoft.Authorization/policyExemptions/delete',
+            'Microsoft.Authorization/roleEligibilityScheduleRequests/read',
+            'Microsoft.Authorization/roleEligibilityScheduleRequests/write',
+            'Microsoft.Authorization/roleAssignmentScheduleRequests/read',
+            'Microsoft.Authorization/roleAssignmentScheduleRequests/write',
+            'Microsoft.Authorization/permissions/read'
         ]
     },
     {
@@ -93,15 +137,58 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Automation/automationAccounts/delete',
             'Microsoft.Automation/automationAccounts/runbooks/read',
             'Microsoft.Automation/automationAccounts/runbooks/write',
+            'Microsoft.Automation/automationAccounts/runbooks/delete',
             'Microsoft.Automation/automationAccounts/runbooks/draft/action',
             'Microsoft.Automation/automationAccounts/runbooks/publish/action',
             'Microsoft.Automation/automationAccounts/jobs/read',
             'Microsoft.Automation/automationAccounts/jobs/write',
             'Microsoft.Automation/automationAccounts/jobs/stop/action',
+            'Microsoft.Automation/automationAccounts/jobs/resume/action',
             'Microsoft.Automation/automationAccounts/variables/read',
             'Microsoft.Automation/automationAccounts/variables/write',
+            'Microsoft.Automation/automationAccounts/variables/delete',
             'Microsoft.Automation/automationAccounts/schedules/read',
-            'Microsoft.Automation/automationAccounts/schedules/write'
+            'Microsoft.Automation/automationAccounts/schedules/write',
+            'Microsoft.Automation/automationAccounts/schedules/delete',
+            'Microsoft.Automation/automationAccounts/modules/read',
+            'Microsoft.Automation/automationAccounts/modules/write',
+            'Microsoft.Automation/automationAccounts/certificates/read',
+            'Microsoft.Automation/automationAccounts/certificates/write',
+            'Microsoft.Automation/automationAccounts/credentials/read',
+            'Microsoft.Automation/automationAccounts/credentials/write',
+            'Microsoft.Automation/automationAccounts/webhooks/read',
+            'Microsoft.Automation/automationAccounts/webhooks/write',
+            'Microsoft.Automation/automationAccounts/webhooks/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Batch',
+        operations: [
+            'Microsoft.Batch/*',
+            'Microsoft.Batch/batchAccounts/read',
+            'Microsoft.Batch/batchAccounts/write',
+            'Microsoft.Batch/batchAccounts/delete',
+            'Microsoft.Batch/batchAccounts/listKeys/action',
+            'Microsoft.Batch/batchAccounts/regenerateKeys/action',
+            'Microsoft.Batch/batchAccounts/pools/read',
+            'Microsoft.Batch/batchAccounts/pools/write',
+            'Microsoft.Batch/batchAccounts/pools/delete',
+            'Microsoft.Batch/batchAccounts/jobs/read',
+            'Microsoft.Batch/batchAccounts/jobs/write',
+            'Microsoft.Batch/batchAccounts/jobs/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Billing',
+        operations: [
+            'Microsoft.Billing/*',
+            'Microsoft.Billing/billingAccounts/read',
+            'Microsoft.Billing/billingAccounts/billingProfiles/read',
+            'Microsoft.Billing/billingAccounts/invoiceSections/read',
+            'Microsoft.Billing/billingAccounts/invoices/read',
+            'Microsoft.Billing/billingAccounts/invoices/download/action',
+            'Microsoft.Billing/billingProperty/read',
+            'Microsoft.Billing/billingSubscriptions/read'
         ]
     },
     {
@@ -117,8 +204,49 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Cache/redis/start/action',
             'Microsoft.Cache/redis/stop/action',
             'Microsoft.Cache/redis/reboot/action',
+            'Microsoft.Cache/redis/flush/action',
+            'Microsoft.Cache/redis/firewallRules/read',
+            'Microsoft.Cache/redis/firewallRules/write',
+            'Microsoft.Cache/redis/firewallRules/delete',
             'Microsoft.Cache/redisEnterprise/read',
-            'Microsoft.Cache/redisEnterprise/write'
+            'Microsoft.Cache/redisEnterprise/write',
+            'Microsoft.Cache/redisEnterprise/delete',
+            'Microsoft.Cache/redisEnterprise/databases/read',
+            'Microsoft.Cache/redisEnterprise/databases/write',
+            'Microsoft.Cache/redisEnterprise/databases/delete',
+            'Microsoft.Cache/redisEnterprise/databases/listKeys/action',
+            'Microsoft.Cache/redisEnterprise/databases/regenerateKey/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.Cdn',
+        operations: [
+            'Microsoft.Cdn/*',
+            'Microsoft.Cdn/profiles/read',
+            'Microsoft.Cdn/profiles/write',
+            'Microsoft.Cdn/profiles/delete',
+            'Microsoft.Cdn/profiles/endpoints/read',
+            'Microsoft.Cdn/profiles/endpoints/write',
+            'Microsoft.Cdn/profiles/endpoints/delete',
+            'Microsoft.Cdn/profiles/endpoints/start/action',
+            'Microsoft.Cdn/profiles/endpoints/stop/action',
+            'Microsoft.Cdn/profiles/endpoints/purge/action',
+            'Microsoft.Cdn/profiles/endpoints/load/action',
+            'Microsoft.Cdn/profiles/customDomains/read',
+            'Microsoft.Cdn/profiles/customDomains/write',
+            'Microsoft.Cdn/profiles/customDomains/delete',
+            'Microsoft.Cdn/profiles/originGroups/read',
+            'Microsoft.Cdn/profiles/originGroups/write',
+            'Microsoft.Cdn/profiles/originGroups/origins/read',
+            'Microsoft.Cdn/profiles/originGroups/origins/write',
+            'Microsoft.Cdn/profiles/rulesets/read',
+            'Microsoft.Cdn/profiles/rulesets/write',
+            'Microsoft.Cdn/profiles/rulesets/rules/read',
+            'Microsoft.Cdn/profiles/rulesets/rules/write',
+            'Microsoft.Cdn/profiles/securityPolicies/read',
+            'Microsoft.Cdn/profiles/securityPolicies/write',
+            'Microsoft.Cdn/profiles/secrets/read',
+            'Microsoft.Cdn/profiles/secrets/write'
         ]
     },
     {
@@ -134,7 +262,12 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.CognitiveServices/accounts/deployments/write',
             'Microsoft.CognitiveServices/accounts/deployments/delete',
             'Microsoft.CognitiveServices/accounts/models/read',
-            'Microsoft.CognitiveServices/accounts/commitments/read'
+            'Microsoft.CognitiveServices/accounts/commitments/read',
+            'Microsoft.CognitiveServices/accounts/raiPolicies/read',
+            'Microsoft.CognitiveServices/accounts/raiPolicies/write',
+            'Microsoft.CognitiveServices/accounts/raiPolicies/delete',
+            'Microsoft.CognitiveServices/accounts/OpenAI/read',
+            'Microsoft.CognitiveServices/accounts/OpenAI/write'
         ]
     },
     {
@@ -151,25 +284,73 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Compute/virtualMachines/deallocate/action',
             'Microsoft.Compute/virtualMachines/redeploy/action',
             'Microsoft.Compute/virtualMachines/reimage/action',
+            'Microsoft.Compute/virtualMachines/performMaintenance/action',
             'Microsoft.Compute/virtualMachines/instanceView/read',
             'Microsoft.Compute/virtualMachines/runCommand/action',
+            'Microsoft.Compute/virtualMachines/extensions/read',
+            'Microsoft.Compute/virtualMachines/extensions/write',
+            'Microsoft.Compute/virtualMachines/extensions/delete',
+            'Microsoft.Compute/virtualMachineScaleSets/*',
             'Microsoft.Compute/virtualMachineScaleSets/read',
             'Microsoft.Compute/virtualMachineScaleSets/write',
             'Microsoft.Compute/virtualMachineScaleSets/delete',
             'Microsoft.Compute/virtualMachineScaleSets/start/action',
             'Microsoft.Compute/virtualMachineScaleSets/restart/action',
+            'Microsoft.Compute/virtualMachineScaleSets/powerOff/action',
             'Microsoft.Compute/virtualMachineScaleSets/deallocate/action',
+            'Microsoft.Compute/virtualMachineScaleSets/reimage/action',
+            'Microsoft.Compute/virtualMachineScaleSets/manualupgrade/action',
+            'Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades/start/action',
+            'Microsoft.Compute/virtualMachineScaleSets/virtualMachines/read',
+            'Microsoft.Compute/virtualMachineScaleSets/virtualMachines/write',
+            'Microsoft.Compute/virtualMachineScaleSets/virtualMachines/delete',
+            'Microsoft.Compute/virtualMachineScaleSets/virtualMachines/restart/action',
+            'Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommand/action',
             'Microsoft.Compute/disks/*',
             'Microsoft.Compute/disks/read',
             'Microsoft.Compute/disks/write',
             'Microsoft.Compute/disks/delete',
+            'Microsoft.Compute/disks/beginGetAccess/action',
+            'Microsoft.Compute/disks/endGetAccess/action',
             'Microsoft.Compute/snapshots/read',
             'Microsoft.Compute/snapshots/write',
             'Microsoft.Compute/snapshots/delete',
+            'Microsoft.Compute/diskEncryptionSets/read',
+            'Microsoft.Compute/diskEncryptionSets/write',
+            'Microsoft.Compute/diskEncryptionSets/delete',
             'Microsoft.Compute/galleries/read',
             'Microsoft.Compute/galleries/write',
+            'Microsoft.Compute/galleries/delete',
             'Microsoft.Compute/galleries/images/read',
-            'Microsoft.Compute/galleries/images/versions/read'
+            'Microsoft.Compute/galleries/images/write',
+            'Microsoft.Compute/galleries/images/delete',
+            'Microsoft.Compute/galleries/images/versions/read',
+            'Microsoft.Compute/galleries/images/versions/write',
+            'Microsoft.Compute/galleries/images/versions/delete',
+            'Microsoft.Compute/hostGroups/read',
+            'Microsoft.Compute/hostGroups/write',
+            'Microsoft.Compute/hostGroups/hosts/read',
+            'Microsoft.Compute/hostGroups/hosts/write',
+            'Microsoft.Compute/proximityPlacementGroups/read',
+            'Microsoft.Compute/proximityPlacementGroups/write',
+            'Microsoft.Compute/proximityPlacementGroups/delete',
+            'Microsoft.Compute/sshPublicKeys/read',
+            'Microsoft.Compute/sshPublicKeys/write',
+            'Microsoft.Compute/sshPublicKeys/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.ContainerInstance',
+        operations: [
+            'Microsoft.ContainerInstance/*',
+            'Microsoft.ContainerInstance/containerGroups/read',
+            'Microsoft.ContainerInstance/containerGroups/write',
+            'Microsoft.ContainerInstance/containerGroups/delete',
+            'Microsoft.ContainerInstance/containerGroups/start/action',
+            'Microsoft.ContainerInstance/containerGroups/stop/action',
+            'Microsoft.ContainerInstance/containerGroups/restart/action',
+            'Microsoft.ContainerInstance/containerGroups/containers/exec/action',
+            'Microsoft.ContainerInstance/containerGroups/containers/logs/read'
         ]
     },
     {
@@ -184,10 +365,22 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.ContainerRegistry/registries/webhooks/read',
             'Microsoft.ContainerRegistry/registries/webhooks/write',
             'Microsoft.ContainerRegistry/registries/webhooks/delete',
+            'Microsoft.ContainerRegistry/registries/webhooks/ping/action',
+            'Microsoft.ContainerRegistry/registries/webhooks/listEvents/action',
             'Microsoft.ContainerRegistry/registries/tokens/read',
             'Microsoft.ContainerRegistry/registries/tokens/write',
             'Microsoft.ContainerRegistry/registries/tokens/delete',
-            'Microsoft.ContainerRegistry/registries/scopeMaps/read'
+            'Microsoft.ContainerRegistry/registries/scopeMaps/read',
+            'Microsoft.ContainerRegistry/registries/scopeMaps/write',
+            'Microsoft.ContainerRegistry/registries/scopeMaps/delete',
+            'Microsoft.ContainerRegistry/registries/tasks/read',
+            'Microsoft.ContainerRegistry/registries/tasks/write',
+            'Microsoft.ContainerRegistry/registries/tasks/delete',
+            'Microsoft.ContainerRegistry/registries/tasks/runs/read',
+            'Microsoft.ContainerRegistry/registries/tasks/scheduleRun/action',
+            'Microsoft.ContainerRegistry/registries/pipelineRuns/read',
+            'Microsoft.ContainerRegistry/registries/exportPipelines/read',
+            'Microsoft.ContainerRegistry/registries/importPipelines/read'
         ]
     },
     {
@@ -201,12 +394,19 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.ContainerService/managedClusters/start/action',
             'Microsoft.ContainerService/managedClusters/stop/action',
             'Microsoft.ContainerService/managedClusters/restart/action',
+            'Microsoft.ContainerService/managedClusters/rotateClusterCertificates/action',
             'Microsoft.ContainerService/managedClusters/accessProfiles/listCredential/action',
+            'Microsoft.ContainerService/managedClusters/listClusterUserCredential/action',
+            'Microsoft.ContainerService/managedClusters/listClusterAdminCredential/action',
+            'Microsoft.ContainerService/managedClusters/listClusterMonitoringUserCredential/action',
             'Microsoft.ContainerService/managedClusters/agentPools/read',
             'Microsoft.ContainerService/managedClusters/agentPools/write',
             'Microsoft.ContainerService/managedClusters/agentPools/delete',
             'Microsoft.ContainerService/managedClusters/agentPools/upgrade/action',
-            'Microsoft.ContainerService/managedClusters/upgradeProfiles/read'
+            'Microsoft.ContainerService/managedClusters/agentPools/upgradeNodeImageVersion/action',
+            'Microsoft.ContainerService/managedClusters/upgradeProfiles/read',
+            'Microsoft.ContainerService/managedClusters/command/action',
+            'Microsoft.ContainerService/managedClusters/runCommand/action'
         ]
     },
     {
@@ -223,7 +423,38 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.CostManagement/exports/delete',
             'Microsoft.CostManagement/exports/run/action',
             'Microsoft.CostManagement/scheduledActions/read',
-            'Microsoft.CostManagement/scheduledActions/write'
+            'Microsoft.CostManagement/scheduledActions/write',
+            'Microsoft.CostManagement/scheduledActions/delete',
+            'Microsoft.CostManagement/views/read',
+            'Microsoft.CostManagement/views/write',
+            'Microsoft.CostManagement/views/delete',
+            'Microsoft.CostManagement/alerts/read',
+            'Microsoft.CostManagement/query/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.Dashboard',
+        operations: [
+            'Microsoft.Dashboard/*',
+            'Microsoft.Dashboard/grafana/read',
+            'Microsoft.Dashboard/grafana/write',
+            'Microsoft.Dashboard/grafana/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Databricks',
+        operations: [
+            'Microsoft.Databricks/*',
+            'Microsoft.Databricks/workspaces/*',
+            'Microsoft.Databricks/workspaces/read',
+            'Microsoft.Databricks/workspaces/write',
+            'Microsoft.Databricks/workspaces/delete',
+            'Microsoft.Databricks/workspaces/vNetPeering/read',
+            'Microsoft.Databricks/workspaces/vNetPeering/write',
+            'Microsoft.Databricks/workspaces/vNetPeering/delete',
+            'Microsoft.Databricks/accessConnectors/read',
+            'Microsoft.Databricks/accessConnectors/write',
+            'Microsoft.Databricks/accessConnectors/delete'
         ]
     },
     {
@@ -240,6 +471,7 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.DataFactory/factories/pipelines/createrun/action',
             'Microsoft.DataFactory/factories/pipelineruns/read',
             'Microsoft.DataFactory/factories/pipelineruns/cancel/action',
+            'Microsoft.DataFactory/factories/pipelineruns/queryByFactory/action',
             'Microsoft.DataFactory/factories/datasets/read',
             'Microsoft.DataFactory/factories/datasets/write',
             'Microsoft.DataFactory/factories/datasets/delete',
@@ -248,26 +480,22 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.DataFactory/factories/linkedservices/delete',
             'Microsoft.DataFactory/factories/triggers/read',
             'Microsoft.DataFactory/factories/triggers/write',
+            'Microsoft.DataFactory/factories/triggers/delete',
             'Microsoft.DataFactory/factories/triggers/start/action',
             'Microsoft.DataFactory/factories/triggers/stop/action',
+            'Microsoft.DataFactory/factories/triggers/subscribeToEvents/action',
+            'Microsoft.DataFactory/factories/triggers/unsubscribeFromEvents/action',
             'Microsoft.DataFactory/factories/integrationRuntimes/read',
+            'Microsoft.DataFactory/factories/integrationRuntimes/write',
+            'Microsoft.DataFactory/factories/integrationRuntimes/delete',
             'Microsoft.DataFactory/factories/integrationRuntimes/start/action',
-            'Microsoft.DataFactory/factories/integrationRuntimes/stop/action'
-        ]
-    },
-    {
-        provider: 'Microsoft.Databricks',
-        operations: [
-            'Microsoft.Databricks/*',
-            'Microsoft.Databricks/workspaces/*',
-            'Microsoft.Databricks/workspaces/read',
-            'Microsoft.Databricks/workspaces/write',
-            'Microsoft.Databricks/workspaces/delete',
-            'Microsoft.Databricks/workspaces/vNetPeering/read',
-            'Microsoft.Databricks/workspaces/vNetPeering/write',
-            'Microsoft.Databricks/workspaces/vNetPeering/delete',
-            'Microsoft.Databricks/accessConnectors/read',
-            'Microsoft.Databricks/accessConnectors/write'
+            'Microsoft.DataFactory/factories/integrationRuntimes/stop/action',
+            'Microsoft.DataFactory/factories/integrationRuntimes/listAuthKeys/action',
+            'Microsoft.DataFactory/factories/integrationRuntimes/regenerateAuthKey/action',
+            'Microsoft.DataFactory/factories/managedVirtualNetworks/read',
+            'Microsoft.DataFactory/factories/managedVirtualNetworks/write',
+            'Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints/read',
+            'Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints/write'
         ]
     },
     {
@@ -278,18 +506,48 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.DesktopVirtualization/hostpools/read',
             'Microsoft.DesktopVirtualization/hostpools/write',
             'Microsoft.DesktopVirtualization/hostpools/delete',
+            'Microsoft.DesktopVirtualization/hostpools/listRegistrationTokens/action',
             'Microsoft.DesktopVirtualization/applicationgroups/read',
             'Microsoft.DesktopVirtualization/applicationgroups/write',
             'Microsoft.DesktopVirtualization/applicationgroups/delete',
+            'Microsoft.DesktopVirtualization/applicationgroups/desktops/read',
+            'Microsoft.DesktopVirtualization/applicationgroups/applications/read',
+            'Microsoft.DesktopVirtualization/applicationgroups/applications/write',
+            'Microsoft.DesktopVirtualization/applicationgroups/applications/delete',
             'Microsoft.DesktopVirtualization/workspaces/read',
             'Microsoft.DesktopVirtualization/workspaces/write',
             'Microsoft.DesktopVirtualization/workspaces/delete',
             'Microsoft.DesktopVirtualization/sessionhosts/read',
+            'Microsoft.DesktopVirtualization/sessionhosts/write',
             'Microsoft.DesktopVirtualization/sessionhosts/delete',
             'Microsoft.DesktopVirtualization/sessionhosts/userSessions/read',
             'Microsoft.DesktopVirtualization/sessionhosts/userSessions/delete',
+            'Microsoft.DesktopVirtualization/sessionhosts/userSessions/sendMessage/action',
+            'Microsoft.DesktopVirtualization/sessionhosts/userSessions/disconnect/action',
             'Microsoft.DesktopVirtualization/scalingplans/read',
-            'Microsoft.DesktopVirtualization/scalingplans/write'
+            'Microsoft.DesktopVirtualization/scalingplans/write',
+            'Microsoft.DesktopVirtualization/scalingplans/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.DevCenter',
+        operations: [
+            'Microsoft.DevCenter/*',
+            'Microsoft.DevCenter/devcenters/read',
+            'Microsoft.DevCenter/devcenters/write',
+            'Microsoft.DevCenter/devcenters/delete',
+            'Microsoft.DevCenter/projects/read',
+            'Microsoft.DevCenter/projects/write',
+            'Microsoft.DevCenter/projects/delete',
+            'Microsoft.DevCenter/projects/pools/read',
+            'Microsoft.DevCenter/projects/pools/write',
+            'Microsoft.DevCenter/projects/pools/devboxes/read',
+            'Microsoft.DevCenter/projects/pools/devboxes/action',
+            'Microsoft.DevCenter/catalogs/read',
+            'Microsoft.DevCenter/catalogs/write',
+            'Microsoft.DevCenter/catalogs/sync/action',
+            'Microsoft.DevCenter/environmentTypes/read',
+            'Microsoft.DevCenter/environmentTypes/write'
         ]
     },
     {
@@ -303,14 +561,29 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.DocumentDB/databaseAccounts/listKeys/action',
             'Microsoft.DocumentDB/databaseAccounts/readonlykeys/action',
             'Microsoft.DocumentDB/databaseAccounts/regenerateKey/action',
+            'Microsoft.DocumentDB/databaseAccounts/listConnectionStrings/action',
             'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/read',
             'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/write',
             'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/delete',
             'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/read',
             'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/write',
             'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/delete',
+            'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read',
+            'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/write',
+            'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures/read',
+            'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures/write',
+            'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions/read',
+            'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions/write',
+            'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments/read',
+            'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments/write',
             'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/read',
-            'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/write'
+            'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/write',
+            'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/delete',
+            'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/read',
+            'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/write',
+            'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/read',
+            'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/read',
+            'Microsoft.DocumentDB/databaseAccounts/tables/read'
         ]
     },
     {
@@ -321,14 +594,24 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.EventGrid/topics/write',
             'Microsoft.EventGrid/topics/delete',
             'Microsoft.EventGrid/topics/listKeys/action',
+            'Microsoft.EventGrid/topics/regenerateKey/action',
             'Microsoft.EventGrid/eventSubscriptions/read',
             'Microsoft.EventGrid/eventSubscriptions/write',
             'Microsoft.EventGrid/eventSubscriptions/delete',
+            'Microsoft.EventGrid/eventSubscriptions/getFullUrl/action',
             'Microsoft.EventGrid/systemTopics/read',
             'Microsoft.EventGrid/systemTopics/write',
             'Microsoft.EventGrid/systemTopics/delete',
+            'Microsoft.EventGrid/systemTopics/eventSubscriptions/read',
+            'Microsoft.EventGrid/systemTopics/eventSubscriptions/write',
+            'Microsoft.EventGrid/systemTopics/eventSubscriptions/delete',
             'Microsoft.EventGrid/domains/read',
-            'Microsoft.EventGrid/domains/write'
+            'Microsoft.EventGrid/domains/write',
+            'Microsoft.EventGrid/domains/delete',
+            'Microsoft.EventGrid/domains/topics/read',
+            'Microsoft.EventGrid/domains/topics/write',
+            'Microsoft.EventGrid/partnerNamespaces/read',
+            'Microsoft.EventGrid/partnerNamespaces/write'
         ]
     },
     {
@@ -339,14 +622,56 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.EventHub/namespaces/read',
             'Microsoft.EventHub/namespaces/write',
             'Microsoft.EventHub/namespaces/delete',
+            'Microsoft.EventHub/namespaces/authorizationRules/read',
+            'Microsoft.EventHub/namespaces/authorizationRules/write',
+            'Microsoft.EventHub/namespaces/authorizationRules/delete',
             'Microsoft.EventHub/namespaces/authorizationRules/listKeys/action',
             'Microsoft.EventHub/namespaces/regenerateKeys/action',
             'Microsoft.EventHub/namespaces/eventhubs/read',
             'Microsoft.EventHub/namespaces/eventhubs/write',
             'Microsoft.EventHub/namespaces/eventhubs/delete',
+            'Microsoft.EventHub/namespaces/eventhubs/authorizationRules/read',
+            'Microsoft.EventHub/namespaces/eventhubs/authorizationRules/write',
+            'Microsoft.EventHub/namespaces/eventhubs/authorizationRules/listKeys/action',
             'Microsoft.EventHub/namespaces/eventhubs/consumergroups/read',
             'Microsoft.EventHub/namespaces/eventhubs/consumergroups/write',
-            'Microsoft.EventHub/namespaces/eventhubs/consumergroups/delete'
+            'Microsoft.EventHub/namespaces/eventhubs/consumergroups/delete',
+            'Microsoft.EventHub/namespaces/disasterRecoveryConfigs/read',
+            'Microsoft.EventHub/namespaces/disasterRecoveryConfigs/write',
+            'Microsoft.EventHub/namespaces/disasterRecoveryConfigs/failover/action',
+            'Microsoft.EventHub/clusters/read',
+            'Microsoft.EventHub/clusters/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.HealthcareApis',
+        operations: [
+            'Microsoft.HealthcareApis/*',
+            'Microsoft.HealthcareApis/services/read',
+            'Microsoft.HealthcareApis/services/write',
+            'Microsoft.HealthcareApis/services/delete',
+            'Microsoft.HealthcareApis/workspaces/read',
+            'Microsoft.HealthcareApis/workspaces/write',
+            'Microsoft.HealthcareApis/workspaces/delete',
+            'Microsoft.HealthcareApis/workspaces/fhirservices/read',
+            'Microsoft.HealthcareApis/workspaces/fhirservices/write',
+            'Microsoft.HealthcareApis/workspaces/dicomservices/read',
+            'Microsoft.HealthcareApis/workspaces/dicomservices/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.HybridCompute',
+        operations: [
+            'Microsoft.HybridCompute/*',
+            'Microsoft.HybridCompute/machines/read',
+            'Microsoft.HybridCompute/machines/write',
+            'Microsoft.HybridCompute/machines/delete',
+            'Microsoft.HybridCompute/machines/extensions/read',
+            'Microsoft.HybridCompute/machines/extensions/write',
+            'Microsoft.HybridCompute/machines/extensions/delete',
+            'Microsoft.HybridCompute/machines/assessPatches/action',
+            'Microsoft.HybridCompute/machines/installPatches/action',
+            'Microsoft.HybridCompute/machines/upgradeExtensions/action'
         ]
     },
     {
@@ -362,18 +687,37 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Insights/metricAlerts/delete',
             'Microsoft.Insights/activityLogAlerts/read',
             'Microsoft.Insights/activityLogAlerts/write',
+            'Microsoft.Insights/activityLogAlerts/delete',
+            'Microsoft.Insights/scheduledQueryRules/read',
+            'Microsoft.Insights/scheduledQueryRules/write',
+            'Microsoft.Insights/scheduledQueryRules/delete',
             'Microsoft.Insights/actionGroups/read',
             'Microsoft.Insights/actionGroups/write',
             'Microsoft.Insights/actionGroups/delete',
             'Microsoft.Insights/diagnosticSettings/read',
             'Microsoft.Insights/diagnosticSettings/write',
             'Microsoft.Insights/diagnosticSettings/delete',
+            'Microsoft.Insights/diagnosticSettingsCategories/read',
             'Microsoft.Insights/metrics/read',
             'Microsoft.Insights/components/read',
             'Microsoft.Insights/components/write',
             'Microsoft.Insights/components/delete',
+            'Microsoft.Insights/components/APIKeys/read',
+            'Microsoft.Insights/components/APIKeys/write',
+            'Microsoft.Insights/components/APIKeys/delete',
+            'Microsoft.Insights/components/query/action',
             'Microsoft.Insights/workbooks/read',
-            'Microsoft.Insights/workbooks/write'
+            'Microsoft.Insights/workbooks/write',
+            'Microsoft.Insights/workbooks/delete',
+            'Microsoft.Insights/dataCollectionRules/read',
+            'Microsoft.Insights/dataCollectionRules/write',
+            'Microsoft.Insights/dataCollectionRules/delete',
+            'Microsoft.Insights/dataCollectionEndpoints/read',
+            'Microsoft.Insights/dataCollectionEndpoints/write',
+            'Microsoft.Insights/dataCollectionEndpoints/delete',
+            'Microsoft.Insights/autoscalesettings/read',
+            'Microsoft.Insights/autoscalesettings/write',
+            'Microsoft.Insights/autoscalesettings/delete'
         ]
     },
     {
@@ -389,16 +733,68 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.KeyVault/vaults/secrets/read',
             'Microsoft.KeyVault/vaults/secrets/write',
             'Microsoft.KeyVault/vaults/secrets/delete',
+            'Microsoft.KeyVault/vaults/secrets/setSecret/action',
+            'Microsoft.KeyVault/vaults/secrets/getSecret/action',
             'Microsoft.KeyVault/vaults/keys/*',
             'Microsoft.KeyVault/vaults/keys/read',
             'Microsoft.KeyVault/vaults/keys/write',
             'Microsoft.KeyVault/vaults/keys/delete',
+            'Microsoft.KeyVault/vaults/keys/create/action',
+            'Microsoft.KeyVault/vaults/keys/wrapKey/action',
+            'Microsoft.KeyVault/vaults/keys/unwrapKey/action',
+            'Microsoft.KeyVault/vaults/keys/sign/action',
+            'Microsoft.KeyVault/vaults/keys/verify/action',
+            'Microsoft.KeyVault/vaults/keys/encrypt/action',
+            'Microsoft.KeyVault/vaults/keys/decrypt/action',
             'Microsoft.KeyVault/vaults/certificates/*',
             'Microsoft.KeyVault/vaults/certificates/read',
             'Microsoft.KeyVault/vaults/certificates/write',
             'Microsoft.KeyVault/vaults/certificates/delete',
+            'Microsoft.KeyVault/vaults/certificates/create/action',
+            'Microsoft.KeyVault/vaults/certificates/import/action',
             'Microsoft.KeyVault/deletedVaults/read',
-            'Microsoft.KeyVault/deletedVaults/purge/action'
+            'Microsoft.KeyVault/deletedVaults/purge/action',
+            'Microsoft.KeyVault/managedHSMs/read',
+            'Microsoft.KeyVault/managedHSMs/write',
+            'Microsoft.KeyVault/managedHSMs/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Kubernetes',
+        operations: [
+            'Microsoft.Kubernetes/*',
+            'Microsoft.Kubernetes/connectedClusters/read',
+            'Microsoft.Kubernetes/connectedClusters/write',
+            'Microsoft.Kubernetes/connectedClusters/delete',
+            'Microsoft.Kubernetes/connectedClusters/listClusterUserCredential/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.KubernetesConfiguration',
+        operations: [
+            'Microsoft.KubernetesConfiguration/*',
+            'Microsoft.KubernetesConfiguration/extensions/read',
+            'Microsoft.KubernetesConfiguration/extensions/write',
+            'Microsoft.KubernetesConfiguration/extensions/delete',
+            'Microsoft.KubernetesConfiguration/fluxConfigurations/read',
+            'Microsoft.KubernetesConfiguration/fluxConfigurations/write',
+            'Microsoft.KubernetesConfiguration/fluxConfigurations/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Kusto',
+        operations: [
+            'Microsoft.Kusto/*',
+            'Microsoft.Kusto/clusters/read',
+            'Microsoft.Kusto/clusters/write',
+            'Microsoft.Kusto/clusters/delete',
+            'Microsoft.Kusto/clusters/start/action',
+            'Microsoft.Kusto/clusters/stop/action',
+            'Microsoft.Kusto/clusters/databases/read',
+            'Microsoft.Kusto/clusters/databases/write',
+            'Microsoft.Kusto/clusters/databases/delete',
+            'Microsoft.Kusto/clusters/attachedDatabaseConfigurations/read',
+            'Microsoft.Kusto/clusters/attachedDatabaseConfigurations/write'
         ]
     },
     {
@@ -415,9 +811,15 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Logic/workflows/runs/cancel/action',
             'Microsoft.Logic/workflows/triggers/read',
             'Microsoft.Logic/workflows/triggers/run/action',
+            'Microsoft.Logic/workflows/triggers/listCallbackUrl/action',
+            'Microsoft.Logic/workflows/versions/read',
             'Microsoft.Logic/integrationAccounts/read',
             'Microsoft.Logic/integrationAccounts/write',
-            'Microsoft.Logic/integrationAccounts/delete'
+            'Microsoft.Logic/integrationAccounts/delete',
+            'Microsoft.Logic/integrationAccounts/schemas/read',
+            'Microsoft.Logic/integrationAccounts/maps/read',
+            'Microsoft.Logic/integrationAccounts/partners/read',
+            'Microsoft.Logic/integrationAccounts/agreements/read'
         ]
     },
     {
@@ -434,12 +836,90 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.MachineLearningServices/workspaces/computes/start/action',
             'Microsoft.MachineLearningServices/workspaces/computes/stop/action',
             'Microsoft.MachineLearningServices/workspaces/computes/restart/action',
+            'Microsoft.MachineLearningServices/workspaces/computes/listKeys/action',
             'Microsoft.MachineLearningServices/workspaces/models/read',
             'Microsoft.MachineLearningServices/workspaces/models/write',
+            'Microsoft.MachineLearningServices/workspaces/models/delete',
             'Microsoft.MachineLearningServices/workspaces/endpoints/read',
             'Microsoft.MachineLearningServices/workspaces/endpoints/write',
+            'Microsoft.MachineLearningServices/workspaces/endpoints/delete',
+            'Microsoft.MachineLearningServices/workspaces/onlineEndpoints/read',
+            'Microsoft.MachineLearningServices/workspaces/onlineEndpoints/write',
+            'Microsoft.MachineLearningServices/workspaces/onlineEndpoints/delete',
+            'Microsoft.MachineLearningServices/workspaces/onlineEndpoints/listKeys/action',
+            'Microsoft.MachineLearningServices/workspaces/onlineEndpoints/token/action',
             'Microsoft.MachineLearningServices/workspaces/datastores/read',
-            'Microsoft.MachineLearningServices/workspaces/datastores/listSecrets/action'
+            'Microsoft.MachineLearningServices/workspaces/datastores/write',
+            'Microsoft.MachineLearningServices/workspaces/datastores/delete',
+            'Microsoft.MachineLearningServices/workspaces/datastores/listSecrets/action',
+            'Microsoft.MachineLearningServices/workspaces/environments/read',
+            'Microsoft.MachineLearningServices/workspaces/environments/write',
+            'Microsoft.MachineLearningServices/workspaces/jobs/read',
+            'Microsoft.MachineLearningServices/workspaces/jobs/write',
+            'Microsoft.MachineLearningServices/workspaces/jobs/cancel/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.Maintenance',
+        operations: [
+            'Microsoft.Maintenance/*',
+            'Microsoft.Maintenance/maintenanceConfigurations/read',
+            'Microsoft.Maintenance/maintenanceConfigurations/write',
+            'Microsoft.Maintenance/maintenanceConfigurations/delete',
+            'Microsoft.Maintenance/configurationAssignments/read',
+            'Microsoft.Maintenance/configurationAssignments/write',
+            'Microsoft.Maintenance/configurationAssignments/delete',
+            'Microsoft.Maintenance/updates/read'
+        ]
+    },
+    {
+        provider: 'Microsoft.ManagedIdentity',
+        operations: [
+            'Microsoft.ManagedIdentity/*',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/read',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/write',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/delete',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/listCredentials/action',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/assign/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.Management',
+        operations: [
+            'Microsoft.Management/*',
+            'Microsoft.Management/managementGroups/read',
+            'Microsoft.Management/managementGroups/write',
+            'Microsoft.Management/managementGroups/delete',
+            'Microsoft.Management/managementGroups/descendants/read',
+            'Microsoft.Management/managementGroups/subscriptions/read',
+            'Microsoft.Management/managementGroups/subscriptions/write',
+            'Microsoft.Management/managementGroups/subscriptions/delete',
+            'Microsoft.Management/managementGroups/getDescendants/action',
+            'Microsoft.Management/managementGroups/settings/read',
+            'Microsoft.Management/managementGroups/settings/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.Maps',
+        operations: [
+            'Microsoft.Maps/*',
+            'Microsoft.Maps/accounts/read',
+            'Microsoft.Maps/accounts/write',
+            'Microsoft.Maps/accounts/delete',
+            'Microsoft.Maps/accounts/listKeys/action',
+            'Microsoft.Maps/accounts/regenerateKeys/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.Migrate',
+        operations: [
+            'Microsoft.Migrate/*',
+            'Microsoft.Migrate/migrateProjects/read',
+            'Microsoft.Migrate/migrateProjects/write',
+            'Microsoft.Migrate/migrateProjects/delete',
+            'Microsoft.Migrate/assessmentProjects/read',
+            'Microsoft.Migrate/assessmentProjects/write',
+            'Microsoft.Migrate/assessmentProjects/delete'
         ]
     },
     {
@@ -454,10 +934,16 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Network/virtualNetworks/subnets/write',
             'Microsoft.Network/virtualNetworks/subnets/delete',
             'Microsoft.Network/virtualNetworks/peer/action',
+            'Microsoft.Network/virtualNetworks/virtualNetworkPeerings/read',
+            'Microsoft.Network/virtualNetworks/virtualNetworkPeerings/write',
+            'Microsoft.Network/virtualNetworks/virtualNetworkPeerings/delete',
             'Microsoft.Network/networkInterfaces/*',
             'Microsoft.Network/networkInterfaces/read',
             'Microsoft.Network/networkInterfaces/write',
             'Microsoft.Network/networkInterfaces/delete',
+            'Microsoft.Network/networkInterfaces/ipConfigurations/read',
+            'Microsoft.Network/networkInterfaces/effectiveNetworkSecurityGroups/action',
+            'Microsoft.Network/networkInterfaces/effectiveRouteTable/action',
             'Microsoft.Network/networkSecurityGroups/*',
             'Microsoft.Network/networkSecurityGroups/read',
             'Microsoft.Network/networkSecurityGroups/write',
@@ -468,27 +954,103 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Network/publicIPAddresses/read',
             'Microsoft.Network/publicIPAddresses/write',
             'Microsoft.Network/publicIPAddresses/delete',
+            'Microsoft.Network/publicIPPrefixes/read',
+            'Microsoft.Network/publicIPPrefixes/write',
+            'Microsoft.Network/publicIPPrefixes/delete',
             'Microsoft.Network/loadBalancers/read',
             'Microsoft.Network/loadBalancers/write',
             'Microsoft.Network/loadBalancers/delete',
+            'Microsoft.Network/loadBalancers/inboundNatRules/read',
+            'Microsoft.Network/loadBalancers/inboundNatRules/write',
             'Microsoft.Network/applicationGateways/read',
             'Microsoft.Network/applicationGateways/write',
             'Microsoft.Network/applicationGateways/delete',
+            'Microsoft.Network/applicationGateways/start/action',
+            'Microsoft.Network/applicationGateways/stop/action',
+            'Microsoft.Network/applicationSecurityGroups/read',
+            'Microsoft.Network/applicationSecurityGroups/write',
+            'Microsoft.Network/applicationSecurityGroups/delete',
+            'Microsoft.Network/routeTables/read',
+            'Microsoft.Network/routeTables/write',
+            'Microsoft.Network/routeTables/delete',
+            'Microsoft.Network/routeTables/routes/read',
+            'Microsoft.Network/routeTables/routes/write',
+            'Microsoft.Network/routeTables/routes/delete',
+            'Microsoft.Network/natGateways/read',
+            'Microsoft.Network/natGateways/write',
+            'Microsoft.Network/natGateways/delete',
             'Microsoft.Network/privateEndpoints/read',
             'Microsoft.Network/privateEndpoints/write',
             'Microsoft.Network/privateEndpoints/delete',
             'Microsoft.Network/privateDnsZones/read',
             'Microsoft.Network/privateDnsZones/write',
             'Microsoft.Network/privateDnsZones/delete',
+            'Microsoft.Network/privateDnsZones/virtualNetworkLinks/read',
+            'Microsoft.Network/privateDnsZones/virtualNetworkLinks/write',
+            'Microsoft.Network/privateDnsZones/virtualNetworkLinks/delete',
+            'Microsoft.Network/dnszones/read',
+            'Microsoft.Network/dnszones/write',
+            'Microsoft.Network/dnszones/delete',
             'Microsoft.Network/azureFirewalls/read',
             'Microsoft.Network/azureFirewalls/write',
             'Microsoft.Network/azureFirewalls/delete',
+            'Microsoft.Network/firewallPolicies/read',
+            'Microsoft.Network/firewallPolicies/write',
+            'Microsoft.Network/firewallPolicies/delete',
+            'Microsoft.Network/firewallPolicies/ruleCollectionGroups/read',
+            'Microsoft.Network/firewallPolicies/ruleCollectionGroups/write',
             'Microsoft.Network/bastionHosts/read',
             'Microsoft.Network/bastionHosts/write',
             'Microsoft.Network/bastionHosts/delete',
             'Microsoft.Network/virtualNetworkGateways/read',
             'Microsoft.Network/virtualNetworkGateways/write',
-            'Microsoft.Network/virtualNetworkGateways/delete'
+            'Microsoft.Network/virtualNetworkGateways/delete',
+            'Microsoft.Network/virtualNetworkGateways/reset/action',
+            'Microsoft.Network/virtualNetworkGateways/vpnclientconnectionhealth/action',
+            'Microsoft.Network/connections/read',
+            'Microsoft.Network/connections/write',
+            'Microsoft.Network/connections/delete',
+            'Microsoft.Network/connections/sharedkey/read',
+            'Microsoft.Network/connections/sharedkey/write',
+            'Microsoft.Network/localNetworkGateways/read',
+            'Microsoft.Network/localNetworkGateways/write',
+            'Microsoft.Network/localNetworkGateways/delete',
+            'Microsoft.Network/expressRouteCircuits/read',
+            'Microsoft.Network/expressRouteCircuits/write',
+            'Microsoft.Network/expressRouteCircuits/delete',
+            'Microsoft.Network/virtualWans/read',
+            'Microsoft.Network/virtualWans/write',
+            'Microsoft.Network/virtualWans/delete',
+            'Microsoft.Network/virtualHubs/read',
+            'Microsoft.Network/virtualHubs/write',
+            'Microsoft.Network/virtualHubs/delete',
+            'Microsoft.Network/networkWatchers/read',
+            'Microsoft.Network/networkWatchers/write',
+            'Microsoft.Network/networkWatchers/connectionMonitors/read',
+            'Microsoft.Network/networkWatchers/connectionMonitors/write',
+            'Microsoft.Network/networkWatchers/flowLogs/read',
+            'Microsoft.Network/networkWatchers/flowLogs/write',
+            'Microsoft.Network/networkWatchers/ipFlowVerify/action',
+            'Microsoft.Network/networkWatchers/nextHop/action',
+            'Microsoft.Network/networkWatchers/packetCapture/action',
+            'Microsoft.Network/networkWatchers/topology/action',
+            'Microsoft.Network/frontDoors/read',
+            'Microsoft.Network/frontDoors/write',
+            'Microsoft.Network/trafficmanagerprofiles/read',
+            'Microsoft.Network/trafficmanagerprofiles/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.NotificationHubs',
+        operations: [
+            'Microsoft.NotificationHubs/*',
+            'Microsoft.NotificationHubs/namespaces/read',
+            'Microsoft.NotificationHubs/namespaces/write',
+            'Microsoft.NotificationHubs/namespaces/delete',
+            'Microsoft.NotificationHubs/namespaces/notificationHubs/read',
+            'Microsoft.NotificationHubs/namespaces/notificationHubs/write',
+            'Microsoft.NotificationHubs/namespaces/notificationHubs/delete',
+            'Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules/listKeys/action'
         ]
     },
     {
@@ -504,11 +1066,43 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.OperationalInsights/workspaces/query/read',
             'Microsoft.OperationalInsights/workspaces/savedSearches/read',
             'Microsoft.OperationalInsights/workspaces/savedSearches/write',
+            'Microsoft.OperationalInsights/workspaces/savedSearches/delete',
             'Microsoft.OperationalInsights/workspaces/tables/read',
             'Microsoft.OperationalInsights/workspaces/tables/write',
+            'Microsoft.OperationalInsights/workspaces/tables/delete',
             'Microsoft.OperationalInsights/workspaces/dataSources/read',
+            'Microsoft.OperationalInsights/workspaces/dataSources/write',
+            'Microsoft.OperationalInsights/workspaces/dataExports/read',
+            'Microsoft.OperationalInsights/workspaces/dataExports/write',
             'Microsoft.OperationalInsights/clusters/read',
-            'Microsoft.OperationalInsights/clusters/write'
+            'Microsoft.OperationalInsights/clusters/write',
+            'Microsoft.OperationalInsights/clusters/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.PolicyInsights',
+        operations: [
+            'Microsoft.PolicyInsights/*',
+            'Microsoft.PolicyInsights/policyStates/queryResults/read',
+            'Microsoft.PolicyInsights/policyEvents/queryResults/read',
+            'Microsoft.PolicyInsights/remediations/read',
+            'Microsoft.PolicyInsights/remediations/write',
+            'Microsoft.PolicyInsights/remediations/delete',
+            'Microsoft.PolicyInsights/remediations/cancel/action',
+            'Microsoft.PolicyInsights/attestations/read',
+            'Microsoft.PolicyInsights/attestations/write',
+            'Microsoft.PolicyInsights/attestations/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Purview',
+        operations: [
+            'Microsoft.Purview/*',
+            'Microsoft.Purview/accounts/read',
+            'Microsoft.Purview/accounts/write',
+            'Microsoft.Purview/accounts/delete',
+            'Microsoft.Purview/accounts/listKeys/action',
+            'Microsoft.Purview/accounts/regenerateKey/action'
         ]
     },
     {
@@ -523,9 +1117,28 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.RecoveryServices/vaults/backupPolicies/delete',
             'Microsoft.RecoveryServices/vaults/backupProtectedItems/read',
             'Microsoft.RecoveryServices/vaults/backupProtectedItems/write',
+            'Microsoft.RecoveryServices/vaults/backupProtectedItems/delete',
             'Microsoft.RecoveryServices/vaults/backupJobs/read',
+            'Microsoft.RecoveryServices/vaults/backupJobs/stop/action',
+            'Microsoft.RecoveryServices/vaults/backupJobs/retry/action',
             'Microsoft.RecoveryServices/vaults/replicationFabrics/read',
-            'Microsoft.RecoveryServices/vaults/replicationFabrics/write'
+            'Microsoft.RecoveryServices/vaults/replicationFabrics/write',
+            'Microsoft.RecoveryServices/vaults/replicationProtectionContainers/read',
+            'Microsoft.RecoveryServices/vaults/replicationProtectedItems/read',
+            'Microsoft.RecoveryServices/vaults/replicationProtectedItems/write',
+            'Microsoft.RecoveryServices/vaults/replicationProtectedItems/delete'
+        ]
+    },
+    {
+        provider: 'Microsoft.Relay',
+        operations: [
+            'Microsoft.Relay/*',
+            'Microsoft.Relay/namespaces/read',
+            'Microsoft.Relay/namespaces/write',
+            'Microsoft.Relay/namespaces/delete',
+            'Microsoft.Relay/namespaces/authorizationRules/listKeys/action',
+            'Microsoft.Relay/namespaces/wcfRelays/read',
+            'Microsoft.Relay/namespaces/hybridConnections/read'
         ]
     },
     {
@@ -542,10 +1155,31 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Resources/deployments/delete',
             'Microsoft.Resources/deployments/validate/action',
             'Microsoft.Resources/deployments/cancel/action',
+            'Microsoft.Resources/deployments/whatIf/action',
+            'Microsoft.Resources/deployments/exportTemplate/action',
             'Microsoft.Resources/tags/read',
             'Microsoft.Resources/tags/write',
             'Microsoft.Resources/tags/delete',
-            'Microsoft.Resources/checkResourceName/action'
+            'Microsoft.Resources/checkResourceName/action',
+            'Microsoft.Resources/templateSpecs/read',
+            'Microsoft.Resources/templateSpecs/write',
+            'Microsoft.Resources/templateSpecs/delete',
+            'Microsoft.Resources/templateSpecs/versions/read',
+            'Microsoft.Resources/templateSpecs/versions/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.Search',
+        operations: [
+            'Microsoft.Search/*',
+            'Microsoft.Search/searchServices/read',
+            'Microsoft.Search/searchServices/write',
+            'Microsoft.Search/searchServices/delete',
+            'Microsoft.Search/searchServices/listAdminKeys/action',
+            'Microsoft.Search/searchServices/regenerateAdminKey/action',
+            'Microsoft.Search/searchServices/listQueryKeys/action',
+            'Microsoft.Search/searchServices/createQueryKey/action',
+            'Microsoft.Search/searchServices/deleteQueryKey/action'
         ]
     },
     {
@@ -554,16 +1188,58 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Security/*',
             'Microsoft.Security/assessments/read',
             'Microsoft.Security/assessments/write',
+            'Microsoft.Security/assessments/delete',
             'Microsoft.Security/alerts/read',
             'Microsoft.Security/alerts/write',
+            'Microsoft.Security/alerts/delete',
+            'Microsoft.Security/alerts/dismiss/action',
+            'Microsoft.Security/alerts/activate/action',
             'Microsoft.Security/securityContacts/read',
             'Microsoft.Security/securityContacts/write',
+            'Microsoft.Security/securityContacts/delete',
             'Microsoft.Security/pricings/read',
             'Microsoft.Security/pricings/write',
             'Microsoft.Security/secureScores/read',
+            'Microsoft.Security/secureScores/controlDefinitions/read',
             'Microsoft.Security/regulatoryComplianceStandards/read',
+            'Microsoft.Security/regulatoryComplianceControls/read',
             'Microsoft.Security/autoProvisioningSettings/read',
-            'Microsoft.Security/autoProvisioningSettings/write'
+            'Microsoft.Security/autoProvisioningSettings/write',
+            'Microsoft.Security/securitySolutions/read',
+            'Microsoft.Security/securitySolutions/write',
+            'Microsoft.Security/jitNetworkAccessPolicies/read',
+            'Microsoft.Security/jitNetworkAccessPolicies/write',
+            'Microsoft.Security/jitNetworkAccessPolicies/initiate/action',
+            'Microsoft.Security/adaptiveNetworkHardenings/read',
+            'Microsoft.Security/advancedThreatProtectionSettings/read',
+            'Microsoft.Security/advancedThreatProtectionSettings/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.SecurityInsights',
+        operations: [
+            'Microsoft.SecurityInsights/*',
+            'Microsoft.SecurityInsights/incidents/read',
+            'Microsoft.SecurityInsights/incidents/write',
+            'Microsoft.SecurityInsights/incidents/delete',
+            'Microsoft.SecurityInsights/incidents/comments/read',
+            'Microsoft.SecurityInsights/incidents/comments/write',
+            'Microsoft.SecurityInsights/alertRules/read',
+            'Microsoft.SecurityInsights/alertRules/write',
+            'Microsoft.SecurityInsights/alertRules/delete',
+            'Microsoft.SecurityInsights/alertRules/actions/read',
+            'Microsoft.SecurityInsights/alertRules/actions/write',
+            'Microsoft.SecurityInsights/dataConnectors/read',
+            'Microsoft.SecurityInsights/dataConnectors/write',
+            'Microsoft.SecurityInsights/dataConnectors/delete',
+            'Microsoft.SecurityInsights/watchlists/read',
+            'Microsoft.SecurityInsights/watchlists/write',
+            'Microsoft.SecurityInsights/watchlists/delete',
+            'Microsoft.SecurityInsights/automationRules/read',
+            'Microsoft.SecurityInsights/automationRules/write',
+            'Microsoft.SecurityInsights/automationRules/delete',
+            'Microsoft.SecurityInsights/threatIntelligence/indicators/read',
+            'Microsoft.SecurityInsights/threatIntelligence/indicators/write'
         ]
     },
     {
@@ -574,17 +1250,59 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.ServiceBus/namespaces/read',
             'Microsoft.ServiceBus/namespaces/write',
             'Microsoft.ServiceBus/namespaces/delete',
+            'Microsoft.ServiceBus/namespaces/authorizationRules/read',
+            'Microsoft.ServiceBus/namespaces/authorizationRules/write',
+            'Microsoft.ServiceBus/namespaces/authorizationRules/delete',
             'Microsoft.ServiceBus/namespaces/authorizationRules/listKeys/action',
             'Microsoft.ServiceBus/namespaces/regenerateKeys/action',
             'Microsoft.ServiceBus/namespaces/queues/read',
             'Microsoft.ServiceBus/namespaces/queues/write',
             'Microsoft.ServiceBus/namespaces/queues/delete',
+            'Microsoft.ServiceBus/namespaces/queues/authorizationRules/read',
+            'Microsoft.ServiceBus/namespaces/queues/authorizationRules/write',
+            'Microsoft.ServiceBus/namespaces/queues/authorizationRules/listKeys/action',
             'Microsoft.ServiceBus/namespaces/topics/read',
             'Microsoft.ServiceBus/namespaces/topics/write',
             'Microsoft.ServiceBus/namespaces/topics/delete',
+            'Microsoft.ServiceBus/namespaces/topics/authorizationRules/read',
+            'Microsoft.ServiceBus/namespaces/topics/authorizationRules/write',
+            'Microsoft.ServiceBus/namespaces/topics/authorizationRules/listKeys/action',
             'Microsoft.ServiceBus/namespaces/topics/subscriptions/read',
             'Microsoft.ServiceBus/namespaces/topics/subscriptions/write',
-            'Microsoft.ServiceBus/namespaces/topics/subscriptions/delete'
+            'Microsoft.ServiceBus/namespaces/topics/subscriptions/delete',
+            'Microsoft.ServiceBus/namespaces/topics/subscriptions/rules/read',
+            'Microsoft.ServiceBus/namespaces/topics/subscriptions/rules/write',
+            'Microsoft.ServiceBus/namespaces/topics/subscriptions/rules/delete',
+            'Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/read',
+            'Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/failover/action'
+        ]
+    },
+    {
+        provider: 'Microsoft.ServiceFabric',
+        operations: [
+            'Microsoft.ServiceFabric/*',
+            'Microsoft.ServiceFabric/clusters/read',
+            'Microsoft.ServiceFabric/clusters/write',
+            'Microsoft.ServiceFabric/clusters/delete',
+            'Microsoft.ServiceFabric/clusters/applications/read',
+            'Microsoft.ServiceFabric/clusters/applications/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.SignalRService',
+        operations: [
+            'Microsoft.SignalRService/*',
+            'Microsoft.SignalRService/SignalR/read',
+            'Microsoft.SignalRService/SignalR/write',
+            'Microsoft.SignalRService/SignalR/delete',
+            'Microsoft.SignalRService/SignalR/listKeys/action',
+            'Microsoft.SignalRService/SignalR/regenerateKey/action',
+            'Microsoft.SignalRService/SignalR/restart/action',
+            'Microsoft.SignalRService/webPubSub/read',
+            'Microsoft.SignalRService/webPubSub/write',
+            'Microsoft.SignalRService/webPubSub/delete',
+            'Microsoft.SignalRService/webPubSub/listKeys/action',
+            'Microsoft.SignalRService/webPubSub/regenerateKey/action'
         ]
     },
     {
@@ -601,6 +1319,13 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Sql/servers/databases/delete',
             'Microsoft.Sql/servers/databases/pause/action',
             'Microsoft.Sql/servers/databases/resume/action',
+            'Microsoft.Sql/servers/databases/failover/action',
+            'Microsoft.Sql/servers/databases/transparentDataEncryption/read',
+            'Microsoft.Sql/servers/databases/transparentDataEncryption/write',
+            'Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies/read',
+            'Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies/write',
+            'Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies/read',
+            'Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies/write',
             'Microsoft.Sql/servers/firewallRules/read',
             'Microsoft.Sql/servers/firewallRules/write',
             'Microsoft.Sql/servers/firewallRules/delete',
@@ -608,7 +1333,23 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Sql/servers/elasticPools/write',
             'Microsoft.Sql/servers/elasticPools/delete',
             'Microsoft.Sql/servers/administrators/read',
-            'Microsoft.Sql/servers/administrators/write'
+            'Microsoft.Sql/servers/administrators/write',
+            'Microsoft.Sql/servers/administrators/delete',
+            'Microsoft.Sql/servers/auditingSettings/read',
+            'Microsoft.Sql/servers/auditingSettings/write',
+            'Microsoft.Sql/servers/securityAlertPolicies/read',
+            'Microsoft.Sql/servers/securityAlertPolicies/write',
+            'Microsoft.Sql/servers/vulnerabilityAssessments/read',
+            'Microsoft.Sql/servers/vulnerabilityAssessments/write',
+            'Microsoft.Sql/managedInstances/read',
+            'Microsoft.Sql/managedInstances/write',
+            'Microsoft.Sql/managedInstances/delete',
+            'Microsoft.Sql/managedInstances/databases/read',
+            'Microsoft.Sql/managedInstances/databases/write',
+            'Microsoft.Sql/managedInstances/databases/delete',
+            'Microsoft.Sql/managedInstances/databases/start/action',
+            'Microsoft.Sql/managedInstances/databases/stop/action',
+            'Microsoft.Sql/managedInstances/failover/action'
         ]
     },
     {
@@ -627,6 +1368,10 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Storage/storageAccounts/blobServices/containers/read',
             'Microsoft.Storage/storageAccounts/blobServices/containers/write',
             'Microsoft.Storage/storageAccounts/blobServices/containers/delete',
+            'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read',
+            'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write',
+            'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete',
+            'Microsoft.Storage/storageAccounts/blobServices/containers/blobs/add/action',
             'Microsoft.Storage/storageAccounts/fileServices/read',
             'Microsoft.Storage/storageAccounts/fileServices/shares/read',
             'Microsoft.Storage/storageAccounts/fileServices/shares/write',
@@ -634,9 +1379,47 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Storage/storageAccounts/tableServices/read',
             'Microsoft.Storage/storageAccounts/tableServices/tables/read',
             'Microsoft.Storage/storageAccounts/tableServices/tables/write',
+            'Microsoft.Storage/storageAccounts/tableServices/tables/delete',
             'Microsoft.Storage/storageAccounts/queueServices/read',
             'Microsoft.Storage/storageAccounts/queueServices/queues/read',
-            'Microsoft.Storage/storageAccounts/queueServices/queues/write'
+            'Microsoft.Storage/storageAccounts/queueServices/queues/write',
+            'Microsoft.Storage/storageAccounts/queueServices/queues/delete',
+            'Microsoft.Storage/storageAccounts/managementPolicies/read',
+            'Microsoft.Storage/storageAccounts/managementPolicies/write',
+            'Microsoft.Storage/storageAccounts/inventoryPolicies/read',
+            'Microsoft.Storage/storageAccounts/inventoryPolicies/write',
+            'Microsoft.Storage/storageAccounts/encryptionScopes/read',
+            'Microsoft.Storage/storageAccounts/encryptionScopes/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.StreamAnalytics',
+        operations: [
+            'Microsoft.StreamAnalytics/*',
+            'Microsoft.StreamAnalytics/streamingjobs/read',
+            'Microsoft.StreamAnalytics/streamingjobs/write',
+            'Microsoft.StreamAnalytics/streamingjobs/delete',
+            'Microsoft.StreamAnalytics/streamingjobs/start/action',
+            'Microsoft.StreamAnalytics/streamingjobs/stop/action',
+            'Microsoft.StreamAnalytics/streamingjobs/inputs/read',
+            'Microsoft.StreamAnalytics/streamingjobs/inputs/write',
+            'Microsoft.StreamAnalytics/streamingjobs/outputs/read',
+            'Microsoft.StreamAnalytics/streamingjobs/outputs/write',
+            'Microsoft.StreamAnalytics/streamingjobs/transformations/read',
+            'Microsoft.StreamAnalytics/streamingjobs/transformations/write'
+        ]
+    },
+    {
+        provider: 'Microsoft.Subscription',
+        operations: [
+            'Microsoft.Subscription/*',
+            'Microsoft.Subscription/aliases/read',
+            'Microsoft.Subscription/aliases/write',
+            'Microsoft.Subscription/aliases/delete',
+            'Microsoft.Subscription/subscriptions/read',
+            'Microsoft.Subscription/subscriptions/acceptOwnership/action',
+            'Microsoft.Subscription/subscriptions/cancel/action',
+            'Microsoft.Subscription/subscriptions/rename/action'
         ]
     },
     {
@@ -657,7 +1440,15 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Synapse/workspaces/bigDataPools/delete',
             'Microsoft.Synapse/workspaces/pipelines/read',
             'Microsoft.Synapse/workspaces/pipelines/write',
-            'Microsoft.Synapse/workspaces/integrationruntimes/read'
+            'Microsoft.Synapse/workspaces/pipelines/delete',
+            'Microsoft.Synapse/workspaces/pipelines/createrun/action',
+            'Microsoft.Synapse/workspaces/integrationruntimes/read',
+            'Microsoft.Synapse/workspaces/integrationruntimes/write',
+            'Microsoft.Synapse/workspaces/integrationruntimes/start/action',
+            'Microsoft.Synapse/workspaces/integrationruntimes/stop/action',
+            'Microsoft.Synapse/workspaces/managedVirtualNetworks/read',
+            'Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings/read',
+            'Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings/write'
         ]
     },
     {
@@ -672,18 +1463,34 @@ export const COMMON_RBAC_PROVIDERS = [
             'Microsoft.Web/sites/stop/action',
             'Microsoft.Web/sites/restart/action',
             'Microsoft.Web/sites/publish/action',
+            'Microsoft.Web/sites/publishxml/action',
             'Microsoft.Web/sites/config/read',
             'Microsoft.Web/sites/config/write',
+            'Microsoft.Web/sites/config/list/action',
             'Microsoft.Web/sites/slots/read',
             'Microsoft.Web/sites/slots/write',
             'Microsoft.Web/sites/slots/delete',
+            'Microsoft.Web/sites/slots/start/action',
+            'Microsoft.Web/sites/slots/stop/action',
+            'Microsoft.Web/sites/slots/restart/action',
             'Microsoft.Web/sites/slots/swap/action',
+            'Microsoft.Web/sites/functions/read',
+            'Microsoft.Web/sites/functions/write',
+            'Microsoft.Web/sites/functions/delete',
+            'Microsoft.Web/sites/functions/listKeys/action',
+            'Microsoft.Web/sites/hostruntime/admin/action',
             'Microsoft.Web/serverfarms/read',
             'Microsoft.Web/serverfarms/write',
             'Microsoft.Web/serverfarms/delete',
             'Microsoft.Web/certificates/read',
             'Microsoft.Web/certificates/write',
-            'Microsoft.Web/certificates/delete'
+            'Microsoft.Web/certificates/delete',
+            'Microsoft.Web/customhostnamestickyslotconfigs/read',
+            'Microsoft.Web/staticSites/read',
+            'Microsoft.Web/staticSites/write',
+            'Microsoft.Web/staticSites/delete',
+            'Microsoft.Web/staticSites/listSecrets/action',
+            'Microsoft.Web/staticSites/builds/read'
         ]
     }
 ];
@@ -885,6 +1692,118 @@ export const RBAC_ROLE_TEMPLATES = [
             'Microsoft.Sql/servers/delete',
             'Microsoft.Sql/servers/databases/delete',
             'Microsoft.DocumentDB/databaseAccounts/delete'
+        ]
+    },
+    {
+        id: 'sentinelAnalyst',
+        name: 'Sentinel Security Analyst',
+        category: 'Security & Monitoring',
+        description: 'Triage and manage Microsoft Sentinel incidents, read alert rules, and run Log Analytics security queries.',
+        assignableScopes: '/subscriptions/00000000-0000-0000-0000-000000000000',
+        actions: [
+            'Microsoft.SecurityInsights/incidents/read',
+            'Microsoft.SecurityInsights/incidents/write',
+            'Microsoft.SecurityInsights/incidents/comments/read',
+            'Microsoft.SecurityInsights/incidents/comments/write',
+            'Microsoft.SecurityInsights/alertRules/read',
+            'Microsoft.SecurityInsights/watchlists/read',
+            'Microsoft.OperationalInsights/workspaces/read',
+            'Microsoft.OperationalInsights/workspaces/query/read'
+        ],
+        notActions: [
+            'Microsoft.SecurityInsights/incidents/delete',
+            'Microsoft.SecurityInsights/alertRules/delete',
+            'Microsoft.OperationalInsights/workspaces/delete'
+        ]
+    },
+    {
+        id: 'aiDeveloper',
+        name: 'Azure AI & OpenAI Developer',
+        category: 'AI & Machine Learning',
+        description: 'Deploy AI models, manage Cognitive Services / Azure OpenAI deployments, and run Azure AI Search queries.',
+        assignableScopes: '/subscriptions/00000000-0000-0000-0000-000000000000',
+        actions: [
+            'Microsoft.CognitiveServices/accounts/read',
+            'Microsoft.CognitiveServices/accounts/listKeys/action',
+            'Microsoft.CognitiveServices/accounts/deployments/read',
+            'Microsoft.CognitiveServices/accounts/models/read',
+            'Microsoft.CognitiveServices/accounts/OpenAI/read',
+            'Microsoft.CognitiveServices/accounts/OpenAI/write',
+            'Microsoft.MachineLearningServices/workspaces/read',
+            'Microsoft.MachineLearningServices/workspaces/computes/read',
+            'Microsoft.MachineLearningServices/workspaces/models/read',
+            'Microsoft.MachineLearningServices/workspaces/models/write',
+            'Microsoft.MachineLearningServices/workspaces/endpoints/read',
+            'Microsoft.Search/searchServices/read',
+            'Microsoft.Search/searchServices/listQueryKeys/action'
+        ],
+        notActions: [
+            'Microsoft.CognitiveServices/accounts/delete',
+            'Microsoft.MachineLearningServices/workspaces/delete',
+            'Microsoft.Search/searchServices/delete'
+        ]
+    },
+    {
+        id: 'policyContributor',
+        name: 'Governance & Policy Contributor',
+        category: 'Governance & Management',
+        description: 'Manage and evaluate Azure Policy definitions, initiatives, exemptions, and remediation tasks.',
+        assignableScopes: '/subscriptions/00000000-0000-0000-0000-000000000000',
+        actions: [
+            'Microsoft.Authorization/policyAssignments/*',
+            'Microsoft.Authorization/policyDefinitions/*',
+            'Microsoft.Authorization/policySetDefinitions/*',
+            'Microsoft.Authorization/policyExemptions/*',
+            'Microsoft.PolicyInsights/*',
+            'Microsoft.Resources/tags/*',
+            'Microsoft.Resources/subscriptions/read',
+            'Microsoft.Resources/subscriptions/resourceGroups/read',
+            '*/read'
+        ],
+        notActions: [
+            'Microsoft.Authorization/roleAssignments/write',
+            'Microsoft.Authorization/roleAssignments/delete',
+            'Microsoft.Authorization/roleDefinitions/write',
+            'Microsoft.Authorization/roleDefinitions/delete'
+        ]
+    },
+    {
+        id: 'identityOperator',
+        name: 'Managed Identity Operator',
+        category: 'Identity & Security',
+        description: 'Read and assign User-Assigned Managed Identities to Azure resources without deletion rights.',
+        assignableScopes: '/subscriptions/00000000-0000-0000-0000-000000000000',
+        actions: [
+            'Microsoft.ManagedIdentity/userAssignedIdentities/read',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/assign/action',
+            'Microsoft.ManagedIdentity/userAssignedIdentities/listCredentials/action'
+        ],
+        notActions: [
+            'Microsoft.ManagedIdentity/userAssignedIdentities/delete'
+        ]
+    },
+    {
+        id: 'frontDoorManager',
+        name: 'CDN & Front Door Manager',
+        category: 'Networking & Edge',
+        description: 'Manage routing rules, custom domains, security policies, and purge cache on Azure Front Door / CDN profiles.',
+        assignableScopes: '/subscriptions/00000000-0000-0000-0000-000000000000',
+        actions: [
+            'Microsoft.Cdn/profiles/read',
+            'Microsoft.Cdn/profiles/endpoints/read',
+            'Microsoft.Cdn/profiles/endpoints/purge/action',
+            'Microsoft.Cdn/profiles/endpoints/start/action',
+            'Microsoft.Cdn/profiles/endpoints/stop/action',
+            'Microsoft.Cdn/profiles/rulesets/read',
+            'Microsoft.Cdn/profiles/rulesets/write',
+            'Microsoft.Cdn/profiles/rulesets/rules/read',
+            'Microsoft.Cdn/profiles/rulesets/rules/write',
+            'Microsoft.Cdn/profiles/customDomains/read',
+            'Microsoft.Cdn/profiles/securityPolicies/read',
+            'Microsoft.Cdn/profiles/securityPolicies/write'
+        ],
+        notActions: [
+            'Microsoft.Cdn/profiles/delete'
         ]
     }
 ];

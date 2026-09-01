@@ -6,13 +6,28 @@
       "category": "Management + Governance"
     },
     {
+      "name": "API Center service",
+      "abbrev": "apic",
+      "category": "Integration"
+    },
+    {
       "name": "API Management",
       "abbrev": "apim",
       "category": "Web"
     },
     {
+      "name": "App Configuration store",
+      "abbrev": "appcs",
+      "category": "Integration"
+    },
+    {
       "name": "App Service",
       "abbrev": "app",
+      "category": "Web"
+    },
+    {
+      "name": "App Service Environment",
+      "abbrev": "ase",
       "category": "Web"
     },
     {
@@ -66,9 +81,19 @@
       "category": "AI + ML"
     },
     {
-      "name": "Azure AI services account",
-      "abbrev": "ais",
+      "name": "Azure AI Video Indexer",
+      "abbrev": "avi",
       "category": "AI + ML"
+    },
+    {
+      "name": "Azure Arc-enabled Kubernetes cluster",
+      "abbrev": "arck",
+      "category": "Containers"
+    },
+    {
+      "name": "Azure Arc-enabled server",
+      "abbrev": "arcs",
+      "category": "Compute"
     },
     {
       "name": "Azure Bot Service",
@@ -81,6 +106,16 @@
       "category": "Databases"
     },
     {
+      "name": "Azure Chaos Studio experiment",
+      "abbrev": "chx",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Azure Databricks Access Connector",
+      "abbrev": "dbac",
+      "category": "Analytics"
+    },
+    {
       "name": "Azure Files share",
       "abbrev": "share",
       "category": "Storage"
@@ -91,12 +126,37 @@
       "category": "Networking"
     },
     {
-      "name": "Azure OpenAI",
-      "abbrev": "oai",
-      "category": "AI + ML"
+      "name": "Azure Local",
+      "abbrev": "al",
+      "category": "Compute"
     },
     {
-      "name": "Azure OpenAI service",
+      "name": "Azure Managed Grafana",
+      "abbrev": "amg",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Azure Managed Redis",
+      "abbrev": "amr",
+      "category": "Databases"
+    },
+    {
+      "name": "Azure Maps account",
+      "abbrev": "map",
+      "category": "Web"
+    },
+    {
+      "name": "Azure Migrate project",
+      "abbrev": "migr",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Azure Monitor workspace",
+      "abbrev": "amon",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Azure OpenAI Service",
       "abbrev": "oai",
       "category": "AI + ML"
     },
@@ -104,6 +164,11 @@
       "name": "Azure Spring Apps",
       "abbrev": "spring",
       "category": "Compute"
+    },
+    {
+      "name": "Backup vault",
+      "abbrev": "bvault",
+      "category": "Storage"
     },
     {
       "name": "Bastion host",
@@ -121,6 +186,11 @@
       "category": "Management + Governance"
     },
     {
+      "name": "Communication Services",
+      "abbrev": "acs",
+      "category": "Web"
+    },
+    {
       "name": "Compute gallery",
       "abbrev": "gal",
       "category": "Compute"
@@ -133,6 +203,11 @@
     {
       "name": "Container Apps Environment",
       "abbrev": "cae",
+      "category": "Containers"
+    },
+    {
+      "name": "Container Apps job",
+      "abbrev": "caj",
       "category": "Containers"
     },
     {
@@ -156,6 +231,16 @@
       "category": "Management + Governance"
     },
     {
+      "name": "Data collection endpoint",
+      "abbrev": "dce",
+      "category": "Management + Governance"
+    },
+    {
+      "name": "Data collection rule",
+      "abbrev": "dcr",
+      "category": "Management + Governance"
+    },
+    {
       "name": "Data Explorer cluster",
       "abbrev": "dec",
       "category": "Analytics"
@@ -171,6 +256,11 @@
       "category": "Storage"
     },
     {
+      "name": "Database Migration Service",
+      "abbrev": "dms",
+      "category": "Databases"
+    },
+    {
       "name": "Databricks workspace",
       "abbrev": "dbw",
       "category": "Analytics"
@@ -179,6 +269,16 @@
       "name": "DDoS protection plan",
       "abbrev": "ddos",
       "category": "Networking"
+    },
+    {
+      "name": "Dev Box project",
+      "abbrev": "devbox",
+      "category": "Compute"
+    },
+    {
+      "name": "Dev Center",
+      "abbrev": "dc",
+      "category": "Compute"
     },
     {
       "name": "Device Provisioning Service",
@@ -206,8 +306,28 @@
       "category": "Compute"
     },
     {
+      "name": "DNS private resolver",
+      "abbrev": "dnspr",
+      "category": "Networking"
+    },
+    {
+      "name": "Elastic SAN",
+      "abbrev": "esan",
+      "category": "Storage"
+    },
+    {
       "name": "Event Grid domain",
       "abbrev": "evgd",
+      "category": "Integration"
+    },
+    {
+      "name": "Event Grid namespace",
+      "abbrev": "evgns",
+      "category": "Integration"
+    },
+    {
+      "name": "Event Grid system topic",
+      "abbrev": "egst",
       "category": "Integration"
     },
     {
@@ -229,6 +349,11 @@
       "name": "ExpressRoute circuit",
       "abbrev": "erc",
       "category": "Networking"
+    },
+    {
+      "name": "Fabric Capacity",
+      "abbrev": "fab",
+      "category": "Analytics"
     },
     {
       "name": "Firewall policy",
@@ -261,9 +386,19 @@
       "category": "Compute"
     },
     {
+      "name": "Integration account",
+      "abbrev": "ia",
+      "category": "Integration"
+    },
+    {
       "name": "IoT Hub",
       "abbrev": "iot",
       "category": "IoT"
+    },
+    {
+      "name": "IP group",
+      "abbrev": "ipg",
+      "category": "Networking"
     },
     {
       "name": "Key vault",
@@ -286,8 +421,23 @@
       "category": "Containers"
     },
     {
+      "name": "Language service",
+      "abbrev": "lang",
+      "category": "AI + ML"
+    },
+    {
       "name": "Load balancer",
       "abbrev": "lb",
+      "category": "Networking"
+    },
+    {
+      "name": "Load Testing",
+      "abbrev": "lt",
+      "category": "Web"
+    },
+    {
+      "name": "Local network gateway",
+      "abbrev": "lgw",
       "category": "Networking"
     },
     {
@@ -304,6 +454,11 @@
       "name": "Machine Learning workspace",
       "abbrev": "mlw",
       "category": "AI + ML"
+    },
+    {
+      "name": "Managed DevOps Pools",
+      "abbrev": "mdp",
+      "category": "DevOps"
     },
     {
       "name": "Managed disk",
@@ -336,6 +491,11 @@
       "category": "AI + ML"
     },
     {
+      "name": "Microsoft Purview instance",
+      "abbrev": "pview",
+      "category": "Management + Governance"
+    },
+    {
       "name": "MySQL server",
       "abbrev": "mysql",
       "category": "Databases"
@@ -361,8 +521,18 @@
       "category": "Storage"
     },
     {
+      "name": "Network interface",
+      "abbrev": "nic",
+      "category": "Networking"
+    },
+    {
       "name": "Network security group",
       "abbrev": "nsg",
+      "category": "Networking"
+    },
+    {
+      "name": "Network security perimeter",
+      "abbrev": "nsp",
       "category": "Networking"
     },
     {
@@ -471,9 +641,19 @@
       "category": "Integration"
     },
     {
+      "name": "Service Fabric cluster",
+      "abbrev": "sf",
+      "category": "Compute"
+    },
+    {
       "name": "SignalR service",
       "abbrev": "sigr",
       "category": "Integration"
+    },
+    {
+      "name": "Speech service",
+      "abbrev": "spch",
+      "category": "AI + ML"
     },
     {
       "name": "SQL database",
@@ -503,6 +683,11 @@
     {
       "name": "Storage account",
       "abbrev": "st",
+      "category": "Storage"
+    },
+    {
+      "name": "Storage Sync Service",
+      "abbrev": "sss",
       "category": "Storage"
     },
     {
@@ -561,6 +746,11 @@
       "category": "Networking"
     },
     {
+      "name": "Virtual Network Manager",
+      "abbrev": "vnm",
+      "category": "Networking"
+    },
+    {
       "name": "Virtual Network routing appliance",
       "abbrev": "vnra",
       "category": "Networking"
@@ -581,52 +771,14 @@
       "category": "Networking"
     },
     {
+      "name": "Web PubSub",
+      "abbrev": "wps",
+      "category": "Web"
+    },
+    {
       "name": "Workspace",
       "abbrev": "vdws",
       "category": "Desktop Virtualization"
-    },
-    {
-      "name": "Virtual Network Manager",
-      "abbrev": "vnm",
-      "category": "Networking"
-    }
-  ],
-  "environments": [
-    {
-      "label": "Production (prod)",
-      "value": "prod"
-    },
-    {
-      "label": "Development (dev)",
-      "value": "dev"
-    },
-    {
-      "label": "Staging (stg)",
-      "value": "stg"
-    },
-    {
-      "label": "Test (test)",
-      "value": "test"
-    },
-    {
-      "label": "UAT (uat)",
-      "value": "uat"
-    },
-    {
-      "label": "QA (qa)",
-      "value": "qa"
-    },
-    {
-      "label": "Shared (shrd)",
-      "value": "shrd"
-    },
-    {
-      "label": "Sandbox (sbx)",
-      "value": "sbx"
-    },
-    {
-      "label": "DR (dr)",
-      "value": "dr"
     }
   ],
   "regions": [
@@ -879,6 +1031,44 @@
       "label": "UAE North",
       "value": "uaenorth",
       "abbrev": "uan"
+    }
+  ],
+  "environments": [
+    {
+      "label": "Production (prod)",
+      "value": "prod"
+    },
+    {
+      "label": "Development (dev)",
+      "value": "dev"
+    },
+    {
+      "label": "Staging (stg)",
+      "value": "stg"
+    },
+    {
+      "label": "Test (test)",
+      "value": "test"
+    },
+    {
+      "label": "UAT (uat)",
+      "value": "uat"
+    },
+    {
+      "label": "QA (qa)",
+      "value": "qa"
+    },
+    {
+      "label": "Shared (shrd)",
+      "value": "shrd"
+    },
+    {
+      "label": "Sandbox (sbx)",
+      "value": "sbx"
+    },
+    {
+      "label": "DR (dr)",
+      "value": "dr"
     }
   ]
 }
