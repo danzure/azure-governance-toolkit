@@ -138,6 +138,7 @@ export default function App() {
                 onToggleMenu={handleToggleMenu}
                 title={headerTitle}
                 isMobile={isMobile}
+                systemPrefersDark={systemPrefersDark}
             />
 
             <div className="flex-1 flex overflow-hidden pt-[48px] min-w-0">

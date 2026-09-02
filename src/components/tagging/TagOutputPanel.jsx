@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { Copy, Check, FileJson, FileText } from 'lucide-react';
 
 /**
@@ -17,7 +17,7 @@ export default function TagOutputPanel({ tags }) {
     const [copiedId, setCopiedId] = useState(null);
     const copyTimeoutRef = useRef(null);
 
-    const generateMarkdown = () => {
+    const markdownContent = useMemo(() => {
         if (tags.length === 0) return 'No tags defined.';
         
         let md = `| Tag Name | Requirement | Policy Effect | Allowed Values |\n`;
@@ -28,9 +28,9 @@ export default function TagOutputPanel({ tags }) {
             md += `| **${safeName}** | ${t.requirement} | ${t.effect} | ${safeValues} |\n`;
         });
         return md;
-    };
+    }, [tags]);
 
-    const generateJSON = () => {
+    const jsonContent = useMemo(() => {
         if (tags.length === 0) return '{\n  "message": "No tags defined."\n}';
         
         // This is a simplified representation of an Azure Policy initiative for tagging.
@@ -85,8 +85,7 @@ export default function TagOutputPanel({ tags }) {
                 };
             }
             
-            // Handle Modify effect details (adding the actual role assignment needed for modify is complex, 
-            // but we add the operations details here)
+            // Handle Modify effect details
             if (t.effect === 'Modify') {
                 policy.properties.policyRule.then.details = {
                     "roleDefinitionIds": [
@@ -106,9 +105,9 @@ export default function TagOutputPanel({ tags }) {
         });
         
         return JSON.stringify(policies, null, 2);
-    };
+    }, [tags]);
 
-    const outputContent = activeTab === 'json' ? generateJSON() : generateMarkdown();
+    const outputContent = activeTab === 'json' ? jsonContent : markdownContent;
 
     const handleCopy = async () => {
         try {

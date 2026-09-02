@@ -4,7 +4,6 @@ import { Plus, Trash2, ChevronDown, ChevronRight, Edit2, ZoomIn, ZoomOut, X, Wan
 import TopologyCodeGenerator from './TopologyCodeGenerator';
 import Tooltip from '../shared/Tooltip';
 import { generateName } from '../../utils/nameGenerator';
-import { toPng } from 'html-to-image';
 import mgIcon from '../../assets/icons/Management-Groups.svg';
 import subIcon from '../../assets/icons/Subscriptions.svg';
 
@@ -446,6 +445,7 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
             // Wait for DOM to update
             await new Promise(r => setTimeout(r, 150));
             
+            const { toPng } = await import('html-to-image');
             const isDark = document.documentElement.classList.contains('dark');
             const dataUrl = await toPng(element, {
                 backgroundColor: isDark ? '#202020' : '#ffffff',

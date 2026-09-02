@@ -37,9 +37,11 @@ export default function SearchableSelect({ items, value, onChange, label, placeh
     const selectedItem = items.find(i => i.value === value && !i.type) || items.find(i => !i.type);
 
     const filteredItems = useMemo(() => {
+        if (!search) return items;
+        const lowerSearch = search.toLowerCase();
         return items.filter(i => {
             if (i.type === 'header') return true;
-            return String(i.label).toLowerCase().includes(search.toLowerCase());
+            return String(i.label).toLowerCase().includes(lowerSearch);
         });
     }, [items, search]);
 

@@ -27,15 +27,17 @@ export default function ResourceGrid({ resources, generateName, copiedId, onCopy
         setVisibleCount(24);
     }, [resources]);
 
-    // Infinite scroll observer
+    // Infinite scroll observer - only active when there are more items to reveal
     useEffect(() => {
+        if (visibleCount >= resources.length) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
-                    setVisibleCount(prev => Math.min(prev + 24, 1000));
+                    setVisibleCount(prev => Math.min(prev + 24, resources.length));
                 }
             },
-            { rootMargin: '500px' }
+            { rootMargin: '400px' }
         );
 
         const currentTarget = loadMoreRef.current;
@@ -44,7 +46,7 @@ export default function ResourceGrid({ resources, generateName, copiedId, onCopy
         return () => {
             if (currentTarget) observer.unobserve(currentTarget);
         };
-    }, []);
+    }, [visibleCount, resources.length]);
 
     // Handle escape key to close expanded cards
     useEffect(() => {
@@ -118,7 +120,9 @@ export default function ResourceGrid({ resources, generateName, copiedId, onCopy
                 })}
             </div>
             {/* Invisible div to trigger intersection observer for infinite scroll */}
-            <div ref={loadMoreRef} className="h-4 w-full" aria-hidden="true" />
+            {visibleCount < resources.length && (
+                <div ref={loadMoreRef} className="h-4 w-full" aria-hidden="true" />
+            )}
         </>
     );
 }

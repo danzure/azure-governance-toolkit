@@ -1,8 +1,9 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useState, useMemo, lazy, Suspense } from 'react';
 import { Copy, Check, ShieldAlert, AlertTriangle, X } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
-import ExpandedPanel from './ExpandedPanel';
 import AzureServiceIcon from './AzureServiceIcon';
+
+const ExpandedPanel = lazy(() => import('./ExpandedPanel'));
 import { getCategoryColors } from '../../data/categoryColors';
 import { getBundleResources } from '../../utils/bundleGenerator';
 import { validateName } from '../../utils/nameValidator';
@@ -41,7 +42,10 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
     const [spokeCount, setSpokeCount] = useState(1);
     const [spokeStartValue, setSpokeStartValue] = useState(1);
 
-    const bundle = useMemo(() => getBundleResources(resource, topology, { spokeCount, spokeStartValue }), [resource, topology, spokeCount, spokeStartValue]);
+    const bundle = useMemo(() => {
+        if (!isExpanded && topology === 'single') return null;
+        return getBundleResources(resource, topology, { spokeCount, spokeStartValue });
+    }, [resource, topology, spokeCount, spokeStartValue, isExpanded]);
     const hasBundle = bundle && bundle.length > 0;
 
     // Helper to generate name - utilizing the passed generateName function with modified resource context
@@ -173,23 +177,30 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
 
             {isExpanded && (
                 <div className="animate-fade-in">
-                    <ExpandedPanel
-                        resource={resource}
-                        genName={genName}
-                        isCopied={isCopied}
-                        onCopy={onCopy}
-                        selectedSubResource={selectedSubResource}
-                        onSubResourceChange={(suffix) => onSubResourceChange(resource.name, suffix)}
-                        topology={topology}
-                        setTopology={setTopology}
-                        spokeCount={spokeCount}
-                        setSpokeCount={setSpokeCount}
-                        spokeStartValue={spokeStartValue}
-                        setSpokeStartValue={setSpokeStartValue}
-                        bundle={bundle}
-                        getBundleName={getGeneratedName}
-                        onClose={() => onToggle(resource.name, isExpanded)}
-                    />
+                    <Suspense fallback={
+                        <div className="p-8 flex items-center justify-center text-[13px] text-fluent-fg-tertiary">
+                            <div className="w-5 h-5 rounded-full border-2 border-fluent-brand-bg/20 border-t-fluent-brand-bg animate-spin mr-2" />
+                            Loading details...
+                        </div>
+                    }>
+                        <ExpandedPanel
+                            resource={resource}
+                            genName={genName}
+                            isCopied={isCopied}
+                            onCopy={onCopy}
+                            selectedSubResource={selectedSubResource}
+                            onSubResourceChange={(suffix) => onSubResourceChange(resource.name, suffix)}
+                            topology={topology}
+                            setTopology={setTopology}
+                            spokeCount={spokeCount}
+                            setSpokeCount={setSpokeCount}
+                            spokeStartValue={spokeStartValue}
+                            setSpokeStartValue={setSpokeStartValue}
+                            bundle={bundle}
+                            getBundleName={getGeneratedName}
+                            onClose={() => onToggle(resource.name, isExpanded)}
+                        />
+                    </Suspense>
                 </div>
             )}
         </div>

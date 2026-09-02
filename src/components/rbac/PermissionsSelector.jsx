@@ -1,8 +1,9 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Search, Plus, Minus, ShieldCheck, X, Code2, Copy, Check, ListFilter, RotateCcw } from 'lucide-react';
 import { COMMON_RBAC_PROVIDERS } from '../../data/rbacData';
 import SearchableSelect from '../shared/SearchableSelect';
+import useDebounce from '../../hooks/useDebounce';
 
 /**
  * PermissionsSelector Component
@@ -41,9 +42,16 @@ export default function PermissionsSelector({
     onClearNotActions
 }) {
     const [searchTerm, setSearchTerm] = useState('');
+    const debouncedSearchTerm = useDebounce(searchTerm, 250);
     const [activeProvider, setActiveProvider] = useState('All');
     const [activeTab, setActiveTab] = useState('permissions'); // 'permissions' | 'json'
     const [copied, setCopied] = useState(false);
+    const [visibleProviderLimit, setVisibleProviderLimit] = useState(15);
+
+    // Reset pagination when filter criteria change
+    useEffect(() => {
+        setVisibleProviderLimit(15);
+    }, [debouncedSearchTerm, activeProvider]);
 
     const filteredProviders = useMemo(() => {
         let providers = COMMON_RBAC_PROVIDERS;
@@ -51,14 +59,26 @@ export default function PermissionsSelector({
             providers = providers.filter(p => p.provider === activeProvider);
         }
         
-        if (!searchTerm) return providers;
+        if (!debouncedSearchTerm) return providers;
         
-        const lowerSearch = searchTerm.toLowerCase();
+        const lowerSearch = debouncedSearchTerm.toLowerCase();
         return providers.map(p => ({
             provider: p.provider,
             operations: p.operations.filter(op => op.toLowerCase().includes(lowerSearch))
         })).filter(p => p.operations.length > 0);
-    }, [searchTerm, activeProvider]);
+    }, [debouncedSearchTerm, activeProvider]);
+
+    // Progressive rendering: when browsing 'All' without search, limit initial providers rendered to keep DOM lightweight
+    const displayedProviders = useMemo(() => {
+        if (activeProvider !== 'All' || debouncedSearchTerm) {
+            return filteredProviders;
+        }
+        return filteredProviders.slice(0, visibleProviderLimit);
+    }, [filteredProviders, activeProvider, debouncedSearchTerm, visibleProviderLimit]);
+
+    // O(1) Set lookups instead of O(N) linear array scanning
+    const actionsSet = useMemo(() => new Set(actions), [actions]);
+    const notActionsSet = useMemo(() => new Set(notActions), [notActions]);
 
     const totalAvailableCount = useMemo(() => {
         return filteredProviders.reduce((acc, p) => acc + p.operations.length, 0);
@@ -208,7 +228,7 @@ export default function PermissionsSelector({
                             </div>
                         ) : (
                             <div className="flex flex-col gap-3">
-                                {filteredProviders.map(p => (
+                                {displayedProviders.map(p => (
                                     <div key={p.provider} className="flex flex-col gap-1">
                                         <div className="flex items-center justify-between px-2 py-1 text-[11px] font-bold text-fluent-fg-secondary uppercase tracking-wider bg-fluent-bg-subtle/60 rounded">
                                             <span>{p.provider}</span>
@@ -216,16 +236,16 @@ export default function PermissionsSelector({
                                         </div>
                                         <div className="flex flex-col gap-0.5">
                                             {p.operations.map(op => {
-                                                const isAction = actions.includes(op);
-                                                const isNotAction = notActions.includes(op);
+                                                const isAction = actionsSet.has(op);
+                                                const isNotAction = notActionsSet.has(op);
                                                 return (
                                                     <div 
                                                         key={op} 
                                                         className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-1.5 rounded text-[12px] font-mono group transition-colors ${
                                                             isAction 
-                                                                ? 'bg-fluent-cat-green-bg/15 text-fluent-fg-primary' 
+                                                                ? 'bg-fluent-cat-green-bg text-fluent-fg-primary' 
                                                                 : isNotAction 
-                                                                    ? 'bg-fluent-cat-red-bg/15 text-fluent-fg-primary' 
+                                                                    ? 'bg-fluent-cat-red-bg text-fluent-fg-primary' 
                                                                     : 'hover:bg-fluent-bg-hover text-fluent-fg-primary'
                                                         }`}
                                                     >
@@ -278,6 +298,18 @@ export default function PermissionsSelector({
                                         </div>
                                     </div>
                                 ))}
+
+                                {displayedProviders.length < filteredProviders.length && (
+                                    <div className="pt-2 pb-1 text-center">
+                                        <button
+                                            type="button"
+                                            onClick={() => setVisibleProviderLimit(prev => prev + 15)}
+                                            className="px-3 h-[28px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[12px] font-medium shadow-sm active:scale-95"
+                                        >
+                                            Show more providers ({filteredProviders.length - displayedProviders.length} remaining)
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
