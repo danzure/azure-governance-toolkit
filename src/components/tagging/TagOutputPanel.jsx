@@ -1,162 +1,170 @@
-import { useState, useRef, useMemo } from 'react';
-import { Copy, Check, FileJson, FileText } from 'lucide-react';
+import { useState, useRef, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { Copy, Check, Braces } from 'lucide-react';
+import { 
+    generateTagJson, 
+    generateTagMarkdown, 
+    generateTagBicep, 
+    generateTagTerraform 
+} from '../../data/taggingData';
 
 /**
  * TagOutputPanel Component
  * 
  * Takes the tag definitions from the TagBuilder and dynamically generates
- * actionable outputs. It supports generating a Markdown table for documentation
- * purposes and an Azure Policy JSON structure for enforcing the tagging strategy.
- * Includes copy-to-clipboard functionality.
+ * actionable outputs:
+ * - Azure Policy JSON (initiative structure)
+ * - Bicep (native Azure resource definitions)
+ * - Terraform (azurerm_policy_definition resources)
+ * - Markdown table (documentation and wiki export)
+ * 
+ * Includes 1-click copy-to-clipboard functionality with positive feedback.
  * 
  * @param {Object} props
  * @param {Array} props.tags - Array of tag definition objects to generate output for.
  */
 export default function TagOutputPanel({ tags }) {
-    const [activeTab, setActiveTab] = useState('json');
-    const [copiedId, setCopiedId] = useState(null);
+    const [activeTab, setActiveTab] = useState('json'); // 'json' | 'bicep' | 'terraform' | 'markdown'
+    const [copied, setCopied] = useState(false);
     const copyTimeoutRef = useRef(null);
 
-    const markdownContent = useMemo(() => {
-        if (tags.length === 0) return 'No tags defined.';
-        
-        let md = `| Tag Name | Requirement | Policy Effect | Allowed Values |\n`;
-        md += `|---|---|---|---|\n`;
-        tags.forEach(t => {
-            const safeName = (t.name || 'Unnamed').replace(/\|/g, '&#124;');
-            const safeValues = (t.allowedValues || 'Any').replace(/\|/g, '&#124;');
-            md += `| **${safeName}** | ${t.requirement} | ${t.effect} | ${safeValues} |\n`;
-        });
-        return md;
-    }, [tags]);
+    const outputContent = useMemo(() => {
+        switch (activeTab) {
+            case 'json':
+                return generateTagJson(tags);
+            case 'bicep':
+                return generateTagBicep(tags);
+            case 'terraform':
+                return generateTagTerraform(tags);
+            case 'markdown':
+                return generateTagMarkdown(tags);
+            default:
+                return '';
+        }
+    }, [tags, activeTab]);
 
-    const jsonContent = useMemo(() => {
-        if (tags.length === 0) return '{\n  "message": "No tags defined."\n}';
-        
-        // This is a simplified representation of an Azure Policy initiative for tagging.
-        const policies = tags.map(t => {
-            const tagName = t.name || 'Unnamed';
-            
-            // Build the basic policy structure
-            const policy = {
-                "properties": {
-                    "displayName": `Require tag and its value: ${tagName}`,
-                    "policyType": "Custom",
-                    "mode": "Indexed",
-                    "parameters": {
-                        "tagName": {
-                            "type": "String",
-                            "defaultValue": tagName
-                        }
-                    }
-                }
-            };
-
-            // If there are allowed values, add them to parameters
-            if (t.allowedValues && t.allowedValues.trim().length > 0) {
-                const valuesArray = t.allowedValues.split(',').map(v => v.trim()).filter(Boolean);
-                policy.properties.parameters.tagValues = {
-                    "type": "Array",
-                    "defaultValue": valuesArray
-                };
-                
-                // Add the policy rule with allowed values check
-                policy.properties.policyRule = {
-                    "if": {
-                        "not": {
-                            "field": `[concat('tags[', parameters('tagName'), ']')]`,
-                            "in": "[parameters('tagValues')]"
-                        }
-                    },
-                    "then": {
-                        "effect": t.effect.toLowerCase()
-                    }
-                };
-            } else {
-                // Policy rule without allowed values check
-                policy.properties.policyRule = {
-                    "if": {
-                        "field": `[concat('tags[', parameters('tagName'), ']')]`,
-                        "exists": "false"
-                    },
-                    "then": {
-                        "effect": t.effect.toLowerCase()
-                    }
-                };
-            }
-            
-            // Handle Modify effect details
-            if (t.effect === 'Modify') {
-                policy.properties.policyRule.then.details = {
-                    "roleDefinitionIds": [
-                        "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-                    ],
-                    "operations": [
-                        {
-                            "operation": "addOrReplace",
-                            "field": `[concat('tags[', parameters('tagName'), ']')]`,
-                            "value": "[parameters('tagName')]" // simplified default value
-                        }
-                    ]
-                };
-            }
-
-            return policy;
-        });
-        
-        return JSON.stringify(policies, null, 2);
-    }, [tags]);
-
-    const outputContent = activeTab === 'json' ? jsonContent : markdownContent;
-
-    const handleCopy = async () => {
+    const handleCopy = useCallback(async () => {
         try {
             await navigator.clipboard.writeText(outputContent);
-            setCopiedId('output');
+            setCopied(true);
             if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-            copyTimeoutRef.current = setTimeout(() => setCopiedId(null), 2000);
+            copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
         } catch (err) {
             console.error('Copy failed', err);
         }
-    };
+    }, [outputContent]);
 
     return (
-        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full">
-            <div className="flex items-center justify-between border-b border-fluent-stroke-subtle bg-fluent-bg-subtle px-4 py-3">
-                <div className="flex items-center gap-2">
+        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full min-h-[400px]">
+            {/* Header Toolbar */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle px-4 py-3 shrink-0">
+                {/* Format Tabs */}
+                <div 
+                    className="flex shrink-0 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md p-0.5 w-full sm:w-auto flex-wrap" 
+                    role="tablist"
+                    aria-label="Export format"
+                >
                     <button 
+                        type="button"
+                        role="tab"
+                        aria-selected={activeTab === 'json'}
                         onClick={() => setActiveTab('json')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${activeTab === 'json' ? 'bg-fluent-info-bg text-fluent-brand-fg font-semibold shadow-sm' : 'bg-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'}`}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-medium transition-all duration-200 ease-in-out active:scale-95 ${
+                            activeTab === 'json' 
+                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle' 
+                                : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
+                        }`}
                     >
-                        <FileJson className="w-4 h-4" /> JSON
+                        <Braces className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> 
+                        <span>JSON</span>
                     </button>
                     <button 
-                        onClick={() => setActiveTab('markdown')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors ${activeTab === 'markdown' ? 'bg-fluent-info-bg text-fluent-brand-fg font-semibold shadow-sm' : 'bg-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'}`}
+                        type="button"
+                        role="tab"
+                        aria-selected={activeTab === 'bicep'}
+                        onClick={() => setActiveTab('bicep')}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-medium transition-all duration-200 ease-in-out active:scale-95 ${
+                            activeTab === 'bicep' 
+                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle' 
+                                : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
+                        }`}
                     >
-                        <FileText className="w-4 h-4" /> Markdown
+                        <img src="/bicep.svg" className="w-3.5 h-3.5 shrink-0" alt="" aria-hidden="true" /> 
+                        <span>Bicep</span>
+                    </button>
+                    <button 
+                        type="button"
+                        role="tab"
+                        aria-selected={activeTab === 'terraform'}
+                        onClick={() => setActiveTab('terraform')}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-medium transition-all duration-200 ease-in-out active:scale-95 ${
+                            activeTab === 'terraform' 
+                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle' 
+                                : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
+                        }`}
+                    >
+                        <img src="/terraform.svg" className="w-3.5 h-3.5 shrink-0" alt="" aria-hidden="true" /> 
+                        <span>Terraform</span>
+                    </button>
+                    <button 
+                        type="button"
+                        role="tab"
+                        aria-selected={activeTab === 'markdown'}
+                        onClick={() => setActiveTab('markdown')}
+                        className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-medium transition-all duration-200 ease-in-out active:scale-95 ${
+                            activeTab === 'markdown' 
+                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle' 
+                                : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
+                        }`}
+                    >
+                        <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 shrink-0" fill="currentColor" aria-hidden="true">
+                            <path d="M14.85 3c.63 0 1.15.52 1.14 1.15v7.7c0 .63-.51 1.15-1.15 1.15H1.15C.52 13 0 12.48 0 11.84V4.15C0 3.52.52 3 1.15 3ZM9 11V5H7L5.5 7 4 5H2v6h2V8l1.5 1.92L7 8v3Zm2.99.5L14.5 8H13V5h-2v3H9.5Z"/>
+                        </svg>
+                        <span>Markdown</span>
                     </button>
                 </div>
+
+                {/* Copy Button */}
                 <button
+                    type="button"
                     onClick={handleCopy}
-                    className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center gap-1.5 border ${copiedId === 'output'
-                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
-                        : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'
-                        }`}
+                    className={`shrink-0 w-full sm:w-auto h-[32px] px-3 rounded-[4px] text-[13px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border active:scale-95 shadow-sm ${
+                        copied
+                            ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
+                            : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'
+                    }`}
+                    title="Copy generated output"
                 >
-                    {copiedId === 'output' ? (
-                        <><Check className="w-3.5 h-3.5" /> <span>Copied</span></>
+                    {copied ? (
+                        <>
+                            <Check className="w-3.5 h-3.5" /> 
+                            <span>Copied</span>
+                        </>
                     ) : (
-                        <><Copy className="w-3.5 h-3.5" /> <span>Copy</span></>
+                        <>
+                            <Copy className="w-3.5 h-3.5" /> 
+                            <span>Copy</span>
+                        </>
                     )}
                 </button>
             </div>
             
-            <div className="flex-1 bg-[#1e1e1e] p-4 overflow-auto custom-scrollbar relative">
-                <pre className="text-[#D4D4D4] font-mono text-[13px] whitespace-pre overflow-x-auto custom-scrollbar">
-                    {outputContent}
+            {/* Terminal Code Content */}
+            <div className="flex-1 bg-[#1E1E1E] w-full min-h-0 overflow-hidden relative">
+                <pre className="h-full text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0 custom-scrollbar">
+                    <code>{outputContent}</code>
                 </pre>
             </div>
         </div>
     );
 }
+
+TagOutputPanel.propTypes = {
+    tags: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        requirement: PropTypes.string,
+        effect: PropTypes.string,
+        allowedValues: PropTypes.string
+    })).isRequired
+};

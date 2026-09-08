@@ -62,7 +62,7 @@ export default function Header({
                         onClick={onOpenCommandPalette}
                         onMouseEnter={preloadCommandPalette}
                         onFocus={preloadCommandPalette}
-                        className="w-full h-[32px] px-3 rounded-[4px] bg-white/15 hover:bg-white/25 active:bg-white/30 border border-white/25 hover:border-white/50 text-white dark:bg-fluent-bg-subtle dark:border-fluent-stroke-subtle dark:hover:bg-[#333333] dark:hover:border-fluent-brand-bg dark:text-fluent-fg-secondary dark:hover:text-fluent-fg-primary transition-all duration-150 flex items-center justify-between text-left cursor-pointer shadow-sm select-none pointer-events-auto"
+                        className="w-full h-[32px] px-3 rounded-[4px] bg-white/15 hover:bg-white/25 active:bg-white/30 border border-white/25 hover:border-white/50 text-white dark:bg-fluent-bg-subtle dark:border-fluent-stroke-subtle dark:hover:bg-fluent-bg-hover dark:hover:border-fluent-brand-bg dark:text-fluent-fg-secondary dark:hover:text-fluent-fg-primary transition-all duration-150 flex items-center justify-between text-left cursor-pointer shadow-sm select-none pointer-events-auto"
                         aria-label="Search or jump to command palette"
                     >
                         <div className="flex items-center gap-2 min-w-0 overflow-hidden">

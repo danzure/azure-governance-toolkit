@@ -1,5 +1,5 @@
 import { useState, useMemo, memo, useCallback } from 'react';
-import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronUp, ExternalLink, Code2, Terminal, FileText, Users, Lock, Shield, Sliders } from 'lucide-react';
+import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronUp, ExternalLink, Code2, Braces, Users, Lock, Shield, Sliders } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { generateConditionalAccessTerraform, generateConditionalAccessJSON } from '../../utils/caExportUtils';
 import FluentDropdown from '../shared/FluentDropdown';
@@ -175,7 +175,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                 {/* Header with Title, Tabs, and Reset Defaults */}
                 <div className="p-4 sm:p-5 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-fluent-stroke-subtle">
                     <div className="flex items-center gap-2.5">
-                        <div className="flex items-center justify-center w-7 h-7 rounded-md bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
+                        <div className="flex items-center justify-center w-7 h-7 rounded-md bg-fluent-info-bg text-fluent-brand-fg shrink-0">
                             <Edit3 className="w-4 h-4" />
                         </div>
                         <div>
@@ -228,7 +228,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                 </div>
 
                 {/* Unified Policy Prefix & Live Preview Strip */}
-                <div className="px-4 sm:px-5 py-3 border-b border-fluent-stroke-subtle bg-fluent-bg-canvas/50 flex flex-col md:flex-row md:items-center justify-between gap-3 text-[13px]">
+                <div className="px-4 sm:px-5 py-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col md:flex-row md:items-center justify-between gap-3 text-[13px]">
                     {/* Policy Prefix configuration */}
                     <div className="flex items-center gap-2.5 shrink-0">
                         <label htmlFor="policy-prefix-input" className="text-[12px] font-semibold text-fluent-fg-primary whitespace-nowrap">
@@ -241,7 +241,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                             onChange={(e) => setPrefix(e.target.value.replace(ALPHANUMERIC_REGEX, ''))}
                             placeholder="CA"
                             maxLength={10}
-                            className="px-2.5 h-[32px] border rounded outline-none text-[13px] font-mono font-semibold transition-colors duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-brand-fg border-fluent-stroke-strong w-[72px] text-center placeholder:text-fluent-fg-tertiary"
+                            className="px-2.5 h-[32px] border rounded outline-none text-[13px] font-mono font-semibold transition-colors duration-200 focus:border-fluent-brand-bg bg-fluent-bg-card text-fluent-brand-fg border-fluent-stroke-strong w-[72px] text-center placeholder:text-fluent-fg-tertiary"
                             aria-label="Policy Prefix"
                             title="Policy naming prefix (default: CA)"
                         />
@@ -257,7 +257,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                             <span className="text-[11px] font-semibold uppercase tracking-wider hidden sm:inline">Preview</span>
                         </div>
 
-                        <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-brand-bg/5 hover:bg-fluent-brand-bg/10 border-fluent-brand-bg/20 transition-all">
+                        <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-info-bg border-fluent-info-border transition-all">
                             <div className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-brand-fg truncate select-all" title={generatedName}>
                                 {generatedName}
                             </div>
@@ -283,7 +283,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         <div className="flex flex-col bg-fluent-bg-card dark:bg-fluent-bg-subtle border border-fluent-stroke-subtle rounded-lg shadow-soft">
                             <div className="px-4 py-3 flex items-center justify-between gap-2 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle rounded-t-lg shrink-0">
                                 <div className="flex items-center gap-2.5">
-                                    <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
+                                    <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-info-bg text-fluent-brand-fg shrink-0">
                                         <Users className="w-3.5 h-3.5" />
                                     </div>
                                     <h4 className="text-[13px] font-semibold text-fluent-fg-primary">
@@ -331,7 +331,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                                 value={customResource}
                                                 onChange={(e) => setCustomResource(e.target.value.replace(ALPHANUMERIC_REGEX, ''))}
                                                 placeholder="e.g. SalesApp, SAP, Workday"
-                                                className="flex-1 min-w-0 w-full px-3 h-[32px] pr-8 border rounded outline-none text-[13px] font-mono transition-colors duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                                className="flex-1 min-w-0 w-full px-3 h-[32px] pr-8 border rounded outline-none text-[13px] font-mono transition-colors duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                                 maxLength={30}
                                                 autoFocus
                                                 aria-label="Custom target resource name"
@@ -386,7 +386,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         <div className="flex flex-col bg-fluent-bg-card dark:bg-fluent-bg-subtle border border-fluent-stroke-subtle rounded-lg shadow-soft">
                             <div className="px-4 py-3 flex items-center justify-between gap-2 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle rounded-t-lg shrink-0">
                                 <div className="flex items-center gap-2.5">
-                                    <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
+                                    <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-info-bg text-fluent-brand-fg shrink-0">
                                         <Lock className="w-3.5 h-3.5" />
                                     </div>
                                     <h4 className="text-[13px] font-semibold text-fluent-fg-primary">
@@ -414,7 +414,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                                 value={customAction}
                                                 onChange={(e) => setCustomAction(e.target.value.replace(ALPHANUMERIC_REGEX, ''))}
                                                 placeholder="e.g. BlockNonCompliant, RequireFIDO2"
-                                                className="flex-1 min-w-0 w-full px-3 h-[32px] pr-8 border rounded outline-none text-[13px] font-mono transition-colors duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                                className="flex-1 min-w-0 w-full px-3 h-[32px] pr-8 border rounded outline-none text-[13px] font-mono transition-colors duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                                 maxLength={30}
                                                 autoFocus
                                                 aria-label="Custom grant requirement"
@@ -512,7 +512,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                             ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' 
                                             : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                                     >
-                                        <Terminal className="w-3.5 h-3.5 shrink-0" />
+                                        <img src="/terraform.svg" className="w-3.5 h-3.5 shrink-0" alt="" aria-hidden="true" />
                                         <span>Terraform</span>
                                     </button>
                                     <button
@@ -524,7 +524,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                             ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' 
                                             : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                                     >
-                                        <FileText className="w-3.5 h-3.5 shrink-0" />
+                                        <Braces className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                                         <span>JSON Payload</span>
                                     </button>
                                 </div>
@@ -532,7 +532,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                 <button
                                     type="button"
                                     onClick={handleCopyIaC}
-                                    className={`px-3 h-[32px] rounded-[4px] text-[12px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 ${exportCopied 
+                                    className={`px-3 h-[32px] rounded-[4px] text-[12px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 shadow-sm ${exportCopied 
                                         ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
                                         : 'bg-fluent-bg-card border-fluent-stroke-subtle hover:border-fluent-stroke-strong text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                                     title="Copy deployment code"

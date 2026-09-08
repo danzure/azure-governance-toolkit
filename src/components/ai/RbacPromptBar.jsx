@@ -208,7 +208,7 @@ const RbacPromptBar = forwardRef(({
                     className={`relative flex items-center w-full h-[50px] sm:h-[52px] bg-fluent-bg-card rounded-lg border shadow-soft transition-all duration-200 ease-in-out overflow-hidden ${
                         isLoading
                             ? 'border-fluent-brand-bg shadow-depth'
-                            : 'border-fluent-stroke-subtle focus-within:border-fluent-brand-bg focus-within:ring-2 focus-within:ring-fluent-brand-bg/20'
+                            : 'border-fluent-stroke-subtle focus-within:border-fluent-brand-bg'
                     }`}
                 >
                     {/* Animated Sparkles Hero Icon */}
@@ -258,7 +258,7 @@ const RbacPromptBar = forwardRef(({
                                             e.preventDefault();
                                             setPrompt('');
                                         }}
-                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                                         aria-label="Clear Input"
                                     >
                                         <X className="w-4 h-4" />
@@ -268,7 +268,7 @@ const RbacPromptBar = forwardRef(({
                                 {prompt.trim() && (
                                     <button
                                         type="submit"
-                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover shadow-sm transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover shadow-sm transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                                         aria-label="Generate Custom Role"
                                     >
                                         <ArrowRight className="w-4 h-4" />
@@ -400,7 +400,7 @@ const RbacPromptBar = forwardRef(({
                                     key={index}
                                     type="button"
                                     onClick={() => setPrompt(preset)}
-                                    className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1.5 sm:py-1 min-h-[32px] sm:min-h-[26px] rounded-[6px] sm:rounded-[4px] shadow-soft transition-all duration-200 ease-in-out active:scale-[0.97] touch-manipulation select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                    className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1.5 sm:py-1 min-h-[32px] sm:min-h-[26px] rounded-[6px] sm:rounded-[4px] shadow-soft transition-all duration-200 ease-in-out active:scale-[0.97] touch-manipulation select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                                 >
                                     {preset}
                                 </button>

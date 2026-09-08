@@ -64,7 +64,7 @@ function ConfigPanel({
                             onChange={(e) => setOrgPrefix(e.target.value)}
                             placeholder="Optional"
                             disabled={!showOrg}
-                            className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 disabled:opacity-40 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                            className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg disabled:opacity-40 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                         />
                         <button
                             type="button"
@@ -88,7 +88,7 @@ function ConfigPanel({
                         value={workload}
                         onChange={(e) => setWorkload(e.target.value)}
                         placeholder="e.g. webapp, corehub, analytics"
-                        className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                        className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                     />
                 </div>
 
@@ -140,7 +140,7 @@ function ConfigPanel({
                         onChange={onInstanceChange}
                         maxLength={3}
                         placeholder="001"
-                        className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                        className="flex-1 min-w-0 px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                     />
                 </div>
             </div>

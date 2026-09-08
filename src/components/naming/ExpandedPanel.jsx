@@ -188,7 +188,7 @@ function ExpandedPanel({
                                         {validationIssues.length} {validationIssues.length === 1 ? 'issue' : 'issues'}
                                     </span>
                                 </div>
-                                <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation-exp:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
+                                <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-flyout border text-[11px] leading-relaxed hidden group-hover/validation-exp:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
                                     {validationIssues.map((issue, i) => (
                                         <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
                                             <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-fluent-state-danger' : 'bg-fluent-cat-orange-fg'}`} />

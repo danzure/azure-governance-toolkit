@@ -1,6 +1,7 @@
-import { Plus, Trash2, Info } from 'lucide-react';
+import { Plus, Trash2, Info, RotateCcw, Sparkles } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
 import FluentDropdown from '../shared/FluentDropdown';
+import { CAF_STARTER_TAGS } from '../../data/taggingData';
 
 /**
  * TagBuilder Component
@@ -24,6 +25,14 @@ export default function TagBuilder({ tags, setTags }) {
         }]);
     };
 
+    const handleResetToBaseline = () => {
+        setTags(CAF_STARTER_TAGS);
+    };
+
+    const handleClearAll = () => {
+        setTags([]);
+    };
+
     const handleUpdateTag = (id, field, value) => {
         setTags(tags.map(tag => tag.id === id ? { ...tag, [field]: value } : tag));
     };
@@ -42,7 +51,7 @@ export default function TagBuilder({ tags, setTags }) {
 
     return (
         <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full p-5">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                 <h2 className="text-[16px] font-semibold text-fluent-fg-primary flex items-center gap-2">
                     <img src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg" alt="Tags" className="w-5 h-5" />
                     Tag Definitions
@@ -50,13 +59,36 @@ export default function TagBuilder({ tags, setTags }) {
                         <Info className="w-4 h-4 text-fluent-fg-tertiary hover:text-fluent-brand-fg transition-colors cursor-help outline-none" />
                     </Tooltip>
                 </h2>
-                <button
-                    onClick={handleAddTag}
-                    className="px-3 h-[32px] bg-fluent-brand-bg text-white rounded-[4px] text-[13px] font-medium hover:bg-fluent-brand-hover transition-colors shadow-sm inline-flex items-center gap-1.5"
-                >
-                    <Plus className="w-4 h-4" />
-                    Add Tag
-                </button>
+                <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                        type="button"
+                        onClick={handleResetToBaseline}
+                        className="px-2.5 h-[32px] rounded-[4px] border border-fluent-stroke-subtle hover:border-fluent-stroke-strong bg-fluent-bg-card hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary text-[12px] font-medium transition-all active:scale-95 inline-flex items-center gap-1.5 shadow-sm"
+                        title="Load standard Cloud Adoption Framework baseline tags"
+                    >
+                        <Sparkles className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                        <span>CAF Baseline</span>
+                    </button>
+                    {tags.length > 0 && (
+                        <button
+                            type="button"
+                            onClick={handleClearAll}
+                            className="px-2.5 h-[32px] rounded-[4px] border border-fluent-stroke-subtle hover:border-fluent-stroke-strong bg-fluent-bg-card hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-state-danger text-[12px] font-medium transition-all active:scale-95 inline-flex items-center gap-1.5 shadow-sm"
+                            title="Clear all tag definitions"
+                        >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                            <span>Clear</span>
+                        </button>
+                    )}
+                    <button
+                        type="button"
+                        onClick={handleAddTag}
+                        className="px-3 h-[32px] bg-fluent-brand-bg text-white rounded-[4px] text-[13px] font-medium hover:bg-fluent-brand-hover transition-colors shadow-sm inline-flex items-center gap-1.5 active:scale-95"
+                    >
+                        <Plus className="w-4 h-4" />
+                        Add Tag
+                    </button>
+                </div>
             </div>
 
             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-4">
@@ -76,7 +108,7 @@ export default function TagBuilder({ tags, setTags }) {
                                             placeholder="e.g. Environment, CostCenter"
                                             value={tag.name}
                                             onChange={(e) => handleUpdateTag(tag.id, 'name', e.target.value)}
-                                            className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                            className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                         />
                                     </div>
 
@@ -125,7 +157,7 @@ export default function TagBuilder({ tags, setTags }) {
                                         placeholder="e.g. dev, test, prod"
                                         value={tag.allowedValues}
                                         onChange={(e) => handleUpdateTag(tag.id, 'allowedValues', e.target.value)}
-                                        className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                        className="flex-1 min-w-0 w-full px-3 h-[32px] border rounded outline-none text-[14px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                     />
                                 </div>
                             </div>

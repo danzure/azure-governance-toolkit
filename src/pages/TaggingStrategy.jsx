@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ExternalLink, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import TagBuilder from '../components/tagging/TagBuilder';
 import TagOutputPanel from '../components/tagging/TagOutputPanel';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { CAF_STARTER_TAGS } from '../data/taggingData';
 
 /**
  * TaggingStrategyPage Component
@@ -9,17 +11,17 @@ import TagOutputPanel from '../components/tagging/TagOutputPanel';
  * Provides a comprehensive UI for building and managing Azure tagging strategies.
  * It integrates the TagBuilder for defining tags (names, requirements, policy effects,
  * and allowed values) and the TagOutputPanel for exporting those definitions as
- * Markdown documentation or Azure Policy JSON.
+ * Markdown documentation, Azure Policy JSON, Bicep, or Terraform.
  */
 export default function TaggingStrategyPage() {
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useLocalStorage('azres_tags', CAF_STARTER_TAGS);
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
 
     return (
         <div className="flex flex-col min-w-0 w-full h-full">
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-4 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col h-full pb-6">
                 <div className="mb-6 shrink-0">
-                    <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
+                    <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
                         Tagging Strategy Builder
                     </h1>
                     <p className="text-[13px] md:text-[14px] text-fluent-fg-secondary max-w-3xl">
@@ -50,7 +52,7 @@ export default function TaggingStrategyPage() {
                             </div>
 
                         {isGuidanceExpanded && (
-                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
+                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
                                 <p>
                                     This tool helps define an organizational tagging matrix aligned with <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) resource tagging <ExternalLink className="w-3 h-3 ml-0.5" /></a> conventions.
                                 </p>

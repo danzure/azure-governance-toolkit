@@ -127,14 +127,14 @@ export default function DashboardPage() {
                     <div className="hidden sm:flex items-center gap-2">
                         <button 
                             onClick={() => scroll('left')}
-                            className="p-1.5 rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 shadow-sm"
+                            className="p-1.5 rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shadow-sm"
                             aria-label="Scroll left"
                         >
                             <ChevronLeft className="w-4 h-4" />
                         </button>
                         <button 
                             onClick={() => scroll('right')}
-                            className="p-1.5 rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 shadow-sm"
+                            className="p-1.5 rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-stroke-strong transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shadow-sm"
                             aria-label="Scroll right"
                         >
                             <ChevronRight className="w-4 h-4" />
@@ -171,7 +171,7 @@ export default function DashboardPage() {
                                 w-[80vw] sm:w-[310px] lg:w-[340px]
                                 min-h-[240px]
                                 animate-slide-up stagger-${index + 1}
-                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 focus-visible:border-fluent-brand-bg
+                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg focus-visible:border-fluent-brand-bg
                             `}
                         >
                             {/* Ambient Hover Glow */}
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                                             </span>
                                         )}
                                         {tool.hasAi && (
-                                            <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-brand-bg/30 transition-colors duration-200">
+                                            <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors duration-200">
                                                 <Sparkles className="w-3 h-3" />
                                                 AI Powered
                                             </span>
@@ -201,9 +201,9 @@ export default function DashboardPage() {
                                 </div>
 
                                 <div className="flex-1">
-                                    <h2 className="text-[16px] font-bold text-fluent-fg-primary mb-1 group-hover:text-fluent-brand-fg transition-colors duration-200">
+                                    <h3 className="text-[16px] font-bold text-fluent-fg-primary mb-1 group-hover:text-fluent-brand-fg transition-colors duration-200">
                                         {tool.title}
-                                    </h2>
+                                    </h3>
                                     <p className="text-[13px] text-fluent-fg-secondary leading-relaxed">
                                         {tool.description}
                                     </p>
@@ -221,7 +221,7 @@ export default function DashboardPage() {
                     <div
                         className="
                             relative overflow-hidden
-                            bg-fluent-bg-canvas/50
+                            bg-fluent-bg-subtle
                             rounded-xl p-4
                             border-2 border-dashed border-fluent-stroke-subtle
                             flex flex-col items-center justify-center text-center
@@ -232,7 +232,7 @@ export default function DashboardPage() {
                         "
                     >
                         <div className="flex flex-col items-center gap-2.5 text-fluent-fg-tertiary">
-                            <div className="w-10 h-10 rounded-full bg-fluent-bg-subtle flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle flex items-center justify-center">
                                 <Plus className="w-5 h-5 opacity-50" />
                             </div>
                             <div>
@@ -264,7 +264,7 @@ export default function DashboardPage() {
                                         href={item.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="group relative flex flex-col justify-between p-4 sm:p-4.5 rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-200 shadow-soft dark:shadow-none hover:shadow-depth active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 min-h-[165px]"
+                                        className="group relative flex flex-col justify-between p-4 sm:p-4.5 rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-200 shadow-soft dark:shadow-none hover:shadow-depth active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg min-h-[165px]"
                                     >
                                         <div className="flex flex-col">
                                             <div className="flex items-center justify-between gap-2 mb-2.5">

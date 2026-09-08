@@ -235,7 +235,7 @@ export default function ResourceNamingPage() {
                     </div>
                         
                     {isGuidanceExpanded && (
-                        <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default animate-fade-in" onClick={(e) => e.stopPropagation()}>
+                        <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default animate-fade-in" onClick={(e) => e.stopPropagation()}>
                             <p>
                                 This tool generates Azure resource names aligned with Microsoft's <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions.
                             </p>
@@ -269,7 +269,7 @@ export default function ResourceNamingPage() {
                 <button
                     type="button"
                     onClick={handleToggleMinimize}
-                    className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
+                    className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-bg-hover border border-transparent hover:border-fluent-stroke-subtle transition-all active:scale-95"
                 >
                     <Settings2 className="w-4 h-4" />
                     {isConfigMinimized ? 'Show manual configuration' : 'Hide manual configuration'}

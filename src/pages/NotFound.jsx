@@ -20,7 +20,7 @@ export default function NotFound() {
 
                 <button
                     onClick={() => navigate('/')}
-                    className="px-3 h-[32px] bg-fluent-brand-bg text-white rounded-[4px] text-[13px] font-medium hover:bg-fluent-brand-hover transition-all duration-200 ease-in-out shadow-sm inline-flex items-center justify-center gap-1.5 w-full active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 focus-visible:border-fluent-brand-bg mt-2"
+                    className="px-3 h-[32px] bg-fluent-brand-bg text-white rounded-[4px] text-[13px] font-medium hover:bg-fluent-brand-hover transition-all duration-200 ease-in-out shadow-sm inline-flex items-center justify-center gap-1.5 w-full active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg focus-visible:border-fluent-brand-bg mt-2"
                 >
                     <Home className="w-4 h-4" />
                     Return to Dashboard

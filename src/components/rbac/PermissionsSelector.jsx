@@ -152,7 +152,7 @@ export default function PermissionsSelector({
                 {/* Available Operations with integrated Search and Provider Filter */}
                 <div className="flex flex-col border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-canvas h-[500px]">
                     {/* Integrated Header Toolbar */}
-                    <div className="p-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle/50 flex flex-col gap-2.5 rounded-t-lg relative z-20">
+                    <div className="p-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col gap-2.5 rounded-t-lg relative z-20">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <span className="text-[13px] font-semibold text-fluent-fg-primary">Available Operations</span>
@@ -183,7 +183,7 @@ export default function PermissionsSelector({
                                     placeholder="Search operations (e.g. read, virtualMachines)..." 
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full pl-8 pr-8 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                    className="w-full pl-8 pr-8 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                 />
                                 {searchTerm && (
                                     <button 
@@ -230,7 +230,7 @@ export default function PermissionsSelector({
                             <div className="flex flex-col gap-3">
                                 {displayedProviders.map(p => (
                                     <div key={p.provider} className="flex flex-col gap-1">
-                                        <div className="flex items-center justify-between px-2 py-1 text-[11px] font-bold text-fluent-fg-secondary uppercase tracking-wider bg-fluent-bg-subtle/60 rounded">
+                                        <div className="flex items-center justify-between px-2 py-1 text-[11px] font-bold text-fluent-fg-secondary uppercase tracking-wider bg-fluent-bg-subtle rounded">
                                             <span>{p.provider}</span>
                                             <span className="font-medium text-fluent-fg-tertiary">{p.operations.length}</span>
                                         </div>
@@ -318,7 +318,7 @@ export default function PermissionsSelector({
                 {/* Selected Operations & JSON Definition with Tab Switcher */}
                 <div className="flex flex-col border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-canvas h-[500px] overflow-hidden shadow-soft">
                     {/* Header with Segmented Tabs */}
-                    <div className="p-2.5 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle/50 flex flex-wrap items-center justify-between gap-2 min-h-[57px] rounded-t-lg">
+                    <div className="p-2.5 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-wrap items-center justify-between gap-2 min-h-[57px] rounded-t-lg">
                         {/* Tab Segmented Control */}
                         <div 
                             className="flex items-center p-0.5 rounded-md bg-fluent-bg-card border border-fluent-stroke-subtle"

@@ -16,7 +16,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
         <div className="flex flex-col items-center relative">
             {/* The Node Card */}
             <div className={`z-10 relative flex flex-col p-2 rounded-lg border border-fluent-stroke-subtle shadow-sm transition-all hover:z-50
-                ${isRoot ? 'bg-fluent-bg-subtle px-4 py-2 rounded-md min-w-[220px] min-h-[48px] justify-center' : 'bg-fluent-bg-card hover:border-fluent-brand-bg/50'}
+                ${isRoot ? 'bg-fluent-bg-subtle px-4 py-2 rounded-md min-w-[220px] min-h-[48px] justify-center' : 'bg-fluent-bg-card hover:border-fluent-stroke-strong'}
             `}>
                 <div className="flex items-center w-full">
                     <img 
@@ -34,7 +34,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                     type="text"
                                     value={node.name}
                                     onChange={(e) => onUpdateName(node.id, e.target.value)}
-                                    className={`flex-1 w-full pl-2 pr-7 h-[32px] border rounded outline-none text-[13px] font-medium transition-all duration-200 focus:ring-2 bg-fluent-bg-card text-fluent-fg-primary placeholder:text-fluent-fg-tertiary ${validationError ? 'border-fluent-state-danger focus:border-fluent-state-danger focus:ring-fluent-state-danger/20 text-fluent-state-danger' : 'border-fluent-stroke-strong focus:border-fluent-brand-bg focus:ring-fluent-brand-bg/20'}`}
+                                    className={`flex-1 w-full pl-2 pr-7 h-[32px] border rounded outline-none text-[13px] font-medium transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary placeholder:text-fluent-fg-tertiary ${validationError ? 'border-fluent-state-danger focus:border-fluent-state-danger text-fluent-state-danger' : 'border-fluent-stroke-strong focus:border-fluent-brand-bg'}`}
                                     placeholder="Group Name"
                                     spellCheck="false"
                                 />
@@ -63,7 +63,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                         setIsExpanded(true);
                                         onAddChild(node.id);
                                     }}
-                                    className="p-1.5 flex items-center justify-center rounded-md text-fluent-brand-fg bg-fluent-brand-bg/10 hover:bg-fluent-brand-bg/20 transition-colors"
+                                    className="p-1.5 flex items-center justify-center rounded-md text-fluent-brand-fg bg-fluent-info-bg hover:bg-fluent-bg-hover transition-colors"
                                 >
                                     <Plus className="w-4 h-4" />
                                 </button>
@@ -73,7 +73,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                             <Tooltip align="center" content="Attach Subscription">
                                 <button
                                     onClick={() => onAddSubscription(node.id)}
-                                    className="p-1.5 flex items-center justify-center rounded-md bg-amber-500/10 hover:bg-amber-500/20 transition-colors"
+                                    className="p-1.5 flex items-center justify-center rounded-md bg-fluent-cat-orange-bg hover:bg-fluent-bg-hover transition-colors"
                                 >
                                     <img 
                                         src={subIcon} 
@@ -87,7 +87,7 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                             <Tooltip align="center" content="Remove this group and all its children">
                                 <button
                                     onClick={() => onRemove(node.id)}
-                                    className="p-1.5 flex items-center justify-center rounded-md text-fluent-status-danger bg-red-500/10 hover:bg-red-500/20 transition-colors"
+                                    className="p-1.5 flex items-center justify-center rounded-md text-fluent-state-danger bg-fluent-cat-red-bg hover:bg-fluent-bg-hover transition-colors"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </button>
@@ -117,12 +117,12 @@ const TreeNode = ({ node, level, onAddChild, onRemove, onUpdateName, onAddSubscr
                                 <Tooltip align="center" content="Generate from Naming Tool">
                                     <button 
                                         onClick={() => onGenerateSubName(node.id, sub.id)} 
-                                        className="text-fluent-brand-fg hover:bg-fluent-brand-bg/10 p-1 rounded transition-colors flex items-center justify-center"
+                                        className="text-fluent-brand-fg hover:bg-fluent-bg-hover p-1 rounded transition-colors flex items-center justify-center"
                                     >
                                         <Wand2 className="w-3.5 h-3.5" />
                                     </button>
                                 </Tooltip>
-                                <button onClick={() => onRemoveSubscription(node.id, sub.id)} className="text-fluent-fg-tertiary hover:text-fluent-status-danger p-1 rounded transition-colors flex items-center justify-center">
+                                <button onClick={() => onRemoveSubscription(node.id, sub.id)} className="text-fluent-fg-tertiary hover:text-fluent-state-danger p-1 rounded transition-colors flex items-center justify-center">
                                     <X className="w-3.5 h-3.5" />
                                 </button>
                             </div>
@@ -513,31 +513,31 @@ export default function TopologyTreeBuilder({ topology, setTopology }) {
                             <div className="flex flex-wrap gap-2">
                                 <Tooltip align="right" content="Reset to standard Cloud Adoption Framework baseline, recommended for most businesses">
                                     <button onClick={() => applyTemplate('default')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#d83b01]"></span>
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-orange-fg"></span>
                                         Default
                                     </button>
                                 </Tooltip>
                                 <Tooltip align="right" content="Simple Production/Non-Prod split for independent setups (1-10 employees)">
                                     <button onClick={() => applyTemplate('independent')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#107c10]"></span>
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg"></span>
                                         Independent
                                     </button>
                                 </Tooltip>
                                 <Tooltip align="right" content="Workloads & Sandbox environments for small scale apps (10-100 employees)">
                                     <button onClick={() => applyTemplate('small')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#0078d4]"></span>
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-brand-bg"></span>
                                         Small
                                     </button>
                                 </Tooltip>
                                 <Tooltip align="right" content="Standard Cloud Adoption Framework layout (100-1000 employees)">
                                     <button onClick={() => applyTemplate('medium')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#8764b8]"></span>
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-purple-fg"></span>
                                         Medium
                                     </button>
                                 </Tooltip>
                                 <Tooltip align="right" content="Enterprise scale with dedicated Platform and Landing Zone separations (1000+ employees)">
                                     <button onClick={() => applyTemplate('large')} className="px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#5c2d91]"></span>
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-magenta-fg"></span>
                                         Large
                                     </button>
                                 </Tooltip>

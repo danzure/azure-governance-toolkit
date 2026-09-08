@@ -423,7 +423,7 @@ export default function CommandPaletteModal({ onOpenChange, themePref = 'system'
                 >
                     {flatItems.length === 0 ? (
                         <div className="py-12 px-6 flex flex-col items-center justify-center text-center">
-                            <div className="w-10 h-10 rounded-full bg-fluent-bg-subtle border border-fluent-stroke-subtle flex items-center justify-center mb-3">
+                            <div className="w-10 h-10 rounded-lg bg-fluent-bg-subtle border border-fluent-stroke-subtle flex items-center justify-center mb-3">
                                 <Search className="w-5 h-5 text-fluent-fg-tertiary" />
                             </div>
                             <p className="text-[14px] font-semibold text-fluent-fg-primary mb-1">
@@ -477,14 +477,14 @@ export default function CommandPaletteModal({ onOpenChange, themePref = 'system'
                     )}
 
                     {!query && flatItems.length > 0 && (
-                        <div className="px-3 py-2 text-center text-[11px] text-fluent-fg-tertiary border-t border-fluent-stroke-subtle/40 mt-1 select-none">
+                        <div className="px-3 py-2 text-center text-[11px] text-fluent-fg-tertiary border-t border-fluent-stroke-subtle mt-1 select-none">
                             Type to search across all 156+ Azure services, CA policies, and RBAC templates
                         </div>
                     )}
                 </div>
 
                 {/* Footer Bar */}
-                <div className="px-4 py-2 border-t border-fluent-stroke-subtle dark:border-[#333333] bg-fluent-bg-canvas flex items-center justify-between text-[12px] text-fluent-fg-tertiary shrink-0 select-none">
+                <div className="px-4 py-2 border-t border-fluent-stroke-subtle bg-fluent-bg-canvas flex items-center justify-between text-[12px] text-fluent-fg-tertiary shrink-0 select-none">
                     <div className="flex items-center gap-3 sm:gap-4">
                         <span className="inline-flex items-center gap-1.5">
                             <kbd className="px-1.5 py-0.5 rounded-[2px] bg-fluent-bg-subtle border border-fluent-stroke-subtle font-mono text-[10px] font-semibold text-fluent-fg-secondary leading-none">

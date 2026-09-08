@@ -61,7 +61,7 @@ export default function ValidationHighlight({ name, allowedCharsPattern }) {
                 seg.type === 'valid' ? (
                     seg.text
                 ) : (
-                    <span key={i} className="text-[#a80000] dark:text-[#f1707b] font-bold underline decoration-wavy" title={`Invalid: '${seg.text}'`}>
+                    <span key={i} className="text-fluent-state-danger font-bold underline decoration-wavy" title={`Invalid: '${seg.text}'`}>
                         {seg.text}
                     </span>
                 )

@@ -48,7 +48,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
         <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden h-full flex-1 min-h-0">
             <div className="px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-brand-bg/10 text-fluent-brand-fg shrink-0">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-info-bg text-fluent-brand-fg shrink-0">
                         <Code2 className="w-4 h-4" />
                     </div>
                     <div className="flex flex-col">
@@ -84,7 +84,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                                 href={docsUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] border transition-colors duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                className="flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] border transition-colors duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary text-[13px] font-medium"
                                 onClick={(e) => e.stopPropagation()}
                                 title="View documentation"
                             >
@@ -107,7 +107,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                             
                             <button
                                 onClick={handleCopyIac}
-                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
+                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                 title="Copy code"
                             >
                                 {isIacCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}

@@ -200,7 +200,7 @@ export default function SearchableSelect({ items, value, onChange, label, placeh
                             <div
                                 key={`header-${item.label}`}
                                 role="presentation"
-                                className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10 bg-fluent-bg-canvas/90 text-fluent-fg-tertiary"
+                                className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10 bg-fluent-bg-canvas text-fluent-fg-tertiary"
                             >
                                 {item.label}
                             </div>

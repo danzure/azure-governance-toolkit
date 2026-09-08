@@ -102,7 +102,7 @@ const ServiceFilter = ({
         <div className="rounded-lg border shadow-soft bg-fluent-bg-card border-fluent-stroke-subtle" role="toolbar" aria-label="Filter and category toolbar">
             <div className="flex flex-col sm:flex-row sm:items-center sm:h-[42px] px-3 gap-3 sm:gap-2 py-3 sm:py-0">
                 {/* Inline compact search */}
-                <div className="flex items-center shrink-0 w-full sm:w-[220px] h-[36px] sm:h-[30px] px-2 gap-1.5 rounded border transition-colors bg-fluent-bg-canvas border-fluent-stroke-subtle focus-within:border-fluent-brand-bg focus-within:ring-1 focus-within:ring-fluent-brand-bg/20">
+                <div className="flex items-center shrink-0 w-full sm:w-[220px] h-[36px] sm:h-[30px] px-2 gap-1.5 rounded border transition-colors bg-fluent-bg-canvas border-fluent-stroke-subtle focus-within:border-fluent-brand-bg">
                     <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0 text-fluent-fg-tertiary" aria-hidden="true" />
                     <input
                         ref={searchInputRef}

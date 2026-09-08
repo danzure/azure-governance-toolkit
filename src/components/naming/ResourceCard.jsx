@@ -101,7 +101,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                         : <AlertTriangle className="w-3.5 h-3.5" strokeWidth={2.5} aria-label={`${validationIssues.length} validation warning(s)`} />
                                     }
                                 </div>
-                                <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-lg border text-[11px] leading-relaxed hidden group-hover/validation:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
+                                <div className="absolute right-0 top-7 z-50 w-56 max-w-[calc(100vw-32px)] p-2.5 rounded shadow-flyout border text-[11px] leading-relaxed hidden group-hover/validation:block bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary">
                                     {validationIssues.map((issue, i) => (
                                         <div key={i} className={`flex items-start gap-1.5 ${i > 0 ? 'mt-1.5 pt-1.5 border-t' : ''} border-fluent-stroke-subtle`}>
                                             <span className={`shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full ${issue.type === 'error' ? 'bg-fluent-state-danger' : 'bg-fluent-cat-orange-fg'}`} />
@@ -179,7 +179,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                 <div className="animate-fade-in">
                     <Suspense fallback={
                         <div className="p-8 flex items-center justify-center text-[13px] text-fluent-fg-tertiary">
-                            <div className="w-5 h-5 rounded-full border-2 border-fluent-brand-bg/20 border-t-fluent-brand-bg animate-spin mr-2" />
+                            <div className="w-5 h-5 rounded-full border-2 border-fluent-stroke-subtle border-t-fluent-brand-bg animate-spin mr-2" />
                             Loading details...
                         </div>
                     }>

@@ -150,7 +150,7 @@ export default function RbacDesignerPage() {
                             {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
                         </div>
                         {isGuidanceExpanded && (
-                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
+                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
                                 <p>
                                     This tool generates standardized JSON definitions for <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Azure Custom Roles <ExternalLink className="w-3 h-3 ml-0.5" /></a> based on your selected actions and data actions.
                                 </p>
@@ -181,7 +181,7 @@ export default function RbacDesignerPage() {
                     <button
                         type="button"
                         onClick={() => setIsConfigMinimized(prev => !prev)}
-                        className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-brand-bg/10 border border-transparent hover:border-fluent-brand-bg/20 transition-all"
+                        className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-bg-hover border border-transparent hover:border-fluent-stroke-subtle transition-all active:scale-95"
                     >
                         <Settings2 className="w-4 h-4" />
                         {isConfigMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
@@ -213,7 +213,7 @@ export default function RbacDesignerPage() {
                                     value={roleName}
                                     onChange={(e) => setRoleName(e.target.value)}
                                     placeholder="e.g. Virtual Machine Operator"
-                                    className="w-full px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                    className="w-full px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
                                 />
                             </div>
 
@@ -259,7 +259,7 @@ export default function RbacDesignerPage() {
                                                 />
                                             </div>
                                             <div className="max-h-[300px] overflow-y-auto scroll-smooth">
-                                                <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10 bg-fluent-bg-canvas/90 text-fluent-fg-tertiary">
+                                                <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10 bg-fluent-bg-canvas text-fluent-fg-tertiary">
                                                     EXAMPLES
                                                 </div>
                                                 {[
@@ -292,7 +292,7 @@ export default function RbacDesignerPage() {
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     placeholder="Describe what this role allows..."
-                                    className="w-full px-3 py-2 min-h-[60px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg focus:ring-2 focus:ring-fluent-brand-bg/20 bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary resize-y"
+                                    className="w-full px-3 py-2 min-h-[60px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary resize-y"
                                 />
                             </div>
                         </div>

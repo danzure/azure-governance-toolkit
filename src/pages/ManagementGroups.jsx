@@ -45,7 +45,7 @@ export default function ManagementGroupsPage() {
         <div className="flex flex-col flex-1 w-full overflow-x-hidden overflow-y-scroll">
             <div className="max-w-[1600px] w-full mx-auto px-3 sm:px-6 pt-4 sm:pt-6 pb-12 animate-fade-in flex-1 flex flex-col">
                 <div className="mb-8 shrink-0">
-                    <h1 className="text-[22px] md:text-[24px] font-normal text-fluent-fg-primary mb-2">
+                    <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
                         Management Group Topology Designer
                     </h1>
                     <p className="text-[13px] md:text-[14px] text-fluent-fg-secondary max-w-3xl">
@@ -80,7 +80,7 @@ export default function ManagementGroupsPage() {
                                 </div>
 
                                 {isGuidanceExpanded && (
-                                    <div className="mt-2 mb-1 flex flex-col lg:flex-row gap-6 text-[12px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default animate-fade-in px-1" onClick={(e) => e.stopPropagation()}>
+                                    <div className="mt-2 mb-1 flex flex-col lg:flex-row gap-6 text-[12px] text-fluent-fg-secondary cursor-default animate-fade-in px-1" onClick={(e) => e.stopPropagation()}>
                                         {/* Column 1: How to use */}
                                         <div className="flex-1 flex flex-col gap-1.5">
                                             <h3 className="font-semibold text-[13px] text-fluent-fg-primary flex items-center gap-1.5">
