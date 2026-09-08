@@ -127,6 +127,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
         setCustomResource('');
         setPlatform('AnyPlatform');
         setAction('RequireMFA');
+        setCustomAction('');
     }, []);
 
     return (
@@ -217,14 +218,12 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         </div>
 
                         {/* Reset Defaults button */}
-                        {activeTab === 'builder' && (
-                            <ResetButton
-                                onClick={handleResetDefaults}
-                                title="Reset all builder inputs to defaults"
-                            >
-                                Reset Defaults
-                            </ResetButton>
-                        )}
+                        <ResetButton
+                            onClick={handleResetDefaults}
+                            title="Reset all policy parameters to defaults"
+                        >
+                            Reset Defaults
+                        </ResetButton>
                     </div>
                 </div>
 

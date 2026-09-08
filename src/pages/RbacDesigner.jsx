@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, Sparkles, Settings2 } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
 import RbacPromptBar from '../components/ai/RbacPromptBar';
@@ -6,6 +7,7 @@ import ResetButton from '../components/shared/ResetButton';
 import { RBAC_ROLE_TEMPLATES } from '../data/rbacData';
 
 export default function RbacDesignerPage() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isConfigMinimized, setIsConfigMinimized] = useState(true);
     const [roleName, setRoleName] = useState('');
     const [description, setDescription] = useState('');
@@ -29,7 +31,6 @@ export default function RbacDesignerPage() {
 
     // Keyboard shortcuts handler:
     // - Escape: Unfocus AI prompt bar or close flyouts
-    // - Ctrl+K: Focus AI Prompt Bar
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -38,11 +39,6 @@ export default function RbacDesignerPage() {
                 } else if (isExamplesOpen) {
                     setIsExamplesOpen(false);
                 }
-            }
-
-            if (e.ctrlKey && e.key === 'k') {
-                e.preventDefault();
-                aiInputRef.current?.focus();
             }
         };
 
@@ -86,7 +82,7 @@ export default function RbacDesignerPage() {
         return scopesString.split(',').map(s => s.trim()).filter(Boolean);
     };
 
-    const applyTemplate = (templateId) => {
+    const applyTemplate = useCallback((templateId) => {
         if (templateId === 'clear') {
             setRoleName('');
             setDescription('');
@@ -104,7 +100,16 @@ export default function RbacDesignerPage() {
             setActions(template.actions);
             setNotActions(template.notActions);
         }
-    };
+    }, []);
+
+    // Deep-link integration from Command Palette (?template=)
+    useEffect(() => {
+        const templateId = searchParams.get('template');
+        if (templateId) {
+            applyTemplate(templateId);
+            setSearchParams({}, { replace: true });
+        }
+    }, [searchParams, setSearchParams, applyTemplate]);
 
     return (
         <div className="flex flex-col min-w-0 w-full">

@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Shield, Settings2 } from 'lucide-react';
 import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/conditionalAccessData';
 import PatternBuilderCard from '../components/ca/PatternBuilderCard';
@@ -23,11 +24,11 @@ const PRE_GROUPED_POLICIES = Object.entries(INITIAL_GROUPS)
  * The Conditional Access Policy Builder Page component.
  * Provides an interactive UI to generate standardized Microsoft Entra Conditional Access policy names.
  * Allows users to construct names from various parts (Prefix, Persona, Resource, Platform, Requirement)
- * or to view and copy from a curated list of Microsoft-recommended defaults.
- * 
- * @returns {JSX.Element} The rendered Conditional Access page.
+ * and view or filter premade baseline policies.
  */
 export default function ConditionalAccessPage() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     // UI state for copy feedback
     const [copiedId, setCopiedId] = useState(null);
     const [globalExpandState, setGlobalExpandState] = useState(false);
@@ -36,6 +37,16 @@ export default function ConditionalAccessPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useState('All');
     const searchInputRef = useRef(null);
+
+    // Deep-link integration from Command Palette (?search=)
+    useEffect(() => {
+        const queryVal = searchParams.get('search');
+        if (queryVal) {
+            setSearchTerm(queryVal);
+            setActiveCategory('All');
+            setSearchParams({}, { replace: true });
+        }
+    }, [searchParams, setSearchParams]);
 
     const handleSearchChange = useCallback((e) => setSearchTerm(e.target.value), []);
     const handleClearSearch = useCallback(() => setSearchTerm(''), []);
@@ -49,7 +60,7 @@ export default function ConditionalAccessPage() {
                 }
             }
 
-            if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && document.activeElement !== searchInputRef.current)) {
+            if (e.key === '/' && document.activeElement !== searchInputRef.current) {
                 e.preventDefault();
                 searchInputRef.current?.focus();
             }

@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Info, ExternalLink, ChevronDown, ChevronUp, Settings2 } from 'lucide-react';
 
 import ConfigPanel from '../components/naming/ConfigPanel';
@@ -21,6 +22,7 @@ import { AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '../data/constan
  * - Resource data and generation logic
  */
 export default function ResourceNamingPage() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isConfigMinimized, setIsConfigMinimized] = useState(true);
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
 
@@ -36,6 +38,16 @@ export default function ResourceNamingPage() {
     const [copiedId, setCopiedId] = useState(null);
     const searchInputRef = useRef(null);
     const aiInputRef = useRef(null);
+
+    // Deep-link integration from Command Palette (?search= or ?service=)
+    useEffect(() => {
+        const queryVal = searchParams.get('search') || searchParams.get('service');
+        if (queryVal) {
+            setSearchTerm(queryVal);
+            setActiveCategory('All');
+            setSearchParams({}, { replace: true });
+        }
+    }, [searchParams, setSearchParams, setActiveCategory]);
 
     // Debounce search term to prevent expensive filtering on every keystroke
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -53,12 +65,6 @@ export default function ResourceNamingPage() {
                     setSearchTerm('');
                     searchInputRef.current?.blur();
                 }
-            }
-
-            // Ctrl+K to focus AI prompt bar
-            if (e.ctrlKey && e.key === 'k') {
-                e.preventDefault();
-                aiInputRef.current?.focus();
             }
             
             // Forward Slash to focus grid search

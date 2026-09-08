@@ -5,6 +5,7 @@ import { getRouteSEO, applySEO } from './utils/seo';
 
 import Header from './components/layout/Header';
 import NavigationMenu from './components/layout/NavigationMenu';
+import CommandPalette from './components/layout/CommandPalette';
 import Footer from './components/layout/Footer';
 import ScrollToTopButton from './components/layout/ScrollToTopButton';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -99,6 +100,10 @@ export default function App() {
         return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
     }, []);
 
+    // State for global Command Palette (Ctrl+K)
+    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+    const handleOpenCommandPalette = useCallback(() => setIsCommandPaletteOpen(true), []);
+
     const handleSetTheme = useCallback((theme) => {
         setThemePref(theme);
     }, [setThemePref]);
@@ -136,9 +141,17 @@ export default function App() {
                 themePref={themePref}
                 onSetTheme={handleSetTheme}
                 onToggleMenu={handleToggleMenu}
+                onOpenCommandPalette={handleOpenCommandPalette}
                 title={headerTitle}
                 isMobile={isMobile}
                 systemPrefersDark={systemPrefersDark}
+            />
+
+            <CommandPalette 
+                isOpen={isCommandPaletteOpen}
+                onOpenChange={setIsCommandPaletteOpen}
+                themePref={themePref}
+                onSetTheme={handleSetTheme}
             />
 
             <div className="flex-1 flex overflow-hidden pt-[48px] min-w-0">
