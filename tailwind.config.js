@@ -64,12 +64,18 @@ export default {
             backgroundImage: {
                 'primary-gradient': 'linear-gradient(135deg, #0f6cbd 0%, #115ea3 100%)',
                 'primary-gradient-hover': 'linear-gradient(135deg, #115ea3 0%, #0f548c 100%)',
+                'copilot-aura-gradient': 'linear-gradient(90deg, var(--colorBrandBackground) 0%, #8764b8 40%, var(--colorCategoryCyanFg) 70%, var(--colorBrandBackground) 100%)',
+                'copilot-stream-gradient': 'linear-gradient(90deg, transparent 0%, var(--colorBrandBackground) 30%, #8764b8 70%, transparent 100%)',
             },
             animation: {
                 'fade-in': 'fadeIn 0.2s cubic-bezier(0.1, 0.9, 0.2, 1) both',
                 'slide-up': 'slideUp 0.2s cubic-bezier(0.1, 0.9, 0.2, 1) both',
                 'scale-in': 'scaleIn 0.15s cubic-bezier(0.1, 0.9, 0.2, 1) both',
                 'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'copilot-stream': 'copilotStream 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                'copilot-gradient': 'copilotGradient 4s ease infinite',
+                'copilot-aura': 'copilotAura 3s ease-in-out infinite',
+                'sparkle-glow': 'sparkleGlow 2.5s ease-in-out infinite',
             },
             keyframes: {
                 fadeIn: {
@@ -83,6 +89,23 @@ export default {
                 scaleIn: {
                     '0%': { transform: 'scale(0.96)', opacity: '0' },
                     '100%': { transform: 'none', opacity: '1' },
+                },
+                copilotStream: {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '50%': { transform: 'translateX(60%)' },
+                    '100%': { transform: 'translateX(250%)' },
+                },
+                copilotGradient: {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                },
+                copilotAura: {
+                    '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
+                    '50%': { opacity: '0.75', transform: 'scale(1.008)' },
+                },
+                sparkleGlow: {
+                    '0%, 100%': { transform: 'scale(1)', filter: 'brightness(1)' },
+                    '50%': { transform: 'scale(1.12)', filter: 'brightness(1.2)' },
                 },
             },
         },

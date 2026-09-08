@@ -97,9 +97,8 @@
 }
 
 @layer base {
-    /* Cohesive, accessible focus state across the entire application */
+    /* Cohesive, accessible focus state across interactive controls */
     button:focus-visible,
-    input:focus-visible:not(.command-palette-input),
     select:focus-visible,
     a:focus-visible,
     [tabindex]:focus-visible {
@@ -110,8 +109,19 @@
 
     /* Suppress default focus rings for non-keyboard nav */
     button:focus:not(:focus-visible),
-    input:focus:not(:focus-visible),
     select:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    /* Form inputs and textareas rely on Fluent 2 border and ring states rather than offset outlines */
+    input,
+    textarea {
+        outline: none;
+    }
+    input:focus,
+    input:focus-visible,
+    textarea:focus,
+    textarea:focus-visible {
         outline: none;
     }
 

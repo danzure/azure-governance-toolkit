@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
-import { Sparkles, ArrowRight, Loader2, X, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, Layers } from 'lucide-react';
+import { Sparkles, ArrowRight, X, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, Layers } from 'lucide-react';
 import PropTypes from 'prop-types';
 import ResetButton from '../shared/ResetButton';
 import { generateResourceNameFallback } from '../../utils/namingAiFallback';
@@ -119,6 +119,7 @@ const NamingPromptBar = forwardRef(({
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isLoading) return;
         const trimmedPrompt = prompt.trim();
         if (!trimmedPrompt) return;
 
@@ -216,17 +217,36 @@ const NamingPromptBar = forwardRef(({
                 )}
             </div>
             <form onSubmit={handleSubmit} className="relative flex items-center w-full group">
-                {/* Glow effect behind the bar */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-fluent-brand-bg to-purple-500 rounded-lg blur opacity-20 group-hover:opacity-40 transition-opacity duration-200 ease-in-out" />
+                {/* Luminous aura behind the bar */}
+                <div
+                    className={`absolute -inset-0.5 bg-copilot-aura-gradient rounded-lg blur-md transition-all duration-500 ease-in-out ${
+                        isLoading
+                            ? 'opacity-70 bg-[length:200%_200%] animate-copilot-gradient animate-copilot-aura'
+                            : 'opacity-20 group-hover:opacity-35'
+                    }`}
+                />
                 
-                <div className="relative flex items-center w-full h-[50px] sm:h-[52px] bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft focus-within:border-fluent-brand-bg focus-within:ring-2 focus-within:ring-fluent-brand-bg/20 transition-all duration-200 ease-in-out overflow-hidden">
-                    
-                    <div className="flex items-center justify-center w-10 sm:w-12 shrink-0">
-                        {isLoading ? (
-                            <Loader2 className="w-5 h-5 text-fluent-brand-bg animate-spin" />
-                        ) : (
-                            <Sparkles className="w-5 h-5 text-fluent-brand-bg" />
+                <div
+                    className={`relative flex items-center w-full h-[50px] sm:h-[52px] bg-fluent-bg-card rounded-lg border shadow-soft transition-all duration-200 ease-in-out overflow-hidden ${
+                        isLoading
+                            ? 'border-fluent-brand-bg shadow-depth'
+                            : 'border-fluent-stroke-subtle focus-within:border-fluent-brand-bg focus-within:ring-2 focus-within:ring-fluent-brand-bg/20'
+                    }`}
+                >
+                    {/* Animated Sparkles Hero Icon */}
+                    <div className="relative flex items-center justify-center w-10 sm:w-12 shrink-0">
+                        {isLoading && (
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div className="w-8 h-8 rounded-full bg-fluent-info-bg animate-copilot-aura" />
+                            </div>
                         )}
+                        <Sparkles
+                            className={`w-5 h-5 transition-all duration-300 relative z-10 ${
+                                isLoading
+                                    ? 'text-fluent-brand-fg scale-110 animate-sparkle-glow drop-shadow-[0_0_8px_rgba(15,108,189,0.4)] dark:drop-shadow-[0_0_8px_rgba(31,158,255,0.6)]'
+                                    : 'text-fluent-brand-bg'
+                            }`}
+                        />
                     </div>
                     
                     <input
@@ -234,36 +254,58 @@ const NamingPromptBar = forwardRef(({
                         type="text"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        disabled={isLoading}
+                        readOnly={isLoading}
                         placeholder={isLoading ? "Analyzing architecture & intent..." : "Describe your cloud architecture (e.g. Production Web App with Azure SQL in West Europe for Contoso)..."}
-                        className="flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary disabled:opacity-50 disabled:cursor-not-allowed pr-[76px] sm:pr-20"
+                        className={`flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary transition-opacity duration-200 pr-[76px] sm:pr-20 ${
+                            isLoading ? 'opacity-70 cursor-wait' : ''
+                        }`}
                     />
 
-                    <div className="absolute right-1.5 sm:right-2 flex items-center gap-1">
-                        {prompt && !isLoading && (
-                            <button
-                                type="button"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setPrompt('');
-                                }}
-                                className="flex items-center justify-center w-8 h-8 rounded-[4px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
-                                aria-label="Clear Input"
+                    {/* Right-hand actions */}
+                    <div className="absolute right-1.5 sm:right-2 flex items-center gap-1.5">
+                        {isLoading ? (
+                            <div
+                                className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg select-none transition-all duration-200"
+                                title="Analyzing architecture & generating configuration..."
+                                aria-label="Generating configuration"
                             >
-                                <X className="w-4 h-4" />
-                            </button>
-                        )}
+                                <div className="w-4 h-4 rounded-full border-2 border-fluent-stroke-subtle border-t-fluent-brand-fg animate-spin" />
+                            </div>
+                        ) : (
+                            <>
+                                {prompt && (
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setPrompt('');
+                                        }}
+                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                        aria-label="Clear Input"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                )}
 
-                        {prompt.trim() && !isLoading && (
-                            <button
-                                type="submit"
-                                className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover shadow-sm transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
-                                aria-label="Generate Configuration"
-                            >
-                                <ArrowRight className="w-4 h-4" />
-                            </button>
+                                {prompt.trim() && (
+                                    <button
+                                        type="submit"
+                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover shadow-sm transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50"
+                                        aria-label="Generate Configuration"
+                                    >
+                                        <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                )}
+                            </>
                         )}
                     </div>
+
+                    {/* Indeterminate Fluent Progress Stream */}
+                    {isLoading && (
+                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-fluent-stroke-subtle overflow-hidden">
+                            <div className="h-full w-1/2 bg-copilot-stream-gradient animate-copilot-stream rounded-full" />
+                        </div>
+                    )}
                 </div>
             </form>
             {error && <p className="text-fluent-state-danger text-[13px] mt-2 ml-2">{error}</p>}
