@@ -35,7 +35,7 @@ export default function Header({
     }, []);
 
     return (
-        <header className="h-[48px] relative flex items-center justify-between px-3 md:px-5 border-b z-50 fixed top-0 w-full bg-primary-gradient dark:bg-fluent-bg-darker border-transparent dark:border-fluent-stroke-subtle text-white shadow-soft dark:shadow-none">
+        <header className="h-[48px] flex items-center justify-between px-3 md:px-5 border-b z-50 fixed top-0 w-full bg-primary-gradient dark:bg-fluent-bg-darker border-transparent dark:border-fluent-stroke-subtle text-white shadow-soft dark:shadow-none">
             <div className="flex items-center gap-2 md:gap-4 min-w-0 z-10 sm:max-w-[calc(50%-10.5rem)] md:max-w-[calc(50%-12.5rem)] lg:max-w-[calc(50%-14.5rem)]">
                 {/* Hamburger button — mobile only */}
                 {isMobile && (
