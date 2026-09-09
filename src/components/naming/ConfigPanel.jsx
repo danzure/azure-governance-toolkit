@@ -13,7 +13,8 @@ import {
     Plus, 
     Minus, 
     X,
-    ChevronUp
+    ChevronUp,
+    Globe
 } from 'lucide-react';
 import SearchableSelect from '../shared/SearchableSelect';
 import Tooltip from '../shared/Tooltip';
@@ -449,7 +450,7 @@ function ConfigPanel({
                 <div className="flex flex-col bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-lg p-4 sm:p-4.5 gap-4">
                     <div className="flex items-center gap-2 pb-2 border-b border-fluent-stroke-subtle">
                         <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-info-bg text-fluent-brand-fg shrink-0">
-                            <TechnologyIcon name="azure" className="w-3.5 h-3.5" />
+                            <Globe className="w-3.5 h-3.5" />
                         </div>
                         <h4 className="text-[13px] font-semibold text-fluent-fg-primary">
                             Deployment & Geography
