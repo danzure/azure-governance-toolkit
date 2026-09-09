@@ -1,6 +1,7 @@
 import { useState, useRef, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Copy, Check, Braces } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
+import TechnologyIcon from '../shared/TechnologyIcon';
 import { 
     generateTagJson, 
     generateTagMarkdown, 
@@ -75,7 +76,7 @@ export default function TagOutputPanel({ tags }) {
                                 : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
                         }`}
                     >
-                        <Braces className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> 
+                        <TechnologyIcon name="json" className="w-3.5 h-3.5 shrink-0" /> 
                         <span>JSON</span>
                     </button>
                     <button 
@@ -89,7 +90,7 @@ export default function TagOutputPanel({ tags }) {
                                 : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
                         }`}
                     >
-                        <img src="/bicep.svg" className="w-3.5 h-3.5 shrink-0" alt="" aria-hidden="true" /> 
+                        <TechnologyIcon name="bicep" className="w-3.5 h-3.5 shrink-0" /> 
                         <span>Bicep</span>
                     </button>
                     <button 
@@ -103,7 +104,7 @@ export default function TagOutputPanel({ tags }) {
                                 : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
                         }`}
                     >
-                        <img src="/terraform.svg" className="w-3.5 h-3.5 shrink-0" alt="" aria-hidden="true" /> 
+                        <TechnologyIcon name="terraform" className="w-3.5 h-3.5 shrink-0" /> 
                         <span>Terraform</span>
                     </button>
                     <button 
@@ -117,9 +118,7 @@ export default function TagOutputPanel({ tags }) {
                                 : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
                         }`}
                     >
-                        <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 shrink-0" fill="currentColor" aria-hidden="true">
-                            <path d="M14.85 3c.63 0 1.15.52 1.14 1.15v7.7c0 .63-.51 1.15-1.15 1.15H1.15C.52 13 0 12.48 0 11.84V4.15C0 3.52.52 3 1.15 3ZM9 11V5H7L5.5 7 4 5H2v6h2V8l1.5 1.92L7 8v3Zm2.99.5L14.5 8H13V5h-2v3H9.5Z"/>
-                        </svg>
+                        <TechnologyIcon name="markdown" className="w-3.5 h-3.5 shrink-0" />
                         <span>Markdown</span>
                     </button>
                 </div>

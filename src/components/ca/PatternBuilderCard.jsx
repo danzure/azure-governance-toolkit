@@ -1,9 +1,10 @@
 import { useState, useMemo, memo, useCallback } from 'react';
-import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronUp, ExternalLink, Code2, Braces, Users, Lock, Shield, Sliders } from 'lucide-react';
+import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronUp, ExternalLink, Code2, Users, Lock, Shield, Sliders } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { generateConditionalAccessTerraform, generateConditionalAccessJSON } from '../../utils/caExportUtils';
 import FluentDropdown from '../shared/FluentDropdown';
 import ResetButton from '../shared/ResetButton';
+import TechnologyIcon from '../shared/TechnologyIcon';
 
 const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9-]/g;
 
@@ -512,7 +513,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                             ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' 
                                             : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                                     >
-                                        <img src="/terraform.svg" className="w-3.5 h-3.5 shrink-0" alt="" aria-hidden="true" />
+                                        <TechnologyIcon name="terraform" className="w-3.5 h-3.5 shrink-0" />
                                         <span>Terraform</span>
                                     </button>
                                     <button
@@ -524,7 +525,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                             ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm font-semibold' 
                                             : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
                                     >
-                                        <Braces className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                                        <TechnologyIcon name="json" className="w-3.5 h-3.5 shrink-0" />
                                         <span>JSON Payload</span>
                                     </button>
                                 </div>

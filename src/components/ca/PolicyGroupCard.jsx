@@ -23,6 +23,7 @@ import {
     FileText, 
     Shield 
 } from 'lucide-react';
+import TechnologyIcon from '../shared/TechnologyIcon';
 import FluentDropdown from '../shared/FluentDropdown';
 import { 
     getReadableTitle, 
@@ -517,7 +518,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                                     ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' 
                                                     : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                                             >
-                                                <Terminal className="w-3.5 h-3.5" />
+                                                <TechnologyIcon name="powershell" className="w-3.5 h-3.5" />
                                                 PowerShell
                                             </button>
                                             <button
@@ -526,7 +527,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                                     ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' 
                                                     : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                                             >
-                                                <FileText className="w-3.5 h-3.5" />
+                                                <TechnologyIcon name="json" className="w-3.5 h-3.5" />
                                                 JSON Payload
                                             </button>
                                         </div>

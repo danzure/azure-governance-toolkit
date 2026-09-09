@@ -41,6 +41,7 @@ When creating or modifying UI components, you **must** adhere to the following T
 Before completing any UI task or component redesign, you **must** actively look for and validate the following to prevent common theming errors:
 - **Opacity Modifiers on Hex Variables**: Do not apply Tailwind opacity modifiers (e.g., `bg-fluent-brand-bg/10`) to custom `fluent-*` colors that are backed by raw hex CSS variables in `index.css`. Tailwind cannot process opacity on hex values, which results in broken, transparent rendering. Always rely on the defined semantic palette (like `bg-fluent-cat-blue-bg`) which handles contrast automatically.
 - **Dark Mode Graceful Degradation**: Always verify that elements using bright, highly saturated backgrounds (such as `bg-primary-gradient` or large white blocks) have appropriate `dark:` fallbacks. Use classes like `dark:bg-none`, `dark:bg-fluent-bg-card`, and adjust text colors (`dark:text-fluent-fg-primary`) to ensure the UI remains sleek, accessible, and doesn't present jarring, bright blocks in dark mode.
+- **Adaptive Official Icons in Light & Dark Mode**: Ensure any official technology, language, or platform icons (e.g., Bicep, Terraform, Markdown) use adaptive light/dark variants or `currentColor` SVGs so they adapt cleanly in dark mode rather than rendering dark marks against dark backgrounds or retaining rigid full-color fills.
 
 #### 1.4 Responsive Design, Layout & Spacing
 - **Mobile Scaling**: Scale down component heights and font sizes on mobile using Tailwind's `sm:` prefix. (e.g., `h-[36px] sm:h-[30px]`, `text-[14px] sm:text-[12px]`).
@@ -104,8 +105,12 @@ Before completing any UI task or component redesign, you **must** actively look 
 
 #### 2.5 Icons & Imagery
 - **Standardisation**: Consistently use the same standardized icons for buttons, actions, or other UI elements that share the same functionality across the application.
-- **Official Microsoft Icons**: Prioritise using official Microsoft icons (e.g., from Fluent UI System Icons or standard Microsoft design assets) where possible to maintain alignment with the Azure portal experience and Fluent UI design language.
-- **Icon Backgrounds**: When using official, full-color product or service icons (e.g., Azure service icons), the container background must be set to transparent (`bg-transparent`) so the icon stands on its own. Solid category backgrounds should only be used for monochrome, generic, or structural icons.
+- **Official Icons Where Possible**: Prioritise using the correct, official icons for technologies, languages, platforms, and formats (e.g., official Bicep, Terraform, Markdown, Azure, GitHub, ARM logos) wherever possible, rather than generic placeholder icons (such as generic code or terminal icons).
+- **Light & Dark Mode Variants Over Fully Coloured Versions**:
+  - When using official icons in UI chrome, tabs, toolbars, buttons, and format selectors (such as IaC export tabs for Bicep, Terraform, Markdown, JSON): **always use official icons that have light and dark mode variants** (e.g., theme-adaptive monochrome SVGs using `currentColor` or dedicated light/dark variants) **rather than fully coloured versions**.
+  - Rigid, fully coloured product logos (e.g., saturated purple Terraform, multi-colour gradient Bicep) disrupt the cohesive Fluent 2 chrome, introduce visual clutter, and often fail contrast/aesthetic standards across light and dark themes.
+  - Icons used in controls, tabs, and buttons should seamlessly match the active/inactive state of their container (e.g., `text-fluent-fg-secondary`, `hover:text-fluent-fg-primary`, and `text-fluent-brand-fg` when active).
+- **Icon Backgrounds & Full-Colour Exceptions**: Full-colour official icons are reserved strictly for Azure service/product architectural representations in resource lists or catalog cards. Even then, their container background must always be set to transparent (`bg-transparent`) so the icon stands on its own. Solid category backgrounds should only be used for monochrome, generic, or structural icons.
 
 #### 2.6 Iconography Register (Lucide React)
 To ensure visual consistency, always use the following `lucide-react` icons for their respective standard actions and states across the application:
@@ -123,7 +128,7 @@ To ensure visual consistency, always use the following `lucide-react` icons for 
 | `Edit2` / `Edit3` | Editing states, pattern builders, configuration panels. |
 | `Eye` / `EyeOff` | Previewing live data or toggling visibility. |
 | `AlertTriangle` / `ShieldAlert` | Warnings, destructive actions, or critical missing information. |
-| `Terminal` / `Code2` / `FileText` | IaC exports (Terraform, ARM/Bicep, JSON). |
+| `Terminal` / `Code2` / `FileText` | Generic IaC/code fallbacks or script execution contexts (prefer official technology icons with light/dark variants for specific formats like Bicep, Terraform, Markdown, JSON). |
 | `Sparkles` | AI-powered feature indicator badge. |
 | `Star` | "New" feature indicator badge. |
 | `ShieldCheck` / `Shield` | Security, RBAC, Conditional Access contexts. |
@@ -188,6 +193,7 @@ To present read-only text (like generated resource names, IDs, or short policies
 - **Terminal/Code Container**: Use `bg-[#1E1E1E] w-full flex flex-col flex-1 h-full min-h-0` for the dark container background housing the code block.
 - **Terminal/Code Content (`<pre>`)**: Use `flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0` for the actual code text and scrollable area.
 - **Terminal Header/Toolbar**: Use `px-5 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0` for the action bar situated above the terminal window.
+- **Export Format Tabs & Technology Icons**: In terminal headers, code generator toolbars, or format pickers, export tabs (JSON, Bicep, Terraform, Markdown, ARM) must use official technology icons with light and dark mode variants (or `currentColor` monochrome SVGs) rather than fully coloured versions, matching the tab's active and hover color states.
 
 ### 5. Interaction States
 

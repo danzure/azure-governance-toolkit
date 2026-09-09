@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Code2, Copy, Check, ExternalLink } from 'lucide-react';
 import PropTypes from 'prop-types';
+import TechnologyIcon from '../../shared/TechnologyIcon';
 import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates, getIacDocsUrl } from '../../../utils/templateGenerator';
 
 /**
@@ -62,21 +63,24 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                         <div className="flex shrink-0 bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-md p-0.5 w-full sm:w-auto">
                             <button
                                 onClick={(e) => { e.stopPropagation(); setIacTab('bicep'); }}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${iacTab === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 inline-flex items-center justify-center gap-1.5 ${iacTab === 'bicep' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
-                                Bicep
+                                <TechnologyIcon name="bicep" className="w-3.5 h-3.5 shrink-0" />
+                                <span>Bicep</span>
                             </button>
                             <button
                                 onClick={(e) => { e.stopPropagation(); setIacTab('arm'); }}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${iacTab === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 inline-flex items-center justify-center gap-1.5 ${iacTab === 'arm' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
-                                ARM
+                                <TechnologyIcon name="arm" className="w-3.5 h-3.5 shrink-0" />
+                                <span>ARM</span>
                             </button>
                             <button
                                 onClick={(e) => { e.stopPropagation(); setIacTab('terraform'); }}
-                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 ${iacTab === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
+                                className={`flex-1 sm:flex-none text-[12px] px-3 py-1.5 font-medium rounded-sm transition-all duration-200 ease-in-out active:scale-95 inline-flex items-center justify-center gap-1.5 ${iacTab === 'terraform' ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
-                                Terraform
+                                <TechnologyIcon name="terraform" className="w-3.5 h-3.5 shrink-0" />
+                                <span>Terraform</span>
                             </button>
                         </div>
                         <div className="flex flex-row items-center gap-2 w-full sm:w-auto">
@@ -88,16 +92,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                                 onClick={(e) => e.stopPropagation()}
                                 title="View documentation"
                             >
-                                {iacTab === 'terraform' ? (
-                                    <img src="/terraform.svg" className="w-[14px] h-[14px] shrink-0" alt="Terraform" />
-                                ) : (
-                                    <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 0h11v11H0z" fill="#f35325"/>
-                                        <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                                        <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                                        <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                                    </svg>
-                                )}
+                                <TechnologyIcon name={iacTab} className="w-3.5 h-3.5 shrink-0" />
                                 <span className="hidden sm:inline">{iacTab === 'terraform' ? 'Terraform Registry' : iacTab === 'bicep' ? 'Bicep Template' : 'ARM Template'}</span>
                                 <span className="sm:hidden">Docs</span>
                                 <ExternalLink className="w-3 h-3 shrink-0" />
