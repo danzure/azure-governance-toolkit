@@ -1,5 +1,5 @@
 import { useState, useMemo, memo, useCallback } from 'react';
-import { Copy, Check, Edit3, Eye, Info, ChevronDown, ChevronUp, ExternalLink, Code2, Users, Lock, Shield, Sliders } from 'lucide-react';
+import { Copy, Check, Edit3, Eye, Users, Lock, Shield, Sliders, Code2 } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { generateConditionalAccessTerraform, generateConditionalAccessJSON } from '../../utils/caExportUtils';
 import FluentDropdown from '../shared/FluentDropdown';
@@ -83,7 +83,6 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
     const [resource, setResource] = useState('AllApps');
     const [customResource, setCustomResource] = useState('');
     const [platform, setPlatform] = useState('AnyPlatform');
-    const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
 
     // IaC Export format: 'terraform' | 'json'
     const [exportFormat, setExportFormat] = useState('terraform');
@@ -132,46 +131,8 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
     }, []);
 
     return (
-        <div className="flex flex-col gap-3">
-            {/* About / Guidance Accordion */}
-            <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-1">
-                <div
-                    className="px-3 py-1.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-fluent-bg-hover transition-colors"
-                    onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
-                    role="button"
-                    aria-expanded={isGuidanceExpanded}
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            setIsGuidanceExpanded(!isGuidanceExpanded);
-                        }
-                    }}
-                >
-                    <div className="flex items-center gap-2">
-                        <Info className="w-4 h-4 flex-shrink-0 text-fluent-brand-fg" />
-                        <p className="text-fluent-fg-primary text-[13px]">
-                            How to use this tool
-                        </p>
-                        {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
-                    </div>
-                    {isGuidanceExpanded && (
-                        <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-info-text dark:text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
-                            <p>
-                                This tool generates standardized <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Microsoft Entra Conditional Access policies <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions aligned with the <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a>.
-                            </p>
-                            <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
-                                <li><strong>Configure Assignments:</strong> Select the target persona, cloud application, and client platform conditions.</li>
-                                <li><strong>Set Access Controls:</strong> Choose grant controls (such as MFA or Compliant Device) or explicit blocks.</li>
-                                <li><strong>Export & Deploy:</strong> Switch to the IaC Template tab to export ready-to-deploy Terraform and JSON payload templates.</li>
-                            </ul>
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            {/* Main Pattern Builder Card */}
-            <div className="relative z-40 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col">
+        /* Main Pattern Builder Card */
+        <div className="relative z-40 rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col">
                 
                 {/* Header with Title, Tabs, and Reset Defaults */}
                 <div className="p-4 sm:p-5 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-fluent-stroke-subtle">
@@ -497,7 +458,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                     <div className="relative z-20 p-4 sm:p-5 flex flex-col gap-4 animate-fade-in">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-fluent-stroke-subtle">
                             <div className="flex items-center gap-2 text-[12px] text-fluent-fg-secondary">
-                                <Code2 className="w-4 h-4 text-fluent-brand-fg shrink-0" />
+                                <TechnologyIcon name={exportFormat} className="w-4 h-4 text-fluent-brand-fg shrink-0" />
                                 <span>Infrastructure as Code definition for <strong className="text-fluent-fg-primary font-mono">{generatedName}</strong></span>
                             </div>
 
@@ -535,7 +496,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                     onClick={handleCopyIaC}
                                     className={`px-3 h-[32px] rounded-[4px] text-[12px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 shadow-sm ${exportCopied 
                                         ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
-                                        : 'bg-fluent-bg-card border-fluent-stroke-subtle hover:border-fluent-stroke-strong text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'}`}
+                                        : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'}`}
                                     title="Copy deployment code"
                                 >
                                     {exportCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
@@ -552,7 +513,6 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         </div>
                     </div>
                 )}
-            </div>
         </div>
     );
 }

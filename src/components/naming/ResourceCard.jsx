@@ -1,5 +1,5 @@
 import { memo, useState, useMemo, lazy, Suspense } from 'react';
-import { Copy, Check, ShieldAlert, AlertTriangle, X } from 'lucide-react';
+import { Copy, Check, ShieldAlert, AlertTriangle, X, Star } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import AzureServiceIcon from './AzureServiceIcon';
 
@@ -75,7 +75,8 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                     className={`text-[11px] px-2 py-0.5 rounded-[4px] font-medium ${categoryColors.bgClass} ${categoryColors.textClass}`}
                                 >{resource.category}</span>
                                 {resource.isNew && (
-                                    <span className="text-[11px] px-2 py-0.5 rounded-[4px] font-medium bg-fluent-info-bg text-fluent-info-text border border-fluent-info-border">
+                                    <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm">
+                                        <Star className="w-2.5 h-2.5 fill-current" />
                                         New
                                     </span>
                                 )}

@@ -14,13 +14,11 @@ import {
     AlertTriangle, 
     Layers, 
     Settings2, 
-    Terminal, 
     Code2, 
     Sliders, 
     Plus, 
     Minus, 
     ArrowRight, 
-    FileText, 
     Shield 
 } from 'lucide-react';
 import TechnologyIcon from '../shared/TechnologyIcon';

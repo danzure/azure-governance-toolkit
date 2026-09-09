@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Code2, Copy, Check, ExternalLink } from 'lucide-react';
+import { Copy, Check, ExternalLink, Code2 } from 'lucide-react';
 import PropTypes from 'prop-types';
 import TechnologyIcon from '../../shared/TechnologyIcon';
 import { generateBicepTemplate, generateTerraformTemplate, generateArmTemplate, generateBundleTemplates, getIacDocsUrl } from '../../../utils/templateGenerator';

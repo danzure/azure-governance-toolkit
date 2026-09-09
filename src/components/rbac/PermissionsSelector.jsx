@@ -1,8 +1,9 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Search, Plus, Minus, ShieldCheck, X, Code2, Copy, Check, ListFilter, RotateCcw } from 'lucide-react';
+import { Search, Plus, Minus, ShieldCheck, X, Copy, Check, ListFilter, RotateCcw } from 'lucide-react';
 import { COMMON_RBAC_PROVIDERS } from '../../data/rbacData';
 import SearchableSelect from '../shared/SearchableSelect';
+import TechnologyIcon from '../shared/TechnologyIcon';
 import useDebounce from '../../hooks/useDebounce';
 
 /**
@@ -353,7 +354,7 @@ export default function PermissionsSelector({
                                         : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'
                                 }`}
                             >
-                                <Code2 className="w-3.5 h-3.5" />
+                                <TechnologyIcon name="json" className="w-3.5 h-3.5" />
                                 <span>Role JSON</span>
                             </button>
                         </div>

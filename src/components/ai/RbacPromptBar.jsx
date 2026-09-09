@@ -30,6 +30,7 @@ const RbacPromptBar = forwardRef(({
     const [loadingPhase, setLoadingPhase] = useState(0);
     const [error, setError] = useState(null);
     const [lastResult, setLastResult] = useState(null);
+    const [hasRunPrompt, setHasRunPrompt] = useState(false);
     const scrollContainerRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
@@ -73,8 +74,10 @@ const RbacPromptBar = forwardRef(({
     };
 
     const handleReset = () => {
+        setPrompt('');
         setLastResult(null);
         setError(null);
+        setHasRunPrompt(false);
         if (onResetAll) {
             onResetAll();
         }
@@ -152,6 +155,7 @@ const RbacPromptBar = forwardRef(({
             }
 
             applyRoleData(data);
+            setHasRunPrompt(true);
 
             // Clear the input after success
             setPrompt('');
@@ -184,40 +188,14 @@ const RbacPromptBar = forwardRef(({
 
     return (
         <div className="w-full mb-2 relative z-30">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 mb-2 ml-0.5 sm:ml-1">
-                <div className="flex items-center justify-between w-full sm:w-auto">
-                    <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[13px] sm:text-[14px] font-semibold text-fluent-brand-fg">
-                            Security Role Copilot
-                        </span>
-                        <div className="hidden sm:flex items-center gap-1.5 text-[12px] text-fluent-fg-secondary">
-                            <Info className="w-3.5 h-3.5 text-fluent-fg-tertiary shrink-0" />
-                            <span>AI-generated suggestions should be reviewed prior to deployment.</span>
-                        </div>
-                    </div>
-                    {onResetAll && (
-                        <ResetButton
-                            onClick={handleReset}
-                            title="Reset custom role configuration"
-                            className="sm:hidden"
-                        >
-                            Reset Role
-                        </ResetButton>
-                    )}
+            <div className="flex items-center gap-2 mb-2 ml-0.5 sm:ml-1">
+                <span className="text-[13px] sm:text-[14px] font-semibold text-fluent-brand-fg shrink-0">
+                    Security Role Copilot
+                </span>
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-[12px] text-fluent-fg-secondary">
+                    <Info className="w-3.5 h-3.5 text-fluent-fg-tertiary shrink-0" />
+                    <span className="truncate sm:overflow-visible">AI-generated suggestions should be reviewed prior to deployment.</span>
                 </div>
-                <div className="flex sm:hidden items-center gap-1.5 text-[11px] text-fluent-fg-secondary leading-tight">
-                    <Info className="w-3 h-3 text-fluent-fg-tertiary shrink-0" />
-                    <span>AI-generated suggestions should be reviewed prior to deployment.</span>
-                </div>
-                {onResetAll && (
-                    <ResetButton
-                        onClick={handleReset}
-                        title="Reset custom role configuration"
-                        className="hidden sm:inline-flex"
-                    >
-                        Reset Role
-                    </ResetButton>
-                )}
             </div>
 
             <form onSubmit={handleSubmit} className="relative flex items-center w-full group" aria-busy={isLoading}>
@@ -233,16 +211,16 @@ const RbacPromptBar = forwardRef(({
                 <div
                     className={`relative flex items-center w-full h-[50px] sm:h-[52px] bg-fluent-bg-card rounded-lg border shadow-soft transition-all duration-300 ease-in-out overflow-hidden ${
                         isLoading
-                            ? 'border-fluent-brand-bg shadow-depth ring-1 ring-fluent-brand-bg/30'
+                            ? 'border-fluent-brand-bg shadow-depth ring-1 ring-fluent-info-border'
                             : 'border-fluent-stroke-subtle focus-within:border-fluent-brand-bg'
                     }`}
                 >
                     {/* Animated Sparkles Hero Icon */}
-                    <div className="relative flex items-center justify-center w-10 sm:w-12 shrink-0">
+                    <div className="relative flex items-center justify-center w-10 sm:w-11 shrink-0">
                         {isLoading && (
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div className="w-7 h-7 rounded-full bg-fluent-info-bg animate-pulse-slow opacity-80" />
-                                <div className="absolute w-5 h-5 rounded-full bg-fluent-brand-bg/20 animate-ping-slow pointer-events-none" />
+                                <div className="absolute w-5 h-5 rounded-full bg-fluent-info-bg animate-ping-slow pointer-events-none" />
                             </div>
                         )}
                         <Sparkles
@@ -257,7 +235,7 @@ const RbacPromptBar = forwardRef(({
                     {/* Active Processing Dynamic Canvas vs Text Input */}
                     {isLoading ? (
                         <div
-                            className="flex-1 h-full min-w-0 flex items-center gap-2.5 pr-[84px] sm:pr-28 select-none animate-fade-in"
+                            className="flex-1 h-full min-w-0 flex items-center gap-2.5 px-2 select-none animate-fade-in"
                             aria-live="polite"
                         >
                             <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -279,12 +257,12 @@ const RbacPromptBar = forwardRef(({
                             onChange={(e) => setPrompt(e.target.value)}
                             readOnly={isLoading}
                             placeholder="Describe the role duties (e.g. Junior App Service Operator who can restart web apps but cannot delete or read secrets)..."
-                            className="flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary transition-opacity duration-200 pr-[76px] sm:pr-20"
+                            className="flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary transition-opacity duration-200 px-1.5"
                         />
                     )}
 
-                    {/* Right-hand actions */}
-                    <div className="absolute right-1.5 sm:right-2 flex items-center gap-1.5">
+                    {/* Right-hand integrated actions */}
+                    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 pr-1.5 sm:pr-2">
                         {isLoading ? (
                             <div
                                 className="flex items-center gap-1.5 px-2 sm:px-2.5 h-[30px] rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg select-none shadow-sm transition-all duration-200"
@@ -309,20 +287,39 @@ const RbacPromptBar = forwardRef(({
                                             e.preventDefault();
                                             setPrompt('');
                                         }}
-                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
-                                        aria-label="Clear Input"
+                                        className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-[4px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover active:bg-fluent-bg-subtle transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg shrink-0"
+                                        title="Clear prompt"
+                                        aria-label="Clear prompt"
                                     >
-                                        <X className="w-4 h-4" />
+                                        <X className="w-3.5 h-3.5" />
                                     </button>
+                                )}
+
+                                {prompt && hasRunPrompt && onResetAll && (
+                                    <div className="w-[1px] h-4 bg-fluent-stroke-subtle shrink-0 mx-0.5" />
+                                )}
+
+                                {hasRunPrompt && onResetAll && (
+                                    <ResetButton
+                                        variant="ghost"
+                                        onClick={handleReset}
+                                        title="Reset custom role configuration"
+                                        ariaLabel="Reset custom role configuration"
+                                        className="h-[30px] sm:h-[32px] px-2 sm:px-2.5 text-[12px] animate-fade-in"
+                                    >
+                                        <span className="hidden sm:inline">Reset Role</span>
+                                    </ResetButton>
                                 )}
 
                                 {prompt.trim() && (
                                     <button
                                         type="submit"
-                                        className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover shadow-sm transition-all duration-200 ease-in-out active:scale-95 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                                        className="h-[30px] sm:h-[32px] px-2.5 sm:px-3 rounded-[4px] bg-fluent-brand-bg hover:bg-fluent-brand-hover text-white text-[12px] font-medium shadow-sm transition-all duration-200 ease-in-out active:scale-95 touch-manipulation inline-flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                                        title="Generate Custom Role"
                                         aria-label="Generate Custom Role"
                                     >
-                                        <ArrowRight className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Generate</span>
+                                        <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                                     </button>
                                 )}
                             </>

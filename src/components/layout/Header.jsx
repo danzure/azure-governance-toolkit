@@ -41,7 +41,7 @@ export default function Header({
                 {isMobile && (
                     <button
                         onClick={onToggleMenu}
-                        className="p-1.5 -ml-1 rounded-md hover:bg-fluent-bg-hover transition-colors shrink-0"
+                        className="p-1.5 -ml-1 rounded-md text-white hover:bg-white/20 active:bg-white/25 dark:hover:bg-fluent-bg-hover dark:text-fluent-fg-primary transition-colors shrink-0"
                         aria-label="Toggle navigation menu"
                     >
                         <Menu className="w-5 h-5" />

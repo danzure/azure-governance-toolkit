@@ -52,8 +52,8 @@ const CommandPaletteItem = React.memo(function CommandPaletteItem({
             onMouseMove={onMouseMove}
             className={`w-full flex items-center justify-between px-3 py-2 rounded-[4px] cursor-pointer transition-colors duration-150 select-none gap-3 ${
                 isActive
-                    ? 'bg-[#f0f0f0] dark:bg-[#333333] text-fluent-fg-primary'
-                    : 'bg-transparent text-fluent-fg-secondary hover:bg-[#f0f0f0] dark:hover:bg-[#333333] hover:text-fluent-fg-primary'
+                    ? 'bg-fluent-bg-subtle text-fluent-fg-primary'
+                    : 'bg-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
             }`}
         >
             {/* Item Left: Icon Box + Titles */}
@@ -372,11 +372,11 @@ export default function CommandPaletteModal({ onOpenChange, themePref = 'system'
             aria-label="Command Palette"
         >
             <div
-                className="w-full max-w-[42rem] bg-fluent-bg-card dark:bg-[#292929] rounded-xl border border-fluent-stroke-subtle dark:border-[#383838] shadow-flyout flex flex-col overflow-hidden animate-scale-in text-fluent-fg-primary max-h-[82vh] sm:max-h-[580px]"
+                className="w-full max-w-[42rem] bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle shadow-flyout flex flex-col overflow-hidden animate-scale-in text-fluent-fg-primary max-h-[82vh] sm:max-h-[580px]"
                 onKeyDown={handleKeyDown}
             >
                 {/* Search Header */}
-                <div className="px-4 py-3 border-b border-fluent-stroke-subtle dark:border-[#333333] bg-fluent-bg-canvas flex items-center gap-3 shrink-0">
+                <div className="px-4 py-3 border-b border-fluent-stroke-subtle bg-fluent-bg-canvas flex items-center gap-3 shrink-0">
                     <div className="flex-1 flex items-center gap-2.5 pb-1.5 border-b-2 border-fluent-brand-bg transition-all min-w-0 relative">
                         <Search className="w-4 h-4 text-fluent-fg-secondary shrink-0" aria-hidden="true" />
                         <input

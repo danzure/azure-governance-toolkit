@@ -124,7 +124,28 @@ export function PowerShellIcon({ className = 'w-3.5 h-3.5 shrink-0', ...props })
     );
 }
 
-PowerShellIcon.propTypes = {
+/**
+ * Official Microsoft 4-Color Logo
+ */
+export function MicrosoftIcon({ className = 'w-3.5 h-3.5 shrink-0', ...props }) {
+    return (
+        <svg 
+            viewBox="0 0 23 23" 
+            className={className} 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true" 
+            {...props}
+        >
+            <path d="M0 0h11v11H0z" fill="#f25022"/>
+            <path d="M12 0h11v11H12z" fill="#7fba00"/>
+            <path d="M0 12h11v11H0z" fill="#00a4ef"/>
+            <path d="M12 12h11v11H12z" fill="#ffb900"/>
+        </svg>
+    );
+}
+
+MicrosoftIcon.propTypes = {
     className: PropTypes.string,
 };
 
@@ -134,7 +155,7 @@ PowerShellIcon.propTypes = {
  * Renders official technology and format icons adapted for light and dark modes.
  *
  * @param {Object} props
- * @param {'bicep' | 'terraform' | 'markdown' | 'json' | 'arm' | 'powershell'} props.name
+ * @param {'bicep' | 'terraform' | 'markdown' | 'json' | 'arm' | 'powershell' | 'microsoft'} props.name
  * @param {string} [props.className]
  */
 export default function TechnologyIcon({ name, className, ...props }) {
@@ -157,12 +178,17 @@ export default function TechnologyIcon({ name, className, ...props }) {
         case 'powershell':
         case 'ps':
             return <PowerShellIcon className={className} {...props} />;
+        case 'microsoft':
+        case 'ms':
+        case 'msft':
+            return <MicrosoftIcon className={className} {...props} />;
         default:
             return <JsonIcon className={className} {...props} />;
     }
 }
 
 TechnologyIcon.propTypes = {
-    name: PropTypes.oneOf(['bicep', 'terraform', 'tf', 'markdown', 'md', 'json', 'arm', 'azure', 'powershell', 'ps']).isRequired,
+    name: PropTypes.oneOf(['bicep', 'terraform', 'tf', 'markdown', 'md', 'json', 'arm', 'azure', 'powershell', 'ps', 'microsoft', 'ms', 'msft']).isRequired,
     className: PropTypes.string,
 };
+

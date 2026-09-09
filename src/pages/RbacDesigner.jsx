@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, Sparkles, Settings2 } from 'lucide-react';
+import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, Sparkles, Sliders } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
 import RbacPromptBar from '../components/ai/RbacPromptBar';
 import ResetButton from '../components/shared/ResetButton';
@@ -177,13 +177,13 @@ export default function RbacDesignerPage() {
                 />
 
                 {/* Manual Configuration Toggle */}
-                <div className="flex justify-center -mt-1 mb-1">
+                <div className="flex justify-center py-0.5">
                     <button
                         type="button"
                         onClick={() => setIsConfigMinimized(prev => !prev)}
                         className="flex items-center gap-1.5 px-3 h-[32px] rounded-[4px] text-[13px] font-medium text-fluent-fg-secondary hover:text-fluent-brand-fg hover:bg-fluent-bg-hover border border-transparent hover:border-fluent-stroke-subtle transition-all active:scale-95"
                     >
-                        <Settings2 className="w-4 h-4" />
+                        <Sliders className="w-4 h-4" />
                         {isConfigMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
                         {isConfigMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
                     </button>
@@ -191,8 +191,9 @@ export default function RbacDesignerPage() {
 
                 {/* Collapsible Role Properties & Templates Card */}
                 {!isConfigMinimized && (
-                    <div className="animate-slide-up bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-4 flex flex-col gap-4">
-                        <div className="flex items-center justify-between border-b border-fluent-stroke-subtle pb-2">
+                    <div className="animate-slide-up bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft flex flex-col overflow-hidden">
+                        {/* Header / Actions - Edge-to-edge header with symmetrical vertical padding */}
+                        <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between border-b border-fluent-stroke-subtle bg-fluent-bg-card">
                             <div className="flex items-center gap-2">
                                 <Edit3 className="w-4 h-4 text-fluent-brand-fg" />
                                 <h3 className="text-[14px] font-semibold text-fluent-fg-primary">Role Properties</h3>
@@ -205,100 +206,92 @@ export default function RbacDesignerPage() {
                             </ResetButton>
                         </div>
                         
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[13px] font-semibold text-fluent-fg-primary block">Role Name</label>
-                                <input 
-                                    type="text"
-                                    value={roleName}
-                                    onChange={(e) => setRoleName(e.target.value)}
-                                    placeholder="e.g. Virtual Machine Operator"
-                                    className="w-full px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-[13px] font-semibold text-fluent-fg-primary block">Assignable Scopes</label>
-                                <div className="relative" ref={examplesRef}>
-                                    <div
-                                        onClick={() => setIsExamplesOpen(!isExamplesOpen)}
-                                        onKeyDown={(e) => {
-                                            if (['Enter', ' ', 'ArrowDown'].includes(e.key) && !isExamplesOpen) {
-                                                e.preventDefault();
-                                                setIsExamplesOpen(true);
-                                            } else if (e.key === 'Escape' && isExamplesOpen) {
-                                                e.preventDefault();
-                                                setIsExamplesOpen(false);
-                                            }
-                                        }}
-                                        tabIndex={0}
-                                        role="combobox"
-                                        aria-expanded={isExamplesOpen}
-                                        aria-haspopup="listbox"
-                                        aria-label="Assignable Scopes"
-                                        className={`w-full flex items-center justify-between px-3 h-[32px] cursor-pointer transition-all border rounded text-[14px] outline-none bg-fluent-bg-card ${isExamplesOpen ? 'border-b-2 border-b-fluent-brand-bg border-x-transparent border-t-transparent' : 'border-fluent-stroke-strong hover:border-fluent-fg-primary'}`}
-                                    >
-                                        <div className="flex items-center gap-1.5 truncate">
-                                            <span className={`text-[13px] font-mono truncate ${assignableScopes ? 'text-fluent-fg-primary' : 'text-fluent-fg-tertiary'}`}>
-                                                {assignableScopes || 'Select or type scopes...'}
-                                            </span>
-                                        </div>
-                                        <ChevronDown className={`w-3 h-3 shrink-0 transition-transform duration-200 ${isExamplesOpen ? 'rotate-180 text-fluent-brand-fg' : 'text-fluent-fg-tertiary'}`} aria-hidden="true" />
-                                    </div>
-                                    
-                                    {isExamplesOpen && (
-                                        <div className="absolute top-[100%] left-0 right-0 z-[100] shadow-flyout border rounded overflow-hidden mt-1 bg-fluent-bg-card border-fluent-stroke-subtle animate-fade-in">
-                                            <div className="p-2 border-b border-fluent-stroke-subtle">
-                                                <input
-                                                    autoFocus
-                                                    type="text"
-                                                    value={assignableScopes}
-                                                    onChange={(e) => setAssignableScopes(e.target.value)}
-                                                    placeholder="e.g. /subscriptions/00000000-0000-0000-0000-000000000000"
-                                                    className="w-full px-2 py-1.5 text-[13px] font-mono border border-fluent-brand-bg outline-none bg-fluent-bg-canvas text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
-                                                />
-                                            </div>
-                                            <div className="max-h-[300px] overflow-y-auto scroll-smooth">
-                                                <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10 bg-fluent-bg-canvas text-fluent-fg-tertiary">
-                                                    EXAMPLES
-                                                </div>
-                                                {[
-                                                    { label: 'Root (Tenant)', value: '/' },
-                                                    { label: 'Management Group', value: '/providers/Microsoft.Management/managementGroups/my-mg' },
-                                                    { label: 'Subscription', value: '/subscriptions/00000000-0000-0000-0000-000000000000' },
-                                                    { label: 'Resource Group', value: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg' }
-                                                ].map(ex => (
-                                                    <div
-                                                        key={ex.label}
-                                                        onClick={() => {
-                                                            setAssignableScopes(ex.value);
-                                                            setIsExamplesOpen(false);
-                                                        }}
-                                                        className="flex flex-col justify-center px-3 py-2 cursor-pointer transition-colors hover:bg-fluent-bg-hover"
-                                                    >
-                                                        <span className="text-[13px] font-medium text-fluent-fg-primary">{ex.label}</span>
-                                                        <span className="text-[11px] font-mono text-fluent-fg-secondary truncate mt-0.5">{ex.value}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
+                        <div className="p-4 sm:p-5 flex flex-col gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-[13px] font-semibold text-fluent-fg-primary block">Role Name</label>
+                                    <input 
+                                        type="text"
+                                        value={roleName}
+                                        onChange={(e) => setRoleName(e.target.value)}
+                                        placeholder="e.g. Virtual Machine Operator"
+                                        className="w-full px-3 h-[32px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary"
+                                    />
                                 </div>
-                            </div>
-                            
-                            <div className="flex flex-col gap-1.5 md:col-span-2">
-                                <label className="text-[13px] font-semibold text-fluent-fg-primary block">Description</label>
-                                <textarea 
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    placeholder="Describe what this role allows..."
-                                    className="w-full px-3 py-2 min-h-[60px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary resize-y"
-                                />
+
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-[13px] font-semibold text-fluent-fg-primary block">Assignable Scopes</label>
+                                    <div className="relative" ref={examplesRef}>
+                                        <div
+                                            onClick={() => setIsExamplesOpen(!isExamplesOpen)}
+                                            onKeyDown={(e) => {
+                                                if (['Enter', ' ', 'ArrowDown'].includes(e.key) && !isExamplesOpen) {
+                                                    e.preventDefault();
+                                                    setIsExamplesOpen(true);
+                                                } else if (e.key === 'Escape' && isExamplesOpen) {
+                                                    e.preventDefault();
+                                                    setIsExamplesOpen(false);
+                                                }
+                                            }}
+                                            tabIndex={0}
+                                            role="combobox"
+                                            aria-expanded={isExamplesOpen}
+                                            aria-haspopup="listbox"
+                                            aria-label="Assignable Scopes"
+                                            className={`w-full flex items-center justify-between px-3 h-[32px] cursor-pointer transition-all border rounded text-[14px] outline-none bg-fluent-bg-card ${isExamplesOpen ? 'border-b-2 border-b-fluent-brand-bg border-x-transparent border-t-transparent' : 'border-fluent-stroke-strong hover:border-fluent-fg-primary'}`}
+                                        >
+                                            <div className="flex items-center gap-1.5 truncate">
+                                                <span className={`text-[13px] font-mono truncate ${assignableScopes ? 'text-fluent-fg-primary' : 'text-fluent-fg-tertiary'}`}>
+                                                    {assignableScopes || 'Select or type scopes...'}
+                                                </span>
+                                            </div>
+                                            <ChevronDown className={`w-3 h-3 shrink-0 transition-transform duration-200 ${isExamplesOpen ? 'rotate-180 text-fluent-brand-fg' : 'text-fluent-fg-tertiary'}`} aria-hidden="true" />
+                                        </div>
+                                        
+                                        {isExamplesOpen && (
+                                            <div className="absolute top-[100%] left-0 right-0 z-[100] shadow-flyout border rounded overflow-hidden mt-1 bg-fluent-bg-card border-fluent-stroke-subtle animate-fade-in">
+                                                <div className="p-2 border-b border-fluent-stroke-subtle">
+                                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-fluent-fg-secondary">Common Scope Patterns</span>
+                                                </div>
+                                                <div className="max-h-60 overflow-y-auto py-1">
+                                                    {[
+                                                        { label: 'Entire Subscription', value: '/subscriptions/00000000-0000-0000-0000-000000000000' },
+                                                        { label: 'Specific Resource Group', value: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-workload' },
+                                                        { label: 'Management Group Level', value: '/providers/Microsoft.Management/managementGroups/mg-core' },
+                                                        { label: 'Root Scope (Multiple Subs)', value: '/' }
+                                                    ].map((example, idx) => (
+                                                        <div
+                                                            key={idx}
+                                                            onClick={() => {
+                                                                setAssignableScopes(example.value);
+                                                                setIsExamplesOpen(false);
+                                                            }}
+                                                            className="px-3 py-2 text-[12px] cursor-pointer hover:bg-fluent-bg-hover flex flex-col gap-0.5"
+                                                        >
+                                                            <span className="font-medium text-fluent-fg-primary">{example.label}</span>
+                                                            <span className="font-mono text-[11px] text-fluent-fg-secondary">{example.value}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-1.5 md:col-span-2">
+                                    <label className="text-[13px] font-semibold text-fluent-fg-primary block">Description</label>
+                                    <textarea 
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        placeholder="Describe what this role allows..."
+                                        className="w-full px-3 py-2 min-h-[60px] border rounded outline-none text-[13px] transition-all duration-200 focus:border-fluent-brand-bg bg-fluent-bg-canvas text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary resize-y"
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         {/* Pre-configured role templates */}
-                        <div className="flex flex-col gap-2 pt-3 border-t border-fluent-stroke-subtle">
+                        <div className="border-t border-fluent-stroke-subtle p-4 sm:p-5 flex flex-col gap-2.5 bg-fluent-bg-subtle/40 dark:bg-fluent-bg-subtle/20">
                             <div className="flex items-center gap-1.5">
                                 <Sparkles className="w-3.5 h-3.5 text-fluent-brand-fg" />
                                 <p className="text-[12px] font-semibold text-fluent-fg-secondary">Try a pre-configured role template:</p>

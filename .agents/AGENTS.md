@@ -20,6 +20,7 @@ To maintain a unified Fluent 2 design language, the following legacy UI patterns
 - **Arbitrary Hover States**: Avoid ad-hoc hover background definitions like `hover:bg-black/5` or `dark:hover:bg-white/5`. Use the standardized `hover:bg-fluent-bg-hover` or `hover:bg-fluent-bg-subtle`.
 - **Legacy Shadows**: Do not use generic Tailwind shadows like `shadow-md` or `shadow-lg`. Use `shadow-soft`, `shadow-depth`, or `shadow-flyout`.
 - **Inconsistent Button/Input Padding**: Do not use ad-hoc padding/sizing like `px-4 py-2` or `px-3 py-2.5`. Use the standardized `px-3 h-[32px]` format.
+- **Mismatched or Unofficial Icons**: Do not use disparate icons for the same concept or action across different views (e.g., never use a vendor logo like Terraform on a generic 'IaC' button, and never mix icons for editing, collapsing, or configuration). Always use official SVG icons via `TechnologyIcon.jsx` for concrete technologies and formats, and use the unified icon from Section 2.6 for generic concepts.
 
 When creating or modifying UI components, you **must** adhere to the following Tailwind CSS class conventions. This ensures a consistent "Fluent UI" design language across the application.
 
@@ -103,38 +104,79 @@ Before completing any UI task or component redesign, you **must** actively look 
 - **Colors**: Use appropriate semantic colours from the Fluent palette (e.g., `bg-fluent-bg-subtle text-fluent-fg-secondary` for neutral tags, or `bg-fluent-info-bg text-fluent-info-text border border-fluent-info-border` for branded/highlighted tags). **Never use Tailwind opacity modifiers on hex-based semantic colors.**
 - **Indicator Dots**: Small circular indicator dots (e.g., `w-1.5 h-1.5 rounded-full`) used for status or list bullets are an exception and may remain fully rounded.
 
-#### 2.5 Icons & Imagery
-- **Standardisation**: Consistently use the same standardized icons for buttons, actions, or other UI elements that share the same functionality across the application.
-- **Official Icons Where Possible**: Prioritise using the correct, official icons for technologies, languages, platforms, and formats (e.g., official Bicep, Terraform, Markdown, Azure, GitHub, ARM logos) wherever possible, rather than generic placeholder icons (such as generic code or terminal icons).
+#### 2.5 Icons & Imagery: Unification & Standards
+
+The application enforces a strict **"One Concept = One Unified Icon"** rule across all 5 tools and all shared components.
+
+- **Rule of Icon Unification**: Any user action, state, or conceptual entity that performs or represents the same function across the application **MUST** use the exact same standardized icon. Never mix icons for the same meaning across different pages or components (e.g. do not use `<Sliders />` in one pattern builder and `<Filter />` in another; do not use `<Settings2 />` on one page and `<ChevronDown />` on another for bulk collapse/expand).
+- **Strict Boundary: Generic Controls vs Concrete Technology Selectors**:
+  - **Generic / Categorical Controls**: When a button, tab, toggle, or card header represents Infrastructure as Code, Scripting, or Documentation as a general feature (e.g. "IaC Template", "IAC Template", "Script Export", "Documentation"), you **MUST ALWAYS** use the designated unified generic icon:
+    - **Generic IaC (`IaC Template`, `IAC Template`)**: Always use `<Code2 />` from `lucide-react`. Specific vendor logos (Terraform, Bicep, ARM, etc.) are **STRICTLY FORBIDDEN** on generic buttons, tabs, or headers.
+    - **Generic Scripting (`Script`, `CLI`)**: Always use `<Terminal />` from `lucide-react`.
+    - **Generic Documentation (`Docs`, `Markdown`)**: Always use `<FileText />` from `lucide-react`.
+  - **Concrete Technology & Format Selectors**: When a button, tab, or selector represents an explicit choice or preview of a specific format, language, or vendor platform (e.g., Bicep, Terraform, ARM template, JSON payload, PowerShell, Markdown, GitHub, Azure), you **MUST ALWAYS** use the **official technology icon** (`TechnologyIcon.jsx`). Never use generic code brackets or terminal icons when a concrete technology is being selected or previewed.
+- **Official Icons Where Possible**:
+  - For all technologies, languages, cloud platforms, formats, and providers (e.g., Azure, Microsoft Entra ID, Bicep, Terraform, ARM, JSON, PowerShell, Markdown, GitHub), **always prioritize official, authentic branding** via `TechnologyIcon.jsx` rather than generic placeholder icons or approximations.
+  - When introducing a new format or vendor integration, add the official SVG asset to `TechnologyIcon.jsx` rather than substituting a generic icon.
 - **Light & Dark Mode Variants Over Fully Coloured Versions**:
-  - When using official icons in UI chrome, tabs, toolbars, buttons, and format selectors (such as IaC export tabs for Bicep, Terraform, Markdown, JSON): **always use official icons that have light and dark mode variants** (e.g., theme-adaptive monochrome SVGs using `currentColor` or dedicated light/dark variants) **rather than fully coloured versions**.
-  - Rigid, fully coloured product logos (e.g., saturated purple Terraform, multi-colour gradient Bicep) disrupt the cohesive Fluent 2 chrome, introduce visual clutter, and often fail contrast/aesthetic standards across light and dark themes.
-  - Icons used in controls, tabs, and buttons should seamlessly match the active/inactive state of their container (e.g., `text-fluent-fg-secondary`, `hover:text-fluent-fg-primary`, and `text-fluent-brand-fg` when active).
-- **Icon Backgrounds & Full-Colour Exceptions**: Full-colour official icons are reserved strictly for Azure service/product architectural representations in resource lists or catalog cards. Even then, their container background must always be set to transparent (`bg-transparent`) so the icon stands on its own. Solid category backgrounds should only be used for monochrome, generic, or structural icons.
+  - When official technology icons are embedded in UI chrome (tabs, buttons, toolbars, format selectors, badges):
+    - **Always use theme-adaptive monochrome SVGs (`currentColor`) or dedicated light/dark variants**.
+    - Icons must seamlessly match the active/inactive state of their container (e.g., `text-fluent-fg-secondary`, `hover:text-fluent-fg-primary`, and `text-fluent-brand-fg` when active).
+    - Rigid, fully coloured product logos (e.g., saturated purple Terraform, multi-colour gradient Bicep) disrupt the cohesive Fluent 2 chrome, create visual clutter, and often fail contrast/aesthetic standards across light and dark themes.
+- **Icon Backgrounds & Full-Colour Exceptions**:
+  - Full-colour official icons are reserved strictly for Azure service/product architectural representations in resource lists or catalog cards. Even then, their container background must always be set to transparent (`bg-transparent`) so the icon stands on its own. Solid category backgrounds should only be used for monochrome, generic, or structural icons.
 
-#### 2.6 Iconography Register (Lucide React)
-To ensure visual consistency, always use the following `lucide-react` icons for their respective standard actions and states across the application:
+#### 2.6 Iconography Register
 
+To ensure complete visual unification, always consult this register. If an icon is needed for an action or concept listed below, you **must** use the designated icon:
+
+##### 1. System & User Interaction Actions
 | Icon Name | Usage Context / Action |
 | :--- | :--- |
-| `Copy` | Copying text, snippets, or code blocks to clipboard. |
-| `Check` | Success state, especially after a successful copy action or selected item indicator. |
-| `Info` | 'How to use this tool' blocks, informational callouts, and tooltips. |
-| `ExternalLink` | Links that open in a new tab or point to external documentation. |
-| `ChevronDown` / `ChevronRight` | Accordions, dropdowns, and collapsible panels. |
-| `Plus` / `Minus` | Adding or removing items from lists or selections. |
-| `X` | Closing modals, flyouts, or clearing search inputs. |
-| `Search` | Search bars and filter inputs. |
-| `Edit2` / `Edit3` | Editing states, pattern builders, configuration panels. |
-| `Eye` / `EyeOff` | Previewing live data or toggling visibility. |
-| `AlertTriangle` / `ShieldAlert` | Warnings, destructive actions, or critical missing information. |
-| `Terminal` / `Code2` / `FileText` | Generic IaC/code fallbacks or script execution contexts (prefer official technology icons with light/dark variants for specific formats like Bicep, Terraform, Markdown, JSON). |
-| `Sparkles` | AI-powered feature indicator badge. |
-| `Star` | "New" feature indicator badge. |
-| `ShieldCheck` / `Shield` | Security, RBAC, Conditional Access contexts. |
-| `Network` / `Layers` | Architecture, topology, Management Groups contexts. |
-| `Settings2` | Global settings, expanding/collapsing all templates or panels. |
-| `RefreshCw` | Resetting to defaults or refreshing data. |
+| `Copy` | Copying text, snippets, names, or code blocks to clipboard. |
+| `Check` | Success feedback state (e.g. temporarily replacing `Copy` after clipboard write, or selected item indicator). |
+| `Info` | 'How to use this tool' collapsible blocks, informational callouts, and tooltips. |
+| `ExternalLink` | Links opening in a new tab or linking to external documentation / registries. |
+| `ChevronDown` / `ChevronUp` | Single-item collapsible accordions, dropdown triggers, and expand/collapse details. |
+| `Plus` / `Minus` | Adding or removing items from list configurations. |
+| `Trash2` | Destructive removal or deleting an entire configuration node/item. |
+| `X` | Closing modals, clearing search inputs, or dismissing overlays. |
+| `Search` | Search inputs and filtering text boxes. |
+| `Edit2` / `Edit3` | Edit states, configuration panels, pattern builder headers. |
+| `Eye` / `EyeOff` | Live preview indicators or toggling preview visibility. |
+| `AlertTriangle` / `ShieldAlert` | Warnings, validation errors, or critical alerts. |
+| `Settings2` | Bulk action triggers (specifically "Expand All Templates" / "Collapse All Templates" across groups). |
+| `RefreshCw` | Resetting configurations, parameters, or builders to factory defaults. |
+| `Sparkles` | AI-powered generation features, smart prompt bars, and AI suggestion badges. |
+| `Star` | "New" feature or recently added service indicator badge (always with `fill-current`). |
+
+##### 2. Domain & Conceptual Features (Generic Controls)
+| Icon Name | Usage Context / Action |
+| :--- | :--- |
+| `Code2` | **Unified generic logo** for any generic 'IaC', 'IAC Template', or IaC export button, tab, toggle, or card header. Vendor logos (Terraform, Bicep, etc.) must NEVER be used on generic controls. |
+| `Terminal` | Generic CLI, shell execution, or script export button/tab. |
+| `FileText` | Generic documentation, readme, or text export button/tab. |
+| `Sliders` | Form/pattern configuration tabs and parameter builder modes (e.g., "Policy Builder"). |
+| `Network` | Architecture topology, topology designer tabs, and network hierarchy views. |
+| `Layers` | Management group trees, hierarchical scopes, and policy layers. |
+| `Shield` | Security baselines, Conditional Access defaults, and protection controls. |
+| `ShieldCheck` | Role-Based Access Control (RBAC), custom roles, and permission assignments. |
+| `Lock` | Grant controls, access restrictions, and explicit block rules. |
+| `Users` | Identity assignments, personas, user groups, and workload identities. |
+
+##### 3. Concrete Technology & Format Selectors (`TechnologyIcon.jsx`)
+When the user is explicitly choosing, filtering, or viewing a concrete format or platform, **always use `<TechnologyIcon />`** with theme-adaptive SVG styling:
+| Technology Name | Identifier (`name=`) | Usage Context |
+| :--- | :--- | :--- |
+| **Bicep** | `bicep` | Explicit Bicep template export tab, button, or file preview. |
+| **Terraform** | `terraform` | Explicit Terraform HCL export tab, button, or registry link. |
+| **Azure Resource Manager (ARM)** | `arm` | Explicit ARM JSON template export tab or button. |
+| **JSON Payload** | `json` | Explicit JSON API payload, Graph API body, or role definition export. |
+| **PowerShell** | `powershell` | Explicit Azure PowerShell / Microsoft Graph PowerShell script export. |
+| **Markdown** | `markdown` | Explicit Markdown documentation export tab or button. |
+| **Microsoft Azure** | `azure` | Azure cloud platform indicators and documentation links. |
+| **Microsoft Entra ID** | `entra` | Entra identity platform indicators and portal links. |
+| **GitHub** | `github` | GitHub repository links, Actions workflows, or source code buttons. |
 
 #### 2.7 Badges & Semantic Colours Register
 To ensure visual consistency, always use the following specific color combinations and standard classes for badges, chips, and tags across the application:
