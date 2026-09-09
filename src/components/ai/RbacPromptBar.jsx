@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
-import { Sparkles, ArrowRight, X, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, ShieldCheck } from 'lucide-react';
+import { Sparkles, ArrowRight, X, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, ShieldCheck, Info } from 'lucide-react';
 import PropTypes from 'prop-types';
 import ResetButton from '../shared/ResetButton';
 import { generateRbacRoleFallback } from '../../utils/rbacAiFallback';
@@ -11,6 +11,12 @@ import { trackEvent, trackException } from '../../utils/telemetry';
  * A natural language input bar that calls the Azure OpenAI backend (or smart fallback)
  * to automatically configure custom Azure RBAC roles based on user intent and least privilege.
  */
+const RBAC_LOADING_PHASES = [
+    'Analyzing role intent & security scope...',
+    'Evaluating resource provider actions...',
+    'Synthesizing custom role definition...'
+];
+
 const RbacPromptBar = forwardRef(({
     setRoleName,
     setDescription,
@@ -21,6 +27,7 @@ const RbacPromptBar = forwardRef(({
 }, ref) => {
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [loadingPhase, setLoadingPhase] = useState(0);
     const [error, setError] = useState(null);
     const [lastResult, setLastResult] = useState(null);
     const scrollContainerRef = useRef(null);
@@ -95,13 +102,23 @@ const RbacPromptBar = forwardRef(({
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e?.preventDefault();
         if (isLoading) return;
         const trimmedPrompt = prompt.trim();
         if (!trimmedPrompt) return;
 
         setIsLoading(true);
+        setLoadingPhase(0);
         setError(null);
+
+        const MIN_ANIMATION_MS = 1400; // Pacing duration to allow animation to breathe gracefully
+        const PHASE_INTERVAL_MS = 480; // Interval for cycling through reasoning phases
+
+        const phaseInterval = setInterval(() => {
+            setLoadingPhase((prev) => (prev + 1) % RBAC_LOADING_PHASES.length);
+        }, PHASE_INTERVAL_MS);
+
+        const startTime = Date.now();
 
         try {
             const apiUrl = import.meta.env.DEV ? 'http://localhost:7071/api/generateRbacRole' : '/api/generateRbacRole';
@@ -128,6 +145,12 @@ const RbacPromptBar = forwardRef(({
                 trackEvent('AI_Generate_RBAC_Role', { source: 'client_fallback_network_error', promptLength: trimmedPrompt.length });
             }
 
+            // Ensure smooth, perceptible processing animation with relaxed pacing
+            const elapsed = Date.now() - startTime;
+            if (elapsed < MIN_ANIMATION_MS) {
+                await new Promise((resolve) => setTimeout(resolve, MIN_ANIMATION_MS - elapsed));
+            }
+
             applyRoleData(data);
 
             // Clear the input after success
@@ -141,6 +164,7 @@ const RbacPromptBar = forwardRef(({
             trackException(err, { component: 'RbacPromptBar', promptLength: trimmedPrompt.length });
             setError(err.message || 'Something went wrong. Please try again.');
         } finally {
+            clearInterval(phaseInterval);
             setIsLoading(false);
         }
     };
@@ -160,15 +184,16 @@ const RbacPromptBar = forwardRef(({
 
     return (
         <div className="w-full mb-2 relative z-30">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 mb-2 ml-0.5 sm:ml-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 mb-2 ml-0.5 sm:ml-1">
                 <div className="flex items-center justify-between w-full sm:w-auto">
-                    <div className="flex items-center gap-2">
-                        <span className="text-[12px] sm:text-[13px] font-semibold text-fluent-brand-fg uppercase tracking-wider">
-                            AI Role Designer
+                    <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-[13px] sm:text-[14px] font-semibold text-fluent-brand-fg">
+                            Security Role Copilot
                         </span>
-                        <span className="hidden sm:inline text-[11px] sm:text-[12px] text-fluent-fg-secondary">
-                            — AI-generated configurations should be reviewed before deployment.
-                        </span>
+                        <div className="hidden sm:flex items-center gap-1.5 text-[12px] text-fluent-fg-secondary">
+                            <Info className="w-3.5 h-3.5 text-fluent-fg-tertiary shrink-0" />
+                            <span>AI-generated suggestions should be reviewed prior to deployment.</span>
+                        </div>
                     </div>
                     {onResetAll && (
                         <ResetButton
@@ -180,9 +205,10 @@ const RbacPromptBar = forwardRef(({
                         </ResetButton>
                     )}
                 </div>
-                <span className="sm:hidden text-[11px] text-fluent-fg-secondary leading-tight">
-                    AI-generated configurations should be reviewed before deployment.
-                </span>
+                <div className="flex sm:hidden items-center gap-1.5 text-[11px] text-fluent-fg-secondary leading-tight">
+                    <Info className="w-3 h-3 text-fluent-fg-tertiary shrink-0" />
+                    <span>AI-generated suggestions should be reviewed prior to deployment.</span>
+                </div>
                 {onResetAll && (
                     <ResetButton
                         onClick={handleReset}
@@ -194,20 +220,20 @@ const RbacPromptBar = forwardRef(({
                 )}
             </div>
 
-            <form onSubmit={handleSubmit} className="relative flex items-center w-full group">
+            <form onSubmit={handleSubmit} className="relative flex items-center w-full group" aria-busy={isLoading}>
                 {/* Luminous aura behind the bar */}
                 <div
                     className={`absolute -inset-0.5 bg-copilot-aura-gradient rounded-lg blur-md transition-all duration-500 ease-in-out ${
                         isLoading
-                            ? 'opacity-70 bg-[length:200%_200%] animate-copilot-gradient animate-copilot-aura'
+                            ? 'opacity-80 bg-[length:200%_200%] animate-copilot-aura'
                             : 'opacity-20 group-hover:opacity-35'
                     }`}
                 />
                 
                 <div
-                    className={`relative flex items-center w-full h-[50px] sm:h-[52px] bg-fluent-bg-card rounded-lg border shadow-soft transition-all duration-200 ease-in-out overflow-hidden ${
+                    className={`relative flex items-center w-full h-[50px] sm:h-[52px] bg-fluent-bg-card rounded-lg border shadow-soft transition-all duration-300 ease-in-out overflow-hidden ${
                         isLoading
-                            ? 'border-fluent-brand-bg shadow-depth'
+                            ? 'border-fluent-brand-bg shadow-depth ring-1 ring-fluent-brand-bg/30'
                             : 'border-fluent-stroke-subtle focus-within:border-fluent-brand-bg'
                     }`}
                 >
@@ -215,39 +241,64 @@ const RbacPromptBar = forwardRef(({
                     <div className="relative flex items-center justify-center w-10 sm:w-12 shrink-0">
                         {isLoading && (
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                <div className="w-8 h-8 rounded-full bg-fluent-info-bg animate-copilot-aura" />
+                                <div className="w-7 h-7 rounded-full bg-fluent-info-bg animate-pulse-slow opacity-80" />
+                                <div className="absolute w-5 h-5 rounded-full bg-fluent-brand-bg/20 animate-ping-slow pointer-events-none" />
                             </div>
                         )}
                         <Sparkles
                             className={`w-5 h-5 transition-all duration-300 relative z-10 ${
                                 isLoading
-                                    ? 'text-fluent-brand-fg scale-110 animate-sparkle-glow drop-shadow-[0_0_8px_rgba(15,108,189,0.4)] dark:drop-shadow-[0_0_8px_rgba(31,158,255,0.6)]'
+                                    ? 'text-fluent-brand-fg animate-sparkle-twinkle drop-shadow-[0_0_10px_rgba(15,108,189,0.5)] dark:drop-shadow-[0_0_12px_rgba(31,158,255,0.8)]'
                                     : 'text-fluent-brand-bg'
                             }`}
                         />
                     </div>
                     
-                    <input
-                        ref={ref}
-                        type="text"
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        readOnly={isLoading}
-                        placeholder={isLoading ? "Analyzing role permissions & security boundaries..." : "Describe the role duties (e.g. Junior App Service Operator who can restart web apps but cannot delete or read secrets)..."}
-                        className={`flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary transition-opacity duration-200 pr-[76px] sm:pr-20 ${
-                            isLoading ? 'opacity-70 cursor-wait' : ''
-                        }`}
-                    />
+                    {/* Active Processing Dynamic Canvas vs Text Input */}
+                    {isLoading ? (
+                        <div
+                            className="flex-1 h-full min-w-0 flex items-center gap-2.5 pr-[84px] sm:pr-28 select-none animate-fade-in"
+                            aria-live="polite"
+                        >
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                                <span className="text-[13px] sm:text-[14px] font-medium bg-gradient-to-r from-fluent-brand-fg via-purple-500 to-cyan-500 dark:via-purple-400 dark:to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer-text truncate">
+                                    {RBAC_LOADING_PHASES[loadingPhase]}
+                                </span>
+                                {prompt && (
+                                    <span className="hidden md:inline-block text-[12px] text-fluent-fg-tertiary truncate max-w-[280px] italic">
+                                        “{prompt}”
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        <input
+                            ref={ref}
+                            type="text"
+                            value={prompt}
+                            onChange={(e) => setPrompt(e.target.value)}
+                            readOnly={isLoading}
+                            placeholder="Describe the role duties (e.g. Junior App Service Operator who can restart web apps but cannot delete or read secrets)..."
+                            className="flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary transition-opacity duration-200 pr-[76px] sm:pr-20"
+                        />
+                    )}
 
                     {/* Right-hand actions */}
                     <div className="absolute right-1.5 sm:right-2 flex items-center gap-1.5">
                         {isLoading ? (
                             <div
-                                className="flex items-center justify-center w-8 h-8 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg select-none transition-all duration-200"
-                                title="Analyzing role duties & generating custom role..."
-                                aria-label="Generating custom role"
+                                className="flex items-center gap-1.5 px-2 sm:px-2.5 h-[30px] rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg select-none shadow-sm transition-all duration-200"
+                                title="AI Copilot is processing your request..."
+                                aria-label="AI Copilot is processing your request"
                             >
-                                <div className="w-4 h-4 rounded-full border-2 border-fluent-stroke-subtle border-t-fluent-brand-fg animate-spin" />
+                                <span className="flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-brand-fg animate-thinking-dot [animation-delay:0ms]" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-brand-fg animate-thinking-dot [animation-delay:180ms]" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-brand-fg animate-thinking-dot [animation-delay:360ms]" />
+                                </span>
+                                <span className="hidden sm:inline text-[11px] font-medium tracking-wide uppercase text-fluent-brand-fg">
+                                    Thinking
+                                </span>
                             </div>
                         ) : (
                             <>
@@ -280,8 +331,8 @@ const RbacPromptBar = forwardRef(({
 
                     {/* Indeterminate Fluent Progress Stream */}
                     {isLoading && (
-                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-fluent-stroke-subtle overflow-hidden">
-                            <div className="h-full w-1/2 bg-copilot-stream-gradient animate-copilot-stream rounded-full" />
+                        <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-fluent-bg-subtle overflow-hidden pointer-events-none">
+                            <div className="h-full w-2/3 bg-copilot-stream-gradient animate-copilot-stream shadow-[0_0_8px_rgba(15,108,189,0.5)] dark:shadow-[0_0_8px_rgba(31,158,255,0.7)]" />
                         </div>
                     )}
                 </div>
@@ -399,8 +450,9 @@ const RbacPromptBar = forwardRef(({
                                 <button
                                     key={index}
                                     type="button"
+                                    disabled={isLoading}
                                     onClick={() => setPrompt(preset)}
-                                    className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1.5 sm:py-1 min-h-[32px] sm:min-h-[26px] rounded-[6px] sm:rounded-[4px] shadow-soft transition-all duration-200 ease-in-out active:scale-[0.97] touch-manipulation select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
+                                    className="whitespace-nowrap flex-shrink-0 text-left text-[12px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-card px-3 py-1.5 sm:py-1 min-h-[32px] sm:min-h-[26px] rounded-[6px] sm:rounded-[4px] shadow-soft transition-all duration-200 ease-in-out active:scale-[0.97] touch-manipulation select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg disabled:opacity-50 disabled:pointer-events-none"
                                 >
                                     {preset}
                                 </button>

@@ -82,7 +82,7 @@ const SERVICE_ICON_MAP = {
     'Application Gateway':              'Application-Gateways',
     'Application Gateway WAF policy':   'Web-Application-Firewall-Policies(WAF)',
     'Azure Firewall':                   'Firewalls',
-    'Firewall policy':                  'Azure-Firewall-Manager',
+    'Firewall policy':                  null,               // → PLAYER (official icon)
     'VPN Gateway':                      'Virtual-Network-Gateways',
     'ExpressRoute circuit':             'ExpressRoute-Circuits',
     'Virtual WAN':                      'Virtual-WANs',
@@ -290,6 +290,7 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Static Web App':                   'web/01007-icon-service-Static-Apps',
     'Subnet':                           'networking/02742-icon-service-Subnet',
     'Virtual network':                  'networking/10061-icon-service-Virtual-Networks',
+    'Firewall policy':                  'networking/00272-icon-service-Azure-Firewall-Policy',
     'Host Pool':                        'other/00327-icon-service-Azure-Virtual-Desktop',
     'Workspace':                        'other/00327-icon-service-Azure-Virtual-Desktop',
     'Application Group':                'other/00327-icon-service-Azure-Virtual-Desktop',

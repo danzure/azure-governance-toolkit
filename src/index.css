@@ -45,6 +45,11 @@
     --colorCategoryYellowFg: #806000;
     --colorCategoryNeutralBg: #ebebeb;
     --colorCategoryNeutralFg: #4d4d4d;
+
+    /* Copilot AI Palette - Light Mode */
+    --colorCopilotBlue: #0f6cbd;
+    --colorCopilotIris: #773cbd;
+    --colorCopilotCyan: #008272;
 }
 
 .dark {
@@ -88,6 +93,11 @@
     --colorCategoryYellowFg: #ffe680;
     --colorCategoryNeutralBg: #3a3938;
     --colorCategoryNeutralFg: #d2d0ce;
+
+    /* Copilot AI Palette - Dark Mode */
+    --colorCopilotBlue: #1f9eff;
+    --colorCopilotIris: #b392db;
+    --colorCopilotCyan: #4dc7cb;
 }
 
 * {
