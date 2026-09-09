@@ -51,6 +51,7 @@ Before completing any UI task or component redesign, you **must** actively look 
   - **Form Fields & Related Elements**: `gap-4` (16px) or `space-y-4`.
   - **Page Sections**: `gap-6` (24px) or `gap-8` (32px).
 - **Symmetrical Padding for Alignment**: Always use symmetrical vertical padding (e.g., `py-1`, `py-2`) instead of asymmetrical padding (e.g., `pt-1 pb-2`) on container elements (especially flex containers). This guarantees perfect vertical centering alignment when using `items-center`.
+- **Hide Shortcut Keys on Mobile**: Any keyboard shortcut keys, key badges, or shortcut hints (e.g. `<kbd>` elements, `Ctrl+K`, `⌘K`, `ESC`, navigation arrows `↑ ↓ ↵`) **must never be displayed in mobile view** (`< sm`). Touchscreen mobile devices do not have physical keyboards, and shortcut badges waste critical viewport space. Always hide them on mobile using responsive Tailwind classes (e.g., `hidden sm:inline-flex`, `hidden sm:flex`, or `hidden sm:inline-block`).
 
 #### 1.5 Shadows & Microanimations
 - **Shadows**: Use `shadow-soft` for standard cards, `shadow-depth` for hover/active states, and `shadow-flyout` for panels/modals/dropdowns.
@@ -166,7 +167,7 @@ For interactive elements like buttons, rely on these unified classes and states 
 
 #### 3.3 Navigation, Tabs & Accessibility
 - **Tabs/Active States**: For selectable horizontal tabs, use `bg-fluent-info-bg text-fluent-brand-fg font-semibold shadow-sm` for the active/selected state, and `bg-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary` for inactive states.
-- **Keyboard Navigation**: Ensure keyboard shortcuts are implemented where relevant (e.g., `Escape` to clear/close, `/` for search, `Ctrl+K` for global prompts). 
+- **Keyboard Navigation & Mobile Visibility**: Ensure keyboard shortcuts are implemented where relevant (e.g., `Escape` to clear/close, `/` for search, `Ctrl+K` for global prompts). However, **any visual shortcut keys or badges (`<kbd>`, key hints) must NOT be visible in mobile view** (use `hidden sm:inline-flex` or `hidden sm:flex`). 
 - **Accessibility & Focus**: Always use appropriate semantic HTML or ARIA roles (`role="toolbar"`, `role="tablist"`, `role="tab"`) and indicate state (`aria-selected`, `aria-hidden`, `aria-label`). For interactive elements, ensure keyboard focus is visible using `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg/50 focus-visible:border-fluent-brand-bg`.
 
 #### 3.4 Tooltips, Popovers & Context Menus

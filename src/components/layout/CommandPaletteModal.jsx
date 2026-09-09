@@ -409,7 +409,7 @@ export default function CommandPaletteModal({ onOpenChange, themePref = 'system'
                             </button>
                         ) : null}
                     </div>
-                    <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-fluent-bg-subtle text-fluent-fg-tertiary border border-fluent-stroke-subtle rounded-[2px] shrink-0 leading-none">
+                    <span className="hidden sm:inline-flex px-1.5 py-0.5 text-[10px] font-semibold bg-fluent-bg-subtle text-fluent-fg-tertiary border border-fluent-stroke-subtle rounded-[2px] shrink-0 leading-none">
                         ESC
                     </span>
                 </div>
@@ -485,7 +485,7 @@ export default function CommandPaletteModal({ onOpenChange, themePref = 'system'
 
                 {/* Footer Bar */}
                 <div className="px-4 py-2 border-t border-fluent-stroke-subtle bg-fluent-bg-canvas flex items-center justify-between text-[12px] text-fluent-fg-tertiary shrink-0 select-none">
-                    <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="hidden sm:flex items-center gap-3 sm:gap-4">
                         <span className="inline-flex items-center gap-1.5">
                             <kbd className="px-1.5 py-0.5 rounded-[2px] bg-fluent-bg-subtle border border-fluent-stroke-subtle font-mono text-[10px] font-semibold text-fluent-fg-secondary leading-none">
                                 ↑
@@ -509,7 +509,7 @@ export default function CommandPaletteModal({ onOpenChange, themePref = 'system'
                         </span>
                     </div>
 
-                    <div className="text-[12px] text-fluent-fg-tertiary">
+                    <div className="text-[12px] text-fluent-fg-tertiary ml-auto sm:ml-0">
                         {flatItems.length} {flatItems.length === 1 ? 'item' : 'items'}
                     </div>
                 </div>

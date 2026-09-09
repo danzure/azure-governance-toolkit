@@ -74,7 +74,7 @@ export default function Header({
                                 Search...
                             </span>
                         </div>
-                        <kbd className="px-1.5 py-0.5 text-[10px] font-semibold bg-white/20 dark:bg-fluent-bg-card border border-transparent dark:border-fluent-stroke-subtle rounded-[2px] text-white dark:text-fluent-fg-tertiary shrink-0 leading-none">
+                        <kbd className="hidden sm:inline-flex px-1.5 py-0.5 text-[10px] font-semibold bg-white/20 dark:bg-fluent-bg-card border border-transparent dark:border-fluent-stroke-subtle rounded-[2px] text-white dark:text-fluent-fg-tertiary shrink-0 leading-none">
                             {isMac ? '⌘K' : 'Ctrl K'}
                         </kbd>
                     </button>
