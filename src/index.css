@@ -31,6 +31,7 @@
     --colorCategoryOrangeFg: #c43501;
     --colorCategoryGreenBg: #e9f5e9;
     --colorCategoryGreenFg: #0e700e;
+    --colorCategoryGreenBorder: #c6ebc9;
     --colorCategoryPurpleBg: #f0ebf7;
     --colorCategoryPurpleFg: #5c2d91;
     --colorCategoryCyanBg: #e0f4fa;
@@ -45,6 +46,10 @@
     --colorCategoryYellowFg: #806000;
     --colorCategoryNeutralBg: #ebebeb;
     --colorCategoryNeutralFg: #4d4d4d;
+
+    /* Code Editor Surfaces - Consistent dark VS Code editor aesthetic */
+    --colorCodeBackground: #1e1e1e;
+    --colorCodeForeground: #d4d4d4;
 
     /* Copilot AI Palette - Light Mode */
     --colorCopilotBlue: #0f6cbd;
@@ -79,6 +84,7 @@
     --colorCategoryOrangeFg: #f7884d;
     --colorCategoryGreenBg: #0f2d0f;
     --colorCategoryGreenFg: #5ec75e;
+    --colorCategoryGreenBorder: #1e4620;
     --colorCategoryPurpleBg: #291545;
     --colorCategoryPurpleFg: #b392db;
     --colorCategoryCyanBg: #0a3040;
@@ -93,6 +99,10 @@
     --colorCategoryYellowFg: #ffe680;
     --colorCategoryNeutralBg: #3a3938;
     --colorCategoryNeutralFg: #d2d0ce;
+
+    /* Code Editor Surfaces - Consistent dark VS Code editor aesthetic */
+    --colorCodeBackground: #1e1e1e;
+    --colorCodeForeground: #d4d4d4;
 
     /* Copilot AI Palette - Dark Mode */
     --colorCopilotBlue: #1f9eff;
@@ -185,7 +195,7 @@ body,
 }
 
 body {
-    @apply font-sans antialiased text-[#242424] overscroll-none;
+    @apply font-sans antialiased text-fluent-fg-primary overscroll-none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

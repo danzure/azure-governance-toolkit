@@ -303,7 +303,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                             handleCopy(activePolicy.name, activePolicy.name);
                         }}
                         className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
-                            ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                            ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                             : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                         title="Copy standardized policy name"
                     >
@@ -528,7 +528,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                         <button
                                             onClick={handleCopyScript}
                                             className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${scriptCopied 
-                                                ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                                ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                                 : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                             title="Copy deployment code"
                                         >
@@ -539,8 +539,8 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                 </div>
                             </div>
                             
-                            <div className="bg-[#1E1E1E] w-full flex-1 relative min-h-[16rem]">
-                                <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0">
+                            <div className="bg-fluent-code-bg w-full flex-1 relative min-h-[16rem]">
+                                <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0">
                                     <code>{scriptFormat === 'powershell' ? deploymentScripts.powershell : deploymentScripts.json}</code>
                                 </pre>
                             </div>

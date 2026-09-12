@@ -129,7 +129,7 @@ export default function TagOutputPanel({ tags }) {
                     onClick={handleCopy}
                     className={`shrink-0 w-full sm:w-auto h-[32px] px-3 rounded-[4px] text-[13px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border active:scale-95 shadow-sm ${
                         copied
-                            ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
+                            ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg'
                             : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'
                     }`}
                     title="Copy generated output"
@@ -149,8 +149,8 @@ export default function TagOutputPanel({ tags }) {
             </div>
             
             {/* Terminal Code Content */}
-            <div className="flex-1 bg-[#1E1E1E] w-full min-h-0 overflow-hidden relative">
-                <pre className="h-full text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0 custom-scrollbar">
+            <div className="flex-1 bg-fluent-code-bg w-full min-h-0 overflow-hidden relative">
+                <pre className="h-full text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0 custom-scrollbar">
                     <code>{outputContent}</code>
                 </pre>
             </div>

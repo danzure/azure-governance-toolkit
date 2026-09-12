@@ -102,7 +102,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                             
                             <button
                                 onClick={handleCopyIac}
-                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 ${isIacCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
+                                className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 ${isIacCopied ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                 title="Copy code"
                             >
                                 {isIacCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
@@ -113,8 +113,8 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                 </div>
             </div>
             
-            <div className="bg-[#1E1E1E] w-full flex-1 relative min-h-[14.5rem]">
-                <pre className="absolute inset-0 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0">
+            <div className="bg-fluent-code-bg w-full flex-1 relative min-h-[14.5rem]">
+                <pre className="absolute inset-0 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0">
                     <code>{iacTemplate}</code>
                 </pre>
             </div>

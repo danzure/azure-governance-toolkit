@@ -366,7 +366,7 @@ export default function PermissionsSelector({
                                 onClick={handleCopy}
                                 className={`h-[28px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all duration-200 inline-flex items-center justify-center gap-1.5 border active:scale-95 ${
                                     copied
-                                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]'
+                                        ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg'
                                         : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'
                                 }`}
                                 title="Copy JSON"
@@ -475,8 +475,8 @@ export default function PermissionsSelector({
 
                     {/* Tab 2: Role JSON Output Content */}
                     {activeTab === 'json' && (
-                        <div className="flex-1 bg-[#1E1E1E] w-full relative flex flex-col min-h-0 animate-fade-in">
-                            <pre className="flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-4 text-[#D4D4D4] m-0 select-all">
+                        <div className="flex-1 bg-fluent-code-bg w-full relative flex flex-col min-h-0 animate-fade-in">
+                            <pre className="flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-4 text-fluent-code-fg m-0 select-all">
                                 <code>{generatedJson}</code>
                             </pre>
                         </div>

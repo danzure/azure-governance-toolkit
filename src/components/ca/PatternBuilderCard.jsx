@@ -228,7 +228,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                 onClick={() => handleCopy(generatedName, 'live-pill')}
                                 aria-label={copiedId === 'live-pill' ? 'Copied' : 'Copy name'}
                                 className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${copiedId === 'live-pill' 
-                                    ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                    ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                     : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                             >
                                 {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy Name</span></>}
@@ -495,7 +495,7 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                     type="button"
                                     onClick={handleCopyIaC}
                                     className={`px-3 h-[32px] rounded-[4px] text-[12px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 shadow-sm ${exportCopied 
-                                        ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                        ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                         : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'}`}
                                     title="Copy deployment code"
                                 >
@@ -506,8 +506,8 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                         </div>
 
                         {/* Terminal Window */}
-                        <div className="bg-[#1E1E1E] w-full relative rounded-lg border border-fluent-stroke-subtle overflow-hidden shadow-soft">
-                            <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-[#D4D4D4] m-0 max-h-[380px]">
+                        <div className="bg-fluent-code-bg w-full relative rounded-lg border border-fluent-stroke-subtle overflow-hidden shadow-soft">
+                            <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0 max-h-[380px]">
                                 <code>{iacCode}</code>
                             </pre>
                         </div>

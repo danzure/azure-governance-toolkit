@@ -39,6 +39,7 @@ export default {
                     'cat-orange-fg': 'var(--colorCategoryOrangeFg)',
                     'cat-green-bg': 'var(--colorCategoryGreenBg)',
                     'cat-green-fg': 'var(--colorCategoryGreenFg)',
+                    'cat-green-border': 'var(--colorCategoryGreenBorder)',
                     'cat-purple-bg': 'var(--colorCategoryPurpleBg)',
                     'cat-purple-fg': 'var(--colorCategoryPurpleFg)',
                     'cat-cyan-bg': 'var(--colorCategoryCyanBg)',
@@ -53,6 +54,10 @@ export default {
                     'cat-yellow-fg': 'var(--colorCategoryYellowFg)',
                     'cat-neutral-bg': 'var(--colorCategoryNeutralBg)',
                     'cat-neutral-fg': 'var(--colorCategoryNeutralFg)',
+
+                    // Code editor surfaces
+                    'code-bg': 'var(--colorCodeBackground)',
+                    'code-fg': 'var(--colorCodeForeground)',
                 }
             },
             boxShadow: {

@@ -75,7 +75,7 @@ export function AboutBanner({ resource, displayDesc, t }) {
                                     </div>
                                     <button
                                         onClick={handleCopyProvider}
-                                        className={`px-2.5 py-1.5 flex items-center justify-center transition-colors outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isProviderCopied ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] text-[#107c10] dark:text-[#a3d4a3]' : 'bg-fluent-bg-card text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'}`}
+                                        className={`px-2.5 py-1.5 flex items-center justify-center transition-colors outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isProviderCopied ? 'bg-fluent-cat-green-bg text-fluent-cat-green-fg' : 'bg-fluent-bg-card text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'}`}
                                         title="Copy provider namespace"
                                     >
                                         {isProviderCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -136,7 +136,7 @@ export function GuidanceCard({ namingPattern, namingGuidanceText, t }) {
                             onClick={handleCopy}
                             aria-label={isCopied ? 'Copied' : 'Copy name'}
                             className={`absolute right-1 top-1/2 -translate-y-1/2 shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg z-10 ${isCopied 
-                                ? 'bg-[#f1faf1] dark:bg-[#1b2b1b] border-[#c6ebc9] dark:border-[#1e4620] text-[#107c10] dark:text-[#a3d4a3]' 
+                                ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                 : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                         >
                             {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
