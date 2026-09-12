@@ -184,7 +184,7 @@ export default function App() {
                             </Routes>
                         </Suspense>
                     </ErrorBoundary>
-                    {location.pathname === '/' && <Footer />}
+                    <Footer variant={location.pathname === '/' ? 'full' : 'slim'} />
                 </main>
             </div>
             
