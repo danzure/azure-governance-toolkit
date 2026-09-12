@@ -291,7 +291,7 @@ export default function RbacDesignerPage() {
                         </div>
 
                         {/* Pre-configured role templates */}
-                        <div className="border-t border-fluent-stroke-subtle p-4 sm:p-5 flex flex-col gap-2.5 bg-fluent-bg-subtle/40 dark:bg-fluent-bg-subtle/20">
+                        <div className="border-t border-fluent-stroke-subtle p-4 sm:p-5 flex flex-col gap-2.5 bg-fluent-bg-subtle">
                             <div className="flex items-center gap-1.5">
                                 <Sparkles className="w-3.5 h-3.5 text-fluent-brand-fg" />
                                 <p className="text-[12px] font-semibold text-fluent-fg-secondary">Try a pre-configured role template:</p>

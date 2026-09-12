@@ -14,7 +14,7 @@ import {
     AlertTriangle, 
     Layers, 
     Settings2, 
-    Code2, 
+    Terminal,
     Sliders, 
     Plus, 
     Minus, 
@@ -343,12 +343,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                 rel="noopener noreferrer"
                                 className="px-3 h-[32px] rounded-[4px] border transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                             >
-                                <svg viewBox="0 0 23 23" className="w-[13px] h-[13px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0 0h11v11H0z" fill="#f35325"/>
-                                    <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                                    <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                                    <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                                </svg>
+                                <TechnologyIcon name="microsoft" className="w-[13px] h-[13px] shrink-0" />
                                 Microsoft Learn
                                 <ExternalLink className="w-3 h-3 ml-0.5 text-fluent-fg-tertiary" />
                             </a>
@@ -383,8 +378,8 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                     ? 'bg-fluent-bg-card text-fluent-brand-fg shadow-sm border border-fluent-stroke-subtle' 
                                     : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'}`}
                             >
-                                <Code2 className="w-3.5 h-3.5" />
-                                IAC Template
+                                <Terminal className="w-3.5 h-3.5" />
+                                Script Export
                             </button>
                         </div>
 
@@ -497,10 +492,10 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                             <div className="px-4 py-3 sm:px-5 sm:py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-info-bg text-fluent-brand-fg shrink-0">
-                                        <Code2 className="w-4 h-4" />
+                                        <Terminal className="w-4 h-4" />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[14px] sm:text-[15px]">IAC Template</span>
+                                        <span className="text-[14px] sm:text-[15px]">Script Export</span>
                                         <span className="text-[12px] font-normal text-fluent-fg-secondary">
                                             Review and export your {scriptFormat === 'powershell' ? 'Microsoft Graph PowerShell' : 'Graph API JSON'} script
                                         </span>

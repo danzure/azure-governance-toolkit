@@ -61,7 +61,7 @@ const CommandPaletteItem = React.memo(function CommandPaletteItem({
                 <div
                     className={`w-8 h-8 rounded-[4px] flex items-center justify-center shrink-0 transition-colors ${
                         item.iconUrl
-                            ? 'bg-fluent-bg-subtle'
+                            ? 'bg-transparent'
                             : item.isRecent
                             ? 'bg-fluent-bg-subtle text-fluent-fg-secondary'
                             : isActive

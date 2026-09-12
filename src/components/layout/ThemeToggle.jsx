@@ -51,14 +51,14 @@ export default function ThemeToggle({ themePref, onSetTheme, systemPrefersDark }
             label: 'Light',
             description: 'Always light appearance',
             icon: Sun,
-            iconColor: 'text-amber-500 dark:text-amber-400'
+            iconColor: 'text-fluent-cat-yellow-fg'
         },
         {
             id: 'dark',
             label: 'Dark',
             description: 'Always dark appearance',
             icon: Moon,
-            iconColor: 'text-indigo-500 dark:text-indigo-400'
+            iconColor: 'text-fluent-cat-purple-fg'
         },
         {
             id: 'system',

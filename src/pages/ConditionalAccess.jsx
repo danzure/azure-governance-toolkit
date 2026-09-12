@@ -111,10 +111,10 @@ export default function ConditionalAccessPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
                     <div>
                         <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
-                            Conditional Access Naming Generator
+                            Conditional Access Policy Builder
                         </h1>
                         <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
-                            Design and generate standardized Microsoft Entra Conditional Access policy names.
+                            Design and generate standardized Microsoft Entra Conditional Access policy names and deployment templates.
                         </p>
                     </div>
                 </div>

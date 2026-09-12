@@ -17,7 +17,6 @@ import {
     Globe
 } from 'lucide-react';
 import SearchableSelect from '../shared/SearchableSelect';
-import Tooltip from '../shared/Tooltip';
 import ResetButton from '../shared/ResetButton';
 import TechnologyIcon from '../shared/TechnologyIcon';
 import { AZURE_REGIONS, ENVIRONMENTS } from '../../data/constants';
@@ -76,42 +75,42 @@ const SEGMENT_METADATA = {
         label: 'Resource',
         bg: 'bg-fluent-cat-blue-bg',
         fg: 'text-fluent-cat-blue-fg',
-        dot: 'bg-[#0f6cbd]',
+        dot: 'bg-fluent-cat-blue-fg',
         description: 'Azure resource abbreviation (e.g. rg, vnet, kv)'
     },
     Workload: {
         label: 'Workload',
         bg: 'bg-fluent-cat-purple-bg',
         fg: 'text-fluent-cat-purple-fg',
-        dot: 'bg-[#773cbd]',
+        dot: 'bg-fluent-cat-purple-fg',
         description: 'Application, solution, or business workload identifier'
     },
     Environment: {
         label: 'Environment',
         bg: 'bg-fluent-cat-green-bg',
         fg: 'text-fluent-cat-green-fg',
-        dot: 'bg-[#0e700e]',
+        dot: 'bg-fluent-cat-green-fg',
         description: 'Deployment lifecycle stage (prod, dev, test)'
     },
     Region: {
         label: 'Region',
         bg: 'bg-fluent-cat-orange-bg',
         fg: 'text-fluent-cat-orange-fg',
-        dot: 'bg-[#c43501]',
+        dot: 'bg-fluent-cat-orange-fg',
         description: 'Azure datacenter region abbreviation (e.g. uks, eus)'
     },
     Instance: {
         label: 'Instance',
         bg: 'bg-fluent-cat-cyan-bg',
         fg: 'text-fluent-cat-cyan-fg',
-        dot: 'bg-[#008272]',
+        dot: 'bg-fluent-cat-cyan-fg',
         description: 'Three-digit numeric deployment index (001-999)'
     },
     Org: {
         label: 'Org Prefix',
         bg: 'bg-fluent-cat-neutral-bg',
         fg: 'text-fluent-cat-neutral-fg',
-        dot: 'bg-[#616161]',
+        dot: 'bg-fluent-cat-neutral-fg',
         description: 'Optional organization or tenant prefix identifier'
     }
 };
@@ -303,7 +302,7 @@ function ConfigPanel({
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
                             <label htmlFor="param-workload-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-[#773cbd]" title="Workload token" />
+                                <span className="w-2 h-2 rounded-full bg-fluent-cat-purple-fg" title="Workload token" />
                                 Workload Name
                             </label>
                             <span className="text-[11px] text-fluent-fg-tertiary">Application / Service</span>
@@ -338,7 +337,7 @@ function ConfigPanel({
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
                             <label htmlFor="param-org-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-[#616161]" title="Org token" />
+                                <span className="w-2 h-2 rounded-full bg-fluent-cat-neutral-fg" title="Org token" />
                                 Organization Prefix
                             </label>
                             <button
@@ -386,7 +385,7 @@ function ConfigPanel({
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
                             <label htmlFor="param-instance-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-[#008272]" title="Instance token" />
+                                <span className="w-2 h-2 rounded-full bg-fluent-cat-cyan-fg" title="Instance token" />
                                 Instance Number
                             </label>
                             <span className="text-[11px] text-fluent-fg-tertiary">001 - 999</span>
@@ -461,7 +460,7 @@ function ConfigPanel({
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
                             <label className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-[#0e700e]" title="Environment token" />
+                                <span className="w-2 h-2 rounded-full bg-fluent-cat-green-fg" title="Environment token" />
                                 Environment
                             </label>
                             <span className="text-[11px] text-fluent-fg-tertiary">Lifecycle Stage</span>
@@ -503,7 +502,7 @@ function ConfigPanel({
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
                             <label className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-[#c43501]" title="Region token" />
+                                <span className="w-2 h-2 rounded-full bg-fluent-cat-orange-fg" title="Region token" />
                                 Azure Region
                             </label>
                             {currentRegion?.abbrev && (
@@ -608,7 +607,7 @@ function ConfigPanel({
                                 </span>
 
                                 {/* Tactile Reorder Arrows */}
-                                <div className="flex items-center gap-0.5 border-l border-fluent-stroke-subtle/50 pl-1">
+                                <div className="flex items-center gap-0.5 border-l border-fluent-stroke-subtle pl-1">
                                     <button
                                         type="button"
                                         onClick={() => onMoveItem(index, -1)}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Info, Lightbulb, Copy, Check, ExternalLink, Calculator } from 'lucide-react';
 import PropTypes from 'prop-types';
+import TechnologyIcon from '../../shared/TechnologyIcon';
 
 /**
  * AboutBanner Component
@@ -50,12 +51,7 @@ export function AboutBanner({ resource, displayDesc, t }) {
                                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-card text-fluent-fg-secondary text-[12px] font-medium hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong hover:text-fluent-fg-primary transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                                     onClick={(e) => e.stopPropagation()}
                                 >
-                                    <svg viewBox="0 0 23 23" className="w-[14px] h-[14px] shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 0h11v11H0z" fill="#f35325"/>
-                                        <path d="M12 0h11v11H12z" fill="#81bc06"/>
-                                        <path d="M0 12h11v11H0z" fill="#05a6f0"/>
-                                        <path d="M12 12h11v11H12z" fill="#ffba08"/>
-                                    </svg>
+                                    <TechnologyIcon name="microsoft" className="w-[14px] h-[14px] shrink-0" />
                                     Microsoft Learn
                                     <ExternalLink className="w-3 h-3 ml-0.5 text-fluent-fg-tertiary" />
                                 </a>
