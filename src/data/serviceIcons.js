@@ -52,7 +52,7 @@ const SERVICE_ICON_MAP = {
     'Policy assignment':                'Policy',
     'Blueprint':                        'Blueprints',
     'Cost Management export':           'Cost-Management',
-    'Template Spec':                    null,               // → ALT
+    'Template Spec':                    null,               // → PLAYER
 
     // ── Compute ──────────────────────────────────────────────────────────────
     'Virtual Machine - Windows':        null,               // → PLAYER (official icon)
@@ -66,9 +66,9 @@ const SERVICE_ICON_MAP = {
     'Proximity placement group':        'Proximity-Placement-Groups',
     'Function app':                     'Function-Apps',
     'Batch account':                    null,               // → PLAYER (official icon)
-    'Azure Spring Apps':                null,               // → ALT
+    'Azure Spring Apps':                null,               // → PLAYER
     'Service Fabric cluster':           'Service-Fabric-Clusters',
-    'Azure Arc-enabled server':         'Azure-Arc',
+    'Azure Arc-enabled server':         null,               // → PLAYER
 
     // ── Networking ───────────────────────────────────────────────────────────
     'Virtual network':                  null,               // → PLAYER (official icon)
@@ -81,6 +81,7 @@ const SERVICE_ICON_MAP = {
     'Load balancer':                    'Load-Balancers',
     'Application Gateway':              'Application-Gateways',
     'Application Gateway WAF policy':   'Web-Application-Firewall-Policies(WAF)',
+    'Front Door firewall policy':       'Web-Application-Firewall-Policies(WAF)',
     'Azure Firewall':                   'Firewalls',
     'Firewall policy':                  null,               // → PLAYER (official icon)
     'VPN Gateway':                      'Virtual-Network-Gateways',
@@ -92,16 +93,16 @@ const SERVICE_ICON_MAP = {
     'Route table':                      'Route-Tables',
     'Traffic Manager':                  'Traffic-Manager-Profiles',
     'Front Door':                       'Front-Doors',
-    'Bastion host':                     null,               // → ALT
+    'Bastion host':                     null,               // → PLAYER
     'Private Link service':             'Private-Link-Service',
     'Private endpoint (Storage)':       'Private-Link',
     'Private endpoint (Database)':      'Private-Link',
     'Private endpoint (Services)':      'Private-Link',
     'Network watcher':                  'Network-Watcher',
     'DDoS protection plan':             'DDoS-Protection-Plans',
-    'DNS private resolver':             null,               // → ALT
+    'DNS private resolver':             null,               // → PLAYER
     'IP group':                         'IP-Groups',
-    'Local network gateway':            null,               // → ALT
+    'Local network gateway':            null,               // → PLAYER
 
     // ── Storage ──────────────────────────────────────────────────────────────
     'Storage account':                  'Storage-Accounts',
@@ -131,7 +132,7 @@ const SERVICE_ICON_MAP = {
     'MySQL server':                     'Azure-Database-MySQL-Server',
     'PostgreSQL server':                'Azure-Database-PostgreSQL-Server',
     'Azure Cache for Redis':            'Cache-Redis',
-    'Azure Managed Redis':              'Cache-Redis',
+    'Azure Managed Redis':              null,               // → PLAYER
     'Database Migration Service':       'Azure-Database-Migration-Services',
 
     // ── Containers ───────────────────────────────────────────────────────────
@@ -141,7 +142,7 @@ const SERVICE_ICON_MAP = {
     'Container App':                    'Container-Instances',
     'Container Apps Environment':       'Container-Instances',
     'Container Apps job':               'Container-Instances',
-    'Azure Arc-enabled Kubernetes cluster': 'Azure-Arc',
+    'Azure Arc-enabled Kubernetes cluster': null,           // → PLAYER
 
     // ── Security & Identity ──────────────────────────────────────────────────
     'Key vault':                        'Key-Vaults',
@@ -162,7 +163,7 @@ const SERVICE_ICON_MAP = {
     'Event Grid system topic':          'Event-Grid-Topics',
     'Integration account':              'Integration-Accounts',
     'Logic App':                        'Logic-Apps',
-    'SignalR service':                  null,               // → ALT
+    'SignalR service':                  null,               // → PLAYER
     'Notification Hub':                 'Notification-Hubs',
     'Relay':                            'Relays',
 
@@ -200,7 +201,7 @@ const SERVICE_ICON_MAP = {
     'Azure Databricks Access Connector':null,               // → ALT
     'Data Explorer cluster':            'Azure-Data-Explorer-Clusters',
     'Stream Analytics Job':             'Stream-Analytics-Jobs',
-    'Power BI Embedded':                null,               // → ALT
+    'Power BI Embedded':                null,               // → PLAYER
     'Microsoft Purview instance':       'Azure-Data-Catalog',
 
     // ── IoT ──────────────────────────────────────────────────────────────────
@@ -217,7 +218,7 @@ const SERVICE_ICON_MAP = {
     // ── DevOps & Developer Tools ─────────────────────────────────────────────
     'DevOps organization':              'Azure-DevOps',
     'DevTest Labs':                     'DevTest-Labs',
-    'Managed DevOps Pools':             'Azure-DevOps',
+    'Managed DevOps Pools':             null,               // → PLAYER
 
     // ── Newly Added Services ─────────────────────────────────────────────────
     'Azure Monitor workspace':          'Monitor',
@@ -233,6 +234,12 @@ const SERVICE_ICON_MAP = {
     'Network security perimeter':       null,               // → PLAYER
     'Fabric Capacity':                  null,               // → ALT
     'Virtual Network Manager':          null,               // → PLAYER
+    'Application Gateway for Containers': null,             // → PLAYER
+    'Azure Arc gateway':                null,               // → PLAYER
+    'Azure Backup Resource Guard':      null,               // → PLAYER
+    'Compute Fleet':                    null,               // → PLAYER
+    'DNS Forwarding Ruleset':           null,               // → PLAYER
+    'Log Analytics query pack':         null,               // → PLAYER
 };
 
 
@@ -242,18 +249,11 @@ const SERVICE_ICON_MAP = {
 // Used for services not available in the primary benc-uk collection.
 
 const SERVICE_ICON_MAP_ALT = {
-    'Azure Spring Apps':                'Azure Spring Cloud',
-    'Bastion host':                     'Bastions',
     'Machine Learning workspace':       'Machine Learning',
     'Managed identity (user)':          'Managed Identities',
-    'SignalR service':                  'SignalR',
     'Databricks workspace':             'Azure Databricks',
     'Azure Databricks Access Connector':'Azure Databricks',
-    'Power BI Embedded':                'Power BI Embedded',
-    'Template Spec':                    'Templates',
     'App Configuration store':          'App Configuration',
-    'DNS private resolver':             'Private DNS zones',
-    'Local network gateway':            'Local network gateways',
     'Azure Local':                      'Azure Stack Edge _ Data Box Gateway',
     'Fabric Capacity':                  'Power BI Embedded',
 };
@@ -309,6 +309,23 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Azure Chaos Studio experiment':    'other/02223-icon-service-Azure-Chaos-Studio',
     'Azure AI Video Indexer':           'other/01800-icon-service-Azure-Video-Indexer',
     'Backup vault':                     'other/02361-icon-service-Backup-Vault',
+    'Azure Managed Redis':              'new%20icons/03675-icon-service-Azure-Managed-Redis',
+    'Managed DevOps Pools':             'devops/03393-icon-service-Managed-DevOps-Pools',
+    'Template Spec':                    'other/02340-icon-service-Template-Specs',
+    'Azure Arc-enabled Kubernetes cluster': 'other/01088-icon-service-Arc-Kubernetes',
+    'Azure Arc-enabled server':         'management%20%2B%20governance/01710-icon-service-Arc-Machines',
+    'DNS private resolver':             'networking/02882-icon-service-DNS-Private-Resolver',
+    'Application Gateway for Containers': 'networking/03328-icon-service-Application-Gateway-Containers',
+    'Compute Fleet':                    'compute/03487-icon-service-Compute-Fleet',
+    'Azure Backup Resource Guard':      'other/02819-icon-service-Resource-Guard',
+    'Bastion host':                     'networking/02422-icon-service-Bastions',
+    'Azure Spring Apps':                'compute/10370-icon-service-Azure-Spring-Apps',
+    'Local network gateway':            'networking/10077-icon-service-Local-Network-Gateways',
+    'Power BI Embedded':                'analytics/03332-icon-service-Power-BI-Embedded',
+    'SignalR service':                  'web/10052-icon-service-SignalR',
+    'Azure Arc gateway':                'management%20%2B%20governance/01710-icon-service-Arc-Machines',
+    'DNS Forwarding Ruleset':           'networking/02882-icon-service-DNS-Private-Resolver',
+    'Log Analytics query pack':         'other/01085-icon-service-Log-Analytics-Query-Pack',
 };
 
 

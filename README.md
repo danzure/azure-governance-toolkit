@@ -1,80 +1,105 @@
-# atozazure | Azure Governance Tool
+# atozazure | Azure Governance Toolkit
 
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)
+[![React](https://img.shields.io/badge/react-18.3-20232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/vite-6.4-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-3.4-38B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vitest](https://img.shields.io/badge/vitest-4.1-6E9F18.svg?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![License](https://img.shields.io/badge/license-MIT-0078D4.svg?style=for-the-badge)](LICENSE)
 
-A modern, highly interactive web application designed to generate **Microsoft Cloud Adoption Framework (CAF)** compliant names for Azure resources and standardized Entra ID Conditional Access policies.
+> A modern, comprehensive web application and cloud governance suite designed to accelerate cloud architecture design, enforce compliance standards, and automate infrastructure configuration across Microsoft Azure and Microsoft Entra ID.
 
-This tool simplifies cloud governance by ensuring all resource names and security policies adhere strictly to Microsoft's recommended conventions, character limits, scope uniqueness, and abbreviation standards, while providing contextual guidance and best practices.
-
-## 🔗 Live Demo
-[https://app.atozazure.com/](https://app.atozazure.com/)
-
-## 🚀 Core Capabilities
-
-### 🔹 Intelligent Resource Naming Generation
-The core feature of the application handles the complexity of Azure's heterogeneous naming rules.
-- **Extensive Library (100+ Services)**: Computes naming logic across multiple categories including Compute, Networking, Storage, Databases, AI, and more.
-- **Strict CAF Compliance**: Automatically applies Microsoft's recommended abbreviations, hyphenation rules, and structural patterns.
-- **Dynamic Configuration & Reordering**: Users can dynamically define and reorder their naming schema (e.g., `Org-Resource-Workload-Environment-Region-Instance`).
-- **Scope Awareness**: Visual badges indicate the uniqueness scope required for each resource (Global, Subscription, Resource Group, or Sub-resource).
-- **Deep Validation Engine**:
-  - Validates overall length against strict Azure limits (e.g., Storage Accounts: 3-24 chars).
-  - Enforces alphanumeric & special character allowances (e.g., stripping hyphens for Key Vaults).
-  - Identifies mandatory structural names (e.g., `AzureFirewallSubnet`, `GatewaySubnet`).
-
-### 🔹 Conditional Access Policy Builder
-A dedicated module aligned with Microsoft's Zero Trust principles to standardize security policy naming.
-- **Zero Trust Naming Standard**: Dynamically builds policy names using the robust `[Prefix]-[Persona]-[Resource]-[Requirement]` framework.
-- **Curated Template Library**: Features over 15 Microsoft-recommended default policies (e.g., *Require MFA for Admins*, *Block Legacy Auth*).
-- **Multi-Category Tagging**: Organizes policies across core security pillars (Secure Foundation, Zero Trust, Remote Work, Protect Administrator, AI Agents).
-- **Granular Customization**: Interactive form builders allow precise parameter tweaking for platform types, insider risk levels, and session controls.
-
-### 🔹 Management Group Topology Designer
-A dedicated module for visually designing and structuring Azure Management Group hierarchies based on Cloud Adoption Framework (CAF) best practices.
-- **Visual Hierarchy Design**: Interactive tree builder to visually organize and structure management groups.
-- **Infrastructure as Code (IaC) Generation**: Automatically generates ready-to-deploy Bicep and Terraform code for your designed topology.
-- **CAF Aligned Guidance**: Built-in best practices for Platform vs Workloads, Landing Zone Archetypes (Corp, Online, Sandbox), and structural depth limits.
-
-### 🔹 Premium User Experience (UX)
-Built for speed and developer productivity.
-- **Centralized Dashboard & Navigation**: Unified landing page with an elegant, responsive flyout navigation menu to seamlessly switch between the governance tools.
-- **Instant Clipboard Access**: One-click copy interactions with localized success feedback.
-- **Keyboard Navigation**: Power-user friendly with global shortcuts (`Ctrl+K` or `/` to focus search, `Escape` to clear).
-- **Persistent State**: Leverages local storage to remember your custom prefixes, environment selections, and component ordering across sessions.
-- **Optimized Performance**: Implements debounced searching, memoized component rendering, and Vite chunking optimizations for fluid interactions and blazing-fast load times.
-- **Responsive Dark/Light Mode**: Fully responsive Tailwind layout that respects OS-level theme preferences.
+Fully aligned with the **Microsoft Cloud Adoption Framework (CAF)**, **Azure Landing Zones (ALZ)**, **Azure Well-Architected Framework (WAF)**, and **Microsoft Entra Zero Trust Architecture**.
 
 ---
 
-## 🛠️ Technical Architecture & Stack
+## 🔗 Live Application
+**Production URL**: [https://app.atozazure.com/](https://app.atozazure.com/)
 
-Built as a lightweight, client-side Single Page Application (SPA) focusing on performance and maintainability.
+---
 
-- **Frontend Library**: [React 18](https://react.dev/) utilizing Hooks for state and lifecycle management.
-- **Build & Bundling**: [Vite](https://vitejs.dev/) for sub-second HMR and optimized production builds (including manual chunk splitting for reduced bundle sizes).
-- **Styling**: [Tailwind CSS 3.4](https://tailwindcss.com/) combined with a custom Fluent-UI inspired color system for a native Microsoft look and feel.
-- **Icons**: [Lucide React](https://lucide.dev/) for crisp, scalable vector iconography.
-- **Testing**: [Vitest](https://vitest.dev/) for fast, reliable unit testing.
-- **State Management**: Custom hooks (`useLocalStorage`, `useDebounce`) for clean, reusable state persistence and performance tuning.
-- **Deployment**: Configured out-of-the-box for **Azure Static Web Apps** with integrated routing (`staticwebapp.config.json`).
+## 🚀 Core Governance Tools
+
+### 1. 🔹 Azure Resource Naming Tool (CAF Compliant)
+Solves the complexity of heterogeneous naming rules, character constraints, and abbreviation requirements across Azure's cloud ecosystem.
+- **150+ Azure Services**: Comprehensive service catalog spanning Compute, Containers, Databases, AI & Foundry, Networking, Storage, Security, Analytics, and Integration.
+- **Strict CAF Compliance**: Automatically applies official Microsoft abbreviations, casing rules, hyphenation restrictions, and uniqueness scopes (Global, Subscription, Resource Group, Sub-resource).
+- **AI-Powered CAF Assistant**: Natural language prompt input that translates architecture requirements into compliant resource names with CAF governance rationale and quick-filter tags.
+- **Dynamic Pattern Builder**: Customize and reorder naming segments (`Org-Resource-Workload-Environment-Region-Instance`) with custom delimiters and instance padding.
+- **Deep Constraint Validation**: Real-time validation against Azure Resource Manager (ARM) regex patterns, min/max length boundaries, and reserved names (e.g., `GatewaySubnet`, `AzureFirewallSubnet`).
+- **Multi-Format IaC & CLI Generation**: Export one-click naming variables and templates in **Bicep**, **Terraform (HCL)**, **ARM (JSON)**, **Azure CLI**, **Azure PowerShell**, and **Markdown**.
+
+### 2. 🔹 Conditional Access Policy Builder
+A structured policy generator for Microsoft Entra ID built upon Zero Trust identity security baselines.
+- **Zero Trust Naming Framework**: Standardizes policy taxonomy using the proven `[Prefix]-[Persona]-[Resource]-[Requirement]` structure.
+- **17+ Curated Baseline Templates**: Microsoft-recommended policies categorized across 5 core security pillars:
+  - *Secure Foundation* (Emergency access break-glass, block legacy authentication)
+  - *Zero Trust* (Require phishing-resistant MFA, compliant device checks)
+  - *Remote Work* (Location-based triggers, untrusted network controls)
+  - *Protect Administrators* (Continuous access evaluation, privileged session controls)
+  - *AI Agents & Workload Identities* (Autonomous agent and workload protection)
+- **Granular Policy Configuration**: Configure target users/personas, cloud apps, client platform conditions, risk levels, grant controls, and session lifetime controls.
+- **Deployment Artifacts**: Instant export to **Microsoft Graph API (JSON)**, **Microsoft Graph PowerShell**, and **Markdown** documentation.
+
+### 3. 🔹 Management Group Topology Designer
+Visual architecture designer to model enterprise-scale management group hierarchies for Azure Landing Zones.
+- **Visual Hierarchy Builder**: Interactive management group and subscription tree builder supporting deep nesting and organizational hierarchy visualization.
+- **Landing Zone Archetypes**: Pre-configured CAF archetypes for Platform management groups (*Identity*, *Connectivity*, *Management*) and Workload landing zones (*Corp*, *Online*, *Sandbox*).
+- **Structural Guardrails**: Built-in CAF guidance on subscription placement, policy inheritance boundaries, and maximum nesting depths (up to 6 levels).
+- **Automated IaC Exports**: Instantly generate clean, production-ready infrastructure code in **Bicep**, **Terraform (`azurerm_management_group`)**, and **ARM JSON**.
+
+### 4. 🔹 RBAC Custom Role Designer
+Tailor-made Azure Role-Based Access Control definition designer implementing the Principle of Least Privilege (PoLP).
+- **AI-Powered Role Generation**: Describe roles in natural language (e.g., *"DevOps engineer needing read access to VMs and write access to Web Apps"*) to automatically select optimal Azure Resource Provider operations.
+- **Curated Permissions Catalog**: Search and toggle granular actions, notActions, dataActions, and notDataActions across core Azure providers (`Microsoft.Compute`, `Microsoft.Storage`, `Microsoft.Network`, `Microsoft.KeyVault`, `Microsoft.Web`, `Microsoft.ContainerService`, etc.).
+- **Scope Scaffolding**: Configure assignable scopes at Management Group, Subscription, or Resource Group level.
+- **Multi-Format Role Exports**: Generate ready-to-deploy role definitions in **Azure CLI (`az role definition create`)**, **Azure PowerShell (`New-AzRoleDefinition`)**, **Bicep (`Microsoft.Authorization/roleDefinitions`)**, and **ARM JSON**.
+
+### 5. 🔹 Tagging Strategy Designer
+Organizational taxonomy builder to enforce consistency across cloud financial operations (FinOps), ownership, and operations.
+- **CAF Tagging Taxonomies**: Standardized presets for Cost Allocation (`CostCenter`, `BillingScope`), Operations (`Environment`, `Criticality`, `SLA`), Ownership (`Owner`, `BusinessUnit`), and Governance (`DataClassification`, `Compliance`).
+- **Policy Enforcement Artifacts**: Automatically generates **Azure Policy** definitions (*Require Tag on Resources*, *Inherit Tag from Resource Group*) to enforce compliance at scale.
+- **IaC Export Modules**: Export reusable tagging schemas formatted as **Bicep** object modules and **Terraform** local variable maps.
+
+---
+
+## ⚡ Developer & User Experience (UX)
+
+- **Microsoft Fluent 2 Design Language**: Built with Microsoft's official Fluent 2 design language, offering consistent elevation, typography, semantic color tokens, and accessible focus states.
+- **Theme-Adaptive (Dark & Light)**: Fully responsive dark and light modes with seamless contrast switching.
+- **Global Command Palette (`Ctrl+K`)**: Rapid keyboard search across all 5 tools and 150+ Azure services with official Azure SVG iconography and instant routing.
+- **Offline-First & Privacy Preserving**: Zero server-side data collection; all settings, custom patterns, and configurations persist securely in browser `localStorage`.
+- **Intelligent Fallback Architecture**: Client-side heuristic grounding ensures robust, deterministic results even when external AI endpoints are unavailable.
+- **One-Click Clipboard & Micro-Interactions**: Instant feedback with visual confirmation across all code snippets and naming outputs.
+
+---
+
+## 🛠️ Technology Stack & Architecture
+
+| Layer | Technology | Details |
+| :--- | :--- | :--- |
+| **Framework** | [React 18](https://react.dev/) | Client-side Single Page Application (SPA) with React Router v7 |
+| **Build & Tooling** | [Vite 6](https://vitejs.dev/) | Sub-second HMR and manual chunk-split production bundling |
+| **Styling & Tokens** | [Tailwind CSS 3.4](https://tailwindcss.com/) | Custom Fluent 2 semantic token hierarchy (`fluent-*`) |
+| **Design Language** | Microsoft Fluent 2 | Cards, flyouts, code canvases, and accessible controls |
+| **Iconography** | [Lucide React](https://lucide.dev/) + Azure SVGs | Unified registers, official Azure service iconography |
+| **Testing** | [Vitest](https://vitest.dev/) | High-speed unit testing for naming rules, exports, and data models |
+| **Linting** | [ESLint 9](https://eslint.org/) | Strict code style and quality enforcement |
+| **Hosting & API** | [Azure Static Web Apps](https://azure.microsoft.com/services/app-service/static/) | Serverless edge hosting with optional Azure Functions API proxy |
 
 ---
 
 ## 🏁 Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher recommended)
 - [npm](https://www.npmjs.com/) (included with Node.js)
 
-### Local Development Setup
+### Installation & Local Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/danzure/react-azresourcename-app.git
-   cd react-azresourcename-app
+   git clone https://github.com/danzure/azure-governance-toolkit.git
+   cd azure-governance-toolkit
    ```
 
 2. **Install dependencies**
@@ -86,63 +111,91 @@ Built as a lightweight, client-side Single Page Application (SPA) focusing on pe
    ```bash
    npm run dev
    ```
-   The application will be accessible at `http://localhost:5173`. Changes will hot-reload automatically.
+   Open [http://localhost:5173](http://localhost:5173) in your browser to view the application.
 
-### Running Tests
+4. **Run both frontend and serverless API (optional)**
+   ```bash
+   npm start
+   ```
 
-Execute the Vitest test suite to verify naming logic and component integrity:
-```bash
-npm run test
-```
+### Quality Verification Commands
 
-### Production Build
-
-To create an optimized, minified production build:
-```bash
-npm run build
-```
-This generates static assets in the `dist/` directory. You can preview the production build locally using `npm run preview`.
+- **Unit Tests**: Run all Vitest suites:
+  ```bash
+  npm test
+  ```
+- **Code Linting**: Check code style and rules:
+  ```bash
+  npm run lint
+  ```
+- **Production Build**: Compile and validate production bundle:
+  ```bash
+  npm run build
+  ```
+- **Production Preview**: Preview production bundle locally:
+  ```bash
+  npm run preview
+  ```
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-src/
-├── components/      # Reusable UI components (ConfigPanel, ResourceGrid, PatternBuilderCard, etc.)
-├── data/            # Static constants, Azure resource schemas, and Conditional Access rules
-├── hooks/           # Custom React hooks (useLocalStorage, useDebounce)
-├── pages/           # High-level route views (ResourceNamingPage, ConditionalAccessPage)
-├── utils/           # Pure functions, including the core naming validation logic
-├── App.jsx          # Main application routing
-├── main.jsx         # React DOM entry point
-└── index.css        # Tailwind directives and custom CSS variables
+azure-governance-toolkit/
+├── .agents/             # Agent guidelines, architecture documentation, and rules
+├── api/                 # Azure Functions serverless proxy backend (Node.js)
+├── public/              # Static public assets, favicon, and manifests
+├── src/
+│   ├── assets/          # Application logos, graphics, and static media
+│   ├── components/      # Modular component architecture
+│   │   ├── ai/          # AI Prompt Bar, CAF feedback banners
+│   │   ├── ca/          # Conditional Access policy forms, cards, and modal
+│   │   ├── layout/      # Navbar, Footer, FlyoutMenu, CommandPaletteModal
+│   │   ├── naming/      # PatternBuilder, ConfigPanel, ResourceCard, ServiceFilter
+│   │   ├── rbac/        # RBAC Designer panels, permission pickers, role preview
+│   │   ├── shared/      # FluentDropdown, TechnologyIcon, ResetButton, CopyButton
+│   │   ├── tagging/     # Tagging Strategy tables, rule cards, export panels
+│   │   └── topology/    # Management Group tree builder, node editor, IaC exporters
+│   ├── data/            # Static schemas, Azure services catalog, RBAC & CA databases
+│   ├── hooks/           # Custom React hooks (useLocalStorage, useDebounce, etc.)
+│   ├── pages/           # Route views (Dashboard, ResourceNaming, ConditionalAccess, etc.)
+│   ├── utils/           # Pure utility logic, validation engines, IaC code generators
+│   ├── App.jsx          # Top-level routing and theme providers
+│   ├── index.css        # Fluent 2 design tokens and Tailwind directives
+│   └── main.jsx         # Application entry point
+├── staticwebapp.config.json # Azure Static Web Apps routing and security headers
+├── tailwind.config.js   # Tailwind theme configuration and Fluent 2 semantic mappings
+└── vite.config.js       # Vite configuration with chunk splitting optimizations
 ```
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Whether it's adding new Azure resource types to the schema, improving the validation logic, or enhancing the UI.
+Contributions are welcome! Whether you are adding new Azure services to the naming catalog, updating Conditional Access templates, expanding RBAC resource provider operations, or enhancing the Fluent 2 UI:
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-Feel free to check the [Issues page](https://github.com/danzure/react-azresourcename-app/issues) for open tasks.
+2. Create your Feature Branch (`git checkout -b feature/governance-enhancement`)
+3. Ensure all tests pass (`npm test && npm run lint && npm run build`)
+4. Commit your Changes (`git commit -m 'feat: add new resource provider support'`)
+5. Push to the Branch (`git push origin feature/governance-enhancement`)
+6. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is distributed under the [MIT License](LICENSE). See the `LICENSE` file for more information.
+This project is distributed under the [MIT License](LICENSE).
 
 ---
 
-## 📖 Official Resources
+## 📖 Official Microsoft Governance Resources
 
-- [Azure Naming Conventions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming)
-- [Azure Resource Abbreviations](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations)
-- [Conditional Access Architecture](https://learn.microsoft.com/entra/identity/conditional-access/plan-conditional-access)
+- [Azure Cloud Adoption Framework (CAF)](https://learn.microsoft.com/azure/cloud-adoption-framework/)
+- [Define your Naming Convention](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming)
+- [Recommended Abbreviations for Azure Resources](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations)
+- [Azure Landing Zones Architecture (ALZ)](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/)
+- [Azure Well-Architected Framework (WAF)](https://learn.microsoft.com/azure/well-architected/)
+- [Microsoft Entra Conditional Access Architecture](https://learn.microsoft.com/entra/identity/conditional-access/plan-conditional-access)
+- [Azure Custom Roles Documentation](https://learn.microsoft.com/azure/role-based-access-control/custom-roles)

@@ -41,6 +41,11 @@
       "category": "Networking"
     },
     {
+      "name": "Application Gateway for Containers",
+      "abbrev": "agc",
+      "category": "Networking"
+    },
+    {
       "name": "Application Gateway WAF policy",
       "abbrev": "waf",
       "category": "Security"
@@ -86,6 +91,11 @@
       "category": "AI + ML"
     },
     {
+      "name": "Azure Arc gateway",
+      "abbrev": "arcgw",
+      "category": "Compute"
+    },
+    {
       "name": "Azure Arc-enabled Kubernetes cluster",
       "abbrev": "arck",
       "category": "Containers"
@@ -94,6 +104,11 @@
       "name": "Azure Arc-enabled server",
       "abbrev": "arcs",
       "category": "Compute"
+    },
+    {
+      "name": "Azure Backup Resource Guard",
+      "abbrev": "rgd",
+      "category": "Storage"
     },
     {
       "name": "Azure Bot Service",
@@ -189,6 +204,11 @@
       "name": "Communication Services",
       "abbrev": "acs",
       "category": "Web"
+    },
+    {
+      "name": "Compute Fleet",
+      "abbrev": "fleet",
+      "category": "Compute"
     },
     {
       "name": "Compute gallery",
@@ -306,6 +326,11 @@
       "category": "Compute"
     },
     {
+      "name": "DNS Forwarding Ruleset",
+      "abbrev": "dnsfrs",
+      "category": "Networking"
+    },
+    {
       "name": "DNS private resolver",
       "abbrev": "dnspr",
       "category": "Networking"
@@ -371,6 +396,11 @@
       "category": "Networking"
     },
     {
+      "name": "Front Door firewall policy",
+      "abbrev": "fdfp",
+      "category": "Networking"
+    },
+    {
       "name": "Function app",
       "abbrev": "func",
       "category": "Compute"
@@ -417,7 +447,7 @@
     },
     {
       "name": "Kubernetes Fleet Manager",
-      "abbrev": "flt",
+      "abbrev": "fleet",
       "category": "Containers"
     },
     {
@@ -439,6 +469,11 @@
       "name": "Local network gateway",
       "abbrev": "lgw",
       "category": "Networking"
+    },
+    {
+      "name": "Log Analytics query pack",
+      "abbrev": "pack",
+      "category": "Management + Governance"
     },
     {
       "name": "Log Analytics workspace",
@@ -557,7 +592,7 @@
     },
     {
       "name": "PostgreSQL server",
-      "abbrev": "psql",
+      "abbrev": "pgsql",
       "category": "Databases"
     },
     {
