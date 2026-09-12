@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import { User, Coffee } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
-import logoLight from '../../assets/logos/atozazure-horizontal-light.png';
-import logoDark from '../../assets/logos/atozazure-logo-darkmode.png';
+// Eagerly resolve brand logos if present (ignored in git to prevent public exposure)
+const logoModules = import.meta.glob('../../assets/logos/*.png', { eager: true, import: 'default' });
+const logoLight = logoModules['../../assets/logos/atozazure-horizontal-light.png'] || null;
+const logoDark = logoModules['../../assets/logos/atozazure-logo-darkmode.png'] || null;
+
 
 /**
  * Footer Component
@@ -26,16 +29,24 @@ export default function Footer({ variant = 'full' }) {
                             className="inline-flex items-center justify-center group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px]"
                             aria-label="atozazure"
                         >
-                            <img
-                                src={logoLight}
-                                alt="atozazure"
-                                className="h-[15px] sm:h-[16px] w-auto object-contain dark:hidden transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
-                            />
-                            <img
-                                src={logoDark}
-                                alt="atozazure"
-                                className="h-[15px] sm:h-[16px] w-auto object-contain hidden dark:block transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
-                            />
+                            {logoLight && logoDark ? (
+                                <>
+                                    <img
+                                        src={logoLight}
+                                        alt="atozazure"
+                                        className="h-[15px] sm:h-[16px] w-auto object-contain dark:hidden transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                                    />
+                                    <img
+                                        src={logoDark}
+                                        alt="atozazure"
+                                        className="h-[15px] sm:h-[16px] w-auto object-contain hidden dark:block transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                                    />
+                                </>
+                            ) : (
+                                <span className="font-semibold text-[13px] sm:text-[14px] text-fluent-fg-primary tracking-tight group-hover:text-fluent-brand-fg transition-colors">
+                                    atozazure
+                                </span>
+                            )}
                         </a>
 
                         <span className="opacity-35 select-none" aria-hidden="true">|</span>
@@ -65,16 +76,24 @@ export default function Footer({ variant = 'full' }) {
                         className="inline-flex items-center justify-center group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px]"
                         aria-label="atozazure"
                     >
-                        <img
-                            src={logoLight}
-                            alt="atozazure"
-                            className="h-[16px] sm:h-[17px] w-auto object-contain dark:hidden transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
-                        />
-                        <img
-                            src={logoDark}
-                            alt="atozazure"
-                            className="h-[16px] sm:h-[17px] w-auto object-contain hidden dark:block transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
-                        />
+                        {logoLight && logoDark ? (
+                            <>
+                                <img
+                                    src={logoLight}
+                                    alt="atozazure"
+                                    className="h-[16px] sm:h-[17px] w-auto object-contain dark:hidden transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                                />
+                                <img
+                                    src={logoDark}
+                                    alt="atozazure"
+                                    className="h-[16px] sm:h-[17px] w-auto object-contain hidden dark:block transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                                />
+                            </>
+                        ) : (
+                            <span className="font-semibold text-[13px] sm:text-[14px] text-fluent-fg-primary tracking-tight group-hover:text-fluent-brand-fg transition-colors">
+                                atozazure
+                            </span>
+                        )}
                     </a>
 
                     <span className="opacity-35 select-none" aria-hidden="true">|</span>

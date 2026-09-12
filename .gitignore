@@ -43,3 +43,9 @@ coverage/
 
 # OS Files
 Thumbs.db
+
+# Agent Configuration & Rules
+.agents/
+
+# Brand Logos & Visual Assets
+src/assets/logos/
