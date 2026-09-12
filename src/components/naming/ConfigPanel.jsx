@@ -19,42 +19,8 @@ import {
 import SearchableSelect from '../shared/SearchableSelect';
 import ResetButton from '../shared/ResetButton';
 import TechnologyIcon from '../shared/TechnologyIcon';
-import { AZURE_REGIONS, ENVIRONMENTS } from '../../data/constants';
+import { AZURE_REGIONS, ENVIRONMENTS, NAMING_PRESETS } from '../../data/constants';
 import PropTypes from 'prop-types';
-
-/**
- * Standard Naming Presets aligned with CAF and enterprise conventions
- */
-const NAMING_PRESETS = [
-    {
-        id: 'caf-default',
-        label: 'CAF Standard',
-        shortDesc: 'Resource → Workload → Env → Region → Instance',
-        order: ['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance'],
-        requiresOrg: false
-    },
-    {
-        id: 'org-first',
-        label: 'Org First',
-        shortDesc: 'Org → Resource → Workload → Env → Region → Instance',
-        order: ['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance'],
-        requiresOrg: true
-    },
-    {
-        id: 'workload-first',
-        label: 'Workload First',
-        shortDesc: 'Workload → Resource → Env → Region → Instance',
-        order: ['Workload', 'Resource', 'Environment', 'Region', 'Instance', 'Org'],
-        requiresOrg: false
-    },
-    {
-        id: 'region-first',
-        label: 'Region First',
-        shortDesc: 'Region → Env → Resource → Workload → Instance',
-        order: ['Region', 'Environment', 'Resource', 'Workload', 'Instance', 'Org'],
-        requiresOrg: false
-    }
-];
 
 /**
  * Quick environment selector pills for the top enterprise stages
@@ -185,12 +151,6 @@ function ConfigPanel({
     const [selectedSampleId, setSelectedSampleId] = useState('rg');
     const [sampleCopied, setSampleCopied] = useState(false);
 
-    // Identify current region object for abbreviation display
-    const currentRegion = useMemo(() => {
-        return AZURE_REGIONS.find(r => r.value === regionValue && !r.type) || 
-               AZURE_REGIONS.find(r => !r.type);
-    }, [regionValue]);
-
     // Active sample resource
     const selectedSample = useMemo(() => {
         return SAMPLE_RESOURCES.find(s => s.id === selectedSampleId) || SAMPLE_RESOURCES[0];
@@ -229,6 +189,8 @@ function ConfigPanel({
         }
         if (preset.requiresOrg) {
             setShowOrg(true);
+        } else if (preset.disableOrg || preset.id === 'caf-default') {
+            setShowOrg(false);
         }
     }, [setNamingOrder, setShowOrg]);
 
@@ -298,6 +260,61 @@ function ConfigPanel({
                         </h4>
                     </div>
 
+                    {/* Field: Organization Prefix with Integrated Toggle Switch */}
+                    <div className="flex flex-col gap-1.5">
+                        <label htmlFor="param-org-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-fluent-cat-neutral-fg" title="Org token" />
+                            Organization Prefix
+                        </label>
+                        <div className="flex items-center gap-2 min-w-0">
+                            <div className="relative flex-1 min-w-0 flex items-center">
+                                <input
+                                    id="param-org-input"
+                                    type="text"
+                                    value={orgPrefix}
+                                    onChange={(e) => setOrgPrefix(e.target.value)}
+                                    placeholder={showOrg ? 'e.g. contoso, az, msft' : 'Disabled — click toggle to enable'}
+                                    disabled={!showOrg}
+                                    maxLength={10}
+                                    className={`flex-1 min-w-0 w-full px-3 h-[32px] pr-8 border rounded-[4px] outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary ${!showOrg ? 'opacity-40 cursor-not-allowed bg-fluent-bg-subtle' : 'focus:border-fluent-brand-bg'}`}
+                                />
+                                {showOrg && orgPrefix && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setOrgPrefix('')}
+                                        title="Clear organization prefix"
+                                        aria-label="Clear organization prefix"
+                                        className="absolute right-2 w-5 h-5 flex items-center justify-center rounded-sm text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-colors"
+                                    >
+                                        <X className="w-3.5 h-3.5" />
+                                    </button>
+                                )}
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setShowOrg(!showOrg)}
+                                className={`h-[32px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all duration-200 ease-in-out active:scale-95 flex items-center gap-1.5 border shrink-0 ${showOrg
+                                    ? 'bg-fluent-brand-bg text-white border-fluent-brand-bg shadow-xs'
+                                    : 'bg-fluent-bg-card text-fluent-fg-secondary border-fluent-stroke-strong hover:border-fluent-fg-primary hover:text-fluent-fg-primary'
+                                }`}
+                                title={showOrg ? 'Disable Organization Prefix' : 'Enable Organization Prefix'}
+                            >
+                                <span className={`w-1.5 h-1.5 rounded-full ${showOrg ? 'bg-white' : 'bg-fluent-fg-tertiary'}`} />
+                                <span>
+                                    {showOrg ? 'Enabled' : (
+                                        <>
+                                            <span className="hidden sm:inline">Optional (Disabled)</span>
+                                            <span className="sm:hidden">Disabled</span>
+                                        </>
+                                    )}
+                                </span>
+                            </button>
+                        </div>
+                        <span className="text-[12px] text-fluent-fg-secondary">
+                            Leading organization or business unit identifier for multi-tenant or enterprise environments.
+                        </span>
+                    </div>
+
                     {/* Field: Workload Name */}
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
@@ -333,63 +350,101 @@ function ConfigPanel({
                         </span>
                     </div>
 
-                    {/* Field: Organization Prefix with Integrated Toggle Switch */}
+                    {/* Field: Environment with Quick Preset Pills */}
                     <div className="flex flex-col gap-1.5">
                         <div className="flex items-center justify-between">
-                            <label htmlFor="param-org-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-fluent-cat-neutral-fg" title="Org token" />
-                                Organization Prefix
+                            <label className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-fluent-cat-green-fg" title="Environment token" />
+                                Environment
                             </label>
-                            <button
-                                type="button"
-                                onClick={() => setShowOrg(!showOrg)}
-                                className={`px-2 py-0.5 rounded-[4px] text-[11px] font-medium transition-all duration-200 ease-in-out active:scale-95 flex items-center gap-1 border ${showOrg
-                                    ? 'bg-fluent-brand-bg text-white border-fluent-brand-bg shadow-xs'
-                                    : 'bg-fluent-bg-card text-fluent-fg-secondary border-fluent-stroke-strong hover:border-fluent-fg-primary'
-                                }`}
-                                title={showOrg ? 'Disable Organization Prefix' : 'Enable Organization Prefix'}
-                            >
-                                <span className={`w-1.5 h-1.5 rounded-full ${showOrg ? 'bg-white' : 'bg-fluent-fg-tertiary'}`} />
-                                <span>{showOrg ? 'Enabled' : 'Optional (Disabled)'}</span>
-                            </button>
+                            <span className="text-[11px] text-fluent-fg-tertiary">Lifecycle Stage</span>
                         </div>
-                        <div className="relative flex items-center w-full">
-                            <input
-                                id="param-org-input"
-                                type="text"
-                                value={orgPrefix}
-                                onChange={(e) => setOrgPrefix(e.target.value)}
-                                placeholder={showOrg ? 'e.g. contoso, az, msft' : 'Disabled — click toggle to enable'}
-                                disabled={!showOrg}
-                                maxLength={10}
-                                className={`flex-1 min-w-0 w-full px-3 h-[32px] pr-8 border rounded outline-none text-[13px] transition-all duration-200 bg-fluent-bg-card text-fluent-fg-primary border-fluent-stroke-strong placeholder:text-fluent-fg-tertiary ${!showOrg ? 'opacity-40 cursor-not-allowed bg-fluent-bg-subtle' : 'focus:border-fluent-brand-bg'}`}
+                        
+                        {/* Searchable Select for all environments */}
+                        <div className="w-full">
+                            <SearchableSelect 
+                                items={ENVIRONMENTS} 
+                                value={envValue} 
+                                onChange={setEnvValue} 
+                                placeholder="Select environment..."
+                                compact 
                             />
-                            {showOrg && orgPrefix && (
+                        </div>
+
+                        {/* Quick-select Environment Pills */}
+                        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+                            {QUICK_ENVIRONMENTS.map(item => (
                                 <button
+                                    key={item.value}
                                     type="button"
-                                    onClick={() => setOrgPrefix('')}
-                                    title="Clear organization prefix"
-                                    aria-label="Clear organization prefix"
-                                    className="absolute right-2 w-5 h-5 flex items-center justify-center rounded-sm text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-colors"
+                                    onClick={() => setEnvValue(item.value)}
+                                    className={`px-2.5 py-1 rounded-[4px] text-[12px] font-medium border transition-all duration-200 ease-in-out active:scale-95 ${envValue === item.value
+                                        ? 'bg-fluent-brand-bg text-white border-fluent-brand-bg font-semibold'
+                                        : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'
+                                    }`}
                                 >
-                                    <X className="w-3.5 h-3.5" />
+                                    {item.label}
                                 </button>
-                            )}
+                            ))}
                         </div>
                         <span className="text-[12px] text-fluent-fg-secondary">
-                            Leading organization or business unit identifier for multi-tenant or enterprise environments.
+                            Specifies the operational lifecycle tier (Production, Development, Test, etc.).
+                        </span>
+                    </div>
+                </div>
+
+                {/* Column 2: Scope & Geography */}
+                <div className="flex flex-col bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-lg p-4 sm:p-4.5 gap-4">
+                    <div className="flex items-center gap-2 pb-2 border-b border-fluent-stroke-subtle">
+                        <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-info-bg text-fluent-brand-fg shrink-0">
+                            <Globe className="w-3.5 h-3.5" />
+                        </div>
+                        <h4 className="text-[13px] font-semibold text-fluent-fg-primary">
+                            Deployment & Geography
+                        </h4>
+                    </div>
+
+                    {/* Field: Azure Region & Datacentre Map Link */}
+                    <div className="flex flex-col gap-1.5">
+                        <label className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-fluent-cat-orange-fg" title="Region token" />
+                            Azure Region
+                        </label>
+
+                        <div className="flex items-center gap-2 min-w-0">
+                            <div className="flex-1 min-w-0">
+                                <SearchableSelect 
+                                    items={AZURE_REGIONS} 
+                                    value={regionValue} 
+                                    onChange={setRegionValue} 
+                                    placeholder="Select region..." 
+                                    compact 
+                                />
+                            </div>
+                            <a
+                                href="https://datacenters.microsoft.com/globe/explore/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Explore Microsoft Cloud Datacenters Map"
+                                className="h-[32px] px-2.5 rounded-[4px] border transition-all duration-200 ease-in-out active:scale-95 shrink-0 inline-flex items-center gap-1.5 no-underline bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary"
+                            >
+                                <TechnologyIcon name="microsoft" className="w-3.5 h-3.5 shrink-0" />
+                                <span className="text-[12px] font-medium hidden sm:inline">Datacentre Map</span>
+                                <ExternalLink className="w-3 h-3 text-fluent-fg-tertiary" />
+                            </a>
+                        </div>
+                        <span className="text-[12px] text-fluent-fg-secondary">
+                            Target deployment geography. Injects the standardized CAF regional abbreviation into resource names.
                         </span>
                     </div>
 
                     {/* Field: Instance Stepper & Quick-Fill */}
                     <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between">
-                            <label htmlFor="param-instance-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-fluent-cat-cyan-fg" title="Instance token" />
-                                Instance Number
-                            </label>
-                            <span className="text-[11px] text-fluent-fg-tertiary">001 - 999</span>
-                        </div>
+                        <label htmlFor="param-instance-input" className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-fluent-cat-cyan-fg" title="Instance token" />
+                            <span>Instance Number</span>
+                            <span className="text-[11px] font-normal text-fluent-fg-tertiary">(001 - 999)</span>
+                        </label>
                         <div className="flex items-center gap-2">
                             {/* Stepper Input */}
                             <div className="flex items-center h-[32px] border border-fluent-stroke-strong rounded bg-fluent-bg-card overflow-hidden">
@@ -441,101 +496,6 @@ function ConfigPanel({
                         </div>
                         <span className="text-[12px] text-fluent-fg-secondary">
                             Sequential deployment index, automatically zero-padded to 3 digits per CAF guidance.
-                        </span>
-                    </div>
-                </div>
-
-                {/* Column 2: Scope & Geography */}
-                <div className="flex flex-col bg-fluent-bg-canvas border border-fluent-stroke-subtle rounded-lg p-4 sm:p-4.5 gap-4">
-                    <div className="flex items-center gap-2 pb-2 border-b border-fluent-stroke-subtle">
-                        <div className="flex items-center justify-center w-6 h-6 rounded-md bg-fluent-info-bg text-fluent-brand-fg shrink-0">
-                            <Globe className="w-3.5 h-3.5" />
-                        </div>
-                        <h4 className="text-[13px] font-semibold text-fluent-fg-primary">
-                            Deployment & Geography
-                        </h4>
-                    </div>
-
-                    {/* Field: Environment with Quick Preset Pills */}
-                    <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between">
-                            <label className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-fluent-cat-green-fg" title="Environment token" />
-                                Environment
-                            </label>
-                            <span className="text-[11px] text-fluent-fg-tertiary">Lifecycle Stage</span>
-                        </div>
-                        
-                        {/* Searchable Select for all environments */}
-                        <div className="w-full">
-                            <SearchableSelect 
-                                items={ENVIRONMENTS} 
-                                value={envValue} 
-                                onChange={setEnvValue} 
-                                placeholder="Select environment..."
-                                compact 
-                            />
-                        </div>
-
-                        {/* Quick-select Environment Pills */}
-                        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
-                            {QUICK_ENVIRONMENTS.map(item => (
-                                <button
-                                    key={item.value}
-                                    type="button"
-                                    onClick={() => setEnvValue(item.value)}
-                                    className={`px-2.5 py-1 rounded-[4px] text-[12px] font-medium border transition-all duration-200 ease-in-out active:scale-95 ${envValue === item.value
-                                        ? 'bg-fluent-brand-bg text-white border-fluent-brand-bg font-semibold'
-                                        : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'
-                                    }`}
-                                >
-                                    {item.label}
-                                </button>
-                            ))}
-                        </div>
-                        <span className="text-[12px] text-fluent-fg-secondary">
-                            Specifies the operational lifecycle tier (Production, Development, Test, etc.).
-                        </span>
-                    </div>
-
-                    {/* Field: Azure Region with Live Abbreviation Badge & Datacentre Map Link */}
-                    <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between">
-                            <label className="text-[13px] font-semibold text-fluent-fg-primary flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-fluent-cat-orange-fg" title="Region token" />
-                                Azure Region
-                            </label>
-                            {currentRegion?.abbrev && (
-                                <span className="px-2 py-0.5 rounded-[4px] font-mono text-[11px] font-semibold bg-fluent-cat-orange-bg text-fluent-cat-orange-fg" title="Calculated CAF region code">
-                                    Token: [{currentRegion.abbrev}]
-                                </span>
-                            )}
-                        </div>
-
-                        <div className="flex items-center gap-2 min-w-0">
-                            <div className="flex-1 min-w-0">
-                                <SearchableSelect 
-                                    items={AZURE_REGIONS} 
-                                    value={regionValue} 
-                                    onChange={setRegionValue} 
-                                    placeholder="Select region..." 
-                                    compact 
-                                />
-                            </div>
-                            <a
-                                href="https://datacenters.microsoft.com/globe/explore/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="Explore Microsoft Cloud Datacenters Map"
-                                className="h-[32px] px-2.5 rounded-[4px] border transition-all duration-200 ease-in-out active:scale-95 shrink-0 inline-flex items-center gap-1.5 no-underline bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary"
-                            >
-                                <TechnologyIcon name="microsoft" className="w-3.5 h-3.5 shrink-0" />
-                                <span className="text-[12px] font-medium hidden sm:inline">Datacentre Map</span>
-                                <ExternalLink className="w-3 h-3 text-fluent-fg-tertiary" />
-                            </a>
-                        </div>
-                        <span className="text-[12px] text-fluent-fg-secondary">
-                            Target deployment geography. Injects the standardized CAF regional abbreviation into resource names.
                         </span>
                     </div>
                 </div>

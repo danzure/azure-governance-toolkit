@@ -76,6 +76,41 @@ export const ENVIRONMENTS = [
     { label: 'DR (dr)', value: 'dr' },
 ];
 
+/**
+ * Standard Naming Presets aligned with CAF and enterprise conventions
+ */
+export const NAMING_PRESETS = [
+    {
+        id: 'caf-default',
+        label: 'Recommended',
+        shortDesc: 'Resource → Workload → Env → Region → Instance',
+        order: ['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance'],
+        requiresOrg: false,
+        disableOrg: true
+    },
+    {
+        id: 'org-first',
+        label: 'Org First',
+        shortDesc: 'Org → Resource → Workload → Env → Region → Instance',
+        order: ['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance'],
+        requiresOrg: true
+    },
+    {
+        id: 'workload-first',
+        label: 'Workload First',
+        shortDesc: 'Workload → Resource → Env → Region → Instance',
+        order: ['Workload', 'Resource', 'Environment', 'Region', 'Instance', 'Org'],
+        requiresOrg: false
+    },
+    {
+        id: 'region-first',
+        label: 'Region First',
+        shortDesc: 'Region → Env → Resource → Workload → Instance',
+        order: ['Region', 'Environment', 'Resource', 'Workload', 'Instance', 'Org'],
+        requiresOrg: false
+    }
+];
+
 const RESOURCE_DATA_RAW = [
     // General
     { category: 'General', name: 'Management group', provider: 'Microsoft.Management/managementGroups', abbrev: 'mg', maxLength: 90, scope: 'Tenant', chars: 'a-z, A-Z, 0-9, -, _, (), .', desc: 'Hierarchical container organizing subscriptions for enterprise-scale governance. Supports up to 6 levels of nesting with inherited Azure Policy and RBAC assignments.', longDesc: 'Hierarchical container that organises subscriptions into a governance structure for enterprise-scale management. Supports up to 6 levels of nesting below the root tenant group, with Azure Policy and RBAC assignments inherited downward through the tree. Management groups are the backbone of the Cloud Adoption Framework (CAF) landing zone architecture — separating Platform (identity, connectivity, management) from Landing Zones (production, dev/test) and Sandbox. Each management group can contain subscriptions and child management groups, enabling consistent governance at scale. Moving subscriptions between groups automatically applies the target group\'s policies.', bestPractice: 'Align management groups with your Cloud Adoption Framework landing zone hierarchy. Assign policies at this level rather than per subscription.', namingGuidance: 'Name pattern: mg-{scope}-{purpose}. Management group names should align with your CAF landing zone hierarchy — use names like mg-platform, mg-landingzones-prod, and mg-sandbox that clearly communicate the group\'s role. Avoid deeply nested hierarchies; most organisations need 3-4 levels. The display name can differ from the ID, but keeping them consistent reduces confusion during policy assignments.', learnUrl: 'https://learn.microsoft.com/azure/governance/management-groups/overview' },

@@ -355,4 +355,20 @@ describe('generateName', () => {
         const resultMultiple = generateName(resource, configMultiple);
         expect(resultMultiple).toBe('prod-myapp-prod-uks-001');
     });
+
+    // ─── Naming Presets & CAF Standard ──────────────────────────────
+
+    it('ensures Recommended (CAF default) preset disables org prefix', async () => {
+        const { NAMING_PRESETS } = await import('../data/constants');
+        const cafPreset = NAMING_PRESETS.find(p => p.id === 'caf-default');
+        expect(cafPreset).toBeDefined();
+        expect(cafPreset.label).toBe('Recommended');
+        expect(cafPreset.disableOrg).toBe(true);
+        expect(cafPreset.requiresOrg).toBe(false);
+
+        const orgFirstPreset = NAMING_PRESETS.find(p => p.id === 'org-first');
+        expect(orgFirstPreset).toBeDefined();
+        expect(orgFirstPreset.requiresOrg).toBe(true);
+    });
 });
+
