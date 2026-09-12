@@ -52,6 +52,7 @@ function getBaseSearchIndex() {
             title: 'Dashboard',
             subtitle: 'Overview of Azure governance suite and quick access stats',
             keywords: 'dashboard home overview stats governance summary',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg',
             iconComponent: LayoutDashboard,
             actionType: 'route',
             target: '/'
@@ -62,6 +63,7 @@ function getBaseSearchIndex() {
             title: 'Azure Resource Naming Tool',
             subtitle: 'Cloud Adoption Framework (CAF) compliant naming generator for 150+ services',
             keywords: 'naming resource naming caf conventions prefix rules generator abbreviations pattern',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg',
             iconComponent: Compass,
             actionType: 'route',
             target: '/resource-naming'
@@ -72,6 +74,7 @@ function getBaseSearchIndex() {
             title: 'Conditional Access Policy Generator',
             subtitle: 'Zero trust security persona baselines and policy deployment templates',
             keywords: 'conditional access ca zero trust security mfa persona policy templates entra id',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg',
             iconComponent: ShieldCheck,
             actionType: 'route',
             target: '/conditional-access'
@@ -82,6 +85,7 @@ function getBaseSearchIndex() {
             title: 'Management Group Topology',
             subtitle: 'Visualize and build landing zone hierarchy architectures',
             keywords: 'management groups topology landing zones alz hierarchy subscriptions root architecture',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
             iconComponent: Layers,
             actionType: 'route',
             target: '/management-groups'
@@ -92,6 +96,7 @@ function getBaseSearchIndex() {
             title: 'RBAC Role Designer',
             subtitle: 'Design custom Azure role definitions with scoped actions and CLI/Bicep export',
             keywords: 'rbac role designer permissions actions notActions assignableScopes custom role identity',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg',
             iconComponent: Sliders,
             actionType: 'route',
             target: '/rbac-designer'
@@ -102,6 +107,7 @@ function getBaseSearchIndex() {
             title: 'Tagging Strategy Designer',
             subtitle: 'Standardized resource tags for cost tracking, ownership, and automation',
             keywords: 'tagging strategy tags metadata cost allocation ownership environment governance compliance',
+            iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg',
             iconComponent: Tag,
             actionType: 'route',
             target: '/tagging-strategy'

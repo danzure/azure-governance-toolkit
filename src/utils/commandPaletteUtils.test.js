@@ -34,6 +34,11 @@ describe('Command Palette Utilities', () => {
         expect(navTargets).toContain('/rbac-designer');
         expect(navTargets).toContain('/tagging-strategy');
 
+        // Verify navigation items have matching official SVG icons
+        const navItems = index.filter(i => i.category === 'Navigation');
+        expect(navItems.length).toBe(6);
+        expect(navItems.every(i => typeof i.iconUrl === 'string' && i.iconUrl.includes('benc-uk/icon-collection/master/azure-icons/'))).toBe(true);
+
         // Verify Azure resources exist
         const kvItem = index.find(i => i.title === 'Key vault');
         expect(kvItem).toBeDefined();
