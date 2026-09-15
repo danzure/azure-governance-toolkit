@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { ExternalLink, ChevronDown, Info } from 'lucide-react';
 import TagBuilder from '../components/tagging/TagBuilder';
 import TagOutputPanel from '../components/tagging/TagOutputPanel';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -48,21 +48,23 @@ export default function TaggingStrategyPage() {
                                 <p className="text-fluent-fg-primary text-[13px]">
                                     How to use this tool
                                 </p>
-                                {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                                <ChevronDown className={`w-3.5 h-3.5 ml-0.5 transition-transform duration-200 ${isGuidanceExpanded ? 'rotate-180' : ''}`} />
                             </div>
 
-                        {isGuidanceExpanded && (
-                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
-                                <p>
-                                    This tool helps define an organizational tagging matrix aligned with <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) resource tagging <ExternalLink className="w-3 h-3 ml-0.5" /></a> conventions.
-                                </p>
-                                <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
-                                    <li><strong>Build Tags:</strong> Add custom tags and define their requirements (Mandatory/Optional) in the Tag Builder.</li>
-                                    <li><strong>Configure Enforcement:</strong> Choose Policy Effects (Audit, Deny, Modify) for each tag to dictate how it's enforced in Azure.</li>
-                                    <li><strong>Export Outputs:</strong> Use the right-hand panel to copy Markdown documentation for your wiki or JSON policy definitions for deployment.</li>
-                                </ul>
+                        <div className={`grid transition-[grid-template-rows] duration-250 ease-out ${isGuidanceExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                            <div className="overflow-hidden min-h-0">
+                                <div className={`mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default transition-opacity duration-200 ${isGuidanceExpanded ? 'opacity-100' : 'opacity-0'}`} onClick={(e) => e.stopPropagation()}>
+                                    <p>
+                                        This tool helps define an organizational tagging matrix aligned with <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) resource tagging <ExternalLink className="w-3 h-3 ml-0.5" /></a> conventions.
+                                    </p>
+                                    <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
+                                        <li><strong>Build Tags:</strong> Add custom tags and define their requirements (Mandatory/Optional) in the Tag Builder.</li>
+                                        <li><strong>Configure Enforcement:</strong> Choose Policy Effects (Audit, Deny, Modify) for each tag to dictate how it's enforced in Azure.</li>
+                                        <li><strong>Export Outputs:</strong> Use the right-hand panel to copy Markdown documentation for your wiki or JSON policy definitions for deployment.</li>
+                                    </ul>
+                                </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
 

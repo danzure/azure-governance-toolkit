@@ -156,7 +156,7 @@ function ExpandedPanel({
     // ── Render ─────────────────────────────────────────────────────────────────
 
     return (
-        <div onClick={(e) => e.stopPropagation()} className="px-3 sm:px-5 py-3 sm:py-4 border-t cursor-default bg-fluent-bg-canvas border-fluent-stroke-subtle animate-fade-in">
+        <div onClick={(e) => e.stopPropagation()} className="px-3 sm:px-5 py-3 sm:py-4 border-t cursor-default bg-fluent-bg-canvas border-fluent-stroke-subtle animate-fade-in rounded-b-lg">
             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-4 pb-3 border-b border-fluent-stroke-subtle">
                 {/* Generated Name and Validation */}
                 <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
@@ -209,11 +209,11 @@ function ExpandedPanel({
                                 }
                             }}
                             aria-label={isCopied ? 'Copied' : 'Copy name'}
-                            className={`flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
+                            className={`flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${isCopied 
                                 ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                 : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                         >
-                            {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                            {isCopied ? <Check className="w-3.5 h-3.5 animate-scale-in" /> : <Copy className="w-3.5 h-3.5" />}
                             <span>{isCopied ? 'Copied' : 'Copy'}</span>
                         </button>
                     </div>

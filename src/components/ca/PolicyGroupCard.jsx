@@ -302,12 +302,12 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                             e.stopPropagation();
                             handleCopy(activePolicy.name, activePolicy.name);
                         }}
-                        className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${isCopied 
+                        className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${isCopied 
                             ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                             : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                         title="Copy standardized policy name"
                     >
-                        {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        {isCopied ? <Check className="w-3.5 h-3.5 animate-scale-in" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{isCopied ? 'Copied' : 'Copy Name'}</span>
                     </button>
                 </div>
@@ -391,7 +391,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
 
                     {/* Tab 1: Entra Portal Template */}
                     {activeTab === 'template' && (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 animate-fade-in">
                             
                             {/* Prerequisites / Safety Banner (if applicable) */}
                             {metadata.prerequisite && (
@@ -488,7 +488,7 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
 
                     {/* Tab 2: Graph Script & JSON Export */}
                     {activeTab === 'script' && (
-                        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden flex-1 min-h-0">
+                        <div className="relative rounded-lg border shadow-soft bg-fluent-bg-card dark:bg-fluent-bg-subtle border-fluent-stroke-subtle w-full flex flex-col overflow-hidden flex-1 min-h-0 animate-fade-in">
                             <div className="px-4 py-3 sm:px-5 sm:py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0">
                                 <div className="flex items-center gap-3 text-fluent-fg-primary font-semibold select-none">
                                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-fluent-info-bg text-fluent-brand-fg shrink-0">
@@ -532,14 +532,14 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                                                 : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                             title="Copy deployment code"
                                         >
-                                            {scriptCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                            {scriptCopied ? <Check className="w-3.5 h-3.5 shrink-0 animate-scale-in" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
                                             <span>{scriptCopied ? 'Copied' : 'Copy Script'}</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div className="bg-fluent-code-bg w-full flex-1 relative min-h-[16rem]">
+                            <div key={scriptFormat} className="bg-fluent-code-bg w-full flex-1 relative min-h-[16rem] animate-fade-in">
                                 <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0">
                                     <code>{scriptFormat === 'powershell' ? deploymentScripts.powershell : deploymentScripts.json}</code>
                                 </pre>

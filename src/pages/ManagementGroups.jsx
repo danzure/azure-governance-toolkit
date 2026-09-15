@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, Network, ChevronDown, ChevronUp, Info, BookOpen } from 'lucide-react';
+import { ExternalLink, Network, ChevronDown, Info, BookOpen } from 'lucide-react';
 import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -75,45 +75,47 @@ export default function ManagementGroupsPage() {
                             <p className="text-fluent-fg-primary text-[13px]">
                                 How to use this tool
                             </p>
-                            {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                            <ChevronDown className={`w-3.5 h-3.5 ml-0.5 transition-transform duration-200 ${isGuidanceExpanded ? 'rotate-180' : ''}`} />
                         </div>
 
-                        {isGuidanceExpanded && (
-                            <div className="mt-2 mb-1 flex flex-col lg:flex-row gap-6 text-[12px] text-fluent-fg-secondary cursor-default animate-fade-in px-1" onClick={(e) => e.stopPropagation()}>
-                                {/* Column 1: How to use */}
-                                <div className="flex-1 flex flex-col gap-1.5">
-                                    <h3 className="font-semibold text-[13px] text-fluent-fg-primary flex items-center gap-1.5">
-                                        <Network className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                        How to use this tool
-                                    </h3>
-                                    <p>
-                                        This tool helps you design Azure management group hierarchies aligned with the <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a> best practices.
-                                    </p>
-                                    <ul className="list-disc pl-4 ml-1 flex flex-col gap-1">
-                                        <li><strong>Design Topology:</strong> Use the Topology Designer tab to visually build and organize your management group hierarchy. Add, rename, or remove groups as needed.</li>
-                                        <li><strong>Generate Code:</strong> Switch to the IAC Template tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
-                                        <li><strong>Export & Deploy:</strong> Copy the generated code to use in your CI/CD pipelines or deploy directly to your Azure environment.</li>
-                                    </ul>
-                                </div>
+                        <div className={`grid transition-[grid-template-rows] duration-250 ease-out ${isGuidanceExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                            <div className="overflow-hidden min-h-0">
+                                <div className={`mt-2 mb-1 flex flex-col lg:flex-row gap-6 text-[12px] text-fluent-fg-secondary cursor-default transition-opacity duration-200 px-1 ${isGuidanceExpanded ? 'opacity-100' : 'opacity-0'}`} onClick={(e) => e.stopPropagation()}>
+                                    {/* Column 1: How to use */}
+                                    <div className="flex-1 flex flex-col gap-1.5">
+                                        <h3 className="font-semibold text-[13px] text-fluent-fg-primary flex items-center gap-1.5">
+                                            <Network className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                            How to use this tool
+                                        </h3>
+                                        <p>
+                                            This tool helps you design Azure management group hierarchies aligned with the <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a> best practices.
+                                        </p>
+                                        <ul className="list-disc pl-4 ml-1 flex flex-col gap-1">
+                                            <li><strong>Design Topology:</strong> Use the Topology Designer tab to visually build and organize your management group hierarchy. Add, rename, or remove groups as needed.</li>
+                                            <li><strong>Generate Code:</strong> Switch to the IAC Template tab to instantly generate Bicep or Terraform templates based on your visual design.</li>
+                                            <li><strong>Export & Deploy:</strong> Copy the generated code to use in your CI/CD pipelines or deploy directly to your Azure environment.</li>
+                                        </ul>
+                                    </div>
 
-                                {/* Column 2: CAF Key */}
-                                <div className="flex-1 flex flex-col gap-1.5 lg:border-l border-fluent-stroke-subtle lg:pl-6">
-                                    <h3 className="font-semibold text-[13px] text-fluent-fg-primary flex items-center gap-1.5">
-                                        <BookOpen className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                        CAF Management Group Key
-                                    </h3>
-                                    <p>
-                                        Microsoft recommends a standard archetype for organizing your Azure footprint:
-                                    </p>
-                                    <ul className="flex flex-col gap-1">
-                                        <li><strong className="text-fluent-fg-primary">Platform:</strong> Centralized enterprise services shared across workloads (e.g., Identity, Management, Connectivity).</li>
-                                        <li><strong className="text-fluent-fg-primary">Landing Zones:</strong> Hosts application workloads. Typically split into <span className="italic">Corp</span> (connected to on-prem) and <span className="italic">Online</span> (public-facing).</li>
-                                        <li><strong className="text-fluent-fg-primary">Sandboxes:</strong> Isolated environments for learning and experimentation with less restrictive policies but stricter cost controls.</li>
-                                        <li><strong className="text-fluent-fg-primary">Decommissioned:</strong> A holding area for subscriptions slated for deletion, preventing accidental use or new deployments.</li>
-                                    </ul>
+                                    {/* Column 2: CAF Key */}
+                                    <div className="flex-1 flex flex-col gap-1.5 lg:border-l border-fluent-stroke-subtle lg:pl-6">
+                                        <h3 className="font-semibold text-[13px] text-fluent-fg-primary flex items-center gap-1.5">
+                                            <BookOpen className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                            CAF Management Group Key
+                                        </h3>
+                                        <p>
+                                            Microsoft recommends a standard archetype for organizing your Azure footprint:
+                                        </p>
+                                        <ul className="flex flex-col gap-1">
+                                            <li><strong className="text-fluent-fg-primary">Platform:</strong> Centralized enterprise services shared across workloads (e.g., Identity, Management, Connectivity).</li>
+                                            <li><strong className="text-fluent-fg-primary">Landing Zones:</strong> Hosts application workloads. Typically split into <span className="italic">Corp</span> (connected to on-prem) and <span className="italic">Online</span> (public-facing).</li>
+                                            <li><strong className="text-fluent-fg-primary">Sandboxes:</strong> Isolated environments for learning and experimentation with less restrictive policies but stricter cost controls.</li>
+                                            <li><strong className="text-fluent-fg-primary">Decommissioned:</strong> A holding area for subscriptions slated for deletion, preventing accidental use or new deployments.</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
 

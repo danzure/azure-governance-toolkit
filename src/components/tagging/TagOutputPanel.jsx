@@ -136,7 +136,7 @@ export default function TagOutputPanel({ tags }) {
                 >
                     {copied ? (
                         <>
-                            <Check className="w-3.5 h-3.5" /> 
+                            <Check className="w-3.5 h-3.5 animate-scale-in" /> 
                             <span>Copied</span>
                         </>
                     ) : (
@@ -149,7 +149,7 @@ export default function TagOutputPanel({ tags }) {
             </div>
             
             {/* Terminal Code Content */}
-            <div className="flex-1 bg-fluent-code-bg w-full min-h-0 overflow-hidden relative">
+            <div key={activeTab} className="flex-1 bg-fluent-code-bg w-full min-h-0 overflow-hidden relative animate-fade-in">
                 <pre className="h-full text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0 custom-scrollbar">
                     <code>{outputContent}</code>
                 </pre>

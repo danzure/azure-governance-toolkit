@@ -371,7 +371,7 @@ export default function PermissionsSelector({
                                 }`}
                                 title="Copy JSON"
                             >
-                                {copied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                {copied ? <Check className="w-3.5 h-3.5 shrink-0 animate-scale-in" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
                                 <span>{copied ? 'Copied' : 'Copy JSON'}</span>
                             </button>
                         ) : (

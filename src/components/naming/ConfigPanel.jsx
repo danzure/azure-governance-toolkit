@@ -618,7 +618,7 @@ function ConfigPanel({
                             >
                                 {copiedId === 'live-pill' ? (
                                     <>
-                                        <Check className="w-3.5 h-3.5" />
+                                        <Check className="w-3.5 h-3.5 animate-scale-in" />
                                         <span>Copied</span>
                                     </>
                                 ) : (
@@ -672,7 +672,7 @@ function ConfigPanel({
                             >
                                 {sampleCopied ? (
                                     <>
-                                        <Check className="w-3.5 h-3.5" />
+                                        <Check className="w-3.5 h-3.5 animate-scale-in" />
                                         <span>Copied</span>
                                     </>
                                 ) : (

@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Shield, Settings2, Info, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { Shield, Settings2, Info, ChevronDown, ExternalLink } from 'lucide-react';
 import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/conditionalAccessData';
 import PatternBuilderCard from '../components/ca/PatternBuilderCard';
 import ServiceFilter from '../components/shared/ServiceFilter';
@@ -139,21 +139,23 @@ export default function ConditionalAccessPage() {
                             <p className="text-fluent-fg-primary text-[13px]">
                                 How to use this tool
                             </p>
-                            {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                            <ChevronDown className={`w-3.5 h-3.5 ml-0.5 transition-transform duration-200 ${isGuidanceExpanded ? 'rotate-180' : ''}`} />
                         </div>
 
-                        {isGuidanceExpanded && (
-                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default animate-fade-in" onClick={(e) => e.stopPropagation()}>
-                                <p>
-                                    This tool generates standardized <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Microsoft Entra Conditional Access policies <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions aligned with the <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a>.
-                                </p>
-                                <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
-                                    <li><strong>Configure Assignments:</strong> Select the target persona, cloud application, and client platform conditions.</li>
-                                    <li><strong>Set Access Controls:</strong> Choose grant controls (such as MFA or Compliant Device) or explicit blocks.</li>
-                                    <li><strong>Export & Deploy:</strong> Switch to the IaC Template tab to export ready-to-deploy Terraform and JSON payload templates.</li>
-                                </ul>
+                        <div className={`grid transition-[grid-template-rows] duration-250 ease-out ${isGuidanceExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                            <div className="overflow-hidden min-h-0">
+                                <div className={`mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default transition-opacity duration-200 ${isGuidanceExpanded ? 'opacity-100' : 'opacity-0'}`} onClick={(e) => e.stopPropagation()}>
+                                    <p>
+                                        This tool generates standardized <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Microsoft Entra Conditional Access policies <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions aligned with the <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a>.
+                                    </p>
+                                    <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
+                                        <li><strong>Configure Assignments:</strong> Select the target persona, cloud application, and client platform conditions.</li>
+                                        <li><strong>Set Access Controls:</strong> Choose grant controls (such as MFA or Compliant Device) or explicit blocks.</li>
+                                        <li><strong>Export & Deploy:</strong> Switch to the IaC Template tab to export ready-to-deploy Terraform and JSON payload templates.</li>
+                                    </ul>
+                                </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
 

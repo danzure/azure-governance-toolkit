@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Info, Edit3, ChevronDown, ChevronUp, ExternalLink, Sparkles, Sliders } from 'lucide-react';
+import { Info, Edit3, ChevronDown, ExternalLink, Sparkles, Sliders } from 'lucide-react';
 import PermissionsSelector from '../components/rbac/PermissionsSelector';
 import RbacPromptBar from '../components/ai/RbacPromptBar';
 import ResetButton from '../components/shared/ResetButton';
@@ -147,21 +147,23 @@ export default function RbacDesignerPage() {
                             <p className="text-fluent-fg-primary text-[13px]">
                                 How to use this tool
                             </p>
-                            {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                            <ChevronDown className={`w-3.5 h-3.5 ml-0.5 transition-transform duration-200 ${isGuidanceExpanded ? 'rotate-180' : ''}`} />
                         </div>
-                        {isGuidanceExpanded && (
-                            <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default" onClick={(e) => e.stopPropagation()}>
-                                <p>
-                                    This tool generates standardized JSON definitions for <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Azure Custom Roles <ExternalLink className="w-3 h-3 ml-0.5" /></a> based on your selected actions and data actions.
-                                </p>
-                                <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
-                                    <li><strong>Describe Intent:</strong> Type what your custom role needs to do in the AI prompt bar to generate permissions automatically.</li>
-                                    <li><strong>Define Properties:</strong> Customize role name, description, and assignable scopes under manual configuration.</li>
-                                    <li><strong>Select Permissions:</strong> Search and refine specific operations to allow (Actions) or explicitly deny (NotActions).</li>
-                                    <li><strong>Export Definition:</strong> Copy or download the generated JSON role definition to deploy directly to Azure.</li>
-                                </ul>
+                        <div className={`grid transition-[grid-template-rows] duration-250 ease-out ${isGuidanceExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                            <div className="overflow-hidden min-h-0">
+                                <div className={`mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default transition-opacity duration-200 ${isGuidanceExpanded ? 'opacity-100' : 'opacity-0'}`} onClick={(e) => e.stopPropagation()}>
+                                    <p>
+                                        This tool generates standardized JSON definitions for <a href="https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Azure Custom Roles <ExternalLink className="w-3 h-3 ml-0.5" /></a> based on your selected actions and data actions.
+                                    </p>
+                                    <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
+                                        <li><strong>Describe Intent:</strong> Type what your custom role needs to do in the AI prompt bar to generate permissions automatically.</li>
+                                        <li><strong>Define Properties:</strong> Customize role name, description, and assignable scopes under manual configuration.</li>
+                                        <li><strong>Select Permissions:</strong> Search and refine specific operations to allow (Actions) or explicitly deny (NotActions).</li>
+                                        <li><strong>Export Definition:</strong> Copy or download the generated JSON role definition to deploy directly to Azure.</li>
+                                    </ul>
+                                </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
 
@@ -185,13 +187,14 @@ export default function RbacDesignerPage() {
                     >
                         <Sliders className="w-4 h-4" />
                         {isConfigMinimized ? 'Show manual configuration' : 'Hide manual configuration'}
-                        {isConfigMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${!isConfigMinimized ? 'rotate-180' : ''}`} />
                     </button>
                 </div>
 
                 {/* Collapsible Role Properties & Templates Card */}
-                {!isConfigMinimized && (
-                    <div className="animate-slide-up bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft flex flex-col overflow-hidden">
+                <div className={`grid transition-[grid-template-rows] duration-250 ease-out ${!isConfigMinimized ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                    <div className="overflow-hidden min-h-0">
+                        <div className={`transition-opacity duration-200 ${!isConfigMinimized ? 'opacity-100' : 'opacity-0'} bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft flex flex-col overflow-hidden`}>
                         {/* Header / Actions - Edge-to-edge header with symmetrical vertical padding */}
                         <div className="px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between border-b border-fluent-stroke-subtle bg-fluent-bg-card">
                             <div className="flex items-center gap-2">
@@ -317,8 +320,9 @@ export default function RbacDesignerPage() {
                                 })}
                             </div>
                         </div>
+                        </div>
                     </div>
-                )}
+                </div>
 
                 {/* Permissions Selector & Custom Role JSON Preview */}
                 <div className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-4 flex flex-col">

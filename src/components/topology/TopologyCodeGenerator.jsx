@@ -215,7 +215,7 @@ export default function TopologyCodeGenerator({ topology }) {
                                 className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${copied ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                 title="Copy code"
                             >
-                                {copied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                {copied ? <Check className="w-3.5 h-3.5 shrink-0 animate-scale-in" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
                                 <span>{copied ? 'Copied' : 'Copy'}</span>
                             </button>
                         </div>
@@ -223,7 +223,7 @@ export default function TopologyCodeGenerator({ topology }) {
                 </div>
             </div>
             
-            <div className="bg-fluent-code-bg w-full flex flex-col flex-1 h-full min-h-0">
+            <div key={format} className="bg-fluent-code-bg w-full flex flex-col flex-1 h-full min-h-0 animate-fade-in">
                 <pre className="flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0">
                     <code>{generatedCode}</code>
                 </pre>

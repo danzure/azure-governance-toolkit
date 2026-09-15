@@ -236,7 +236,7 @@ export default function FluentDropdown({
                     ref={listboxRef}
                     role="listbox"
                     aria-label={ariaLabel}
-                    className={`absolute ${openUpward ? 'bottom-[100%] mb-1' : 'top-[100%] mt-1'} left-0 z-50 min-w-full w-max max-w-[420px] max-h-[260px] overflow-y-auto rounded bg-fluent-bg-card border border-fluent-stroke-subtle shadow-flyout py-1 animate-fade-in ${flyoutClassName}`}
+                    className={`absolute ${openUpward ? 'bottom-[100%] mb-1' : 'top-[100%] mt-1'} left-0 z-50 min-w-full w-max max-w-[420px] max-h-[260px] overflow-y-auto rounded bg-fluent-bg-card border border-fluent-stroke-subtle shadow-flyout py-1 ${openUpward ? 'animate-flyout-up' : 'animate-flyout-down'} ${flyoutClassName}`}
                 >
                     {normalizedOptions.length === 0 ? (
                         <div className={`px-3 py-2 ${textClass} text-fluent-fg-tertiary`}>

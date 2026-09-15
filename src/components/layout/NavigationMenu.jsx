@@ -32,8 +32,10 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
             aria-label="Navigation menu"
         >
             {/* Header inside drawer */}
-            <div className={`h-[48px] flex items-center border-b border-fluent-stroke-subtle overflow-hidden whitespace-nowrap transition-all duration-200 ease-in-out ${isExpanded ? 'px-4 justify-between' : isMobile ? 'px-4 justify-between' : 'justify-center px-0'}`}>
-                {(isExpanded || isMobile) && <span className="font-semibold text-[16px] tracking-tight pl-1">Navigation</span>}
+            <div className={`h-[48px] flex items-center border-b border-fluent-stroke-subtle overflow-hidden whitespace-nowrap px-3 transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'justify-between' : 'justify-center'}`}>
+                <span className={`font-semibold text-[16px] tracking-tight pl-1 whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[180px] translate-x-0' : 'opacity-0 max-w-0 -translate-x-2 pointer-events-none'}`}>
+                    Navigation
+                </span>
                 {isMobile ? (
                     <button
                         onClick={onClose}
@@ -61,8 +63,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Dashboard" : undefined}
                     className={({ isActive }) =>
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${isActive
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
                             ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
                             : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
@@ -76,10 +77,12 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             <img
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Dashboard.svg"
                                 alt=""
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                                 aria-hidden="true"
                             />
-                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Dashboard</span>}
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                Dashboard
+                            </span>
                         </>
                     )}
                 </NavLink>
@@ -89,8 +92,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Azure Resources" : undefined}
                     className={({ isActive }) =>
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${isActive
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
                             ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
                             : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
@@ -104,10 +106,12 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             <img
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg"
                                 alt=""
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                                 aria-hidden="true"
                             />
-                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Azure Resources</span>}
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                Azure Resources
+                            </span>
                         </>
                     )}
                 </NavLink>
@@ -117,8 +121,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Conditional Access" : undefined}
                     className={({ isActive }) =>
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${isActive
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
                             ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
                             : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
@@ -132,10 +135,12 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             <img
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg"
                                 alt=""
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                                 aria-hidden="true"
                             />
-                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Conditional Access</span>}
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                Conditional Access
+                            </span>
                         </>
                     )}
                 </NavLink>
@@ -145,8 +150,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Management Group Topology" : undefined}
                     className={({ isActive }) =>
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${isActive
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
                             ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
                             : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
@@ -160,10 +164,12 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             <img
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg"
                                 alt=""
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                                 aria-hidden="true"
                             />
-                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Management Groups</span>}
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                Management Groups
+                            </span>
                         </>
                     )}
                 </NavLink>
@@ -173,8 +179,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "RBAC Designer" : undefined}
                     className={({ isActive }) =>
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${isActive
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
                             ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
                             : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
@@ -188,10 +193,12 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             <img
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg"
                                 alt=""
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                                 aria-hidden="true"
                             />
-                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">RBAC Designer</span>}
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                RBAC Designer
+                            </span>
                         </>
                     )}
                 </NavLink>
@@ -201,8 +208,7 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Tagging Strategy" : undefined}
                     className={({ isActive }) =>
-                        `group relative flex items-center gap-3 py-2.5 mx-2 rounded-md text-[15px] transition-all duration-200 ${isExpanded || isMobile ? 'px-3' : 'justify-center px-0'
-                        } ${isActive
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
                             ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
                             : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
                         }`
@@ -216,10 +222,12 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                             <img
                                 src="https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg"
                                 alt=""
-                                className={`w-5 h-5 min-w-[20px] object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${!isExpanded && !isMobile ? 'mx-auto' : ''}`}
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
                                 aria-hidden="true"
                             />
-                            {(isExpanded || isMobile) && <span className="whitespace-nowrap">Tagging Strategy</span>}
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                Tagging Strategy
+                            </span>
                         </>
                     )}
                 </NavLink>

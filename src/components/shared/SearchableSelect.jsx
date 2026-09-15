@@ -164,7 +164,7 @@ export default function SearchableSelect({ items, value, onChange, label, placeh
     // Shared dropdown panel renderer
     const renderDropdown = () => (
         <div
-            className={`absolute ${openUpward ? 'bottom-[100%] mb-1' : 'top-[100%] mt-1'} left-0 right-0 z-[100] shadow-flyout border rounded overflow-hidden bg-fluent-bg-card border-fluent-stroke-subtle animate-fade-in`}
+            className={`absolute ${openUpward ? 'bottom-[100%] mb-1' : 'top-[100%] mt-1'} left-0 right-0 z-[100] shadow-flyout border rounded overflow-hidden bg-fluent-bg-card border-fluent-stroke-subtle ${openUpward ? 'animate-flyout-up' : 'animate-flyout-down'}`}
             role="presentation"
         >
             <div className="p-2 border-b border-fluent-stroke-subtle">

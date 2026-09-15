@@ -105,7 +105,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                                 className={`flex-1 sm:flex-none px-3 h-[32px] rounded-[4px] text-[13px] font-medium transition-all duration-200 ease-in-out inline-flex items-center justify-center gap-1.5 border active:scale-95 ${isIacCopied ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary'}`}
                                 title="Copy code"
                             >
-                                {isIacCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                {isIacCopied ? <Check className="w-3.5 h-3.5 shrink-0 animate-scale-in" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
                                 <span>{isIacCopied ? 'Copied' : 'Copy'}</span>
                             </button>
                         </div>
@@ -113,7 +113,7 @@ export default function ResourceTemplateCard({ resource, genName, bundle, getBun
                 </div>
             </div>
             
-            <div className="bg-fluent-code-bg w-full flex-1 relative min-h-[14.5rem]">
+            <div key={iacTab} className="bg-fluent-code-bg w-full flex-1 relative min-h-[14.5rem] animate-fade-in">
                 <pre className="absolute inset-0 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0">
                     <code>{iacTemplate}</code>
                 </pre>

@@ -227,11 +227,11 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                 type="button"
                                 onClick={() => handleCopy(generatedName, 'live-pill')}
                                 aria-label={copiedId === 'live-pill' ? 'Copied' : 'Copy name'}
-                                className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${copiedId === 'live-pill' 
+                                className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${copiedId === 'live-pill' 
                                     ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                     : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                             >
-                                {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy Name</span></>}
+                                {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5 animate-scale-in" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy Name</span></>}
                             </button>
                         </div>
                     </div>
@@ -499,14 +499,14 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                                         : 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary'}`}
                                     title="Copy deployment code"
                                 >
-                                    {exportCopied ? <Check className="w-3.5 h-3.5 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
+                                    {exportCopied ? <Check className="w-3.5 h-3.5 shrink-0 animate-scale-in" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
                                     <span>{exportCopied ? 'Copied' : 'Copy Code'}</span>
                                 </button>
                             </div>
                         </div>
 
                         {/* Terminal Window */}
-                        <div className="bg-fluent-code-bg w-full relative rounded-lg border border-fluent-stroke-subtle overflow-hidden shadow-soft">
+                        <div key={exportFormat} className="bg-fluent-code-bg w-full relative rounded-lg border border-fluent-stroke-subtle overflow-hidden shadow-soft animate-fade-in">
                             <pre className="text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0 max-h-[380px]">
                                 <code>{iacCode}</code>
                             </pre>

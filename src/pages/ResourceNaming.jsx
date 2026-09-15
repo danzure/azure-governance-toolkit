@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Info, ExternalLink, ChevronDown, ChevronUp, Sliders } from 'lucide-react';
+import { Info, ExternalLink, ChevronDown, Sliders } from 'lucide-react';
 
 import ConfigPanel from '../components/naming/ConfigPanel';
 import ResourceGrid from '../components/naming/ResourceGrid';
@@ -244,22 +244,24 @@ export default function ResourceNamingPage() {
                         <p className="text-fluent-fg-primary text-[13px]">
                             How to use this tool
                         </p>
-                        {isGuidanceExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                        <ChevronDown className={`w-3.5 h-3.5 ml-0.5 transition-transform duration-200 ${isGuidanceExpanded ? 'rotate-180' : ''}`} />
                     </div>
                         
-                    {isGuidanceExpanded && (
-                        <div className="mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default animate-fade-in" onClick={(e) => e.stopPropagation()}>
-                            <p>
-                                This tool generates Azure resource names aligned with Microsoft's <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions.
-                            </p>
-                            <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
-                                <li><strong>Describe Architecture:</strong> Type your target architecture into the AI prompt bar to auto-populate naming parameters and filter resources.</li>
-                                <li><strong>Configure Parameters:</strong> Manually customize your organization prefix, workload name, environment, and region if needed.</li>
-                                <li><strong>Build Pattern:</strong> Toggle and reorder individual naming components to match your specific organizational requirements.</li>
-                                <li><strong>Select Resources:</strong> Search and choose Azure services from the grid below to instantly generate and copy compliant names.</li>
-                            </ul>
+                    <div className={`grid transition-[grid-template-rows] duration-250 ease-out ${isGuidanceExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                        <div className="overflow-hidden min-h-0">
+                            <div className={`mt-3 flex flex-col gap-3 text-[13px] text-fluent-fg-secondary cursor-default transition-opacity duration-200 ${isGuidanceExpanded ? 'opacity-100' : 'opacity-0'}`} onClick={(e) => e.stopPropagation()}>
+                                <p>
+                                    This tool generates Azure resource names aligned with Microsoft's <a href="https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming" target="_blank" rel="noopener noreferrer" className="text-fluent-brand-fg hover:underline inline-flex items-center gap-0.5 font-medium">Cloud Adoption Framework (CAF) <ExternalLink className="w-3 h-3 ml-0.5" /></a> naming conventions.
+                                </p>
+                                <ul className="list-disc pl-5 ml-2 flex flex-col gap-2">
+                                    <li><strong>Describe Architecture:</strong> Type your target architecture into the AI prompt bar to auto-populate naming parameters and filter resources.</li>
+                                    <li><strong>Configure Parameters:</strong> Manually customize your organization prefix, workload name, environment, and region if needed.</li>
+                                    <li><strong>Build Pattern:</strong> Toggle and reorder individual naming components to match your specific organizational requirements.</li>
+                                    <li><strong>Select Resources:</strong> Search and choose Azure services from the grid below to instantly generate and copy compliant names.</li>
+                                </ul>
+                            </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
 
@@ -279,7 +281,7 @@ export default function ResourceNamingPage() {
 
             {/* Manual Configuration: Collapsed Summary Strip OR Expanded ConfigPanel */}
             {isConfigMinimized ? (
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 px-3 sm:px-4 py-2 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft transition-all">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 px-3 sm:px-4 py-2 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft transition-all animate-fade-in">
                     <div className="flex items-center gap-2 flex-wrap min-w-0">
                         <div className="flex items-center gap-1.5 shrink-0 text-fluent-fg-secondary">
                             <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />

@@ -91,10 +91,10 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
             aria-label={`${resource.name} (${resource.abbrev}) - ${isExpanded ? 'Collapse card' : 'Expand card details'}`}
             onClick={() => onToggle(resource.name, isExpanded)}
             onKeyDown={handleKeyDown}
-            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-all duration-300 ease-in-out h-full outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${
+            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-[box-shadow,border-color,background-color,ring-color] duration-200 ease-in-out outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${
                 isExpanded 
-                    ? 'ring-2 ring-fluent-brand-bg shadow-flyout border-transparent dark:border-transparent bg-fluent-bg-card' 
-                    : `hover:shadow-depth shadow-soft bg-fluent-bg-card ${
+                    ? 'ring-2 ring-fluent-brand-bg shadow-flyout border-transparent dark:border-transparent bg-fluent-bg-card overflow-hidden' 
+                    : `h-full hover:shadow-depth shadow-soft bg-fluent-bg-card ${
                         hasErrors 
                             ? 'border-fluent-state-danger hover:border-fluent-state-danger' 
                             : hasWarnings 
@@ -103,7 +103,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                     }`
             }`}
         >
-            <div className="p-3 sm:p-4 flex flex-col h-full gap-3 min-w-0">
+            <div className={`p-3 sm:p-4 flex flex-col gap-3 min-w-0 ${!isExpanded ? 'h-full' : ''}`}>
                 <div className="flex items-start justify-between gap-3 min-w-0">
                     <div className="flex items-center gap-3 overflow-hidden">
                         <AzureServiceIcon resourceName={resource.name} category={resource.category} className="w-8 h-8 shrink-0" />
@@ -154,7 +154,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                         {isExpanded && (
                             <button
                                 onClick={(e) => { e.stopPropagation(); onToggle(resource.name, isExpanded); }}
-                                className="p-1 -mr-1 rounded-sm text-fluent-fg-tertiary hover:bg-fluent-bg-hover transition-colors"
+                                className="p-1 -mr-1 rounded-sm text-fluent-fg-tertiary hover:bg-fluent-bg-hover transition-colors active:scale-95"
                                 aria-label="Close"
                             >
                                 <X className="w-5 h-5" />
@@ -199,7 +199,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
                                     ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
                                     : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
                             >
-                                {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                {isCopied ? <Check className="w-3.5 h-3.5 animate-scale-in" /> : <Copy className="w-3.5 h-3.5" />}
                                 <span>{isCopied ? 'Copied' : 'Copy'}</span>
                             </button>
                         </div>
@@ -216,7 +216,7 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
 
 
             {isExpanded && (
-                <div className="animate-fade-in border-t border-fluent-stroke-subtle">
+                <div className="animate-fade-in rounded-b-lg overflow-hidden">
                     <ExpandedPanel
                         resource={resource}
                         genName={genName}
