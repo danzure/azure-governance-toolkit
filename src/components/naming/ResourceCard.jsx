@@ -1,9 +1,8 @@
-import { memo, useState, useMemo, lazy, Suspense } from 'react';
+import { memo, useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { Copy, Check, ShieldAlert, AlertTriangle, X, Star } from 'lucide-react';
 import ValidationHighlight from './ValidationHighlight';
 import AzureServiceIcon from './AzureServiceIcon';
-
-const ExpandedPanel = lazy(() => import('./ExpandedPanel'));
+import ExpandedPanel from './ExpandedPanel';
 import { getCategoryColors } from '../../data/categoryColors';
 import { getBundleResources } from '../../utils/bundleGenerator';
 import { validateName } from '../../utils/nameValidator';
@@ -58,11 +57,51 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
     const isTooLong = validationIssues.some(i => i.code === 'TOO_LONG');
 
 
+    const cardRef = useRef(null);
+
+    // Keep keyboard focus synchronized when card expands without abrupt scrolling
+    useEffect(() => {
+        if (isExpanded && cardRef.current) {
+            if (document.activeElement === document.body) {
+                cardRef.current.focus({ preventScroll: true });
+            }
+        }
+    }, [isExpanded]);
+
+    // Keyboard activation (Enter / Space)
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            // Do not intercept if interacting with interactive inner controls
+            const tag = e.target.tagName.toLowerCase();
+            if (tag === 'button' || tag === 'input' || tag === 'select' || tag === 'a' || e.target.closest('button') || e.target.closest('input')) {
+                return;
+            }
+            e.preventDefault();
+            onToggle(resource.name, isExpanded);
+        }
+    }, [onToggle, resource.name, isExpanded]);
+
     return (
         <div
             id={id}
+            ref={cardRef}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isExpanded}
+            aria-label={`${resource.name} (${resource.abbrev}) - ${isExpanded ? 'Collapse card' : 'Expand card details'}`}
             onClick={() => onToggle(resource.name, isExpanded)}
-            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-all duration-200 ease-in-out h-full ${isExpanded ? 'ring-2 ring-fluent-brand-bg shadow-depth border-transparent dark:border-transparent' : `hover:shadow-depth shadow-soft ${hasErrors ? 'hover:border-fluent-state-danger' : hasWarnings ? 'hover:border-fluent-cat-orange-fg' : 'hover:border-fluent-stroke-strong'}`} bg-fluent-bg-card ${hasErrors ? 'border-fluent-state-danger' : hasWarnings ? 'border-fluent-cat-orange-fg' : 'border-fluent-stroke-subtle'}`}
+            onKeyDown={handleKeyDown}
+            className={`group relative flex flex-col min-w-0 rounded-lg border cursor-pointer transition-all duration-300 ease-in-out h-full outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${
+                isExpanded 
+                    ? 'ring-2 ring-fluent-brand-bg shadow-flyout border-transparent dark:border-transparent bg-fluent-bg-card' 
+                    : `hover:shadow-depth shadow-soft bg-fluent-bg-card ${
+                        hasErrors 
+                            ? 'border-fluent-state-danger hover:border-fluent-state-danger' 
+                            : hasWarnings 
+                            ? 'border-fluent-cat-orange-fg hover:border-fluent-cat-orange-fg' 
+                            : 'border-fluent-stroke-subtle hover:border-fluent-stroke-strong'
+                    }`
+            }`}
         >
             <div className="p-3 sm:p-4 flex flex-col h-full gap-3 min-w-0">
                 <div className="flex items-start justify-between gap-3 min-w-0">
@@ -177,31 +216,24 @@ function ResourceCard({ id, resource, genName, isCopied, isExpanded, onCopy, onT
 
 
             {isExpanded && (
-                <div className="animate-fade-in">
-                    <Suspense fallback={
-                        <div className="p-8 flex items-center justify-center text-[13px] text-fluent-fg-tertiary">
-                            <div className="w-5 h-5 rounded-full border-2 border-fluent-stroke-subtle border-t-fluent-brand-bg animate-spin mr-2" />
-                            Loading details...
-                        </div>
-                    }>
-                        <ExpandedPanel
-                            resource={resource}
-                            genName={genName}
-                            isCopied={isCopied}
-                            onCopy={onCopy}
-                            selectedSubResource={selectedSubResource}
-                            onSubResourceChange={(suffix) => onSubResourceChange(resource.name, suffix)}
-                            topology={topology}
-                            setTopology={setTopology}
-                            spokeCount={spokeCount}
-                            setSpokeCount={setSpokeCount}
-                            spokeStartValue={spokeStartValue}
-                            setSpokeStartValue={setSpokeStartValue}
-                            bundle={bundle}
-                            getBundleName={getGeneratedName}
-                            onClose={() => onToggle(resource.name, isExpanded)}
-                        />
-                    </Suspense>
+                <div className="animate-fade-in border-t border-fluent-stroke-subtle">
+                    <ExpandedPanel
+                        resource={resource}
+                        genName={genName}
+                        isCopied={isCopied}
+                        onCopy={onCopy}
+                        selectedSubResource={selectedSubResource}
+                        onSubResourceChange={(suffix) => onSubResourceChange(resource.name, suffix)}
+                        topology={topology}
+                        setTopology={setTopology}
+                        spokeCount={spokeCount}
+                        setSpokeCount={setSpokeCount}
+                        spokeStartValue={spokeStartValue}
+                        setSpokeStartValue={setSpokeStartValue}
+                        bundle={bundle}
+                        getBundleName={getGeneratedName}
+                        onClose={() => onToggle(resource.name, isExpanded)}
+                    />
                 </div>
             )}
         </div>

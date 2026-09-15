@@ -36,15 +36,28 @@ export default function ResourceNamingPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useLocalStorage('azres_category', 'All');
     const [copiedId, setCopiedId] = useState(null);
+    const [deepLinkedService, setDeepLinkedService] = useState(null);
     const searchInputRef = useRef(null);
     const aiInputRef = useRef(null);
 
     // Deep-link integration from Command Palette (?search= or ?service=)
     useEffect(() => {
-        const queryVal = searchParams.get('search') || searchParams.get('service');
+        const serviceVal = searchParams.get('service');
+        const searchVal = searchParams.get('search');
+        const queryVal = serviceVal || searchVal;
+
         if (queryVal) {
             setSearchTerm(queryVal);
             setActiveCategory('All');
+
+            // If the query matches a known resource, auto-expand and scroll to it
+            const matched = RESOURCE_DATA_SORTED.find(
+                r => r.name.toLowerCase() === queryVal.toLowerCase() || (r.abbrev && r.abbrev.toLowerCase() === queryVal.toLowerCase())
+            );
+            if (matched) {
+                setDeepLinkedService(matched.name);
+            }
+
             setSearchParams({}, { replace: true });
         }
     }, [searchParams, setSearchParams, setActiveCategory]);
@@ -351,6 +364,7 @@ export default function ResourceNamingPage() {
                 generateName={generateName}
                 copiedId={copiedId}
                 onCopy={copyToClipboard}
+                selectedService={deepLinkedService}
             />
         </div>
     );
