@@ -213,13 +213,13 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                     </div>
 
                     {/* Live Generated Preview Snippet */}
-                    <div className="flex items-center gap-2.5 flex-1 min-w-0 md:justify-end">
+                    <div className="flex items-center gap-2.5 w-full md:w-auto md:flex-1 min-w-0 md:justify-end">
                         <div className="flex items-center gap-1.5 shrink-0 text-fluent-fg-tertiary">
                             <Eye className="w-3.5 h-3.5 text-fluent-brand-fg" />
                             <span className="text-[11px] font-semibold uppercase tracking-wider hidden sm:inline">Preview</span>
                         </div>
 
-                        <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] w-full md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-info-bg border-fluent-info-border transition-all">
+                        <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 md:flex-initial md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-info-bg border-fluent-info-border transition-all">
                             <div className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-brand-fg truncate select-all" title={generatedName}>
                                 {generatedName}
                             </div>
