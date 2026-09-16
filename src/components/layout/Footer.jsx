@@ -26,9 +26,15 @@ export default function Footer({ variant = 'full' }) {
                             href="https://atozazure.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px]"
+                            className="inline-flex items-center gap-1.5 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px]"
                             aria-label="atozazure"
                         >
+                            <img
+                                src="/atozazure-favicon-192x192.png"
+                                alt=""
+                                aria-hidden="true"
+                                className="w-5 h-5 object-contain transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                            />
                             {logoLight && logoDark ? (
                                 <>
                                     <img
