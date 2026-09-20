@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, forwardRef } from 'react';
 import { Sparkles, ArrowRight, X, ChevronLeft, ChevronRight, CheckCircle2, Lightbulb, Layers, Info } from 'lucide-react';
 import PropTypes from 'prop-types';
 import ResetButton from '../shared/ResetButton';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import { generateResourceNameFallback } from '../../utils/namingAiFallback';
 import { trackEvent, trackException } from '../../utils/telemetry';
 
@@ -28,6 +29,7 @@ const NamingPromptBar = forwardRef(({
     setActiveCategory,
     onResetAll
 }, ref) => {
+    const isMobile = useMediaQuery('(max-width: 639px)');
     const [prompt, setPrompt] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [loadingPhase, setLoadingPhase] = useState(0);
@@ -209,15 +211,19 @@ const NamingPromptBar = forwardRef(({
         "Highly available E-Commerce platform for Contoso Retail"
     ];
 
+    const placeholderText = isMobile
+        ? "Describe architecture (e.g. Web App & SQL)..."
+        : "Describe your cloud architecture (e.g. Production Web App with Azure SQL in West Europe for Contoso)...";
+
     return (
         <div className="w-full relative z-30">
-            <div className="flex items-center gap-2 mb-2 ml-0.5 sm:ml-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-2 ml-0.5 sm:ml-1 min-w-0">
                 <span className="text-[13px] sm:text-[14px] font-semibold text-fluent-brand-fg shrink-0">
                     Architecture Copilot
                 </span>
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-[12px] text-fluent-fg-secondary">
-                    <Info className="w-3.5 h-3.5 text-fluent-fg-tertiary shrink-0" />
-                    <span className="truncate sm:overflow-visible">AI-generated suggestions should be reviewed prior to deployment.</span>
+                <div className="flex items-start sm:items-center gap-1.5 text-[11px] sm:text-[12px] text-fluent-fg-secondary min-w-0">
+                    <Info className="w-3.5 h-3.5 text-fluent-fg-tertiary shrink-0 mt-0.5 sm:mt-0" />
+                    <span className="break-words">AI-generated suggestions should be reviewed prior to deployment.</span>
                 </div>
             </div>
             <form onSubmit={handleSubmit} className="relative flex items-center w-full group" aria-busy={isLoading}>
@@ -278,7 +284,9 @@ const NamingPromptBar = forwardRef(({
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             readOnly={isLoading}
-                            placeholder="Describe your cloud architecture (e.g. Production Web App with Azure SQL in West Europe for Contoso)..."
+                            placeholder={placeholderText}
+                            title="Describe your cloud architecture"
+                            aria-label="Describe your cloud architecture"
                             className="flex-1 h-full bg-transparent min-w-0 !border-0 !outline-none !ring-0 !shadow-none focus:!border-0 focus:!outline-none focus:!ring-0 focus:!shadow-none text-[13px] sm:text-[14px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary transition-opacity duration-200 px-1.5"
                         />
                     )}

@@ -145,6 +145,10 @@
         outline: none;
     }
 
+    input::placeholder {
+        text-overflow: ellipsis;
+    }
+
     /* Command Palette input custom reset */
     .command-palette-input {
         outline: none !important;

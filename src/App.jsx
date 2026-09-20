@@ -170,7 +170,7 @@ export default function App() {
                     onClose={handleCloseMobileNav}
                 />
 
-                <main id="main-scroll-container" tabIndex="-1" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overscroll-y-none outline-none will-change-transform">
+                <main id="main-scroll-container" tabIndex="-1" className="flex-1 min-w-0 w-full relative flex flex-col overflow-y-auto overflow-x-hidden overscroll-y-none outline-none will-change-transform">
                     <ErrorBoundary>
                         <Suspense fallback={<PageLoader />}>
                             <Routes>
