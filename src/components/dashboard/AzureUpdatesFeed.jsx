@@ -9,9 +9,10 @@ import {
     ArrowRight,
     Clock,
     AlertCircle,
-    Info
+    Info,
+    Globe
 } from 'lucide-react';
-import { fetchAzureRss, AZURE_RSS_FEED_URL } from '../../utils/rssParser';
+import { fetchAzureRss, AZURE_RSS_FEED_URL, RSS_CACHE_TTL_MS } from '../../utils/rssParser';
 
 /**
  * Azure Service Updates RSS Feed Widget.
@@ -25,9 +26,13 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
     const [isFallback, setIsFallback] = useState(false);
     const [activeTab, setActiveTab] = useState('all');
     const [channelMeta, setChannelMeta] = useState({ title: 'Azure Service Updates', lastBuildDate: '' });
+    const lastFetchTimeRef = useRef(Date.now());
 
-    const loadFeed = useCallback(async (forceRefresh = false) => {
-        if (forceRefresh) {
+    const loadFeed = useCallback(async (options = false) => {
+        const forceRefresh = typeof options === 'boolean' ? options : Boolean(options?.forceRefresh);
+        const background = typeof options === 'object' && Boolean(options?.background);
+
+        if (forceRefresh || background) {
             setIsRefreshing(true);
         } else {
             setIsLoading(true);
@@ -45,6 +50,7 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
             if (data.error && data.isFallback) {
                 setError(data.error);
             }
+            lastFetchTimeRef.current = Date.now();
         } catch (err) {
             setError(err.message || 'Unable to load Azure updates.');
         } finally {
@@ -54,7 +60,36 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
     }, []);
 
     useEffect(() => {
+        // Initial mount load
         loadFeed(false);
+
+        // Periodic auto-refresh every 15 minutes (active update polling)
+        const intervalId = setInterval(() => {
+            if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+                loadFeed({ forceRefresh: true, background: true });
+            }
+        }, RSS_CACHE_TTL_MS);
+
+        // Refresh immediately when returning to tab if cache expired
+        const handleVisibilityChange = () => {
+            if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+                const elapsed = Date.now() - lastFetchTimeRef.current;
+                if (elapsed >= RSS_CACHE_TTL_MS) {
+                    loadFeed({ forceRefresh: true, background: true });
+                }
+            }
+        };
+
+        if (typeof document !== 'undefined') {
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+        }
+
+        return () => {
+            clearInterval(intervalId);
+            if (typeof document !== 'undefined') {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+            }
+        };
     }, [loadFeed]);
 
     const feedScrollRef = useRef(null);
@@ -69,12 +104,12 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
 
     // Compute status counts for filter tabs
     const statusCounts = useMemo(() => {
-        const counts = { all: items.length, launched: 0, preview: 0, retirement: 0, security: 0 };
+        const counts = { all: items.length, launched: 0, preview: 0, retirement: 0, datacenters: 0 };
         for (const item of items) {
             if (item.statusType === 'launched') counts.launched++;
             else if (item.statusType === 'preview') counts.preview++;
             else if (item.statusType === 'retirement') counts.retirement++;
-            else if (item.statusType === 'security') counts.security++;
+            if (item.isDatacenter) counts.datacenters++;
         }
         return counts;
     }, [items]);
@@ -82,6 +117,7 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
     // Filter items based on active status tab
     const filteredItems = useMemo(() => {
         if (activeTab === 'all') return items;
+        if (activeTab === 'datacenters') return items.filter((item) => item.isDatacenter);
         return items.filter((item) => item.statusType === activeTab);
     }, [items, activeTab]);
 
@@ -209,59 +245,62 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
     return (
         <div className="w-full h-full flex flex-col justify-between gap-3 rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-3.5 sm:p-4 shadow-soft">
             {/* Streamlined Header Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5 pb-2.5 border-b border-fluent-stroke-subtle">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-2.5 border-b border-fluent-stroke-subtle">
                 {/* Left Side: Title, Live indicator & Status Filter Tabs */}
-                <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap min-w-0">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 min-w-0 w-full sm:w-auto">
                     {/* Title & Live Feed Badge */}
-                    <div className="flex items-center gap-2 min-w-0">
-                        <a
-                            href={AZURE_RSS_FEED_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="shrink-0 h-[26px] w-[26px] rounded-[4px] border border-fluent-stroke-subtle bg-fluent-cat-orange-bg hover:border-fluent-stroke-strong flex items-center justify-center transition-all active:scale-95 shadow-sm"
-                            title="Open official RSS feed (XML)"
-                            aria-label="Open official RSS feed (XML)"
-                        >
-                            <Rss className="w-3.5 h-3.5 text-fluent-cat-orange-fg" />
-                        </a>
-                        <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="flex items-center justify-between sm:justify-start gap-2 min-w-0 w-full sm:w-auto">
+                        <div className="flex items-center gap-2 min-w-0">
+                            <a
+                                href={AZURE_RSS_FEED_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0 h-[26px] w-[26px] rounded-[4px] border border-fluent-stroke-subtle bg-fluent-cat-orange-bg hover:border-fluent-stroke-strong flex items-center justify-center transition-all active:scale-95 shadow-sm"
+                                title="Open official RSS feed (XML)"
+                                aria-label="Open official RSS feed (XML)"
+                            >
+                                <Rss className="w-3.5 h-3.5 text-fluent-cat-orange-fg" />
+                            </a>
                             <h2 
                                 className="text-[14.5px] sm:text-[15px] font-bold tracking-tight text-fluent-fg-primary truncate"
                                 title={channelMeta.lastBuildDate ? `Last build: ${channelMeta.lastBuildDate}` : channelMeta.title}
                             >
                                 Azure Service Updates
                             </h2>
-                            {!isFallback ? (
-                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary shrink-0">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg animate-pulse shrink-0" />
-                                    <span>Online</span>
-                                </span>
-                            ) : (
-                                <span 
-                                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg border border-fluent-stroke-subtle shrink-0"
-                                    title={error ? `Showing cached updates (${error})` : 'Showing cached updates'}
-                                >
-                                    <AlertCircle className="w-3 h-3 text-fluent-state-danger shrink-0" />
-                                    <span>Offline ({error || 'Failed to fetch'})</span>
-                                </span>
-                            )}
                         </div>
+                        {!isFallback ? (
+                            <span 
+                                className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary shrink-0 cursor-default"
+                                title="Live feed active • Auto-updates every 15 minutes"
+                            >
+                                <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg animate-pulse shrink-0" />
+                                <span>Online</span>
+                            </span>
+                        ) : (
+                            <span 
+                                className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg border border-fluent-stroke-subtle shrink-0"
+                                title={error ? `Showing cached updates (${error})` : 'Showing cached updates'}
+                            >
+                                <AlertCircle className="w-3 h-3 text-fluent-state-danger shrink-0" />
+                                <span>Offline ({error || 'Failed to fetch'})</span>
+                            </span>
+                        )}
                     </div>
 
                     <div className="hidden sm:block w-[1px] h-5 bg-fluent-stroke-subtle shrink-0" />
 
                     {/* Status Filter Tabs (Fluent 2 Segmented Control Track) */}
                     <div 
-                        className="inline-flex items-center p-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle overflow-x-auto scrollbar-none shrink-0" 
+                        className="flex items-center p-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle overflow-x-auto scrollbar-none w-full sm:w-auto max-w-full min-w-0" 
                         role="tablist"
                         aria-label="Filter updates by status"
                     >
                         {[
-                            { id: 'all', label: 'All', count: statusCounts.all },
-                            { id: 'launched', label: 'GA', count: statusCounts.launched },
-                            { id: 'preview', label: 'Preview', count: statusCounts.preview },
-                            { id: 'retirement', label: 'Retirements', count: statusCounts.retirement },
-                            { id: 'security', label: 'Security', count: statusCounts.security },
+                            { id: 'all', label: 'All', shortLabel: 'All', count: statusCounts.all },
+                            { id: 'launched', label: 'GA', shortLabel: 'GA', count: statusCounts.launched },
+                            { id: 'preview', label: 'Preview', shortLabel: 'Preview', count: statusCounts.preview },
+                            { id: 'retirement', label: 'Retirements', shortLabel: 'Retired', count: statusCounts.retirement },
+                            { id: 'datacenters', label: 'Datacenters', shortLabel: 'Datacenters', count: statusCounts.datacenters },
                         ].map((tab) => {
                             const isActive = activeTab === tab.id;
                             return (
@@ -272,14 +311,15 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                                     aria-selected={isActive}
                                     onClick={() => setActiveTab(tab.id)}
                                     className={`
-                                        h-[24px] px-2.5 rounded-[3px] text-[12px] font-medium transition-all duration-150 shrink-0 inline-flex items-center gap-1.5 active:scale-95 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg
+                                        h-[24px] px-2 sm:px-2.5 rounded-[3px] text-[12px] font-medium transition-all duration-150 shrink-0 inline-flex items-center gap-1 sm:gap-1.5 active:scale-95 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg
                                         ${isActive
                                             ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle'
                                             : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent'
                                         }
                                     `}
                                 >
-                                    <span>{tab.label}</span>
+                                    <span className="hidden sm:inline">{tab.label}</span>
+                                    <span className="sm:hidden">{tab.shortLabel || tab.label}</span>
                                     {tab.count > 0 && (
                                         <span
                                             className={`
@@ -300,42 +340,42 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                 </div>
 
                 {/* Right Side: Pagination & Action Controls (Fluent 2 Standardized Controls) */}
-                <div className="flex items-center gap-2 shrink-0 ml-auto">
+                <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto shrink-0 pt-0.5 sm:pt-0 sm:ml-auto">
                     {/* Page counter hint */}
                     {filteredItems.length > 0 && (
-                        <span className="text-[12px] text-fluent-fg-tertiary hidden sm:inline font-medium">
+                        <span className="text-[12px] text-fluent-fg-tertiary font-medium">
                             {visibleRange.start}–{visibleRange.end} of {filteredItems.length}
                         </span>
                     )}
 
-                    {/* Prev/Next Page Segmented Buttons */}
-                    <div className="inline-flex items-center rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm overflow-hidden" role="group" aria-label="Pagination">
-                        <button
-                            type="button"
-                            onClick={() => scroll('left')}
-                            disabled={!canScrollLeft || isLoading}
-                            className="shrink-0 h-[26px] w-[26px] inline-flex items-center justify-center text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border-r border-fluent-stroke-subtle transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-95"
-                            aria-label="Previous updates page"
-                            title="Previous page"
-                        >
-                            <ChevronLeft className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => scroll('right')}
-                            disabled={!canScrollRight || isLoading}
-                            className="shrink-0 h-[26px] w-[26px] inline-flex items-center justify-center text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-95"
-                            aria-label="Next updates page"
-                            title="Next page"
-                        >
-                            <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
-                    </div>
+                    <div className="flex items-center gap-1.5 shrink-0 ml-auto sm:ml-0">
+                        {/* Prev/Next Page Segmented Buttons */}
+                        <div className="inline-flex items-center rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm overflow-hidden" role="group" aria-label="Pagination">
+                            <button
+                                type="button"
+                                onClick={() => scroll('left')}
+                                disabled={!canScrollLeft || isLoading}
+                                className="shrink-0 h-[26px] w-[26px] inline-flex items-center justify-center text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border-r border-fluent-stroke-subtle transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-95"
+                                aria-label="Previous updates page"
+                                title="Previous page"
+                            >
+                                <ChevronLeft className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => scroll('right')}
+                                disabled={!canScrollRight || isLoading}
+                                className="shrink-0 h-[26px] w-[26px] inline-flex items-center justify-center text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-95"
+                                aria-label="Next updates page"
+                                title="Next page"
+                            >
+                                <ChevronRight className="w-3.5 h-3.5" />
+                            </button>
+                        </div>
 
-                    <div className="hidden sm:block w-[1px] h-4 bg-fluent-stroke-subtle shrink-0" />
+                        <div className="hidden sm:block w-[1px] h-4 bg-fluent-stroke-subtle shrink-0" />
 
-                    {/* Action Buttons (Refresh & External Link) */}
-                    <div className="flex items-center gap-1.5">
+                        {/* Action Buttons (Refresh & External Link) */}
                         <button
                             type="button"
                             onClick={() => loadFeed(true)}
@@ -397,7 +437,7 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                 <div className="py-8 px-3 rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle text-center flex flex-col items-center justify-center gap-1.5 flex-1">
                     <Info className="w-4 h-4 text-fluent-fg-tertiary" />
                     <span className="text-[12px] text-fluent-fg-secondary">
-                        No updates in this category.
+                        {activeTab === 'datacenters' ? 'No recent datacenter updates found in feed.' : 'No updates in this category.'}
                     </span>
                     <button
                         type="button"
@@ -444,11 +484,23 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                                 <div className="flex flex-col min-w-0">
                                     {/* Top Row: Status Badge & Relative Time */}
                                     <div className="flex items-center justify-between gap-1 mb-2">
-                                        <span
-                                            className={`text-[10px] font-semibold px-2 py-0.5 rounded-[3px] border ${badgeStyle} shrink-0`}
-                                        >
-                                            {item.statusLabel}
-                                        </span>
+                                        <div className="flex items-center gap-1.5 min-w-0">
+                                            <span
+                                                className={`text-[10px] font-semibold px-2 py-0.5 rounded-[3px] border ${badgeStyle} shrink-0`}
+                                            >
+                                                {item.statusLabel}
+                                            </span>
+
+                                            {item.isDatacenter && (
+                                                <span
+                                                    className="text-[10px] font-semibold px-1.5 py-0.5 rounded-[3px] border bg-fluent-info-bg text-fluent-brand-fg border-fluent-stroke-subtle shrink-0 inline-flex items-center gap-1"
+                                                    title="Regions & Datacenters update"
+                                                >
+                                                    <Globe className="w-2.5 h-2.5" />
+                                                    <span>Datacenter</span>
+                                                </span>
+                                            )}
+                                        </div>
 
                                         <div
                                             className="flex items-center gap-1 text-[11px] text-fluent-fg-tertiary shrink-0"

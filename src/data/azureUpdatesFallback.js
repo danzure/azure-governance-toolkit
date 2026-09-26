@@ -98,6 +98,59 @@ export const AZURE_UPDATES_FALLBACK = [
         categories: ['Security', 'Networking', 'Azure Front Door'],
         statusType: 'security',
         statusLabel: 'Security Update',
-        primaryCategory: 'Security'
+        primaryCategory: 'Security',
+        isDatacenter: false
+    },
+    {
+        id: '570919',
+        title: '[Launched] Generally Available: Playwright Workspaces in Australia East, Japan East, and Switzerland North',
+        displayTitle: 'Playwright Workspaces in Australia East, Japan East, and Switzerland North',
+        link: 'https://azure.microsoft.com/updates?id=570919',
+        description: 'Playwright Workspaces in Azure App Testing is now generally available in Switzerland North, Japan East, and Australia East. Playwright Workspaces provides fully managed cloud-hosted browsers for running end-to-end Playwright tests at scale.',
+        pubDate: 'Tue, 08 Sep 2026 17:35:32 Z',
+        categories: ['Launched', 'Developer tools', 'DevOps', 'Azure Load Testing', 'Regions & Datacenters', 'Feature'],
+        statusType: 'launched',
+        statusLabel: 'Generally Available',
+        primaryCategory: 'Azure Load Testing',
+        isDatacenter: true
+    },
+    {
+        id: '570557',
+        title: '[Launched] Generally Available: Azure Virtual Network Manager IPAM in additional Azure regions',
+        displayTitle: 'Azure Virtual Network Manager IPAM in additional Azure regions',
+        link: 'https://azure.microsoft.com/updates?id=570557',
+        description: 'Azure Virtual Network Manager IP address management is now generally available in additional regions: US Gov Virginia, US Gov Texas and US Gov Arizona, and China North 3 and China East 3.',
+        pubDate: 'Thu, 03 Sep 2026 17:17:08 Z',
+        categories: ['Launched', 'Networking', 'Azure Virtual Network Manager', 'Regions & Datacenters'],
+        statusType: 'launched',
+        statusLabel: 'Generally Available',
+        primaryCategory: 'Azure Virtual Network Manager',
+        isDatacenter: true
+    },
+    {
+        id: '570105',
+        title: '[Launched] Generally Available: Azure VM Image Builder in sovereign and air-gapped clouds',
+        displayTitle: 'Azure VM Image Builder in sovereign and air-gapped clouds',
+        link: 'https://azure.microsoft.com/updates?id=570105',
+        description: 'Azure VM Image Builder is now generally available in Azure Government, China North 3, Azure Government Secret, and Azure Government Top Secret for sovereign and air-gapped environments.',
+        pubDate: 'Fri, 28 Aug 2026 15:45:32 Z',
+        categories: ['Launched', 'Compute', 'Azure VM Image Builder', 'Regions & Datacenters'],
+        statusType: 'launched',
+        statusLabel: 'Generally Available',
+        primaryCategory: 'Azure VM Image Builder',
+        isDatacenter: true
+    },
+    {
+        id: '568013',
+        title: '[Launched] Generally Available: Microsoft Azure now available from new cloud region in India (India South Central)',
+        displayTitle: 'Microsoft Azure now available from new cloud region in India (India South Central)',
+        link: 'https://azure.microsoft.com/updates?id=568013',
+        description: 'Microsoft announces the opening of its fourth datacenter region in India, India South Central, with campuses in Hyderabad, Telangana, providing local, secure, AI-ready cloud infrastructure.',
+        pubDate: 'Tue, 28 Jul 2026 15:40:55 Z',
+        categories: ['Launched', 'Regions & Datacenters'],
+        statusType: 'launched',
+        statusLabel: 'Generally Available',
+        primaryCategory: 'Regions & Datacenters',
+        isDatacenter: true
     }
 ];
