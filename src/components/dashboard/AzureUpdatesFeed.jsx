@@ -232,14 +232,17 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                                 Azure Service Updates
                             </h2>
                             {!isFallback ? (
-                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[4px] text-[10.5px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary shrink-0">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg animate-pulse" />
-                                    Live
+                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary shrink-0">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg animate-pulse shrink-0" />
+                                    <span>Online</span>
                                 </span>
                             ) : (
-                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[4px] text-[10.5px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg border border-fluent-stroke-subtle shrink-0">
-                                    <Info className="w-2.5 h-2.5" />
-                                    Offline
+                                <span 
+                                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg border border-fluent-stroke-subtle shrink-0"
+                                    title={error ? `Showing cached updates (${error})` : 'Showing cached updates'}
+                                >
+                                    <AlertCircle className="w-3 h-3 text-fluent-state-danger shrink-0" />
+                                    <span>Offline ({error || 'Failed to fetch'})</span>
                                 </span>
                             )}
                         </div>
@@ -294,14 +297,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                             );
                         })}
                     </div>
-
-                    {/* Integrated Cached Updates Notice */}
-                    {error && isFallback && (
-                        <div className="inline-flex items-center gap-1.5 h-[26px] px-2.5 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-subtle text-[12px] text-fluent-fg-secondary shrink-0 animate-fade-in">
-                            <AlertCircle className="w-3.5 h-3.5 text-fluent-state-danger shrink-0" />
-                            <span>Showing cached updates ({error}).</span>
-                        </div>
-                    )}
                 </div>
 
                 {/* Right Side: Pagination & Action Controls (Fluent 2 Standardized Controls) */}
