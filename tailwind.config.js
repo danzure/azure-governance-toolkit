@@ -58,6 +58,9 @@ export default {
                     // Code editor surfaces
                     'code-bg': 'var(--colorCodeBackground)',
                     'code-fg': 'var(--colorCodeForeground)',
+
+                    // Azure Portal surface
+                    'portal-dark': 'var(--colorPortalDark, #1b1a19)',
                 }
             },
             boxShadow: {

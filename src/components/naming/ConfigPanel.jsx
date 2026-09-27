@@ -604,7 +604,7 @@ function ConfigPanel({
                             <span className="text-[12px] font-semibold text-fluent-fg-secondary">Live CAF Schema:</span>
                         </div>
                         <div className="flex flex-1 items-center gap-2 min-w-0">
-                            <div className="flex-1 h-[32px] px-3 flex items-center rounded font-mono text-[13px] font-semibold tracking-wide bg-fluent-bg-canvas text-fluent-brand-fg border border-fluent-stroke-subtle overflow-x-auto whitespace-nowrap scrollbar-hide select-all">
+                            <div className="flex-1 h-[32px] px-3 flex items-center rounded font-mono text-[13px] font-semibold tracking-wide bg-fluent-bg-canvas text-fluent-fg-primary border border-fluent-stroke-subtle overflow-x-auto whitespace-nowrap scrollbar-hide select-all">
                                 {liveSchemaStr}
                             </div>
                             <button

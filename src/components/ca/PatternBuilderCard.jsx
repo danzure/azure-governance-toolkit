@@ -219,17 +219,17 @@ function PatternBuilderCard({ copiedId, handleCopy }) {
                             <span className="text-[11px] font-semibold uppercase tracking-wider hidden sm:inline">Preview</span>
                         </div>
 
-                        <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 md:flex-initial md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-info-bg border-fluent-info-border transition-all">
-                            <div className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-brand-fg truncate select-all" title={generatedName}>
+                        <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 md:flex-initial md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-bg-canvas border-fluent-stroke-subtle transition-all">
+                            <div className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-fg-primary truncate select-all" title={generatedName}>
                                 {generatedName}
                             </div>
                             <button
                                 type="button"
                                 onClick={() => handleCopy(generatedName, 'live-pill')}
                                 aria-label={copiedId === 'live-pill' ? 'Copied' : 'Copy name'}
-                                className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${copiedId === 'live-pill' 
+                                className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border active:scale-95 ${copiedId === 'live-pill' 
                                     ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
-                                    : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
+                                    : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
                             >
                                 {copiedId === 'live-pill' ? <><Check className="w-3.5 h-3.5 animate-scale-in" /> <span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /> <span>Copy Name</span></>}
                             </button>

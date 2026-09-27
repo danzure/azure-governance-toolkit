@@ -293,8 +293,8 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                 </div>
 
                 {/* Standardized CAF Policy Name Bar */}
-                <div className="group/copy relative flex items-center justify-between gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-transparent transition-all">
-                    <span className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-brand-fg truncate select-all pr-2" title={activePolicy.name}>
+                <div className="group/copy relative flex items-center justify-between gap-2 px-3 py-1.5 min-h-[32px] w-full min-w-0 rounded-[4px] border bg-fluent-bg-canvas hover:bg-fluent-bg-hover border-fluent-stroke-subtle transition-all">
+                    <span className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-fg-primary truncate select-all pr-2" title={activePolicy.name}>
                         {activePolicy.name}
                     </span>
                     <button
@@ -302,9 +302,9 @@ function PolicyGroupCard({ requirement, policies, copiedId, handleCopy, globalEx
                             e.stopPropagation();
                             handleCopy(activePolicy.name, activePolicy.name);
                         }}
-                        className={`shrink-0 flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-[4px] border text-[11px] font-medium transition-colors shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg active:scale-95 ${isCopied 
+                        className={`shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border active:scale-95 ${isCopied 
                             ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
-                            : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-primary hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong'}`}
+                            : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary'}`}
                         title="Copy standardized policy name"
                     >
                         {isCopied ? <Check className="w-3.5 h-3.5 animate-scale-in" /> : <Copy className="w-3.5 h-3.5" />}

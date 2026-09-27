@@ -55,6 +55,9 @@
     --colorCopilotBlue: #0f6cbd;
     --colorCopilotIris: #773cbd;
     --colorCopilotCyan: #008272;
+
+    /* Azure Portal Dark Theme Navigation Surface */
+    --colorPortalDark: #1b1a19;
 }
 
 .dark {
@@ -78,26 +81,26 @@
     --colorStateDanger: #f1707b;
 
     /* Category Colors - Dark Mode (Fluent UI 2 aligned, WCAG AA compliant) */
-    --colorCategoryBlueBg: #152d44;
+    --colorCategoryBlueBg: #1a3b5c;
     --colorCategoryBlueFg: #62abf5;
-    --colorCategoryOrangeBg: #3d1f0e;
+    --colorCategoryOrangeBg: #4d2814;
     --colorCategoryOrangeFg: #f7884d;
-    --colorCategoryGreenBg: #0f2d0f;
+    --colorCategoryGreenBg: #183f1c;
     --colorCategoryGreenFg: #5ec75e;
-    --colorCategoryGreenBorder: #1e4620;
-    --colorCategoryPurpleBg: #291545;
+    --colorCategoryGreenBorder: #27622c;
+    --colorCategoryPurpleBg: #352055;
     --colorCategoryPurpleFg: #b392db;
-    --colorCategoryCyanBg: #0a3040;
+    --colorCategoryCyanBg: #114457;
     --colorCategoryCyanFg: #60d6f5;
-    --colorCategoryTealBg: #0a2e2f;
+    --colorCategoryTealBg: #124344;
     --colorCategoryTealFg: #4dc7cb;
-    --colorCategoryRedBg: #3b1114;
+    --colorCategoryRedBg: #4c1a1e;
     --colorCategoryRedFg: #f78d91;
-    --colorCategoryMagentaBg: #361028;
+    --colorCategoryMagentaBg: #481b37;
     --colorCategoryMagentaFg: #e06bc7;
-    --colorCategoryYellowBg: #5c4700;
+    --colorCategoryYellowBg: #4d3d0a;
     --colorCategoryYellowFg: #ffe680;
-    --colorCategoryNeutralBg: #3a3938;
+    --colorCategoryNeutralBg: #383838;
     --colorCategoryNeutralFg: #d2d0ce;
 
     /* Code Editor Surfaces - Consistent dark VS Code editor aesthetic */
@@ -108,6 +111,9 @@
     --colorCopilotBlue: #1f9eff;
     --colorCopilotIris: #b392db;
     --colorCopilotCyan: #4dc7cb;
+
+    /* Azure Portal Dark Theme Navigation Surface */
+    --colorPortalDark: #1b1a19;
 }
 
 * {

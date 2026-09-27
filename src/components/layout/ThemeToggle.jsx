@@ -128,8 +128,8 @@ export default function ThemeToggle({ themePref, onSetTheme, systemPrefersDark }
                 }}
                 className={`h-[32px] px-2.5 rounded-md flex items-center gap-1.5 transition-all duration-200 ease-in-out active:scale-95 touch-manipulation select-none border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
                     isOpen 
-                        ? 'bg-white/25 text-white border-white/30 shadow-sm' 
-                        : 'bg-black/20 hover:bg-black/30 active:bg-black/40 dark:bg-white/10 dark:hover:bg-white/15 dark:active:bg-white/20 text-white border-white/10 hover:border-white/20'
+                        ? 'bg-white/25 text-white border-white/40 dark:bg-fluent-bg-hover dark:text-fluent-fg-primary dark:border-fluent-stroke-strong shadow-sm' 
+                        : 'bg-white/15 hover:bg-white/25 active:bg-white/30 text-white border-white/20 hover:border-white/30 dark:bg-fluent-bg-card dark:hover:bg-fluent-bg-hover dark:active:bg-fluent-bg-card dark:text-fluent-fg-primary dark:border-fluent-stroke-subtle dark:hover:border-fluent-stroke-strong'
                 }`}
                 aria-label={`Theme: ${currentOption.label}. Change appearance`}
                 aria-expanded={isOpen}
@@ -141,8 +141,8 @@ export default function ThemeToggle({ themePref, onSetTheme, systemPrefersDark }
                     {themePref === 'system' ? 'System' : currentOption.label}
                 </span>
                 <ChevronDown 
-                    className={`w-3.5 h-3.5 text-white/70 transition-transform duration-200 shrink-0 ${
-                        isOpen ? 'rotate-180 text-white' : ''
+                    className={`w-3.5 h-3.5 text-white/70 dark:text-fluent-fg-tertiary transition-transform duration-200 shrink-0 ${
+                        isOpen ? 'rotate-180 text-white dark:text-fluent-fg-primary' : ''
                     }`} 
                 />
             </button>
