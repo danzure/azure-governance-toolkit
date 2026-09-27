@@ -143,57 +143,13 @@ export default function DashboardPage() {
         <div className="flex flex-col flex-1 w-full min-w-0 bg-fluent-bg-canvas">
             <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-3.5 sm:py-5 animate-fade-in flex-1 flex flex-col justify-start">
 
-                {/* Compact Slim Hero Banner */}
-                <div className="relative overflow-hidden bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle px-4 sm:px-5 py-3 sm:py-3.5 shadow-soft w-full shrink-0 flex flex-col lg:flex-row lg:items-center justify-between gap-3 lg:gap-6">
-                    {/* Left: Official Branded Logo + Mission Tagline */}
-                    <div className="flex items-center gap-3.5 sm:gap-4.5 min-w-0">
-                        <a
-                            href="https://atozazure.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="shrink-0 hover:opacity-85 transition-opacity translate-y-[1px] -mr-1.5 sm:-mr-2 md:-ml-0.5"
-                            title="atozazure.com"
-                        >
-                            <img
-                                src="/atozazure-logo-lightmode-transparent.png"
-                                alt="atozazure"
-                                className="h-7 sm:h-8 w-auto object-contain dark:hidden"
-                            />
-                            <img
-                                src="/atozazure-logo-darkmode-transparent.png"
-                                alt="atozazure"
-                                className="h-7 sm:h-8 w-auto object-contain hidden dark:block"
-                            />
-                        </a>
-
-                        <div className="hidden sm:block w-[1px] h-7 bg-fluent-stroke-subtle shrink-0" />
-
-                        <div className="flex flex-col min-w-0">
-                            <h1 className="text-[14px] sm:text-[15px] font-semibold text-fluent-fg-primary tracking-tight truncate">
-                                Azure Cloud Governance & Architecture Toolkit
-                            </h1>
-                            <p className="text-[12.5px] text-fluent-fg-secondary truncate">
-                                Interactive utilities for CAF resource naming, Zero Trust Conditional Access, management groups, and custom RBAC.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Ambient Glow */}
-                    <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[350px] h-[350px] bg-fluent-brand-bg rounded-full blur-[80px] opacity-[0.03] dark:opacity-[0.06] pointer-events-none" />
-                </div>
-
-                {/* Section Divider: Hero to Tools */}
-                <div className="w-full py-3.5 sm:py-4 shrink-0 flex items-center" role="separator">
-                    <div className="w-full h-px bg-fluent-stroke-subtle" />
-                </div>
-
                 {/* Tools Section */}
                 <div className="flex flex-col gap-2.5">
                     {/* Tools Header & Controls */}
                     <div className="flex items-center justify-between">
-                        <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-fluent-fg-primary">
+                        <h1 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-fluent-fg-primary">
                             Available Tools
-                        </h2>
+                        </h1>
                         <div className="hidden sm:flex items-center gap-1.5">
                             <button
                                 type="button"
