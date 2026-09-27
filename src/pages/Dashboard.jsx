@@ -143,21 +143,43 @@ export default function DashboardPage() {
         <div className="flex flex-col flex-1 w-full min-w-0 bg-fluent-bg-canvas">
             <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 sm:py-3.5 animate-fade-in flex-1 flex flex-col justify-start gap-2.5 sm:gap-3">
 
-                {/* Hero Section */}
-                <div className="relative overflow-hidden bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle p-4 sm:p-5 shadow-soft w-full shrink-0">
-                    <div className="relative z-10 max-w-3xl">
-                        <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-bold text-fluent-fg-primary mb-1.5 tracking-tight leading-[1.2]">
-                            Streamline Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-fluent-brand-bg to-fluent-brand-hover dark:from-fluent-brand-fg dark:to-fluent-brand-bg">Azure Cloud</span> Governance
-                        </h1>
-                        <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary leading-relaxed max-w-2xl">
-                            Welcome to <strong className="font-semibold text-fluent-fg-primary">atozazure</strong>! An interactive toolkit designed to guide you through building, managing, and scaling Azure environments with confidence. Explore these practical utilities to help aid in aligning your cloud deployments and policies with industry best practices.
-                        </p>
+                {/* Compact Slim Hero Banner */}
+                <div className="relative overflow-hidden bg-fluent-bg-card rounded-xl border border-fluent-stroke-subtle px-4 sm:px-5 py-3 sm:py-3.5 shadow-soft w-full shrink-0 flex flex-col lg:flex-row lg:items-center justify-between gap-3 lg:gap-6">
+                    {/* Left: Official Branded Logo + Mission Tagline */}
+                    <div className="flex items-center gap-3.5 sm:gap-4.5 min-w-0">
+                        <a
+                            href="https://atozazure.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shrink-0 hover:opacity-85 transition-opacity translate-y-[1px] -mr-1.5 sm:-mr-2 md:-ml-0.5"
+                            title="atozazure.com"
+                        >
+                            <img
+                                src="/atozazure-logo-lightmode-transparent.png"
+                                alt="atozazure"
+                                className="h-7 sm:h-8 w-auto object-contain dark:hidden"
+                            />
+                            <img
+                                src="/atozazure-logo-darkmode-transparent.png"
+                                alt="atozazure"
+                                className="h-7 sm:h-8 w-auto object-contain hidden dark:block"
+                            />
+                        </a>
+
+                        <div className="hidden sm:block w-[1px] h-7 bg-fluent-stroke-subtle shrink-0" />
+
+                        <div className="flex flex-col min-w-0">
+                            <h1 className="text-[14px] sm:text-[15px] font-semibold text-fluent-fg-primary tracking-tight truncate">
+                                Azure Cloud Governance & Architecture Toolkit
+                            </h1>
+                            <p className="text-[12.5px] text-fluent-fg-secondary truncate">
+                                Interactive utilities for CAF resource naming, Zero Trust Conditional Access, management groups, and custom RBAC.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Soft Ambient Background Glows */}
-                    <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[600px] h-[600px] bg-fluent-brand-bg rounded-full blur-[80px] opacity-5 dark:opacity-10 pointer-events-none" />
-                    <div className="absolute bottom-0 right-1/4 translate-y-1/2 w-[400px] h-[400px] bg-fluent-brand-bg rounded-full blur-[60px] opacity-5 dark:opacity-10 pointer-events-none" />
-                    <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-fluent-brand-bg rounded-full blur-[60px] opacity-5 dark:opacity-10 pointer-events-none" />
+                    {/* Ambient Glow */}
+                    <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[350px] h-[350px] bg-fluent-brand-bg rounded-full blur-[80px] opacity-[0.03] dark:opacity-[0.06] pointer-events-none" />
                 </div>
 
                 {/* Tools Header & Controls */}

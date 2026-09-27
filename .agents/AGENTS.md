@@ -31,6 +31,8 @@ To maintain a unified Microsoft Fluent 2 design language, the following legacy p
 | **Opacity Slashes on Hex Variables**<br>`bg-fluent-brand-bg/10`, `ring-fluent-brand-bg/50` | Tailwind generates `rgb(#hex / alpha)` which is invalid CSS in browsers, rendering backgrounds transparent. | Use defined semantic tokens (`bg-fluent-info-bg`, `bg-fluent-bg-hover`, `ring-fluent-brand-bg`). |
 | **Generic Tailwind Palette**<br>`bg-white`, `bg-blue-600`, `text-gray-400`, `text-amber-500` | Creates visual inconsistency with the Azure Fluent 2 brand tokens. | Use corresponding `fluent-*` tokens (`bg-fluent-bg-card`, `bg-fluent-brand-bg`, `text-fluent-fg-secondary`, `text-fluent-cat-yellow-fg`). |
 | **Ad-Hoc Copied State Hexes**<br>`bg-[#f1faf1] text-[#107c10] border-[#c6ebc9]` | Fragmented, hardcoded values that fail theme adaptiveness. | Use `bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg`. |
+| **Solid Category Backgrounds on Parameter Badges**<br>`bg-fluent-cat-*-bg text-fluent-cat-*-fg` | Fully saturated colored badges create visual clutter and poor text contrast across light/dark themes. | Use neutral subtle pills (`bg-fluent-bg-subtle border-fluent-stroke-subtle`) with a 6px category accent dot (`w-1.5 h-1.5 rounded-full bg-fluent-cat-*-fg`). |
+| **Brand Colored Monospace Previews**<br>`text-fluent-brand-fg` in preview output boxes | Reduces legibility for resource names or syntax strings against canvas backgrounds. | Use `text-fluent-fg-primary font-mono` inside `bg-fluent-bg-canvas border-fluent-stroke-subtle`. |
 | **Arbitrary Padding & Heights**<br>`px-4 py-2`, `h-[38px]`, `py-2.5` | Breaks vertical grid alignment across adjacent inputs, buttons, and selects. | Standardize on `h-[32px] px-3` (standard) or `h-[26px] px-2.5` (compact). |
 | **Arbitrary Shadows**<br>`shadow-md`, `shadow-lg` | Generic Tailwind shadows clash with Fluent 2 depth elevations. | Standardize on `shadow-soft` (cards), `shadow-depth` (hover), or `shadow-flyout` (menus/modals). |
 | **Pill Shapes (`rounded-full`) on Controls** | Fully rounded pills violate Fluent 2 geometry for toggles, badges, and controls. | Use standard rounded corners: `rounded-[4px]` (inputs/buttons/badges) or `rounded-lg` (cards). |
@@ -54,21 +56,51 @@ The application defines semantic CSS variables in `src/index.css` mapped in `tai
 | :--- | :--- | :--- | :--- |
 | `bg-fluent-bg-canvas` | `#fafafa` | `#242424` | Main page and application background canvas. |
 | `bg-fluent-bg-card` | `#ffffff` | `#292929` | Cards, panels, input resting states, flyouts. |
-| `bg-fluent-bg-subtle` | `#f0f0f0` | `#1b1b1b` | Subtle containers, tool guidance blocks, inactive pills. |
+| `bg-fluent-bg-subtle` | `#f0f0f0` | `#1b1b1b` | Subtle containers, tool guidance blocks, parameter pills. |
 | `bg-fluent-bg-hover` | `#f5f5f5` | `#202020` | Hover states across list items, dropdown options, tabs. |
-| `text-fluent-fg-primary` | `#242424` | `#ffffff` | Primary text, headings, selected labels. |
+| `bg-fluent-bg-darker` | `#ebebeb` | `#111111` | Deep background canvas or high-contrast container layer. |
+| `bg-fluent-portal-dark` | `#1b1a19` | `#1b1a19` | Azure Portal dark theme navigation surface (Header bar). |
+| `text-fluent-fg-primary` | `#242424` | `#ffffff` | Primary text, headings, selected labels, preview text. |
 | `text-fluent-fg-secondary` | `#424242` | `#d6d6d6` | Secondary supporting text, subtitles, resting labels. |
-| `text-fluent-fg-tertiary` | `#616161` | `#adadad` | Placeholders, counter hints, disabled text. |
+| `text-fluent-fg-tertiary` | `#616161` | `#adadad` | Placeholders, counter hints, disabled text, metric labels. |
 | `border-fluent-stroke-subtle` | `#e0e0e0` | `#525252` | Dividers, card borders, subtle bounding boxes. |
 | `border-fluent-stroke-strong` | `#d1d1d1` | `#666666` | Interactive element borders (inputs, secondary buttons). |
 | `bg-fluent-brand-bg` | `#0f6cbd` | `#1f9eff` | Primary action buttons, active indicator pills. |
 | `text-fluent-brand-fg` | `#0f6cbd` | `#60cdff` | Brand accents, active links, primary icons. |
 | `bg-fluent-info-bg` / `text-fluent-info-text` | `#eff6fc` / `#004578` | `rgba(31,158,255,0.1)` / `#c7e0f4` | Informational callouts, active navigation tabs. |
+| `border-fluent-info-border` | `#c7e0f4` | `rgba(31,158,255,0.3)` | Subtle border for informational and guidance blocks. |
 | `text-fluent-state-danger` | `#d13438` | `#f1707b` | Destructive actions, validation error states. |
 | `bg-fluent-code-bg` / `text-fluent-code-fg` | `#1e1e1e` / `#d4d4d4` | `#1e1e1e` / `#d4d4d4` | Code editor canvas & monospace syntax text. |
-| `bg-fluent-cat-green-bg` | `#e9f5e9` | `#0f2d0f` | Positive status badges, copy-button active background. |
-| `border-fluent-cat-green-border` | `#c6ebc9` | `#1e4620` | Copy-button active border, verified status outline. |
+| `bg-fluent-cat-green-bg` | `#e9f5e9` | `#183f1c` | Positive status badges, copy-button active background. |
+| `border-fluent-cat-green-border` | `#c6ebc9` | `#27622c` | Copy-button active border, verified status outline. |
 | `text-fluent-cat-green-fg` | `#0e700e` | `#5ec75e` | Success text, Check icon, copy confirmation. |
+
+#### Fluent 2 Category Color Tokens
+All category tokens are calibrated to maintain WCAG AA contrast against both light and dark backgrounds. Use category foreground tokens (`text-fluent-cat-*-fg`) for accent dots (`w-1.5 h-1.5 rounded-full`) inside neutral parameter pills, and status tags:
+
+| Category | Background Token (`bg-fluent-cat-*-bg`) | Foreground Token (`text-fluent-cat-*-fg`) | Light Mode (Bg / Fg) | Dark Mode (Bg / Fg) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Blue** | `bg-fluent-cat-blue-bg` | `text-fluent-cat-blue-fg` | `#e8f1fb` / `#0f6cbd` | `#1a3b5c` / `#62abf5` |
+| **Orange** | `bg-fluent-cat-orange-bg` | `text-fluent-cat-orange-fg` | `#fceee8` / `#c43501` | `#4d2814` / `#f7884d` |
+| **Green** | `bg-fluent-cat-green-bg` | `text-fluent-cat-green-fg` | `#e9f5e9` / `#0e700e` (border: `#c6ebc9`) | `#183f1c` / `#5ec75e` (border: `#27622c`) |
+| **Purple** | `bg-fluent-cat-purple-bg` | `text-fluent-cat-purple-fg` | `#f0ebf7` / `#5c2d91` | `#352055` / `#b392db` |
+| **Cyan** | `bg-fluent-cat-cyan-bg` | `text-fluent-cat-cyan-fg` | `#e0f4fa` / `#006a8e` | `#114457` / `#60d6f5` |
+| **Teal** | `bg-fluent-cat-teal-bg` | `text-fluent-cat-teal-fg` | `#e1f2f2` / `#036c70` | `#124344` / `#4dc7cb` |
+| **Red** | `bg-fluent-cat-red-bg` | `text-fluent-cat-red-fg` | `#fce9ea` / `#c4262e` | `#4c1a1e` / `#f78d91` |
+| **Magenta** | `bg-fluent-cat-magenta-bg` | `text-fluent-cat-magenta-fg` | `#f9e5f2` / `#9b008a` | `#481b37` / `#e06bc7` |
+| **Yellow** | `bg-fluent-cat-yellow-bg` | `text-fluent-cat-yellow-fg` | `#fff0b3` / `#806000` | `#4d3d0a` / `#ffe680` |
+| **Neutral** | `bg-fluent-cat-neutral-bg` | `text-fluent-cat-neutral-fg` | `#ebebeb` / `#4d4d4d` | `#383838` / `#d2d0ce` |
+
+#### Copilot AI & Brand Gradients
+| Gradient / Palette Token | Definition / Classes | Usage Context |
+| :--- | :--- | :--- |
+| `bg-primary-gradient` | `linear-gradient(135deg, #0f6cbd 0%, #115ea3 100%)` | Light mode header bar, hero branding. |
+| `bg-primary-gradient-hover` | `linear-gradient(135deg, #115ea3 0%, #0f548c 100%)` | Interactive brand hover states. |
+| `bg-copilot-aura-gradient` | Linear gradient traversing Copilot Blue, Iris, Cyan | AI prompt bar focus borders, Copilot card highlights. |
+| `bg-copilot-stream-gradient` | Animated shimmering gradient | AI generation streaming state indicators. |
+| `--colorCopilotBlue` | `#0f6cbd` (Light) / `#1f9eff` (Dark) | Copilot brand accent 1 (Blue). |
+| `--colorCopilotIris` | `#773cbd` (Light) / `#b392db` (Dark) | Copilot brand accent 2 (Iris). |
+| `--colorCopilotCyan` | `#008272` (Light) / `#4dc7cb` (Dark) | Copilot brand accent 3 (Cyan). |
 
 ### 3.3 Layout, Spacing & Alignment
 - **Page Container**: `max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 pb-12 flex-1 flex flex-col`
@@ -176,6 +208,64 @@ When displaying generated code (Bicep, Terraform, ARM, JSON, PowerShell, Markdow
 - **Terminal Container**: `bg-fluent-code-bg w-full flex flex-col flex-1 h-full min-h-0 relative overflow-hidden rounded-b-lg`
 - **Code Area (`<pre>`)**: `flex-1 text-[13px] leading-relaxed font-mono overflow-auto p-5 text-fluent-code-fg m-0 select-all`
 - **Terminal Header/Toolbar**: `px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle shrink-0`
+
+### 4.5 Header & Top Navigation Bar
+The fixed header harmonizes brand identity across themes, adopting the authentic Azure Portal dark surface (`bg-fluent-portal-dark`) in dark mode:
+- **Header Shell**:
+  ```html
+  h-[48px] flex items-center justify-between px-3 md:px-5 border-b z-50 fixed top-0 w-full bg-primary-gradient dark:bg-none dark:bg-fluent-portal-dark border-transparent dark:border-fluent-stroke-subtle text-white dark:text-fluent-fg-primary shadow-soft dark:shadow-sm
+  ```
+- **Branding & Divider**:
+  ```html
+  <a href="https://atozazure.com" className="font-semibold text-[18px] text-white dark:text-fluent-fg-primary tracking-tight shrink-0 hover:opacity-80 transition-opacity">atozazure</a>
+  <span className="text-[14px] text-white/40 dark:text-fluent-stroke-strong mx-1 hidden sm:inline">|</span>
+  <span className="text-[14px] text-white/80 dark:text-fluent-fg-secondary tracking-wide truncate hidden sm:inline">{title}</span>
+  ```
+- **Command Palette Search Trigger**:
+  ```html
+  w-full h-[32px] px-3 rounded-[4px] bg-white hover:bg-white/95 text-fluent-fg-primary border border-white/30 hover:border-white/60 dark:bg-fluent-bg-card dark:border-fluent-stroke-subtle dark:hover:bg-fluent-bg-hover dark:hover:border-fluent-stroke-strong dark:text-fluent-fg-primary transition-all duration-150 flex items-center justify-between text-left cursor-pointer shadow-sm
+  ```
+- **Theme Toggle Trigger**:
+  ```html
+  h-[32px] px-2.5 rounded-md flex items-center gap-1.5 transition-all duration-200 ease-in-out active:scale-95 touch-manipulation select-none border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50
+  /* Resting */
+  bg-white/15 hover:bg-white/25 active:bg-white/30 text-white border-white/20 hover:border-white/30 dark:bg-fluent-bg-card dark:hover:bg-fluent-bg-hover dark:active:bg-fluent-bg-card dark:text-fluent-fg-primary dark:border-fluent-stroke-subtle dark:hover:border-fluent-stroke-strong
+  /* Open */
+  bg-white/25 text-white border-white/40 dark:bg-fluent-bg-hover dark:text-fluent-fg-primary dark:border-fluent-stroke-strong shadow-sm
+  ```
+
+### 4.6 Parameter Badges & Live Output Preview Bars
+- **Standard Parameter Pill (Neutral Subtle with Category Indicator Dot)**:
+  Parameter values should never use heavy saturated background fills. Standardize on neutral subtle badges with a 6px category accent dot:
+  ```jsx
+  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Parameter description">
+      <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-[color]-fg shrink-0" />
+      <span className="text-fluent-fg-tertiary">Label:</span>
+      <span className="font-medium text-fluent-fg-primary">{value}</span>
+  </div>
+  ```
+- **Standard Live Preview / Generated Output Bar**:
+  Generated resource names, policy names, or syntax previews must use `text-fluent-fg-primary` on `bg-fluent-bg-canvas` for high contrast:
+  ```jsx
+  <div className="group/copy relative flex items-center gap-2 px-3 py-1.5 min-h-[32px] flex-1 min-w-0 md:flex-initial md:w-auto md:min-w-[340px] max-w-full rounded-[4px] border bg-fluent-bg-canvas border-fluent-stroke-subtle transition-all">
+      <div className="flex-1 min-w-0 font-mono text-[13px] font-semibold text-fluent-fg-primary truncate select-all" title={generatedName}>
+          {generatedName}
+      </div>
+      <button
+          type="button"
+          onClick={() => handleCopy(generatedName, 'preview-id')}
+          className="shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium transition-all inline-flex items-center justify-center gap-1.5 border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary active:scale-95"
+      >
+          {isCopied ? <><Check className="w-3.5 h-3.5 animate-scale-in" /><span>Copied</span></> : <><Copy className="w-3.5 h-3.5" /><span>Copy Name</span></>}
+      </button>
+  </div>
+  ```
+- **Active Naming Pattern / Schema Badge**:
+  ```jsx
+  <span className="hidden lg:inline-flex items-center font-mono text-[11px] text-fluent-fg-secondary px-2.5 py-1 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle" title="Active naming pattern">
+      {patternString}
+  </span>
+  ```
 
 ---
 
@@ -294,7 +384,7 @@ When adding a service:
 ### 6.4 AI-Powered Tool Layout Standards
 For tools with AI or smart prompt capabilities (`ResourceNaming`, `RbacDesigner`):
 1. **Primary Interaction Point**: Place the AI Prompt Bar directly below the "How to use this tool" guidance block.
-2. **Collapsible Manual Configuration**: Manual property forms, templates, or sliders must be wrapped in a collapsible container that is **collapsed by default** (`isConfigMinimized = true`), toggled via a centered button with the `<Sliders className="w-3.5 h-3.5" />` icon and `<ChevronDown className="w-3.5 h-3.5" />`.
+2. **Collapsible Manual Configuration**: Manual property forms, templates, or sliders must be wrapped in a collapsible container that is **collapsed by default** (`isConfigMinimized = true`), toggled via a secondary button with the `<Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />` icon, text, and `<ChevronDown className="w-3.5 h-3.5 text-fluent-fg-tertiary" />` (`h-[32px] px-3 rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95`). When collapsed, show a summary row of active parameter pills with category colored dots and the live naming schema pill.
 3. **Interactive AI Feedback Banner**: Always render an AI resolution banner displaying the summary, CAF governance rationale, and quick-filter tags upon successful prompt execution.
 4. **Keyboard Shortcuts**: Bind `Ctrl+K` to focus the prompt input and `Escape` to blur/clear it (with key hints hidden on mobile: `hidden sm:inline-flex`).
 5. **Dashboard Registration**: Ensure `hasAi: true` is set on the tool entry in `src/pages/Dashboard.jsx`.
