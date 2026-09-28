@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-    Rss,
     RefreshCw,
     ExternalLink,
     ChevronLeft,
@@ -13,12 +12,13 @@ import {
     Globe
 } from 'lucide-react';
 import { fetchAzureRss, AZURE_RSS_FEED_URL, RSS_CACHE_TTL_MS } from '../../utils/rssParser';
+import rssIcon from '../../assets/icons/Rss.svg';
 
 /**
  * Azure Service Updates RSS Feed Widget.
- * Can be rendered full-width or in modular columns.
+ * Supports 'vertical' (sidebar stream) and 'horizontal' (carousel) layouts.
  */
-export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
+export default function AzureUpdatesFeed({ itemsPerPage = 4, layout = 'vertical' }) {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -63,7 +63,7 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
         // Initial mount load
         loadFeed(false);
 
-        // Periodic auto-refresh every 15 minutes (active update polling)
+        // Periodic auto-refresh every 15 minutes
         const intervalId = setInterval(() => {
             if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
                 loadFeed({ forceRefresh: true, background: true });
@@ -92,10 +92,11 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
         };
     }, [loadFeed]);
 
+    // Horizontal layout refs & state
     const feedScrollRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
-    const [visibleRange, setVisibleRange] = useState({ start: 1, end: 4 });
+    const [visibleRange, setVisibleRange] = useState({ start: 1, end: itemsPerPage });
 
     const isDraggingRef = useRef(false);
     const startXRef = useRef(0);
@@ -120,6 +121,13 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
         if (activeTab === 'datacenters') return items.filter((item) => item.isDatacenter);
         return items.filter((item) => item.statusType === activeTab);
     }, [items, activeTab]);
+
+    // Reset scroll position on active status tab changes (horizontal mode)
+    useEffect(() => {
+        if (layout === 'horizontal' && feedScrollRef.current) {
+            feedScrollRef.current.scrollTo({ left: 0, behavior: 'instant' });
+        }
+    }, [activeTab, layout]);
 
     const checkScrollState = useCallback(() => {
         const el = feedScrollRef.current;
@@ -148,17 +156,9 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
         }
     }, [filteredItems.length]);
 
-    // Reset scroll position on active status tab changes
+    // Attach scroll and resize observers for horizontal mode
     useEffect(() => {
-        const el = feedScrollRef.current;
-        if (el) {
-            el.scrollTo({ left: 0, behavior: 'instant' });
-        }
-        checkScrollState();
-    }, [activeTab, checkScrollState]);
-
-    // Attach scroll and resize observers
-    useEffect(() => {
+        if (layout !== 'horizontal') return;
         const el = feedScrollRef.current;
         if (!el) return;
 
@@ -185,7 +185,7 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                 resizeObserver.disconnect();
             }
         };
-    }, [checkScrollState, filteredItems.length, isLoading]);
+    }, [checkScrollState, filteredItems.length, isLoading, layout]);
 
     const scroll = (direction) => {
         const el = feedScrollRef.current;
@@ -242,24 +242,230 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
         }
     };
 
+    const filterTabs = [
+        { id: 'all', label: 'All', shortLabel: 'All', count: statusCounts.all },
+        { id: 'launched', label: 'GA', shortLabel: 'GA', count: statusCounts.launched },
+        { id: 'preview', label: 'Preview', shortLabel: 'Preview', count: statusCounts.preview },
+        { id: 'retirement', label: 'Retirements', shortLabel: 'Retired', count: statusCounts.retirement },
+        { id: 'datacenters', label: 'Datacenters', shortLabel: 'DC', count: statusCounts.datacenters },
+    ];
+
+    // ==========================================
+    // VERTICAL LAYOUT (Option 1 Sidebar Widget)
+    // ==========================================
+    if (layout === 'vertical') {
+        return (
+            <div className="w-full h-full rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-3.5 sm:p-4 shadow-soft flex flex-col justify-between gap-3 overflow-hidden min-h-0">
+                {/* Header Row */}
+                <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-fluent-stroke-subtle shrink-0">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <a
+                            href={AZURE_RSS_FEED_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shrink-0 group/rss transition-transform hover:scale-105 active:scale-95 flex items-center justify-center drop-shadow-sm"
+                            title="Open official RSS feed (XML)"
+                            aria-label="Open official RSS feed (XML)"
+                        >
+                            <img
+                                src={rssIcon}
+                                alt="Azure Service Updates RSS Feed"
+                                className="w-[22px] h-[22px] object-contain"
+                            />
+                        </a>
+                        <h2 
+                            className="text-[14px] font-bold tracking-tight text-fluent-fg-primary truncate"
+                            title={channelMeta.lastBuildDate ? `Last build: ${channelMeta.lastBuildDate}` : channelMeta.title}
+                        >
+                            Azure Service Updates
+                        </h2>
+                        {!isFallback ? (
+                            <span 
+                                className="inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-[4px] text-[10.5px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-secondary shrink-0 cursor-default"
+                                title="Live feed active • Auto-updates every 15 minutes"
+                            >
+                                <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg animate-pulse shrink-0" />
+                                <span>Online</span>
+                            </span>
+                        ) : (
+                            <span 
+                                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[4px] text-[10.5px] font-medium bg-fluent-cat-yellow-bg text-fluent-cat-yellow-fg border border-fluent-stroke-subtle shrink-0"
+                                title={error ? `Showing cached updates (${error})` : 'Showing cached updates'}
+                            >
+                                <AlertCircle className="w-3 h-3 text-fluent-state-danger shrink-0" />
+                                <span>Offline</span>
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Top action controls */}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                            type="button"
+                            onClick={() => loadFeed(true)}
+                            disabled={isLoading || isRefreshing}
+                            title={error && isFallback ? "Retry fetching live updates" : "Refresh feed data"}
+                            aria-label={error && isFallback ? "Retry fetching live updates" : "Refresh feed data"}
+                            className={`shrink-0 h-[26px] px-2.5 rounded-[4px] border transition-all active:scale-95 inline-flex items-center justify-center gap-1.5 text-[12px] font-medium shadow-sm disabled:opacity-50 ${
+                                error && isFallback
+                                    ? 'bg-fluent-bg-card border-fluent-stroke-strong text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-hover font-semibold'
+                                    : 'bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'
+                            }`}
+                        >
+                            <RefreshCw className={`w-3 h-3 ${isRefreshing ? 'animate-spin text-fluent-brand-fg' : (error && isFallback ? 'text-fluent-brand-fg' : '')}`} />
+                            <span>{isRefreshing ? (error && isFallback ? 'Retrying...' : 'Refreshing...') : (error && isFallback ? 'Retry' : 'Refresh')}</span>
+                        </button>
+                        <a
+                            href="https://azure.microsoft.com/updates/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shrink-0 h-[26px] px-2.5 rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-all active:scale-95 inline-flex items-center justify-center gap-1.5 text-[12px] font-medium shadow-sm"
+                            title="Open official Azure Updates portal"
+                            aria-label="Open official Azure Updates portal"
+                        >
+                            <span className="hidden xl:inline">Updates Portal</span>
+                            <span className="xl:hidden">Portal</span>
+                            <ExternalLink className="w-3 h-3" />
+                        </a>
+                    </div>
+                </div>
+
+                {/* Items Container - Continuous Scrolling Stream */}
+                {isLoading ? (
+                    <div className="flex flex-col gap-2.5 flex-1 min-h-0 overflow-hidden">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <div
+                                key={i}
+                                className="shrink-0 min-h-[96px] rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card p-3 flex flex-col justify-between animate-pulse"
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="h-3 w-14 bg-fluent-bg-subtle rounded-[3px]" />
+                                    <div className="h-3 w-10 bg-fluent-bg-subtle rounded-[3px]" />
+                                </div>
+                                <div className="h-3.5 w-4/5 bg-fluent-bg-subtle rounded-[3px]" />
+                                <div className="h-2.5 w-2/3 bg-fluent-bg-subtle rounded-[3px]" />
+                            </div>
+                        ))}
+                    </div>
+                ) : items.length === 0 ? (
+                    <div className="py-6 px-3 rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle text-center flex flex-col items-center justify-center gap-1.5 flex-1 min-h-[280px]">
+                        <Info className="w-4 h-4 text-fluent-fg-tertiary" />
+                        <span className="text-[12px] text-fluent-fg-secondary">
+                            No updates found.
+                        </span>
+                        <button
+                            type="button"
+                            onClick={() => loadFeed(true)}
+                            className="h-[24px] px-2 rounded-[4px] text-[11px] font-medium bg-fluent-bg-card border border-fluent-stroke-strong text-fluent-fg-primary hover:bg-fluent-bg-hover active:scale-95 transition-all shadow-sm mt-1"
+                        >
+                            Refresh Feed
+                        </button>
+                    </div>
+                ) : (
+                    <div
+                        tabIndex={0}
+                        role="region"
+                        aria-label="Azure Service Updates scrolling feed"
+                        className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden flex flex-col gap-2.5 pr-1.5 py-0.5 fluent-scrollbar focus:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-md"
+                    >
+                        {items.map((item) => {
+                            const badgeStyle = getStatusBadgeClass(item.statusType);
+
+                            return (
+                                <a
+                                    key={item.id}
+                                    href={item.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="
+                                        group shrink-0 flex flex-col justify-between
+                                        p-3 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card
+                                        hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong
+                                        transition-all duration-150 shadow-soft dark:shadow-none hover:shadow-depth
+                                        active:scale-[0.99] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg
+                                        min-h-[96px]
+                                    "
+                                >
+                                    <div className="flex flex-col min-w-0">
+                                        <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                                            <div className="flex items-center gap-1.5 min-w-0">
+                                                <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-[3px] border ${badgeStyle} shrink-0`}>
+                                                    {item.statusLabel}
+                                                </span>
+                                                {item.isDatacenter && (
+                                                    <span className="text-[9.5px] font-semibold px-1 py-0.5 rounded-[3px] border bg-fluent-info-bg text-fluent-brand-fg border-fluent-stroke-subtle shrink-0 inline-flex items-center gap-0.5">
+                                                        <Globe className="w-2.5 h-2.5" />
+                                                        <span>DC</span>
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-1 text-[10.5px] text-fluent-fg-tertiary shrink-0">
+                                                <Clock className="w-3 h-3 text-fluent-fg-tertiary" />
+                                                <span>{item.relativeTime || item.formattedDate}</span>
+                                            </div>
+                                        </div>
+
+                                        <h3 className="text-[12.5px] font-bold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors line-clamp-2 leading-snug">
+                                            {item.displayTitle || item.title}
+                                        </h3>
+                                        {item.description && (
+                                            <p className="text-[11px] text-fluent-fg-secondary leading-relaxed line-clamp-2 mt-1">
+                                                {item.description}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="pt-2 mt-2 border-t border-fluent-stroke-subtle/80 flex items-center justify-between text-[11px] font-medium">
+                                        <span className="text-fluent-fg-tertiary truncate max-w-[150px] text-[10.5px]">
+                                            {item.primaryCategory || 'General'}
+                                        </span>
+                                        <div className="flex items-center gap-1 text-fluent-brand-fg group-hover:underline shrink-0">
+                                            <span>View</span>
+                                            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-150" />
+                                        </div>
+                                    </div>
+                                </a>
+                            );
+                        })}
+                    </div>
+                )}
+
+                {/* Footer Controls (Feed stats & live stream indicator) */}
+                <div className="pt-2 border-t border-fluent-stroke-subtle flex items-center justify-between shrink-0 text-[11.5px] text-fluent-fg-tertiary">
+                    <span className="font-medium">
+                        {items.length > 0 ? `${items.length} updates • Live stream` : '0 updates'}
+                    </span>
+                    <span className="text-[11px] text-fluent-fg-tertiary">
+                        Scroll to explore
+                    </span>
+                </div>
+            </div>
+        );
+    }
+
+    // ==========================================
+    // HORIZONTAL LAYOUT (Full-width Carousel)
+    // ==========================================
     return (
         <div className="w-full h-full flex flex-col justify-between gap-3 rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-3.5 sm:p-4 shadow-soft">
             {/* Streamlined Header Bar */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-2.5 border-b border-fluent-stroke-subtle">
-                {/* Left Side: Title, Live indicator & Status Filter Tabs */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 min-w-0 w-full sm:w-auto">
-                    {/* Title & Live Feed Badge */}
                     <div className="flex items-center justify-between sm:justify-start gap-2 min-w-0 w-full sm:w-auto">
                         <div className="flex items-center gap-2 min-w-0">
                             <a
                                 href={AZURE_RSS_FEED_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="shrink-0 h-[26px] w-[26px] rounded-[4px] border border-fluent-stroke-subtle bg-fluent-cat-orange-bg hover:border-fluent-stroke-strong flex items-center justify-center transition-all active:scale-95 shadow-sm"
+                                className="shrink-0 group/rss transition-transform hover:scale-105 active:scale-95 flex items-center justify-center drop-shadow-sm"
                                 title="Open official RSS feed (XML)"
                                 aria-label="Open official RSS feed (XML)"
                             >
-                                <Rss className="w-3.5 h-3.5 text-fluent-cat-orange-fg" />
+                                <img
+                                    src={rssIcon}
+                                    alt="Azure Service Updates RSS Feed"
+                                    className="w-[22px] h-[22px] object-contain"
+                                />
                             </a>
                             <h2 
                                 className="text-[14.5px] sm:text-[15px] font-bold tracking-tight text-fluent-fg-primary truncate"
@@ -295,13 +501,7 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                         role="tablist"
                         aria-label="Filter updates by status"
                     >
-                        {[
-                            { id: 'all', label: 'All', shortLabel: 'All', count: statusCounts.all },
-                            { id: 'launched', label: 'GA', shortLabel: 'GA', count: statusCounts.launched },
-                            { id: 'preview', label: 'Preview', shortLabel: 'Preview', count: statusCounts.preview },
-                            { id: 'retirement', label: 'Retirements', shortLabel: 'Retired', count: statusCounts.retirement },
-                            { id: 'datacenters', label: 'Datacenters', shortLabel: 'Datacenters', count: statusCounts.datacenters },
-                        ].map((tab) => {
+                        {filterTabs.map((tab) => {
                             const isActive = activeTab === tab.id;
                             return (
                                 <button
@@ -339,9 +539,8 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                     </div>
                 </div>
 
-                {/* Right Side: Pagination & Action Controls (Fluent 2 Standardized Controls) */}
+                {/* Right Side: Controls */}
                 <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto shrink-0 pt-0.5 sm:pt-0 sm:ml-auto">
-                    {/* Page counter hint */}
                     {filteredItems.length > 0 && (
                         <span className="text-[12px] text-fluent-fg-tertiary font-medium">
                             {visibleRange.start}–{visibleRange.end} of {filteredItems.length}
@@ -349,7 +548,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                     )}
 
                     <div className="flex items-center gap-1.5 shrink-0 ml-auto sm:ml-0">
-                        {/* Prev/Next Page Segmented Buttons */}
                         <div className="inline-flex items-center rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card shadow-sm overflow-hidden" role="group" aria-label="Pagination">
                             <button
                                 type="button"
@@ -375,7 +573,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
 
                         <div className="hidden sm:block w-[1px] h-4 bg-fluent-stroke-subtle shrink-0" />
 
-                        {/* Action Buttons (Refresh & External Link) */}
                         <button
                             type="button"
                             onClick={() => loadFeed(true)}
@@ -409,7 +606,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
 
             {/* Updates Cards Surface */}
             {isLoading ? (
-                // Skeleton Cards
                 <div className="flex overflow-hidden gap-2.5 -mx-1 px-1 pt-1 pb-2.5 flex-1">
                     {Array.from({ length: 4 }).map((_, i) => (
                         <div
@@ -433,7 +629,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                     ))}
                 </div>
             ) : filteredItems.length === 0 ? (
-                // Compact Empty State
                 <div className="py-8 px-3 rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle text-center flex flex-col items-center justify-center gap-1.5 flex-1">
                     <Info className="w-4 h-4 text-fluent-fg-tertiary" />
                     <span className="text-[12px] text-fluent-fg-secondary">
@@ -448,7 +643,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                     </button>
                 </div>
             ) : (
-                // Items Grid with Native Trackpad Gesture & Momentum Snap
                 <div 
                     ref={feedScrollRef}
                     onMouseDown={handleMouseDown}
@@ -482,7 +676,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                                 "
                             >
                                 <div className="flex flex-col min-w-0">
-                                    {/* Top Row: Status Badge & Relative Time */}
                                     <div className="flex items-center justify-between gap-1 mb-2">
                                         <div className="flex items-center gap-1.5 min-w-0">
                                             <span
@@ -511,18 +704,15 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
                                         </div>
                                     </div>
 
-                                    {/* Title */}
                                     <h3 className="text-[13px] sm:text-[13.5px] font-bold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors line-clamp-2 leading-snug mb-1.5">
                                         {item.displayTitle || item.title}
                                     </h3>
 
-                                    {/* Description */}
                                     <p className="text-[12px] text-fluent-fg-secondary leading-relaxed line-clamp-3">
                                         {item.description}
                                     </p>
                                 </div>
 
-                                {/* Footer: Category & Direct Link */}
                                 <div className="pt-2.5 mt-2 border-t border-fluent-stroke-subtle flex items-center justify-between text-[11.5px] font-medium">
                                     <span className="text-fluent-fg-tertiary truncate max-w-[140px] text-[11px]">
                                         {item.primaryCategory || 'General'}
@@ -543,5 +733,6 @@ export default function AzureUpdatesFeed({ itemsPerPage: _itemsPerPage = 4 }) {
 }
 
 AzureUpdatesFeed.propTypes = {
-    itemsPerPage: PropTypes.number
+    itemsPerPage: PropTypes.number,
+    layout: PropTypes.oneOf(['vertical', 'horizontal'])
 };

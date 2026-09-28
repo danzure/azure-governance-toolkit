@@ -1,58 +1,16 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, BookOpen, Layers, Shield, LayoutTemplate, ExternalLink, ChevronLeft, ChevronRight, Plus, Star } from 'lucide-react';
+import {
+    ArrowRight,
+    Sparkles,
+    Plus,
+    Star,
+    Boxes
+} from 'lucide-react';
 import AzureUpdatesFeed from '../components/dashboard/AzureUpdatesFeed';
+import QuickActionsDeck from '../components/dashboard/QuickActionsDeck';
 
 export default function DashboardPage() {
     const navigate = useNavigate();
-    const scrollContainerRef = useRef(null);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
-
-    const checkScroll = useCallback(() => {
-        const el = scrollContainerRef.current;
-        if (el) {
-            const { scrollLeft, scrollWidth, clientWidth } = el;
-            setCanScrollLeft(scrollLeft > 2);
-            setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 2);
-        }
-    }, []);
-
-    useEffect(() => {
-        const el = scrollContainerRef.current;
-        if (!el) return;
-
-        checkScroll();
-
-        el.addEventListener('scroll', checkScroll, { passive: true });
-        window.addEventListener('resize', checkScroll);
-
-        let resizeObserver = null;
-        if (typeof ResizeObserver !== 'undefined') {
-            resizeObserver = new ResizeObserver(() => {
-                checkScroll();
-            });
-            resizeObserver.observe(el);
-        }
-
-        const timeoutId = setTimeout(checkScroll, 100);
-
-        return () => {
-            clearTimeout(timeoutId);
-            el.removeEventListener('scroll', checkScroll);
-            window.removeEventListener('resize', checkScroll);
-            if (resizeObserver) {
-                resizeObserver.disconnect();
-            }
-        };
-    }, [checkScroll]);
-
-    const scroll = (direction) => {
-        if (scrollContainerRef.current) {
-            const scrollAmount = direction === 'left' ? -396 : 396;
-            scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
 
     const tools = [
         {
@@ -61,7 +19,7 @@ export default function DashboardPage() {
             description: 'Instantly generate standard-compliant names for 100+ Azure resources using Cloud Adoption Framework guidelines.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg',
             path: '/resource-naming',
-            bgClass: 'bg-transparent',
+            badge: 'CAF Aligned',
             hasAi: true,
         },
         {
@@ -70,7 +28,7 @@ export default function DashboardPage() {
             description: 'Design, build, and document secure Conditional Access policies using standardized naming conventions.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg',
             path: '/conditional-access',
-            bgClass: 'bg-transparent',
+            badge: 'Zero Trust',
         },
         {
             id: 'management-group-topology',
@@ -78,7 +36,7 @@ export default function DashboardPage() {
             description: 'Visually architect your Azure Management Group hierarchy utilizing enterprise best-practice topologies.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
             path: '/management-groups',
-            bgClass: 'bg-transparent',
+            badge: 'Landing Zones',
         },
         {
             id: 'rbac-designer',
@@ -86,7 +44,7 @@ export default function DashboardPage() {
             description: 'Design and generate JSON definitions for Azure Custom Roles by selecting specific resource provider operations.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg',
             path: '/rbac-designer',
-            bgClass: 'bg-transparent',
+            badge: 'Least Privilege',
             hasAi: true,
             isNew: true,
         },
@@ -96,260 +54,151 @@ export default function DashboardPage() {
             description: 'Define organizational tagging strategies and automatically generate Azure Policy compliance rules.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg',
             path: '/tagging-strategy',
-            bgClass: 'bg-transparent',
+            badge: 'Azure Policy',
         }
-    ];
-
-    const frameworks = [
-        {
-            title: 'Azure Landing Zones',
-            category: 'Architecture',
-            description: 'Scalable multi-subscription architecture with management group hierarchies, networking topologies, and landing zone guardrails.',
-            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/',
-            icon: Layers,
-            bgClass: 'bg-fluent-cat-green-bg',
-            fgClass: 'text-fluent-cat-green-fg',
-        },
-        {
-            title: 'Cloud Adoption Framework',
-            category: 'Governance',
-            description: 'Proven guidance for standardized resource naming conventions, metadata tagging strategies, and cloud operating models.',
-            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming',
-            icon: BookOpen,
-            bgClass: 'bg-fluent-cat-blue-bg',
-            fgClass: 'text-fluent-cat-blue-fg',
-        },
-        {
-            title: 'Well-Architected Framework',
-            category: 'Optimization',
-            description: 'Architectural tenets to optimize workload reliability, security, cost efficiency, performance, and operational excellence.',
-            url: 'https://learn.microsoft.com/en-us/azure/well-architected/',
-            icon: LayoutTemplate,
-            bgClass: 'bg-fluent-cat-orange-bg',
-            fgClass: 'text-fluent-cat-orange-fg',
-        },
-        {
-            title: 'Zero Trust Architecture',
-            category: 'Security',
-            description: 'Proactive security model enforcing continuous explicit verification, least-privileged access, and Conditional Access defense.',
-            url: 'https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview',
-            icon: Shield,
-            bgClass: 'bg-fluent-cat-purple-bg',
-            fgClass: 'text-fluent-cat-purple-fg',
-        },
     ];
 
     return (
         <div className="flex flex-col flex-1 w-full min-w-0 bg-fluent-bg-canvas">
-            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-3.5 sm:py-5 animate-fade-in flex-1 flex flex-col justify-start">
+            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-4 sm:py-6 animate-fade-in flex-1 flex flex-col justify-start">
 
-                {/* Tools Section */}
-                <div className="flex flex-col gap-2.5">
-                    {/* Tools Header & Controls */}
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-fluent-fg-primary">
-                            Available Tools
-                        </h1>
-                        <div className="hidden sm:flex items-center gap-1.5">
-                            <button
-                                type="button"
-                                onClick={() => scroll('left')}
-                                disabled={!canScrollLeft}
-                                className="shrink-0 h-[26px] w-[26px] rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-stroke-strong hover:bg-fluent-bg-hover transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-95 inline-flex items-center justify-center shadow-sm"
-                                aria-label="Scroll tools left"
-                                title="Scroll left"
-                            >
-                                <ChevronLeft className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => scroll('right')}
-                                disabled={!canScrollRight}
-                                className="shrink-0 h-[26px] w-[26px] rounded-[4px] border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-fg-primary hover:border-fluent-stroke-strong hover:bg-fluent-bg-hover transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-95 inline-flex items-center justify-center shadow-sm"
-                                aria-label="Scroll tools right"
-                                title="Scroll right"
-                            >
-                                <ChevronRight className="w-3.5 h-3.5" />
-                            </button>
-                        </div>
-                    </div>
+                {/* Two-Column Responsive Workspace Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch w-full min-w-0">
 
-                    {/* Enhanced Tools Grid */}
-                    <div
-                        ref={scrollContainerRef}
-                        className="flex overflow-x-auto gap-4 -mx-1 px-1 py-1.5 -my-1.5 snap-x snap-mandatory scrollbar-hide scroll-smooth"
-                    >
-                        {tools.map((tool, index) => (
-                            <div
-                                key={tool.id}
-                                onClick={() => navigate(tool.path)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                        e.preventDefault();
-                                        navigate(tool.path);
-                                    }
-                                }}
-                                className={`
-                                    relative group cursor-pointer overflow-hidden
-                                    bg-fluent-bg-card hover:bg-fluent-bg-hover
-                                    rounded-xl p-5 sm:p-5.5
-                                    border border-fluent-stroke-subtle shadow-soft dark:shadow-none
-                                    hover:shadow-depth hover:border-fluent-stroke-strong hover:-translate-y-0.5
-                                    dark:hover:shadow-none
-                                    transition-all duration-200 ease-in-out
-                                    active:scale-[0.98]
-                                    flex flex-col justify-between shrink-0 snap-start
-                                    w-[82vw] sm:w-[340px] lg:w-[370px]
-                                    min-h-[265px]
-                                    animate-slide-up stagger-${index + 1}
-                                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg focus-visible:border-fluent-brand-bg
-                                `}
-                            >
-                                <div className="relative z-10 flex flex-col">
-                                    <div className="flex items-start justify-between mb-3.5">
-                                        <img
-                                            src={tool.iconUrl}
-                                            alt={`${tool.title} icon`}
-                                            className="w-11 h-11 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200 ease-in-out"
-                                        />
-                                        <div className="flex gap-1.5">
-                                            {tool.isNew && (
-                                                <span className="inline-flex items-center gap-1.5 bg-fluent-brand-bg text-white text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm transition-colors duration-200">
-                                                    <Star className="w-3 h-3 fill-current" />
-                                                    New
-                                                </span>
-                                            )}
-                                            {tool.hasAi && (
-                                                <span className="inline-flex items-center gap-1.5 bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2.5 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors duration-200">
-                                                    <Sparkles className="w-3 h-3" />
-                                                    AI Powered
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
+                    {/* Left Column: Primary Governance Workspace (~68% / 8 cols) */}
+                    <div className="lg:col-span-8 flex flex-col gap-5 sm:gap-6 min-w-0 w-full">
 
-                                    <div>
-                                        <h3 className="text-[17px] font-bold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200 leading-snug">
-                                            {tool.title}
-                                        </h3>
-                                        <p className="text-[13.5px] text-fluent-fg-secondary leading-relaxed">
-                                            {tool.description}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="mt-4 pt-3 border-t border-fluent-stroke-subtle/60 flex items-center justify-between text-[13px] font-semibold text-fluent-brand-fg group-hover:text-fluent-brand-hover transition-colors">
-                                    <span className="group-hover:underline">Get started</span>
-                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 ease-in-out" />
-                                </div>
-                            </div>
-                        ))}
-
-                        {/* Coming Soon Placeholder */}
-                        <div
-                            className="
-                                relative overflow-hidden
-                                bg-fluent-bg-subtle
-                                rounded-xl p-5 sm:p-5.5
-                                border-2 border-dashed border-fluent-stroke-subtle
-                                flex flex-col items-center justify-center text-center
-                                shrink-0 snap-start
-                                w-[82vw] sm:w-[340px] lg:w-[370px]
-                                min-h-[265px]
-                                animate-slide-up stagger-5
-                            "
-                        >
-                            <div className="flex flex-col items-center gap-2.5 text-fluent-fg-tertiary">
-                                <div className="w-11 h-11 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle flex items-center justify-center">
-                                    <Plus className="w-5 h-5 opacity-50" />
-                                </div>
+                        {/* Section: Available Tools */}
+                        <div className="flex flex-col gap-3">
+                            {/* Section Header */}
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
                                 <div>
-                                    <h3 className="text-[15px] font-semibold text-fluent-fg-secondary mb-1">More tools coming soon</h3>
-                                    <p className="text-[13px]">Stay tuned for updates.</p>
+                                    <h1 className="text-[17px] sm:text-[18px] font-bold tracking-tight text-fluent-fg-primary">
+                                        Governance & Architecture Tools
+                                    </h1>
+                                    <p className="text-[12.5px] text-fluent-fg-secondary">
+                                        Interactive utilities for cloud architects, security engineers, and DevOps teams
+                                    </p>
+                                </div>
+                                <div className="flex items-center gap-1.5 self-start sm:self-auto">
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[11.5px] font-medium text-fluent-fg-secondary shadow-sm">
+                                        <Boxes className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                        <span>5 Active Utilities</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Tools Grid (All tools visible, responsive grid) */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3.5">
+                                {tools.map((tool, index) => (
+                                    <div
+                                        key={tool.id}
+                                        onClick={() => navigate(tool.path)}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                navigate(tool.path);
+                                            }
+                                        }}
+                                        className={`
+                                            relative group cursor-pointer overflow-hidden
+                                            bg-fluent-bg-card hover:bg-fluent-bg-hover
+                                            rounded-xl p-4 sm:p-4.5
+                                            border border-fluent-stroke-subtle shadow-soft dark:shadow-none
+                                            hover:shadow-depth hover:border-fluent-stroke-strong hover:-translate-y-0.5
+                                            dark:hover:shadow-none
+                                            transition-all duration-200 ease-in-out
+                                            active:scale-[0.98]
+                                            flex flex-col justify-between
+                                            min-h-[220px]
+                                            animate-slide-up stagger-${index + 1}
+                                            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg focus-visible:border-fluent-brand-bg
+                                        `}
+                                    >
+                                        <div className="relative z-10 flex flex-col">
+                                            {/* Icon & Badges */}
+                                            <div className="flex items-start justify-between mb-3">
+                                                <img
+                                                    src={tool.iconUrl}
+                                                    alt={`${tool.title} icon`}
+                                                    className="w-10 h-10 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200 ease-in-out"
+                                                />
+                                                <div className="flex flex-wrap items-center justify-end gap-1.5">
+                                                    {tool.isNew && (
+                                                        <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm transition-colors duration-200">
+                                                            <Star className="w-3 h-3 fill-current" />
+                                                            New
+                                                        </span>
+                                                    )}
+                                                    {tool.hasAi && (
+                                                        <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors duration-200">
+                                                            <Sparkles className="w-3 h-3" />
+                                                            AI Powered
+                                                        </span>
+                                                    )}
+                                                    {tool.badge && (
+                                                        <span className="inline-flex items-center text-fluent-fg-secondary bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium">
+                                                            {tool.badge}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Title & Description */}
+                                            <div>
+                                                <h3 className="text-[15.5px] font-bold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200 leading-snug">
+                                                    {tool.title}
+                                                </h3>
+                                                <p className="text-[12.5px] text-fluent-fg-secondary leading-relaxed line-clamp-3">
+                                                    {tool.description}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Action Footer */}
+                                        <div className="mt-3.5 pt-2.5 border-t border-fluent-stroke-subtle/70 flex items-center justify-between text-[12.5px] font-semibold text-fluent-brand-fg group-hover:text-fluent-brand-hover transition-colors">
+                                            <span className="group-hover:underline">Open tool</span>
+                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 ease-in-out" />
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {/* Coming Soon Placeholder */}
+                                <div
+                                    className="
+                                        relative overflow-hidden
+                                        bg-fluent-bg-subtle
+                                        rounded-xl p-4 sm:p-4.5
+                                        border-2 border-dashed border-fluent-stroke-subtle
+                                        flex flex-col items-center justify-center text-center
+                                        min-h-[220px]
+                                        animate-slide-up stagger-6
+                                    "
+                                >
+                                    <div className="flex flex-col items-center gap-2 text-fluent-fg-tertiary">
+                                        <div className="w-10 h-10 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle flex items-center justify-center shadow-sm">
+                                            <Plus className="w-5 h-5 opacity-50" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-[14px] font-semibold text-fluent-fg-secondary mb-0.5">More tools coming soon</h3>
+                                            <p className="text-[12px]">Stay tuned for new governance modules.</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                {/* Section Divider: Tools to Updates */}
-                <div className="w-full py-3.5 sm:py-4 shrink-0 flex items-center" role="separator">
-                    <div className="w-full h-px bg-fluent-stroke-subtle" />
-                </div>
-
-                {/* Azure Updates RSS Feed Widget (Full Width) */}
-                <div className="w-full shrink-0">
-                    <AzureUpdatesFeed itemsPerPage={4} />
-                </div>
-
-                {/* Section Divider: Updates to Reference Frameworks */}
-                <div className="w-full py-3.5 sm:py-4 shrink-0 flex items-center" role="separator">
-                    <div className="w-full h-px bg-fluent-stroke-subtle" />
-                </div>
-
-                {/* Reference Documentation Single Strip */}
-                <div className="w-full rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-2.5 sm:p-3 shadow-soft flex flex-col lg:flex-row lg:items-center gap-2.5 sm:gap-3 shrink-0">
-                    <div className="flex items-center justify-between lg:justify-start gap-2 px-1 shrink-0">
-                        <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-[4px] bg-fluent-cat-blue-bg flex items-center justify-center shrink-0">
-                                <BookOpen className="w-3.5 h-3.5 text-fluent-cat-blue-fg" />
-                            </div>
-                            <h2 className="text-[13px] font-bold text-fluent-fg-primary whitespace-nowrap">
-                                Reference Frameworks
-                            </h2>
-                        </div>
-                        <a
-                            href="https://learn.microsoft.com/azure/cloud-adoption-framework/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-1 rounded-[4px] border border-fluent-stroke-subtle hover:border-fluent-stroke-strong text-fluent-fg-secondary hover:text-fluent-brand-fg transition-all lg:hidden"
-                            title="Browse Cloud Adoption Framework documentation"
-                            aria-label="Browse Cloud Adoption Framework documentation"
-                        >
-                            <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
+                        {/* Section: Quick Starters & Reference Frameworks Deck */}
+                        <QuickActionsDeck />
                     </div>
 
-                    <div className="hidden lg:block w-[1px] h-6 bg-fluent-stroke-subtle shrink-0" />
-
-                    {/* 4 Framework Items in a Single Horizontal Row */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 flex-1 min-w-0">
-                        {frameworks.map((item) => {
-                            const IconComponent = item.icon;
-                            return (
-                                <a
-                                    key={item.title}
-                                    href={item.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="
-                                        group flex items-center justify-between
-                                        px-2.5 py-1.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-subtle
-                                        hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong
-                                        transition-all duration-150 active:scale-[0.99] min-w-0
-                                    "
-                                    title={item.description}
-                                >
-                                    <div className="flex items-center gap-2 min-w-0">
-                                        <div className={`w-5 h-5 rounded-[4px] flex items-center justify-center shrink-0 ${item.bgClass} ${item.fgClass}`}>
-                                            <IconComponent className="w-3 h-3" />
-                                        </div>
-                                        <div className="flex flex-col min-w-0">
-                                            <span className="text-[12px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
-                                                {item.title}
-                                            </span>
-                                            <span className="text-[10.5px] text-fluent-fg-tertiary truncate">
-                                                {item.category}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <ExternalLink className="w-3 h-3 text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors shrink-0 ml-1.5" />
-                                </a>
-                            );
-                        })}
+                    {/* Right Column: Dedicated Azure Updates Feed (~32% / 4 cols) */}
+                    <div className="lg:col-span-4 flex flex-col min-w-0 w-full h-[540px] lg:h-0 lg:min-h-full min-h-0">
+                        <AzureUpdatesFeed layout="vertical" />
                     </div>
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+  <defs>
+    <linearGradient id="azure-rss-bg" x1="2" y1="2" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF9500" />
+      <stop offset="45%" stop-color="#F25022" />
+      <stop offset="100%" stop-color="#D83B01" />
+    </linearGradient>
+    <linearGradient id="azure-rss-shine" x1="9" y1="0.5" x2="9" y2="8" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    <filter id="azure-rss-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="0.5" stdDeviation="0.4" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Azure/Microsoft Style Rounded Squircle Tile -->
+  <rect x="0.75" y="0.75" width="16.5" height="16.5" rx="3.75" ry="3.75" fill="url(#azure-rss-bg)" />
+
+  <!-- Subtle Top Specular Curve -->
+  <path d="M 4.5 0.75 L 13.5 0.75 A 3.75 3.75 0 0 1 17.25 4.5 L 17.25 7 Q 9 9 0.75 7 L 0.75 4.5 A 3.75 3.75 0 0 1 4.5 0.75 Z" fill="url(#azure-rss-shine)" />
+
+  <!-- Crisp Inner Border / Inset Highlight -->
+  <rect x="0.75" y="0.75" width="16.5" height="16.5" rx="3.75" ry="3.75" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="0.5" />
+
+  <!-- Signal Radio Waves and Dot -->
+  <g filter="url(#azure-rss-shadow)">
+    <!-- Base Node Dot -->
+    <circle cx="4.6" cy="13.4" r="1.45" fill="#FFFFFF" />
+
+    <!-- Inner Wave Arc -->
+    <path d="M 4.6 9.4 A 4 4 0 0 1 8.6 13.4" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" />
+
+    <!-- Outer Wave Arc -->
+    <path d="M 4.6 5.6 A 7.8 7.8 0 0 1 12.4 13.4" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" />
+  </g>
+</svg>

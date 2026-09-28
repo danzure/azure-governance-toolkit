@@ -262,4 +262,23 @@ body {
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
+
+    /* Fluent Subtle Scrollbar */
+    .fluent-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: var(--colorNeutralStroke1) transparent;
+    }
+    .fluent-scrollbar::-webkit-scrollbar {
+        width: 5px;
+    }
+    .fluent-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .fluent-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--colorNeutralStroke1);
+        border-radius: 9999px;
+    }
+    .fluent-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: var(--colorNeutralForeground3);
+    }
 }
