@@ -223,11 +223,11 @@ export default function QuickActionsDeck() {
             )}
 
             {/* Balanced Split Layout: Quick Starters (Left) & Reference Frameworks (Right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
 
                 {/* Left Column: Quick Starters (~58% / 7 cols) */}
-                <div className="lg:col-span-7 flex flex-col gap-2.5 lg:border-r lg:border-fluent-stroke-subtle lg:pr-5">
-                    <div className="flex items-center justify-between mb-0.5">
+                <div className="lg:col-span-7 flex flex-col justify-between gap-2.5 lg:border-r lg:border-fluent-stroke-subtle lg:pr-5 h-full">
+                    <div className="flex items-center justify-between mb-0.5 shrink-0">
                         <span className="text-[11.5px] font-bold text-fluent-fg-primary uppercase tracking-wider">
                             Quick Starters
                         </span>
@@ -236,25 +236,26 @@ export default function QuickActionsDeck() {
                         </span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 flex-1">
                         {starters.map((starter) => (
                             <button
                                 key={starter.id}
                                 type="button"
                                 onClick={() => navigate(starter.path)}
                                 className="
-                                    group flex items-start gap-2.5 p-2.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-subtle
+                                    group flex items-center gap-2.5 p-2.5 sm:px-3 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-subtle
                                     hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong
                                     transition-all duration-150 text-left active:scale-[0.98]
                                     focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg
+                                    h-full
                                 "
                             >
                                 <img
                                     src={starter.iconUrl}
                                     alt=""
-                                    className="w-6 h-6 object-contain shrink-0 mt-0.5 group-hover:scale-105 transition-transform"
+                                    className="w-6 h-6 object-contain shrink-0 group-hover:scale-105 transition-transform"
                                 />
-                                <div className="flex flex-col min-w-0 flex-1">
+                                <div className="flex flex-col min-w-0 flex-1 justify-center">
                                     <div className="flex items-center justify-between gap-1">
                                         <span className="text-[12.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
                                             {starter.title}
@@ -271,21 +272,11 @@ export default function QuickActionsDeck() {
                 </div>
 
                 {/* Right Column: Reference Frameworks (~42% / 5 cols) */}
-                <div className="lg:col-span-5 flex flex-col gap-2.5">
-                    <div className="flex items-center justify-between mb-0.5">
+                <div className="lg:col-span-5 flex flex-col justify-between gap-2.5 h-full">
+                    <div className="flex items-center justify-between mb-0.5 shrink-0">
                         <span className="text-[11.5px] font-bold text-fluent-fg-primary uppercase tracking-wider">
                             Reference Frameworks
                         </span>
-                        <a
-                            href="https://learn.microsoft.com/azure/cloud-adoption-framework/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[11.5px] text-fluent-brand-fg hover:underline inline-flex items-center gap-1 font-medium"
-                            title="Browse Microsoft Cloud Adoption Framework documentation"
-                        >
-                            <span>Browse docs</span>
-                            <ExternalLink className="w-3 h-3" />
-                        </a>
                     </div>
 
                     <div className="flex flex-col gap-2">

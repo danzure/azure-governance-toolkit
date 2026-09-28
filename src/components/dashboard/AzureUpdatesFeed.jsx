@@ -11,7 +11,7 @@ import {
     Info,
     Globe
 } from 'lucide-react';
-import { fetchAzureRss, AZURE_RSS_FEED_URL, RSS_CACHE_TTL_MS } from '../../utils/rssParser';
+import { fetchAzureRss, RSS_CACHE_TTL_MS } from '../../utils/rssParser';
 import rssIcon from '../../assets/icons/Rss.svg';
 
 /**
@@ -259,20 +259,11 @@ export default function AzureUpdatesFeed({ itemsPerPage = 4, layout = 'vertical'
                 {/* Header Row */}
                 <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-fluent-stroke-subtle shrink-0">
                     <div className="flex items-center gap-2 min-w-0">
-                        <a
-                            href={AZURE_RSS_FEED_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="shrink-0 group/rss transition-transform hover:scale-105 active:scale-95 flex items-center justify-center drop-shadow-sm"
-                            title="Open official RSS feed (XML)"
-                            aria-label="Open official RSS feed (XML)"
-                        >
-                            <img
-                                src={rssIcon}
-                                alt="Azure Service Updates RSS Feed"
-                                className="w-[22px] h-[22px] object-contain"
-                            />
-                        </a>
+                        <img
+                            src={rssIcon}
+                            alt="Azure Service Updates RSS Feed"
+                            className="w-[22px] h-[22px] object-contain shrink-0 drop-shadow-sm select-none"
+                        />
                         <h2 
                             className="text-[14px] font-bold tracking-tight text-fluent-fg-primary truncate"
                             title={channelMeta.lastBuildDate ? `Last build: ${channelMeta.lastBuildDate}` : channelMeta.title}
@@ -453,20 +444,11 @@ export default function AzureUpdatesFeed({ itemsPerPage = 4, layout = 'vertical'
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 min-w-0 w-full sm:w-auto">
                     <div className="flex items-center justify-between sm:justify-start gap-2 min-w-0 w-full sm:w-auto">
                         <div className="flex items-center gap-2 min-w-0">
-                            <a
-                                href={AZURE_RSS_FEED_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="shrink-0 group/rss transition-transform hover:scale-105 active:scale-95 flex items-center justify-center drop-shadow-sm"
-                                title="Open official RSS feed (XML)"
-                                aria-label="Open official RSS feed (XML)"
-                            >
-                                <img
-                                    src={rssIcon}
-                                    alt="Azure Service Updates RSS Feed"
-                                    className="w-[22px] h-[22px] object-contain"
-                                />
-                            </a>
+                            <img
+                                src={rssIcon}
+                                alt="Azure Service Updates RSS Feed"
+                                className="w-[22px] h-[22px] object-contain shrink-0 drop-shadow-sm select-none"
+                            />
                             <h2 
                                 className="text-[14.5px] sm:text-[15px] font-bold tracking-tight text-fluent-fg-primary truncate"
                                 title={channelMeta.lastBuildDate ? `Last build: ${channelMeta.lastBuildDate}` : channelMeta.title}
