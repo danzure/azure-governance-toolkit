@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { User, Coffee } from 'lucide-react';
+import { User } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
+import BuyMeACoffeeIcon from '../shared/BuyMeACoffeeIcon';
 // Eagerly resolve brand logos, falling back to public assets
 const logoModules = import.meta.glob('../../assets/logos/*.png', { eager: true, import: 'default' });
 const logoLight = logoModules['../../assets/logos/atozazure-horizontal-light.png'] || '/atozazure-logo-lightmode-transparent.png';
@@ -78,7 +79,7 @@ export default function Footer({ variant = 'full' }) {
                                     className="group/btn relative inline-flex items-center justify-center gap-1.5 h-[32px] px-3 rounded-[4px] text-[12.5px] font-medium bg-fluent-bg-card border border-fluent-stroke-subtle hover:border-fluent-stroke-strong text-fluent-fg-primary hover:bg-fluent-bg-hover shadow-soft hover:shadow-depth transition-all duration-150 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg"
                                     aria-label="Support development - Buy me a Coffee"
                                 >
-                                    <Coffee className="w-3.5 h-3.5 text-fluent-cat-yellow-fg shrink-0 transition-transform duration-200 ease-in-out group-hover/btn:scale-110 group-hover/btn:-rotate-12" />
+                                    <BuyMeACoffeeIcon className="h-[18px] w-auto shrink-0 transition-transform duration-200 ease-in-out group-hover/btn:scale-105" />
                                     <span>Buy me a Coffee</span>
 
                                     {/* Notification indicator dot to draw attention */}

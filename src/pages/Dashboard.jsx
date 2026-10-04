@@ -171,7 +171,7 @@ export default function DashboardPage() {
                             </div>
                         </div>
 
-                        {/* Section: Quick Starters & Reference Frameworks Deck */}
+                        {/* Section: Standards & Architecture Reference Hub */}
                         <QuickActionsDeck />
                     </div>
 
