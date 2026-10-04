@@ -11,7 +11,6 @@ import {
     Shield,
     LayoutTemplate,
     ExternalLink,
-    Code2,
     Search,
     X
 } from 'lucide-react';
@@ -142,17 +141,6 @@ export default function QuickActionsDeck() {
 
     const frameworks = [
         {
-            title: 'Cloud Adoption Framework',
-            category: 'Governance',
-            badge: 'CAF Standards',
-            shortDesc: 'Cloud operating model, subscription topology, tagging strategy, and standard CAF naming rules.',
-            pillars: ['Naming Conventions', 'Landing Zones', 'Governance'],
-            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming',
-            icon: BookOpen,
-            bgClass: 'bg-fluent-cat-blue-bg',
-            fgClass: 'text-fluent-cat-blue-fg',
-        },
-        {
             title: 'Azure Landing Zones',
             category: 'Architecture',
             badge: 'Enterprise Scale',
@@ -162,6 +150,17 @@ export default function QuickActionsDeck() {
             icon: Layers,
             bgClass: 'bg-fluent-cat-green-bg',
             fgClass: 'text-fluent-cat-green-fg',
+        },
+        {
+            title: 'Cloud Adoption Framework',
+            category: 'Governance',
+            badge: 'CAF Standards',
+            shortDesc: 'Cloud operating model, subscription topology, tagging strategy, and standard CAF naming rules.',
+            pillars: ['Naming Conventions', 'Landing Zones', 'Governance'],
+            url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming',
+            icon: BookOpen,
+            bgClass: 'bg-fluent-cat-blue-bg',
+            fgClass: 'text-fluent-cat-blue-fg',
         },
         {
             title: 'Well-Architected Framework',
@@ -185,17 +184,6 @@ export default function QuickActionsDeck() {
             bgClass: 'bg-fluent-cat-purple-bg',
             fgClass: 'text-fluent-cat-purple-fg',
         },
-        {
-            title: 'Azure Verified Modules',
-            category: 'IaC Standards',
-            badge: 'Bicep & Terraform',
-            shortDesc: 'Official Microsoft-supported infrastructure modules engineered to comply strictly with WAF and CAF best practices.',
-            pillars: ['Bicep Modules', 'Terraform Modules', 'Verified IaC'],
-            url: 'https://azure.github.io/Azure-Verified-Modules/',
-            icon: Code2,
-            bgClass: 'bg-fluent-cat-teal-bg',
-            fgClass: 'text-fluent-cat-teal-fg',
-        },
     ];
 
     const handleCopySample = (text, idx, e) => {
@@ -217,14 +205,14 @@ export default function QuickActionsDeck() {
     };
 
     return (
-        <div className="w-full rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-4 sm:p-5 shadow-soft flex flex-col gap-4">
+        <div className="w-full rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-3 sm:p-4 shadow-soft flex flex-col gap-3">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-fluent-stroke-subtle">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 pb-2.5 border-b border-fluent-stroke-subtle">
                 <div>
-                    <h2 className="text-[15px] font-bold text-fluent-fg-primary leading-tight">
+                    <h2 className="text-[14px] sm:text-[15px] font-bold text-fluent-fg-primary leading-tight">
                         Standards & Architecture Reference Hub
                     </h2>
-                    <p className="text-[12px] text-fluent-fg-secondary">
+                    <p className="text-[11.5px] text-fluent-fg-secondary">
                         Interactive Cloud Adoption Framework (CAF) resource cheatsheet and official Microsoft architecture guidance
                     </p>
                 </div>
@@ -234,7 +222,7 @@ export default function QuickActionsDeck() {
                         <button
                             type="button"
                             onClick={() => navigate('/resource-naming')}
-                            className="h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle hover:border-fluent-stroke-strong hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95"
+                            className="h-[24px] px-2 rounded-[4px] text-[11.5px] font-medium bg-fluent-bg-subtle border border-fluent-stroke-subtle hover:border-fluent-stroke-strong hover:bg-fluent-bg-hover text-fluent-fg-secondary hover:text-fluent-fg-primary transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95"
                             title="Open Resource Naming configuration"
                         >
                             <SlidersHorizontal className="w-3 h-3" />
@@ -246,18 +234,18 @@ export default function QuickActionsDeck() {
 
             {/* Active Naming Preview Bar (if active config present) */}
             {activeConfig && activeConfig.sampleName && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-3 py-2 rounded-lg bg-fluent-bg-subtle border border-fluent-stroke-subtle">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-2.5 py-1.5 rounded-md bg-fluent-bg-subtle border border-fluent-stroke-subtle">
                     <div className="flex items-center gap-2 min-w-0">
                         <Compass className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
-                        <span className="text-[12px] text-fluent-fg-tertiary shrink-0">Active Naming Baseline:</span>
-                        <code className="text-[12.5px] font-mono font-semibold text-fluent-fg-primary truncate select-all">
+                        <span className="text-[11.5px] text-fluent-fg-tertiary shrink-0">Active Naming Baseline:</span>
+                        <code className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all">
                             {activeConfig.sampleName}
                         </code>
                     </div>
                     <button
                         type="button"
                         onClick={(e) => handleCopySample(activeConfig.sampleName, 'sample', e)}
-                        className="shrink-0 h-[26px] px-2.5 rounded-[4px] text-[12px] font-medium border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary active:scale-95 transition-all inline-flex items-center justify-center gap-1.5"
+                        className="shrink-0 h-[24px] px-2 rounded-[4px] text-[11.5px] font-medium border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary active:scale-95 transition-all inline-flex items-center justify-center gap-1.5"
                     >
                         {copiedIndex === 'sample' ? (
                             <>
@@ -275,16 +263,16 @@ export default function QuickActionsDeck() {
             )}
 
             {/* Balanced Split Layout: CAF Cheatsheet (Left) & Reference Frameworks (Right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
 
                 {/* Left Column: Interactive CAF Resource Cheatsheet (~58% / 7 cols) */}
-                <div className="lg:col-span-7 flex flex-col gap-3 lg:border-r lg:border-fluent-stroke-subtle lg:pr-5 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 shrink-0">
+                <div className="lg:col-span-7 flex flex-col gap-2 lg:border-r lg:border-fluent-stroke-subtle lg:pr-4 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 shrink-0">
                         <div className="flex items-center gap-2">
-                            <span className="text-[11.5px] font-bold text-fluent-fg-primary uppercase tracking-wider">
+                            <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
                                 CAF Resource Cheatsheet
                             </span>
-                            <span className="text-[11px] text-fluent-fg-tertiary">
+                            <span className="text-[10.5px] text-fluent-fg-tertiary">
                                 {searchQuery || selectedCategory !== 'All' || showAll
                                     ? `${filteredResources.length} standard resources`
                                     : 'Featured core standards'}
@@ -296,7 +284,7 @@ export default function QuickActionsDeck() {
                             <button
                                 type="button"
                                 onClick={() => setShowAll(prev => !prev)}
-                                className="text-[11px] text-fluent-brand-fg hover:underline self-start sm:self-auto font-medium"
+                                className="text-[10.5px] text-fluent-brand-fg hover:underline self-start sm:self-auto font-medium"
                             >
                                 {showAll ? 'Show featured only' : `View all (${RESOURCE_DATA_SORTED.length})`}
                             </button>
@@ -314,7 +302,7 @@ export default function QuickActionsDeck() {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search 150+ services or prefixes (e.g. st, kv, vnet)..."
                                 aria-label="Search Azure resources by name, prefix, or category"
-                                className="w-full pl-8 pr-7 h-[30px] rounded-[4px] border border-fluent-stroke-strong bg-fluent-bg-card text-fluent-fg-primary text-[12px] placeholder:text-fluent-fg-tertiary outline-none focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg transition-all"
+                                className="w-full pl-8 pr-7 h-[28px] rounded-[4px] border border-fluent-stroke-strong bg-fluent-bg-card text-fluent-fg-primary text-[11.5px] placeholder:text-fluent-fg-tertiary outline-none focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg transition-all"
                             />
                             {searchQuery && (
                                 <button
@@ -323,13 +311,13 @@ export default function QuickActionsDeck() {
                                     className="absolute right-2 top-1/2 -translate-y-1/2 text-fluent-fg-tertiary hover:text-fluent-fg-primary p-0.5"
                                     title="Clear search"
                                 >
-                                    <X className="w-3.5 h-3.5" />
+                                    <X className="w-3 h-3" />
                                 </button>
                             )}
                         </div>
 
                         {/* Category Dropdown */}
-                        <div className="w-full sm:w-[155px] shrink-0">
+                        <div className="w-full sm:w-[145px] shrink-0">
                             <FluentDropdown
                                 options={categoryOptions}
                                 value={selectedCategory}
@@ -342,14 +330,14 @@ export default function QuickActionsDeck() {
                     </div>
 
                     {/* Resource Items Scrollable Deck */}
-                    <div className="flex flex-col gap-1.5 max-h-[380px] overflow-y-auto pr-1">
+                    <div className="flex flex-col gap-1 max-h-[192px] overflow-y-auto pr-1">
                         {filteredResources.length === 0 ? (
-                            <div className="py-8 px-4 text-center rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col items-center justify-center gap-2">
-                                <Search className="w-5 h-5 text-fluent-fg-tertiary opacity-60" />
-                                <p className="text-[13px] font-medium text-fluent-fg-primary">
+                            <div className="py-6 px-3 text-center rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col items-center justify-center gap-1.5">
+                                <Search className="w-4 h-4 text-fluent-fg-tertiary opacity-60" />
+                                <p className="text-[12px] font-medium text-fluent-fg-primary">
                                     No resources found matching &quot;{searchQuery}&quot;
                                 </p>
-                                <p className="text-[11.5px] text-fluent-fg-secondary">
+                                <p className="text-[11px] text-fluent-fg-secondary">
                                     Try searching by service name, prefix (e.g., &quot;st&quot;, &quot;rg&quot;, &quot;vnet&quot;), or reset category filter.
                                 </p>
                                 <button
@@ -358,7 +346,7 @@ export default function QuickActionsDeck() {
                                         setSearchQuery('');
                                         setSelectedCategory('All');
                                     }}
-                                    className="mt-1 h-[26px] px-3 rounded-[4px] text-[12px] font-medium border border-fluent-stroke-strong bg-fluent-bg-card hover:bg-fluent-bg-hover text-fluent-fg-primary transition-all active:scale-95"
+                                    className="mt-1 h-[24px] px-2.5 rounded-[4px] text-[11.5px] font-medium border border-fluent-stroke-strong bg-fluent-bg-card hover:bg-fluent-bg-hover text-fluent-fg-primary transition-all active:scale-95"
                                 >
                                     Reset filters
                                 </button>
@@ -374,42 +362,40 @@ export default function QuickActionsDeck() {
                                 return (
                                     <div
                                         key={resource.name}
-                                        className="group/row flex items-center justify-between gap-2.5 p-2 px-2.5 sm:px-3 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-subtle hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-150 min-w-0"
+                                        className="group/row flex items-center justify-between gap-2 p-1.5 px-2.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-150 min-w-0"
                                     >
                                         {/* Left: Icon, Name, Category */}
-                                        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                        <div className="flex items-center gap-2 min-w-0 flex-1">
                                             {iconUrl && !isFailed ? (
                                                 <img
                                                     src={iconUrl}
                                                     alt=""
                                                     onError={() => handleImageError(resource.name)}
                                                     loading="lazy"
-                                                    className="w-5 h-5 object-contain shrink-0 group-hover/row:scale-105 transition-transform"
+                                                    className="w-4 h-4 object-contain shrink-0 group-hover/row:scale-105 transition-transform"
                                                 />
                                             ) : (
-                                                <Layers className="w-5 h-5 text-fluent-brand-fg shrink-0" />
+                                                <Layers className="w-4 h-4 text-fluent-brand-fg shrink-0" />
                                             )}
 
-                                            <div className="flex flex-col min-w-0">
-                                                <span className="text-[12.5px] font-semibold text-fluent-fg-primary group-hover/row:text-fluent-brand-fg transition-colors truncate leading-snug">
+                                            <div className="flex items-center gap-1.5 min-w-0">
+                                                <span className="text-[12px] font-semibold text-fluent-fg-primary group-hover/row:text-fluent-brand-fg transition-colors truncate leading-tight">
                                                     {resource.name}
                                                 </span>
-                                                <div className="flex items-center gap-1.5 mt-0.5">
-                                                    <span className="inline-flex items-center gap-1 text-[10.5px] text-fluent-fg-secondary">
-                                                        <span className={`w-1.5 h-1.5 rounded-full ${colorConfig.textClass.replace('text-', 'bg-')} shrink-0`} />
-                                                        <span className="truncate">{categoryName}</span>
-                                                    </span>
-                                                </div>
+                                                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-fluent-fg-secondary shrink-0">
+                                                    <span className={`w-1.5 h-1.5 rounded-full ${colorConfig.textClass.replace('text-', 'bg-')} shrink-0`} />
+                                                    <span className="truncate">{categoryName}</span>
+                                                </span>
                                             </div>
                                         </div>
 
-                                        {/* Middle: Prefix Badge & Metadata */}
-                                        <div className="flex items-center gap-1.5 shrink-0">
+                                        {/* Middle & Right: Prefix Badge & Metadata & Generate Button */}
+                                        <div className="flex items-center gap-1 shrink-0">
                                             {/* CAF Prefix button */}
                                             <button
                                                 type="button"
                                                 onClick={(e) => handleCopyPrefix(resource.abbrev, resource.name, e)}
-                                                className={`h-[24px] px-2 rounded-[4px] font-mono text-[11.5px] font-bold inline-flex items-center gap-1 border transition-all active:scale-95 ${
+                                                className={`h-[22px] px-1.5 rounded-[4px] font-mono text-[11px] font-bold inline-flex items-center gap-1 border transition-all active:scale-95 ${
                                                     isPrefixCopied
                                                         ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg'
                                                         : 'bg-fluent-bg-canvas border-fluent-stroke-subtle hover:border-fluent-stroke-strong text-fluent-fg-primary'
@@ -418,7 +404,7 @@ export default function QuickActionsDeck() {
                                             >
                                                 {isPrefixCopied ? (
                                                     <>
-                                                        <Check className="w-3 h-3 text-fluent-cat-green-fg" />
+                                                        <Check className="w-2.5 h-2.5 text-fluent-cat-green-fg" />
                                                         <span>Copied</span>
                                                     </>
                                                 ) : (
@@ -432,7 +418,7 @@ export default function QuickActionsDeck() {
                                             {/* Scope badge (Tablet and Desktop) */}
                                             {resource.scope && (
                                                 <span
-                                                    className="hidden sm:inline-flex px-1.5 py-0.5 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-[10.5px] text-fluent-fg-tertiary"
+                                                    className="hidden sm:inline-flex px-1.5 py-0.2 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-[10px] text-fluent-fg-tertiary"
                                                     title={`Resource Scope: ${resource.scope}`}
                                                 >
                                                     {resource.scope}
@@ -442,7 +428,7 @@ export default function QuickActionsDeck() {
                                             {/* Max Length badge (Desktop) */}
                                             {resource.maxLength && (
                                                 <span
-                                                    className="hidden md:inline-flex px-1.5 py-0.5 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-[10.5px] text-fluent-fg-tertiary font-mono"
+                                                    className="hidden md:inline-flex px-1.5 py-0.2 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-[10px] text-fluent-fg-tertiary font-mono"
                                                     title={`Max character length: ${resource.maxLength}`}
                                                 >
                                                     {resource.maxLength}c
@@ -453,11 +439,11 @@ export default function QuickActionsDeck() {
                                             <button
                                                 type="button"
                                                 onClick={() => navigate(`/resource-naming?service=${encodeURIComponent(resource.name)}`)}
-                                                className="h-[24px] px-2 rounded-[4px] text-[11px] font-medium border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-hover inline-flex items-center gap-1 transition-all active:scale-95 shrink-0"
+                                                className="h-[22px] px-2 rounded-[4px] text-[10.5px] font-medium border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-brand-fg hover:border-fluent-brand-bg hover:bg-fluent-bg-hover inline-flex items-center gap-1 transition-all active:scale-95 shrink-0"
                                                 title={`Open ${resource.name} in Resource Naming Tool`}
                                             >
                                                 <span>Generate</span>
-                                                <ArrowRight className="w-3 h-3" />
+                                                <ArrowRight className="w-2.5 h-2.5" />
                                             </button>
                                         </div>
                                     </div>
@@ -467,23 +453,23 @@ export default function QuickActionsDeck() {
                     </div>
 
                     {/* Cheatsheet Footer Guidance */}
-                    <div className="pt-1 text-[11px] text-fluent-fg-tertiary flex items-center justify-between">
+                    <div className="pt-0.5 text-[10.5px] text-fluent-fg-tertiary flex items-center justify-between">
                         <span>Click any prefix badge to copy, or select <strong>Generate</strong> to configure.</span>
                     </div>
                 </div>
 
                 {/* Right Column: Reference Frameworks (~42% / 5 cols) */}
-                <div className="lg:col-span-5 flex flex-col gap-3 min-w-0">
+                <div className="lg:col-span-5 flex flex-col gap-2 min-w-0">
                     <div className="flex items-center justify-between shrink-0">
-                        <span className="text-[11.5px] font-bold text-fluent-fg-primary uppercase tracking-wider">
+                        <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
                             Architecture Frameworks
                         </span>
-                        <span className="text-[11px] text-fluent-fg-tertiary">
+                        <span className="text-[10.5px] text-fluent-fg-tertiary">
                             Microsoft Guidelines
                         </span>
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1.5 max-h-[224px] overflow-y-auto pr-1">
                         {frameworks.map((framework) => {
                             const IconComponent = framework.icon;
                             return (
@@ -493,45 +479,40 @@ export default function QuickActionsDeck() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="
-                                        group flex flex-col gap-1.5
-                                        p-2.5 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-subtle
+                                        group flex items-center justify-between gap-2.5
+                                        p-2 px-2.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle
                                         hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong
                                         transition-all duration-150 active:scale-[0.99]
                                     "
-                                    title={`Open ${framework.title} on Microsoft Learn`}
+                                    title={`${framework.title}: ${framework.shortDesc}`}
                                 >
-                                    <div className="flex items-center justify-between gap-2">
-                                        <div className="flex items-center gap-2 min-w-0">
-                                            <div className={`w-5 h-5 rounded-[4px] flex items-center justify-center shrink-0 ${framework.bgClass} ${framework.fgClass}`}>
-                                                <IconComponent className="w-3 h-3" />
+                                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                        <div className={`w-6 h-6 rounded-[4px] flex items-center justify-center shrink-0 ${framework.bgClass} ${framework.fgClass}`}>
+                                            <IconComponent className="w-3.5 h-3.5" />
+                                        </div>
+                                        <div className="flex flex-col min-w-0 flex-1">
+                                            <div className="flex items-center gap-1.5 min-w-0">
+                                                <span className="text-[12px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
+                                                    {framework.title}
+                                                </span>
+                                                <span className="hidden sm:inline-flex text-[9.5px] px-1.5 py-0.2 rounded-[3px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-fluent-fg-tertiary shrink-0">
+                                                    {framework.badge}
+                                                </span>
                                             </div>
-                                            <span className="text-[12.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
-                                                {framework.title}
-                                            </span>
-                                            <span className="hidden sm:inline-flex text-[10px] px-1.5 py-0.2 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-fluent-fg-tertiary">
-                                                {framework.badge}
+                                            <span className="text-[10.5px] text-fluent-fg-secondary truncate">
+                                                {framework.shortDesc}
                                             </span>
                                         </div>
-                                        <ExternalLink className="w-3 h-3 text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors shrink-0" />
                                     </div>
-
-                                    <p className="text-[11px] text-fluent-fg-secondary leading-snug line-clamp-2">
-                                        {framework.shortDesc}
-                                    </p>
-
-                                    <div className="flex flex-wrap items-center gap-1 mt-0.5">
-                                        {framework.pillars.map((pillar) => (
-                                            <span
-                                                key={pillar}
-                                                className="text-[9.5px] px-1.5 py-0.5 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-fluent-fg-tertiary"
-                                            >
-                                                {pillar}
-                                            </span>
-                                        ))}
-                                    </div>
+                                    <ExternalLink className="w-3 h-3 text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors shrink-0" />
                                 </a>
                             );
                         })}
+                    </div>
+
+                    {/* Architecture Frameworks Footer Guidance */}
+                    <div className="pt-0.5 text-[10.5px] text-fluent-fg-tertiary flex items-center justify-between">
+                        <span>Official Microsoft patterns, landing zones & guidelines.</span>
                     </div>
                 </div>
 
