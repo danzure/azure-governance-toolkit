@@ -33,6 +33,18 @@ export function stripHtml(html) {
 }
 
 /**
+ * Validate and sanitize external URL from feed to prevent javascript: or unsafe protocol injection
+ */
+export function sanitizeFeedUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    const trimmed = url.trim();
+    if (/^https?:\/\//i.test(trimmed)) {
+        return trimmed;
+    }
+    return '';
+}
+
+/**
  * Clean redundant prefix from RSS title
  */
 export function cleanTitle(rawTitle) {
@@ -143,7 +155,8 @@ function parseXmlWithRegex(xmlString) {
 
         const rawTitle = titleMatch ? unescapeXml(titleMatch[1]).trim() : '';
         const rawDesc = descMatch ? stripHtml(descMatch[1]) : '';
-        const link = linkMatch ? unescapeXml(linkMatch[1]).trim() : '';
+        const rawLink = linkMatch ? unescapeXml(linkMatch[1]).trim() : '';
+        const link = sanitizeFeedUrl(rawLink);
         const pubDate = pubDateMatch ? unescapeXml(pubDateMatch[1]).trim() : '';
         const updatedDate = updatedMatch ? unescapeXml(updatedMatch[1]).trim() : '';
         const guid = guidMatch ? unescapeXml(guidMatch[1]).trim() : '';
@@ -217,7 +230,8 @@ export function parseAzureRssXml(xmlString) {
                     };
 
                     const rawTitle = getTag('title');
-                    const link = getTag('link');
+                    const rawLink = getTag('link');
+                    const link = sanitizeFeedUrl(rawLink);
                     const desc = stripHtml(getTag('description'));
                     const pubDate = getTag('pubDate');
                     const updatedDate = getUpdated();

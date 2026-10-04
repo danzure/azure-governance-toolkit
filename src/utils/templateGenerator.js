@@ -191,7 +191,7 @@ function getBicepProperties(resourceName) {
         case 'Key vault': return `  properties: {\n    tenantId: subscription().tenantId\n    sku: {\n      family: 'A'\n      name: 'standard'\n    }\n    enableSoftDelete: true\n    softDeleteRetentionInDays: 90\n    accessPolicies: []\n  }`;
         case 'App Service plan': return `  sku: {\n    name: 'P1v3'\n    tier: 'PremiumV3'\n    size: 'P1v3'\n    family: 'Pv3'\n    capacity: 1\n  }\n  properties: {\n    reserved: true // Required for Linux\n  }`;
         case 'App Service': return `  properties: {\n    serverFarmId: 'appServicePlanId' // Replace with your plan ID\n    siteConfig: {\n      alwaysOn: true\n      linuxFxVersion: 'NODE|18-lts'\n    }\n  }`;
-        case 'SQL server': return `  properties: {\n    administratorLogin: 'sqladmin'\n    administratorLoginPassword: 'ChangeYourPassword123!' // Use KeyVault!\n    version: '12.0'\n  }`;
+        case 'SQL server': return `  properties: {\n    administratorLogin: 'sqladmin'\n    administratorLoginPassword: sqlAdministratorPassword // Secure parameter: @secure() param sqlAdministratorPassword string\n    version: '12.0'\n  }`;
         case 'SQL database': return `  sku: {\n    name: 'Standard'\n    tier: 'Standard'\n    capacity: 10\n  }\n  properties: {\n    collation: 'SQL_Latin1_General_CP1_CI_AS'\n    maxSizeBytes: 1073741824\n  }`;
         case 'Kubernetes (AKS)': return `  identity: {\n    type: 'SystemAssigned'\n  }\n  properties: {\n    dnsPrefix: 'aks-dns'\n    agentPoolProfiles: [\n      {\n        name: 'agentpool'\n        count: 3\n        vmSize: 'Standard_DS2_v2'\n        osType: 'Linux'\n        mode: 'System'\n      }\n    ]\n  }`;
         case 'Log Analytics workspace': return `  properties: {\n    sku: {\n      name: 'PerGB2018'\n    }\n    retentionInDays: 30\n    workspaceCapping: {\n      dailyQuotaGb: -1\n    }\n  }`;
@@ -209,7 +209,7 @@ function getTerraformProperties(resourceName) {
         case 'Key vault': return `  tenant_id                  = data.azurerm_client_config.current.tenant_id\n  sku_name                   = "standard"\n  soft_delete_retention_days = 90\n  purge_protection_enabled   = false`;
         case 'App Service plan': return `  os_type  = "Linux"\n  sku_name = "P1v2"`;
         case 'App Service': return `  service_plan_id = "app-service-plan-id"\n  site_config {\n    always_on = true\n    application_stack {\n      node_version = "18-lts"\n    }\n  }`;
-        case 'SQL server': return `  version                      = "12.0"\n  administrator_login          = "sqladmin"\n  administrator_login_password = "ChangeYourPassword123!"`;
+        case 'SQL server': return `  version                      = "12.0"\n  administrator_login          = "sqladmin"\n  administrator_login_password = var.sql_administrator_password # Defined with sensitive = true`;
         case 'SQL database': return `  server_id      = "sql-server-id"\n  collation      = "SQL_Latin1_General_CP1_CI_AS"\n  max_size_gb    = 1\n  sku_name       = "S0"`;
         case 'Kubernetes (AKS)': return `  dns_prefix = "aks-dns"\n  default_node_pool {\n    name       = "default"\n    node_count = 3\n    vm_size    = "Standard_DS2_v2"\n  }\n  identity {\n    type = "SystemAssigned"\n  }`;
         case 'Log Analytics workspace': return `  sku               = "PerGB2018"\n  retention_in_days = 30`;

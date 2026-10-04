@@ -2,8 +2,9 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": [
-      "/*.{css,scss,js,png,gif,ico,jpg,svg}",
-      "/assets/*"
+      "/*.{css,scss,js,png,gif,ico,jpg,svg,txt,xml,json,webmanifest}",
+      "/assets/*",
+      "/.well-known/*"
     ]
   },
   "globalHeaders": {
@@ -12,15 +13,24 @@
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
-    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.monitor.azure.com; style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com; font-src 'self' https://fonts.cdnfonts.com; img-src 'self' data: https://app.atozazure.com https://raw.githubusercontent.com; connect-src 'self' https://dc.services.visualstudio.com https://*.in.applicationinsights.azure.com https://js.monitor.azure.com https://raw.githubusercontent.com https://www.microsoft.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self';",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.monitor.azure.com; style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com; font-src 'self' https://fonts.cdnfonts.com; img-src 'self' data: https://app.atozazure.com https://raw.githubusercontent.com; connect-src 'self' https://dc.services.visualstudio.com https://*.in.applicationinsights.azure.com https://js.monitor.azure.com https://raw.githubusercontent.com https://www.microsoft.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;",
     "Cache-Control": "no-cache, no-store, must-revalidate"
   },
   "routeHeaders": {
     "/*.{css,scss,js,png,gif,ico,jpg,svg,webmanifest}": {
       "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/.well-known/*": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "public, max-age=86400"
+    },
+    "/*.txt": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "public, max-age=86400"
     }
   },
   "mimeTypes": {
-    ".webmanifest": "application/manifest+json"
+    ".webmanifest": "application/manifest+json",
+    ".txt": "text/plain; charset=utf-8"
   }
 }

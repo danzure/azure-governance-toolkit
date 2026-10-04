@@ -6,6 +6,7 @@ import {
     classifyStatus,
     isDatacenterUpdate,
     formatRelativeDate,
+    sanitizeFeedUrl,
     parseAzureRssXml,
     fetchAzureRss,
     extractChannelMeta,
@@ -21,6 +22,25 @@ describe('rssParser utils', () => {
             expect(AZURE_RSS_FEED_URL).toContain('microsoft.com/releasecommunications/api/v2/azure/rss');
             expect(AZURE_UPDATES_API_URL).toBe('/api/azureUpdates');
             expect(RSS_CACHE_KEY).toBe('azres_azure_updates_rss');
+        });
+    });
+
+    describe('sanitizeFeedUrl', () => {
+        it('allows valid https and http URLs', () => {
+            expect(sanitizeFeedUrl('https://azure.microsoft.com/updates')).toBe('https://azure.microsoft.com/updates');
+            expect(sanitizeFeedUrl('http://azure.microsoft.com/updates')).toBe('http://azure.microsoft.com/updates');
+        });
+
+        it('rejects unsafe protocols like javascript: or data:', () => {
+            expect(sanitizeFeedUrl('javascript:alert(1)')).toBe('');
+            expect(sanitizeFeedUrl('data:text/html,<script>alert(1)</script>')).toBe('');
+            expect(sanitizeFeedUrl('vbscript:msgbox(1)')).toBe('');
+        });
+
+        it('handles null, undefined, and non-string inputs safely', () => {
+            expect(sanitizeFeedUrl(null)).toBe('');
+            expect(sanitizeFeedUrl(undefined)).toBe('');
+            expect(sanitizeFeedUrl(12345)).toBe('');
         });
     });
 

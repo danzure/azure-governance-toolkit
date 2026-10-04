@@ -2,10 +2,12 @@ const { app } = require('@azure/functions');
 
 const AZURE_RSS_FEED_URL = 'https://www.microsoft.com/releasecommunications/api/v2/azure/rss';
 const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+const MIN_REFRESH_INTERVAL_MS = 60 * 1000; // 1 minute minimum cooldown between upstream fetches
 
 let cache = {
     xml: null,
-    expiry: 0
+    expiry: 0,
+    lastFetched: 0
 };
 
 app.http('azureUpdates', {
@@ -26,7 +28,10 @@ app.http('azureUpdates', {
             // Default to false on parse error
         }
 
-        if (!forceRefresh && cache.xml && Date.now() < cache.expiry) {
+        const now = Date.now();
+        const isCooldownActive = cache.lastFetched && (now - cache.lastFetched < MIN_REFRESH_INTERVAL_MS);
+
+        if ((!forceRefresh || isCooldownActive) && cache.xml && now < cache.expiry) {
             context.log('Returning cached Azure updates RSS payload.');
             return {
                 status: 200,
@@ -65,7 +70,8 @@ app.http('azureUpdates', {
 
             cache = {
                 xml: xmlText,
-                expiry: Date.now() + CACHE_TTL_MS
+                expiry: Date.now() + CACHE_TTL_MS,
+                lastFetched: Date.now()
             };
 
             return {
@@ -101,7 +107,7 @@ app.http('azureUpdates', {
                 },
                 jsonBody: {
                     error: 'Failed to fetch upstream Azure updates feed',
-                    details: error.message
+                    message: 'The upstream updates service is currently unavailable. Please try again later.'
                 }
             };
         }
