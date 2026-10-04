@@ -29,10 +29,16 @@ function flushBuffer(instance) {
  * subsequent calls are no-ops.
  */
 export async function initTelemetry() {
-    const connectionString = import.meta.env.VITE_APPINSIGHTS_CONNECTION_STRING;
+    let connectionString = import.meta.env.VITE_APPINSIGHTS_CONNECTION_STRING;
+    const instrumentationKey = import.meta.env.VITE_APPINSIGHTS_INSTRUMENTATION_KEY;
 
-    if (!connectionString) {
+    if (!connectionString && !instrumentationKey) {
         return;
+    }
+
+    // Format raw GUID or key as a valid connection string if needed
+    if (connectionString && !connectionString.includes('=')) {
+        connectionString = `InstrumentationKey=${connectionString.trim()};`;
     }
 
     if (appInsights || isInitializing) return;
@@ -40,20 +46,25 @@ export async function initTelemetry() {
 
     try {
         const { ApplicationInsights } = await import('@microsoft/applicationinsights-web');
-        const instance = new ApplicationInsights({
-            config: {
-                connectionString,
-                /* ── Auto-collection settings ── */
-                enableAutoRouteTracking: false,   // We handle route changes manually via React Router
-                autoTrackPageVisitTime: true,     // Track how long users spend on each page
-                disableFetchTracking: false,      // Track outbound fetch/XHR calls
-                enableCorsCorrelation: true,      // Correlate cross-origin requests
-                /* ── Performance & Sampling ── */
-                maxBatchInterval: 15000,          // Flush telemetry every 15s (default 15000)
-                disableExceptionTracking: false,  // Capture unhandled exceptions
-                enableUnhandledPromiseRejectionTracking: true,
-            },
-        });
+        const config = {
+            /* ── Auto-collection settings ── */
+            enableAutoRouteTracking: false,   // We handle route changes manually via React Router
+            autoTrackPageVisitTime: true,     // Track how long users spend on each page
+            disableFetchTracking: false,      // Track outbound fetch/XHR calls
+            enableCorsCorrelation: true,      // Correlate cross-origin requests
+            /* ── Performance & Sampling ── */
+            maxBatchInterval: 15000,          // Flush telemetry every 15s (default 15000)
+            disableExceptionTracking: false,  // Capture unhandled exceptions
+            enableUnhandledPromiseRejectionTracking: true,
+        };
+
+        if (connectionString) {
+            config.connectionString = connectionString;
+        } else if (instrumentationKey) {
+            config.instrumentationKey = instrumentationKey;
+        }
+
+        const instance = new ApplicationInsights({ config });
 
         instance.loadAppInsights();
 
