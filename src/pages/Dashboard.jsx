@@ -3,8 +3,7 @@ import {
     ArrowRight,
     Sparkles,
     Plus,
-    Star,
-    Boxes
+    Star
 } from 'lucide-react';
 import AzureUpdatesFeed from '../components/dashboard/AzureUpdatesFeed';
 import QuickActionsDeck from '../components/dashboard/QuickActionsDeck';
@@ -19,7 +18,6 @@ export default function DashboardPage() {
             description: 'Instantly generate standard-compliant names for 100+ Azure resources using Cloud Adoption Framework guidelines.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/All-Resources.svg',
             path: '/resource-naming',
-            badge: 'CAF Aligned',
             hasAi: true,
         },
         {
@@ -28,7 +26,6 @@ export default function DashboardPage() {
             description: 'Design, build, and document secure Conditional Access policies using standardized naming conventions.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Conditional-Access.svg',
             path: '/conditional-access',
-            badge: 'Zero Trust',
         },
         {
             id: 'management-group-topology',
@@ -36,7 +33,6 @@ export default function DashboardPage() {
             description: 'Visually architect your Azure Management Group hierarchy utilizing enterprise best-practice topologies.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Management-Groups.svg',
             path: '/management-groups',
-            badge: 'Landing Zones',
         },
         {
             id: 'rbac-designer',
@@ -44,7 +40,6 @@ export default function DashboardPage() {
             description: 'Design and generate JSON definitions for Azure Custom Roles by selecting specific resource provider operations.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg',
             path: '/rbac-designer',
-            badge: 'Least Privilege',
             hasAi: true,
             isNew: true,
         },
@@ -54,7 +49,6 @@ export default function DashboardPage() {
             description: 'Define organizational tagging strategies and automatically generate Azure Policy compliance rules.',
             iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Tags.svg',
             path: '/tagging-strategy',
-            badge: 'Azure Policy',
         }
     ];
 
@@ -71,21 +65,13 @@ export default function DashboardPage() {
                         {/* Section: Available Tools */}
                         <div className="flex flex-col gap-3">
                             {/* Section Header */}
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
-                                <div>
-                                    <h1 className="text-[17px] sm:text-[18px] font-bold tracking-tight text-fluent-fg-primary">
-                                        Governance & Architecture Tools
-                                    </h1>
-                                    <p className="text-[12.5px] text-fluent-fg-secondary">
-                                        Interactive utilities for cloud architects, security engineers, and DevOps teams
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-1.5 self-start sm:self-auto">
-                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[11.5px] font-medium text-fluent-fg-secondary shadow-sm">
-                                        <Boxes className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                        <span>5 Active Utilities</span>
-                                    </span>
-                                </div>
+                            <div>
+                                <h1 className="text-[17px] sm:text-[18px] font-bold tracking-tight text-fluent-fg-primary">
+                                    Governance & Architecture Tools
+                                </h1>
+                                <p className="text-[12.5px] text-fluent-fg-secondary">
+                                    Interactive utilities for cloud architects, security engineers, and DevOps teams
+                                </p>
                             </div>
 
                             {/* Tools Grid (All tools visible, responsive grid) */}
@@ -136,11 +122,6 @@ export default function DashboardPage() {
                                                         <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors duration-200">
                                                             <Sparkles className="w-3 h-3" />
                                                             AI Powered
-                                                        </span>
-                                                    )}
-                                                    {tool.badge && (
-                                                        <span className="inline-flex items-center text-fluent-fg-secondary bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium">
-                                                            {tool.badge}
                                                         </span>
                                                     )}
                                                 </div>

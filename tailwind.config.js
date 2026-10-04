@@ -84,6 +84,10 @@ export default {
                 'copilot-stream': 'copilotStream 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
                 'copilot-gradient': 'copilotGradient 4.5s ease infinite',
                 'copilot-aura': 'copilotAura 3.5s ease-in-out infinite',
+                'gemini-flow': 'geminiFlow 3s linear infinite',
+                'gemini-pulse': 'geminiPulse 2.4s ease-in-out infinite',
+                'stream-ltr': 'streamLtr 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                'thinking-wave': 'thinkingWave 1.3s ease-in-out infinite',
                 'sparkle-glow': 'sparkleGlow 2.8s ease-in-out infinite',
                 'sparkle-twinkle': 'sparkleTwinkle 2.8s ease-in-out infinite',
                 'thinking-dot': 'thinkingDot 1.4s ease-in-out infinite',
@@ -125,6 +129,22 @@ export default {
                     '0%, 100%': { opacity: '0.45', transform: 'scale(1)', backgroundPosition: '0% 50%' },
                     '50%': { opacity: '0.8', transform: 'scale(1.008)', backgroundPosition: '100% 50%' },
                 },
+                geminiFlow: {
+                    '0%': { backgroundPosition: '200% 50%' },
+                    '100%': { backgroundPosition: '0% 50%' },
+                },
+                geminiPulse: {
+                    '0%, 100%': { transform: 'scale(0.92)', opacity: '0.4' },
+                    '50%': { transform: 'scale(1.12)', opacity: '0.85' },
+                },
+                streamLtr: {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(100%)' },
+                },
+                thinkingWave: {
+                    '0%, 100%': { transform: 'scale(0.75)', opacity: '0.35' },
+                    '50%': { transform: 'scale(1.3)', opacity: '1' },
+                },
                 sparkleGlow: {
                     '0%, 100%': { transform: 'scale(1)', filter: 'brightness(1)' },
                     '50%': { transform: 'scale(1.12)', filter: 'brightness(1.2)' },
@@ -140,8 +160,8 @@ export default {
                     '50%': { transform: 'translateY(-2.5px)', opacity: '1' },
                 },
                 shimmerText: {
-                    '0%': { backgroundPosition: '-200% center' },
-                    '100%': { backgroundPosition: '200% center' },
+                    '0%': { backgroundPosition: '200% center' },
+                    '100%': { backgroundPosition: '-200% center' },
                 },
             },
         },
