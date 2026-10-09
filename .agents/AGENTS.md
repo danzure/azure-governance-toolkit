@@ -44,9 +44,9 @@ To maintain a unified Microsoft Fluent 2 design language, the following legacy p
 ## 3. Fluent 2 Design System & Design Tokens
 
 ### 3.1 Typography & Headings
-- **Page Titles (H1)**: `text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary`
+- **Page Titles (H1)**: `text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary`
 - **Section Headings (H2/H3)**: `text-[14px] sm:text-[16px] font-semibold text-fluent-fg-primary`
-- **Body & Form Text**: Default `text-[14px]` for body copy; `text-[13px]` for dense data, table cells, and form controls.
+- **Body & Form Text**: Default `15px` / `text-[14px]` for body copy; `text-[13px]` for dense data, table cells, and form controls.
 - **Code & Monospace**: `font-mono text-[13px] leading-relaxed` (using Cascadia Code, Consolas).
 
 ### 3.2 Semantic Color Tokens Reference
@@ -94,8 +94,8 @@ All category tokens are calibrated to maintain WCAG AA contrast against both lig
 #### Copilot AI & Brand Gradients
 | Gradient / Palette Token | Definition / Classes | Usage Context |
 | :--- | :--- | :--- |
-| `bg-primary-gradient` | `linear-gradient(135deg, #0f6cbd 0%, #115ea3 100%)` | Light mode header bar, hero branding. |
-| `bg-primary-gradient-hover` | `linear-gradient(135deg, #115ea3 0%, #0f548c 100%)` | Interactive brand hover states. |
+| `bg-primary-gradient` | `linear-gradient(135deg, #0078d4 0%, #005a9e 100%)` | Light mode header bar, Azure branding. |
+| `bg-primary-gradient-hover` | `linear-gradient(135deg, #0067b8 0%, #004e8c 100%)` | Interactive brand hover states. |
 | `bg-copilot-aura-gradient` | Linear gradient traversing Copilot Blue, Iris, Cyan | AI prompt bar focus borders, Copilot card highlights. |
 | `bg-copilot-stream-gradient` | Animated shimmering gradient | AI generation streaming state indicators. |
 | `--colorCopilotBlue` | `#0f6cbd` (Light) / `#1f9eff` (Dark) | Copilot brand accent 1 (Blue). |

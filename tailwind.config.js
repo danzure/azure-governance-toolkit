@@ -8,7 +8,30 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['"Segoe UI"', '"Segoe UI Web (West European)"', '-apple-system', 'BlinkMacSystemFont', 'Roboto', '"Helvetica Neue"', 'sans-serif'],
+                sans: [
+                    '"Segoe UI Variable Text"',
+                    '"Segoe UI Variable Display"',
+                    '"Segoe UI"',
+                    '"Segoe UI Web (West European)"',
+                    '-apple-system',
+                    'BlinkMacSystemFont',
+                    'Roboto',
+                    '"Helvetica Neue"',
+                    'Arial',
+                    'sans-serif',
+                ],
+                display: [
+                    '"Segoe UI Variable Display"',
+                    '"Segoe UI Variable Text"',
+                    '"Segoe UI"',
+                    '"Segoe UI Web (West European)"',
+                    '-apple-system',
+                    'BlinkMacSystemFont',
+                    'Roboto',
+                    '"Helvetica Neue"',
+                    'Arial',
+                    'sans-serif',
+                ],
                 mono: ['Cascadia Code', 'Consolas', 'ui-monospace', 'monospace'],
             },
             colors: {
@@ -70,8 +93,8 @@ export default {
                 'glow': '0 0 15px rgba(0, 120, 212, 0.3)',
             },
             backgroundImage: {
-                'primary-gradient': 'linear-gradient(135deg, #0f6cbd 0%, #115ea3 100%)',
-                'primary-gradient-hover': 'linear-gradient(135deg, #115ea3 0%, #0f548c 100%)',
+                'primary-gradient': 'linear-gradient(135deg, #0078d4 0%, #005a9e 100%)',
+                'primary-gradient-hover': 'linear-gradient(135deg, #0067b8 0%, #004e8c 100%)',
                 'copilot-aura-gradient': 'linear-gradient(90deg, var(--colorCopilotBlue) 0%, var(--colorCopilotIris) 40%, var(--colorCopilotCyan) 70%, var(--colorCopilotBlue) 100%)',
                 'copilot-stream-gradient': 'linear-gradient(90deg, transparent 0%, var(--colorCopilotBlue) 25%, var(--colorCopilotIris) 50%, var(--colorCopilotCyan) 75%, transparent 100%)',
             },

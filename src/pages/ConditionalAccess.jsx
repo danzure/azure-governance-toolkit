@@ -110,10 +110,10 @@ export default function ConditionalAccessPage() {
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 flex-1 flex flex-col">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
                     <div>
-                        <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
+                        <h1 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary mb-2">
                             Conditional Access Policy Builder
                         </h1>
-                        <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
+                        <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary max-w-3xl mt-1 block">
                             Design and generate standardized Microsoft Entra Conditional Access policy names and deployment templates.
                         </p>
                     </div>

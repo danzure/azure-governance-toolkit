@@ -131,10 +131,10 @@ export default function RbacDesignerPage() {
                 {/* Header */}
                 <div className="flex flex-col gap-3 mb-1">
                     <div>
-                        <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
+                        <h1 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary mb-2">
                             RBAC Custom Role Designer
                         </h1>
-                        <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
+                        <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary max-w-3xl mt-1 block">
                             Design and generate JSON definitions for Azure Custom Roles by selecting specific resource provider operations.
                         </p>
                     </div>

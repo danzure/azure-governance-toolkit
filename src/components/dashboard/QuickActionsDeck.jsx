@@ -209,10 +209,10 @@ export default function QuickActionsDeck() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 pb-2.5 border-b border-fluent-stroke-subtle">
                 <div>
-                    <h2 className="text-[14px] sm:text-[15px] font-bold text-fluent-fg-primary leading-tight">
+                    <h2 className="text-[15px] sm:text-[16px] font-semibold tracking-tight text-fluent-fg-primary leading-tight">
                         Standards & Architecture Reference Hub
                     </h2>
-                    <p className="text-[11.5px] text-fluent-fg-secondary">
+                    <p className="text-[12.5px] sm:text-[13px] text-fluent-fg-secondary">
                         Interactive Cloud Adoption Framework (CAF) resource cheatsheet and official Microsoft architecture guidance
                     </p>
                 </div>

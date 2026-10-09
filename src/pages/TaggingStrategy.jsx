@@ -21,10 +21,10 @@ export default function TaggingStrategyPage() {
         <div className="flex flex-col min-w-0 w-full h-full">
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-4 sm:px-6 pt-4 sm:pt-6 animate-fade-in flex-1 flex flex-col h-full pb-6">
                 <div className="mb-6 shrink-0">
-                    <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
+                    <h1 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary mb-2">
                         Tagging Strategy Builder
                     </h1>
-                    <p className="text-[13px] md:text-[14px] text-fluent-fg-secondary max-w-3xl">
+                    <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary max-w-3xl">
                         Visually define your organizational tagging matrix and automatically generate Azure Policy (JSON) definitions and Markdown documentation.
                     </p>
                 </div>

@@ -46,10 +46,10 @@ export default function ManagementGroupsPage() {
             <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 pb-12 animate-fade-in flex-1 flex flex-col gap-4 sm:gap-5">
                 <div className="flex flex-col gap-3">
                     <div>
-                        <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
+                        <h1 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary mb-2">
                             Management Group Topology Designer
                         </h1>
-                        <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
+                        <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary max-w-3xl mt-1 block">
                             Visually design your Azure Management Group hierarchy and automatically generate the corresponding Bicep or Terraform deployment code.
                         </p>
                     </div>

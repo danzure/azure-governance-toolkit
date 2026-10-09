@@ -66,10 +66,10 @@ export default function DashboardPage() {
                         <div className="flex flex-col gap-3">
                             {/* Section Header */}
                             <div>
-                                <h1 className="text-[17px] sm:text-[18px] font-bold tracking-tight text-fluent-fg-primary">
+                                <h1 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-fluent-fg-primary">
                                     Governance & Architecture Tools
                                 </h1>
-                                <p className="text-[12.5px] text-fluent-fg-secondary">
+                                <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary mt-0.5">
                                     Interactive utilities for cloud architects, security engineers, and DevOps teams
                                 </p>
                             </div>
@@ -129,10 +129,10 @@ export default function DashboardPage() {
 
                                             {/* Title & Description */}
                                             <div>
-                                                <h3 className="text-[15.5px] font-bold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200 leading-snug">
+                                                <h3 className="text-[15.5px] sm:text-[16px] font-semibold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200 leading-snug">
                                                     {tool.title}
                                                 </h3>
-                                                <p className="text-[12.5px] text-fluent-fg-secondary leading-relaxed line-clamp-3">
+                                                <p className="text-[13px] sm:text-[13.5px] text-fluent-fg-secondary leading-relaxed line-clamp-3">
                                                     {tool.description}
                                                 </p>
                                             </div>
@@ -163,8 +163,8 @@ export default function DashboardPage() {
                                             <Plus className="w-5 h-5 opacity-50" />
                                         </div>
                                         <div>
-                                            <h3 className="text-[14px] font-semibold text-fluent-fg-secondary mb-0.5">More tools coming soon</h3>
-                                            <p className="text-[12px]">Stay tuned for new governance modules.</p>
+                                            <h3 className="text-[14px] sm:text-[15px] font-semibold text-fluent-fg-secondary mb-0.5">More tools coming soon</h3>
+                                            <p className="text-[12.5px] sm:text-[13px]">Stay tuned for new governance modules.</p>
                                         </div>
                                     </div>
                                 </div>

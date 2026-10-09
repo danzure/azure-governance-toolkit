@@ -204,10 +204,35 @@ body,
     overflow: hidden;
 }
 
+/* Microsoft Segoe UI Variable Font Face Declarations */
+@font-face {
+    font-family: 'Segoe UI Variable Text';
+    src: local('Segoe UI Variable Text'), local('Segoe UI Variable'), local('Segoe UI');
+    font-weight: 300 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Segoe UI Variable Display';
+    src: local('Segoe UI Variable Display'), local('Segoe UI Variable'), local('Segoe UI Bold');
+    font-weight: 500 700;
+    font-display: swap;
+}
+
 body {
     @apply font-sans antialiased text-fluent-fg-primary overscroll-none;
+    font-size: 15px;
+    line-height: 1.5;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Microsoft Fluent 2 Display Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: -0.015em;
 }
 
 /* Stagger animations for grid items */

@@ -265,7 +265,7 @@ export default function AzureUpdatesFeed({ itemsPerPage = 4, layout = 'vertical'
                             className="w-[22px] h-[22px] object-contain shrink-0 drop-shadow-sm select-none"
                         />
                         <h2 
-                            className="text-[14px] font-bold tracking-tight text-fluent-fg-primary truncate"
+                            className="text-[14px] sm:text-[15px] font-semibold tracking-tight text-fluent-fg-primary truncate"
                             title={channelMeta.lastBuildDate ? `Last build: ${channelMeta.lastBuildDate}` : channelMeta.title}
                         >
                             Azure Service Updates

@@ -12,8 +12,8 @@ export default function NotFound() {
                 </div>
                 
                 <div className="space-y-2">
-                    <h1 className="text-xl font-semibold text-fluent-fg-primary">Page Not Found</h1>
-                    <p className="text-[14px] text-fluent-fg-secondary">
+                    <h1 className="text-[22px] font-semibold tracking-tight text-fluent-fg-primary">Page Not Found</h1>
+                    <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary">
                         The page you are looking for doesn't exist or has been moved.
                     </p>
                 </div>

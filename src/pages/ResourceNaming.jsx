@@ -215,10 +215,10 @@ export default function ResourceNamingPage() {
             {/* Header */}
             <div className="flex flex-col gap-3">
                 <div>
-                    <h1 className="text-[20px] sm:text-[24px] font-semibold text-fluent-fg-primary mb-2">
+                    <h1 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary mb-2">
                         Azure Resource Naming Tool
                     </h1>
-                    <p className="text-[14px] text-fluent-fg-secondary max-w-3xl mt-1 block">
+                    <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary max-w-3xl mt-1 block">
                         Generate consistent, standards-compliant Azure resource names aligned with Microsoft's Cloud Adoption Framework (CAF).
                     </p>
                 </div>
