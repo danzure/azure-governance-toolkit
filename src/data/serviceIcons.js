@@ -240,6 +240,17 @@ const SERVICE_ICON_MAP = {
     'Compute Fleet':                    null,               // → PLAYER
     'DNS Forwarding Ruleset':           null,               // → PLAYER
     'Log Analytics query pack':         null,               // → PLAYER
+    'Alert processing rule':            'Alerts',
+    'Azure Cosmos DB for PostgreSQL cluster': 'Azure-Cosmos-DB',
+    'Azure SQL Elastic Job agent':      'SQL-Elastic-Pools',
+    'Azure Synapse Analytics private link hub': 'Azure-Synapse-Analytics',
+    'Deployment script':                null,               // → ALT
+    'ExpressRoute direct':              'ExpressRoute-Circuits',
+    'Image template':                   'Images',
+    'Restore point collection':         'Recovery-Services-Vaults',
+    'Service Fabric managed cluster':   'Service-Fabric-Clusters',
+    'SSH key':                          'Keys',
+    'Virtual machine maintenance configuration': null,       // → ALT
 };
 
 
@@ -256,6 +267,8 @@ const SERVICE_ICON_MAP_ALT = {
     'App Configuration store':          'App Configuration',
     'Azure Local':                      'Azure Stack Edge _ Data Box Gateway',
     'Fabric Capacity':                  'Power BI Embedded',
+    'Deployment script':                'Deployment Scripts',
+    'Virtual machine maintenance configuration': 'Maintenance Configurations',
 };
 
 

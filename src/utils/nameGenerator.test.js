@@ -260,6 +260,26 @@ describe('generateName', () => {
         expect(generateName(resource, configWithOrg)).toBe('ado-contoso');
     });
 
+    it('returns custom name pattern for Key Vault Managed HSMs incorporating org instead of workload', () => {
+        const resource = makeResource({
+            name: 'Key Vault Managed HSMs',
+            abbrev: 'kvmhsm',
+            maxLength: 24,
+            chars: 'a-z, A-Z, 0-9, -',
+        });
+        
+        // Uses 'org' fallback when orgPrefix is not present, avoiding workload
+        expect(generateName(resource, defaultConfig)).toBe('kvmhsm-org-prod');
+        
+        // Uses orgPrefix when present
+        const configWithOrg = { ...defaultConfig, orgPrefix: 'contoso' };
+        expect(generateName(resource, configWithOrg)).toBe('kvmhsm-contoso-prod');
+
+        // Works with different environment
+        const configCustomEnv = { ...defaultConfig, orgPrefix: 'acme', envValue: 'dev' };
+        expect(generateName(resource, configCustomEnv)).toBe('kvmhsm-acme-dev');
+    });
+
     it('returns AzureFirewallSubnet for subnet with afw sub-resource', () => {
         const resource = makeResource({
             name: 'Subnet',
@@ -354,6 +374,15 @@ describe('generateName', () => {
         };
         const resultMultiple = generateName(resource, configMultiple);
         expect(resultMultiple).toBe('prod-myapp-prod-uks-001');
+
+        // Test {org} placeholder in patternOverride
+        const configOrg = {
+            ...defaultConfig,
+            orgPrefix: 'contoso',
+            patternOverride: 'res-{org}-{env}-{region}'
+        };
+        const resultOrg = generateName(resource, configOrg);
+        expect(resultOrg).toBe('res-contoso-prod-uks-001');
     });
 
     // ─── Naming Presets & CAF Standard ──────────────────────────────

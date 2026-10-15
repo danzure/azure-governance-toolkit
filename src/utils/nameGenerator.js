@@ -48,6 +48,12 @@ export function generateName(resource, config, selectedSubResource = null) {
         return `ado-${orgName}`;
     }
 
+    // Special handling for Key Vault Managed HSMs (global scope, 24 char limit: kvmhsm-{org}-{env})
+    if (resource.name === 'Key Vault Managed HSMs') {
+        const orgName = cleanOrg || 'org';
+        return `${resAbbrev}-${orgName}-${envValue}`.toLowerCase();
+    }
+
     // Special handling for App Service
     if (resource.name === 'App Service') {
         return `${cleanWorkload}.azurewebsites.net`;
@@ -70,6 +76,14 @@ export function generateName(resource, config, selectedSubResource = null) {
     let processedPattern = patternOverride;
     let skipParts = {};
     if (processedPattern) {
+        if (processedPattern.includes('{org}')) {
+            processedPattern = processedPattern.replaceAll('{org}', cleanOrg || 'org');
+            skipParts['Org'] = true;
+        }
+        if (processedPattern.includes('{workload}')) {
+            processedPattern = processedPattern.replaceAll('{workload}', cleanWorkload);
+            skipParts['Workload'] = true;
+        }
         if (processedPattern.includes('{env}')) {
             processedPattern = processedPattern.replaceAll('{env}', envValue);
             skipParts['Environment'] = true;

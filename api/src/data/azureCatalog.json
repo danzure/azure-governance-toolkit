@@ -6,6 +6,11 @@
       "category": "Management + Governance"
     },
     {
+      "abbrev": "apr",
+      "category": "Management + Governance",
+      "name": "Alert processing rule"
+    },
+    {
       "name": "API Center service",
       "abbrev": "apic",
       "category": "Integration"
@@ -126,6 +131,11 @@
       "category": "Management + Governance"
     },
     {
+      "abbrev": "cospos",
+      "category": "Databases",
+      "name": "Azure Cosmos DB for PostgreSQL cluster"
+    },
+    {
       "name": "Azure Databricks Access Connector",
       "abbrev": "dbac",
       "category": "Analytics"
@@ -179,6 +189,16 @@
       "name": "Azure Spring Apps",
       "abbrev": "spring",
       "category": "Compute"
+    },
+    {
+      "abbrev": "sqlja",
+      "category": "Databases",
+      "name": "Azure SQL Elastic Job agent"
+    },
+    {
+      "abbrev": "synplh",
+      "category": "Analytics",
+      "name": "Azure Synapse Analytics private link hub"
     },
     {
       "name": "Backup vault",
@@ -291,6 +311,11 @@
       "category": "Networking"
     },
     {
+      "abbrev": "script",
+      "category": "Management + Governance",
+      "name": "Deployment script"
+    },
+    {
       "name": "Dev Box project",
       "abbrev": "devbox",
       "category": "Compute"
@@ -376,6 +401,11 @@
       "category": "Networking"
     },
     {
+      "abbrev": "erd",
+      "category": "Networking",
+      "name": "ExpressRoute direct"
+    },
+    {
       "name": "Fabric Capacity",
       "abbrev": "fab",
       "category": "Analytics"
@@ -414,6 +444,11 @@
       "name": "Image",
       "abbrev": "img",
       "category": "Compute"
+    },
+    {
+      "abbrev": "it",
+      "category": "Compute",
+      "name": "Image template"
     },
     {
       "name": "Integration account",
@@ -651,6 +686,11 @@
       "category": "General"
     },
     {
+      "abbrev": "rpc",
+      "category": "Compute",
+      "name": "Restore point collection"
+    },
+    {
       "name": "Route table",
       "abbrev": "rt",
       "category": "Networking"
@@ -681,6 +721,11 @@
       "category": "Compute"
     },
     {
+      "abbrev": "sfmc",
+      "category": "Containers",
+      "name": "Service Fabric managed cluster"
+    },
+    {
       "name": "SignalR service",
       "abbrev": "sigr",
       "category": "Integration"
@@ -709,6 +754,11 @@
       "name": "SQL server",
       "abbrev": "sql",
       "category": "Databases"
+    },
+    {
+      "abbrev": "sshkey",
+      "category": "Compute",
+      "name": "SSH key"
     },
     {
       "name": "Static Web App",
@@ -774,6 +824,11 @@
       "name": "Virtual Machine - Windows",
       "abbrev": "vmw",
       "category": "Compute"
+    },
+    {
+      "abbrev": "mc",
+      "category": "Compute",
+      "name": "Virtual machine maintenance configuration"
     },
     {
       "name": "Virtual network",
