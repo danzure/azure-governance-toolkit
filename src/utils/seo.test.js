@@ -124,11 +124,11 @@ describe('SEO Utilities', () => {
 
         const ogImageMeta = document.querySelector('meta[property="og:image"]');
         expect(ogImageMeta).not.toBeNull();
-        expect(ogImageMeta.getAttribute('content')).toBe('https://app.atozazure.com/app_atozazure-OG.jpg');
+        expect(ogImageMeta.getAttribute('content')).toBe('https://app.atozazure.com/app-atozazure-OG.jpg');
 
         const ogImageSecureMeta = document.querySelector('meta[property="og:image:secure_url"]');
         expect(ogImageSecureMeta).not.toBeNull();
-        expect(ogImageSecureMeta.getAttribute('content')).toBe('https://app.atozazure.com/app_atozazure-OG.jpg');
+        expect(ogImageSecureMeta.getAttribute('content')).toBe('https://app.atozazure.com/app-atozazure-OG.jpg');
 
         const ogImageTypeMeta = document.querySelector('meta[property="og:image:type"]');
         expect(ogImageTypeMeta).not.toBeNull();
@@ -136,11 +136,11 @@ describe('SEO Utilities', () => {
 
         const ogImageWidthMeta = document.querySelector('meta[property="og:image:width"]');
         expect(ogImageWidthMeta).not.toBeNull();
-        expect(ogImageWidthMeta.getAttribute('content')).toBe('1424');
+        expect(ogImageWidthMeta.getAttribute('content')).toBe('2848');
 
         const ogImageHeightMeta = document.querySelector('meta[property="og:image:height"]');
         expect(ogImageHeightMeta).not.toBeNull();
-        expect(ogImageHeightMeta.getAttribute('content')).toBe('752');
+        expect(ogImageHeightMeta.getAttribute('content')).toBe('1504');
 
         const twitterCard = document.querySelector('meta[name="twitter:card"]');
         expect(twitterCard).not.toBeNull();
@@ -152,7 +152,7 @@ describe('SEO Utilities', () => {
 
         const twitterImage = document.querySelector('meta[name="twitter:image"]');
         expect(twitterImage).not.toBeNull();
-        expect(twitterImage.getAttribute('content')).toBe('https://app.atozazure.com/app_atozazure-OG.jpg');
+        expect(twitterImage.getAttribute('content')).toBe('https://app.atozazure.com/app-atozazure-OG.jpg');
 
         const breadcrumbScript = document.querySelector('script#seo-breadcrumb-jsonld');
         expect(breadcrumbScript).not.toBeNull();

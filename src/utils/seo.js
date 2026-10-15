@@ -94,9 +94,9 @@ export const DEFAULT_SEO = {
     ],
 };
 
-export const DEFAULT_OG_IMAGE = 'https://app.atozazure.com/app_atozazure-OG.jpg';
-export const DEFAULT_OG_IMAGE_WIDTH = '1424';
-export const DEFAULT_OG_IMAGE_HEIGHT = '752';
+export const DEFAULT_OG_IMAGE = 'https://app.atozazure.com/app-atozazure-OG.jpg';
+export const DEFAULT_OG_IMAGE_WIDTH = '2848';
+export const DEFAULT_OG_IMAGE_HEIGHT = '1504';
 export const DEFAULT_OG_IMAGE_TYPE = 'image/jpeg';
 
 /**
