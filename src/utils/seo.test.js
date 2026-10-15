@@ -122,9 +122,37 @@ describe('SEO Utilities', () => {
         expect(ogUrl).not.toBeNull();
         expect(ogUrl.getAttribute('content')).toBe('https://app.atozazure.com/resource-naming');
 
+        const ogImageMeta = document.querySelector('meta[property="og:image"]');
+        expect(ogImageMeta).not.toBeNull();
+        expect(ogImageMeta.getAttribute('content')).toBe('https://app.atozazure.com/app_atozazure-OG.jpg');
+
+        const ogImageSecureMeta = document.querySelector('meta[property="og:image:secure_url"]');
+        expect(ogImageSecureMeta).not.toBeNull();
+        expect(ogImageSecureMeta.getAttribute('content')).toBe('https://app.atozazure.com/app_atozazure-OG.jpg');
+
+        const ogImageTypeMeta = document.querySelector('meta[property="og:image:type"]');
+        expect(ogImageTypeMeta).not.toBeNull();
+        expect(ogImageTypeMeta.getAttribute('content')).toBe('image/jpeg');
+
+        const ogImageWidthMeta = document.querySelector('meta[property="og:image:width"]');
+        expect(ogImageWidthMeta).not.toBeNull();
+        expect(ogImageWidthMeta.getAttribute('content')).toBe('1424');
+
+        const ogImageHeightMeta = document.querySelector('meta[property="og:image:height"]');
+        expect(ogImageHeightMeta).not.toBeNull();
+        expect(ogImageHeightMeta.getAttribute('content')).toBe('752');
+
+        const twitterCard = document.querySelector('meta[name="twitter:card"]');
+        expect(twitterCard).not.toBeNull();
+        expect(twitterCard.getAttribute('content')).toBe('summary_large_image');
+
         const twitterTitle = document.querySelector('meta[name="twitter:title"]');
         expect(twitterTitle).not.toBeNull();
         expect(twitterTitle.getAttribute('content')).toBe(ROUTE_SEO['/resource-naming'].title);
+
+        const twitterImage = document.querySelector('meta[name="twitter:image"]');
+        expect(twitterImage).not.toBeNull();
+        expect(twitterImage.getAttribute('content')).toBe('https://app.atozazure.com/app_atozazure-OG.jpg');
 
         const breadcrumbScript = document.querySelector('script#seo-breadcrumb-jsonld');
         expect(breadcrumbScript).not.toBeNull();

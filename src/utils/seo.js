@@ -94,6 +94,11 @@ export const DEFAULT_SEO = {
     ],
 };
 
+export const DEFAULT_OG_IMAGE = 'https://app.atozazure.com/app_atozazure-OG.jpg';
+export const DEFAULT_OG_IMAGE_WIDTH = '1424';
+export const DEFAULT_OG_IMAGE_HEIGHT = '752';
+export const DEFAULT_OG_IMAGE_TYPE = 'image/jpeg';
+
 /**
  * Retrieve SEO metadata for a given path
  * @param {string} pathname 
@@ -161,7 +166,11 @@ export function applySEO(pathname) {
     if (typeof document === 'undefined') return;
 
     const seo = getRouteSEO(pathname);
-    const ogImage = 'https://app.atozazure.com/atozazure-favicon-192x192.png?v=2';
+    const ogImage = seo.ogImage || DEFAULT_OG_IMAGE;
+    const ogImageWidth = seo.ogImageWidth || DEFAULT_OG_IMAGE_WIDTH;
+    const ogImageHeight = seo.ogImageHeight || DEFAULT_OG_IMAGE_HEIGHT;
+    const ogImageType = seo.ogImageType || DEFAULT_OG_IMAGE_TYPE;
+    const ogImageAlt = seo.ogImageAlt || `${seo.headerTitle} - atozazure`;
     const siteName = 'atozazure | Azure Governance Toolkit';
 
     // Browser tab title
@@ -184,14 +193,18 @@ export function applySEO(pathname) {
     setMetaTag('property', 'og:site_name', siteName);
     setMetaTag('property', 'og:locale', 'en_US');
     setMetaTag('property', 'og:image', ogImage);
-    setMetaTag('property', 'og:image:alt', `${seo.headerTitle} - atozazure`);
+    setMetaTag('property', 'og:image:secure_url', ogImage);
+    setMetaTag('property', 'og:image:type', ogImageType);
+    setMetaTag('property', 'og:image:width', ogImageWidth);
+    setMetaTag('property', 'og:image:height', ogImageHeight);
+    setMetaTag('property', 'og:image:alt', ogImageAlt);
 
     // Twitter Card
-    setMetaTag('name', 'twitter:card', 'summary');
+    setMetaTag('name', 'twitter:card', 'summary_large_image');
     setMetaTag('name', 'twitter:title', seo.title);
     setMetaTag('name', 'twitter:description', seo.description);
     setMetaTag('name', 'twitter:image', ogImage);
-    setMetaTag('name', 'twitter:image:alt', `${seo.headerTitle} - atozazure`);
+    setMetaTag('name', 'twitter:image:alt', ogImageAlt);
 
     // Schema.org BreadcrumbList JSON-LD
     if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
