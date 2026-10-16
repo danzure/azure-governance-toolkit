@@ -263,17 +263,17 @@ export default function QuickActionsDeck() {
             )}
 
             {/* Balanced Split Layout: CAF Cheatsheet (Left) & Reference Frameworks (Right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
                 {/* Left Column: Interactive CAF Resource Cheatsheet (~58% / 7 cols) */}
-                <div className="lg:col-span-7 flex flex-col gap-2 lg:border-r lg:border-fluent-stroke-subtle lg:pr-4 min-w-0">
+                <div className="lg:col-span-7 flex flex-col gap-2.5 lg:border-r lg:border-fluent-stroke-subtle lg:pr-5 min-w-0">
                     <div className="flex flex-col gap-0.5 shrink-0">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                            <div className="flex items-center gap-2">
-                                <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
+                        <div className="flex items-center justify-between gap-1">
+                            <div className="flex items-center gap-2 min-w-0">
+                                <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider shrink-0">
                                     CAF Resource Cheatsheet
                                 </span>
-                                <span className="text-[10.5px] text-fluent-fg-tertiary">
+                                <span className="text-[10.5px] text-fluent-fg-tertiary truncate">
                                     {searchQuery || selectedCategory !== 'All' || showAll
                                         ? `${filteredResources.length} standard resources`
                                         : 'Featured core standards'}
@@ -285,7 +285,7 @@ export default function QuickActionsDeck() {
                                 <button
                                     type="button"
                                     onClick={() => setShowAll(prev => !prev)}
-                                    className="text-[10.5px] text-fluent-brand-fg hover:underline self-start sm:self-auto font-medium"
+                                    className="text-[10.5px] text-fluent-brand-fg hover:underline shrink-0 font-medium"
                                 >
                                     {showAll ? 'Show featured only' : `View all (${RESOURCE_DATA_SORTED.length})`}
                                 </button>
@@ -296,10 +296,10 @@ export default function QuickActionsDeck() {
                         </p>
                     </div>
 
-                    {/* Search & Category Filter Controls */}
-                    <div className="flex flex-col sm:flex-row items-center gap-2 shrink-0">
+                    {/* Search & Category Filter Controls (Height 28px) */}
+                    <div className="flex items-center gap-2 shrink-0">
                         {/* Search Input */}
-                        <div className="relative flex-1 w-full">
+                        <div className="relative flex-1 min-w-0">
                             <Search className="w-3.5 h-3.5 text-fluent-fg-tertiary absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                             <input
                                 type="text"
@@ -322,7 +322,7 @@ export default function QuickActionsDeck() {
                         </div>
 
                         {/* Category Dropdown */}
-                        <div className="w-full sm:w-[145px] shrink-0">
+                        <div className="w-[145px] shrink-0">
                             <FluentDropdown
                                 options={categoryOptions}
                                 value={selectedCategory}
@@ -335,7 +335,7 @@ export default function QuickActionsDeck() {
                     </div>
 
                     {/* Resource Items Scrollable Deck */}
-                    <div className="flex flex-col gap-1 max-h-[195px] tall:max-h-[200px] overflow-y-auto pr-1">
+                    <div className="flex flex-col gap-1.5 max-h-[212px] overflow-y-auto pr-1">
                         {filteredResources.length === 0 ? (
                             <div className="py-6 px-3 text-center rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col items-center justify-center gap-1.5">
                                 <Search className="w-4 h-4 text-fluent-fg-tertiary opacity-60" />
@@ -367,7 +367,7 @@ export default function QuickActionsDeck() {
                                 return (
                                     <div
                                         key={resource.name}
-                                        className="group/row flex items-center justify-between gap-2 p-1.5 px-2.5 tall:py-2 tall:px-3 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-150 min-w-0"
+                                        className="group/row flex items-center justify-between gap-2 p-1.5 px-2.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-150 min-w-0"
                                     >
                                         {/* Left: Icon, Name, Category */}
                                         <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -459,22 +459,45 @@ export default function QuickActionsDeck() {
                 </div>
 
                 {/* Right Column: Reference Frameworks (~42% / 5 cols) */}
-                <div className="lg:col-span-5 flex flex-col gap-2 min-w-0">
+                <div className="lg:col-span-5 flex flex-col gap-2.5 min-w-0">
                     <div className="flex flex-col gap-0.5 shrink-0">
-                        <div className="flex items-center justify-between">
-                            <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
-                                Architecture Frameworks
-                            </span>
-                            <span className="text-[10.5px] text-fluent-fg-tertiary">
-                                Microsoft Guidelines
-                            </span>
+                        <div className="flex items-center justify-between gap-1">
+                            <div className="flex items-center gap-2 min-w-0">
+                                <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider shrink-0">
+                                    Architecture Frameworks
+                                </span>
+                                <span className="text-[10.5px] text-fluent-fg-tertiary truncate">
+                                    Official Guidance
+                                </span>
+                            </div>
+                            <a
+                                href="https://learn.microsoft.com/azure/architecture/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[10.5px] text-fluent-brand-fg hover:underline inline-flex items-center gap-1 font-medium shrink-0"
+                            >
+                                <span>Architecture Center</span>
+                                <ExternalLink className="w-2.5 h-2.5" />
+                            </a>
                         </div>
                         <p className="text-[11px] text-fluent-fg-secondary">
-                            Official Microsoft patterns, landing zones & guidelines.
+                            Official Microsoft enterprise patterns, landing zones &amp; engineering pillars.
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-1.5 max-h-[195px] tall:max-h-[200px] overflow-y-auto pr-1">
+                    {/* Reference Hub Guidelines Indicator Toolbar (Height 28px - perfectly matching left search bar) */}
+                    <div className="flex items-center justify-between gap-2 h-[28px] px-2.5 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-subtle text-[11.5px] text-fluent-fg-secondary shrink-0">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                            <Compass className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
+                            <span className="font-medium text-fluent-fg-primary truncate">Curated Architecture Center Guides</span>
+                        </div>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-[3px] bg-fluent-bg-card border border-fluent-stroke-subtle text-fluent-fg-tertiary shrink-0 font-mono">
+                            4 Core Pillars
+                        </span>
+                    </div>
+
+                    {/* Framework Cards Deck */}
+                    <div className="flex flex-col gap-1.5">
                         {frameworks.map((framework) => {
                             const IconComponent = framework.icon;
                             return (
@@ -485,31 +508,34 @@ export default function QuickActionsDeck() {
                                     rel="noopener noreferrer"
                                     className="
                                         group flex items-center justify-between gap-2.5
-                                        p-1.5 px-2.5 tall:py-2.5 tall:px-3 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle
+                                        p-1.5 px-2.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle
                                         hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong
                                         transition-all duration-150 active:scale-[0.99]
                                     "
                                     title={`${framework.title}: ${framework.shortDesc}`}
                                 >
                                     <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                        <div className={`w-6 h-6 tall:w-7 tall:h-7 rounded-[4px] flex items-center justify-center shrink-0 ${framework.bgClass} ${framework.fgClass}`}>
-                                            <IconComponent className="w-3.5 h-3.5 tall:w-4 tall:h-4" />
+                                        <div className={`w-6 h-6 rounded-[4px] flex items-center justify-center shrink-0 ${framework.bgClass} ${framework.fgClass}`}>
+                                            <IconComponent className="w-3.5 h-3.5" />
                                         </div>
                                         <div className="flex flex-col min-w-0 flex-1">
                                             <div className="flex items-center gap-1.5 min-w-0">
-                                                <span className="text-[12px] tall:text-[12.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
+                                                <span className="text-[12px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
                                                     {framework.title}
                                                 </span>
                                                 <span className="hidden sm:inline-flex text-[9.5px] px-1.5 py-0.2 rounded-[3px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-fluent-fg-tertiary shrink-0">
                                                     {framework.badge}
                                                 </span>
                                             </div>
-                                            <span className="text-[10.5px] tall:text-[11px] text-fluent-fg-secondary truncate">
+                                            <span className="text-[10.5px] text-fluent-fg-secondary truncate">
                                                 {framework.shortDesc}
                                             </span>
                                         </div>
                                     </div>
-                                    <ExternalLink className="w-3 h-3 text-fluent-fg-tertiary group-hover:text-fluent-brand-fg transition-colors shrink-0" />
+                                    <span className="h-[22px] px-2 rounded-[4px] text-[10.5px] font-medium border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-brand-fg group-hover:border-fluent-brand-bg group-hover:bg-fluent-bg-hover inline-flex items-center gap-1 transition-all shrink-0">
+                                        <span>Docs</span>
+                                        <ExternalLink className="w-2.5 h-2.5" />
+                                    </span>
                                 </a>
                             );
                         })}
