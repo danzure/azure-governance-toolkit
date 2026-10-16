@@ -54,28 +54,28 @@ export default function DashboardPage() {
 
     return (
         <div className="flex flex-col flex-1 w-full min-w-0 bg-fluent-bg-canvas">
-            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-4 sm:py-6 animate-fade-in flex-1 flex flex-col justify-start">
+            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-2 sm:py-2.5 tall:py-3.5 very-tall:py-4 animate-fade-in flex-1 flex flex-col justify-start tall:justify-between min-h-0">
 
                 {/* Two-Column Responsive Workspace Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch w-full min-w-0">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 tall:gap-4.5 very-tall:gap-5 items-stretch w-full min-w-0 tall:flex-1 tall:min-h-0">
 
                     {/* Left Column: Primary Governance Workspace (~68% / 8 cols) */}
-                    <div className="lg:col-span-8 flex flex-col gap-5 sm:gap-6 min-w-0 w-full">
+                    <div className="lg:col-span-8 flex flex-col gap-2.5 sm:gap-3 tall:gap-3.5 very-tall:gap-4 min-w-0 w-full tall:h-full tall:min-h-0">
 
                         {/* Section: Available Tools */}
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-1.5 sm:gap-2 tall:gap-2.5">
                             {/* Section Header */}
                             <div>
-                                <h1 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-fluent-fg-primary">
+                                <h1 className="text-[19px] sm:text-[22px] tall:text-[23px] very-tall:text-[25px] font-semibold tracking-tight text-fluent-fg-primary">
                                     Governance & Architecture Tools
                                 </h1>
-                                <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary mt-0.5">
+                                <p className="text-[13px] sm:text-[14px] tall:text-[14.5px] text-fluent-fg-secondary mt-0.5">
                                     Interactive utilities for cloud architects, security engineers, and DevOps teams
                                 </p>
                             </div>
 
                             {/* Tools Grid (All tools visible, responsive grid) */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3.5">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3 tall:gap-3.5 very-tall:gap-4">
                                 {tools.map((tool, index) => (
                                     <div
                                         key={tool.id}
@@ -91,35 +91,35 @@ export default function DashboardPage() {
                                         className={`
                                             relative group cursor-pointer overflow-hidden
                                             bg-fluent-bg-card hover:bg-fluent-bg-hover
-                                            rounded-xl p-4 sm:p-4.5
+                                            rounded-xl p-3.5 sm:p-4 tall:p-4.5
                                             border border-fluent-stroke-subtle shadow-soft dark:shadow-none
                                             hover:shadow-depth hover:border-fluent-stroke-strong hover:-translate-y-0.5
                                             dark:hover:shadow-none
                                             transition-all duration-200 ease-in-out
                                             active:scale-[0.98]
                                             flex flex-col justify-between
-                                            min-h-[220px]
+                                            min-h-[200px] sm:min-h-[210px] tall:min-h-[225px] very-tall:min-h-[238px]
                                             animate-slide-up stagger-${index + 1}
                                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg focus-visible:border-fluent-brand-bg
                                         `}
                                     >
                                         <div className="relative z-10 flex flex-col">
                                             {/* Icon & Badges */}
-                                            <div className="flex items-start justify-between mb-3">
+                                            <div className="flex items-start justify-between mb-2">
                                                 <img
                                                     src={tool.iconUrl}
                                                     alt={`${tool.title} icon`}
-                                                    className="w-10 h-10 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200 ease-in-out"
+                                                    className="w-10 h-10 sm:w-11 sm:h-11 tall:w-12 tall:h-12 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200 ease-in-out"
                                                 />
                                                 <div className="flex flex-wrap items-center justify-end gap-1.5">
                                                     {tool.isNew && (
-                                                        <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm transition-colors duration-200">
+                                                        <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm transition-colors duration-200">
                                                             <Star className="w-3 h-3 fill-current" />
                                                             New
                                                         </span>
                                                     )}
                                                     {tool.hasAi && (
-                                                        <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[10.5px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors duration-200">
+                                                        <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors duration-200">
                                                             <Sparkles className="w-3 h-3" />
                                                             AI Powered
                                                         </span>
@@ -129,17 +129,17 @@ export default function DashboardPage() {
 
                                             {/* Title & Description */}
                                             <div>
-                                                <h3 className="text-[15.5px] sm:text-[16px] font-semibold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200 leading-snug">
+                                                <h3 className="text-[14.5px] sm:text-[15.5px] tall:text-[16px] font-semibold text-fluent-fg-primary mb-1.5 group-hover:text-fluent-brand-fg transition-colors duration-200 leading-snug">
                                                     {tool.title}
                                                 </h3>
-                                                <p className="text-[13px] sm:text-[13.5px] text-fluent-fg-secondary leading-relaxed line-clamp-3">
+                                                <p className="text-[12.5px] sm:text-[13px] tall:text-[13.5px] text-fluent-fg-secondary leading-relaxed line-clamp-3">
                                                     {tool.description}
                                                 </p>
                                             </div>
                                         </div>
 
                                         {/* Action Footer */}
-                                        <div className="mt-3.5 pt-2.5 border-t border-fluent-stroke-subtle/70 flex items-center justify-between text-[12.5px] font-semibold text-fluent-brand-fg group-hover:text-fluent-brand-hover transition-colors">
+                                        <div className="mt-3 pt-2 border-t border-fluent-stroke-subtle/70 flex items-center justify-between text-[12px] sm:text-[12.5px] font-semibold text-fluent-brand-fg group-hover:text-fluent-brand-hover transition-colors">
                                             <span className="group-hover:underline">Open tool</span>
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 ease-in-out" />
                                         </div>
@@ -151,20 +151,20 @@ export default function DashboardPage() {
                                     className="
                                         relative overflow-hidden
                                         bg-fluent-bg-subtle
-                                        rounded-xl p-4 sm:p-4.5
+                                        rounded-xl p-3.5 sm:p-4 tall:p-4.5
                                         border-2 border-dashed border-fluent-stroke-subtle
                                         flex flex-col items-center justify-center text-center
-                                        min-h-[220px]
+                                        min-h-[200px] sm:min-h-[210px] tall:min-h-[225px] very-tall:min-h-[238px]
                                         animate-slide-up stagger-6
                                     "
                                 >
                                     <div className="flex flex-col items-center gap-2 text-fluent-fg-tertiary">
-                                        <div className="w-10 h-10 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle flex items-center justify-center shadow-sm">
+                                        <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle flex items-center justify-center shadow-sm">
                                             <Plus className="w-5 h-5 opacity-50" />
                                         </div>
                                         <div>
-                                            <h3 className="text-[14px] sm:text-[15px] font-semibold text-fluent-fg-secondary mb-0.5">More tools coming soon</h3>
-                                            <p className="text-[12.5px] sm:text-[13px]">Stay tuned for new governance modules.</p>
+                                            <h3 className="text-[13.5px] sm:text-[14.5px] tall:text-[15px] font-semibold text-fluent-fg-secondary mb-0.5">More tools coming soon</h3>
+                                            <p className="text-[12px] sm:text-[12.5px] tall:text-[13px]">Stay tuned for new governance modules.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Right Column: Dedicated Azure Updates Feed (~32% / 4 cols) */}
-                    <div className="lg:col-span-4 flex flex-col min-w-0 w-full h-[540px] lg:h-0 lg:min-h-full min-h-0">
+                    <div className="lg:col-span-4 flex flex-col min-w-0 w-full h-[540px] lg:h-0 lg:min-h-full min-h-0 tall:h-full">
                         <AzureUpdatesFeed layout="vertical" />
                     </div>
 

@@ -189,5 +189,10 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        function({ addVariant }) {
+            addVariant('tall', '@media (min-height: 960px)');
+            addVariant('very-tall', '@media (min-height: 1050px)');
+        },
+    ],
 }

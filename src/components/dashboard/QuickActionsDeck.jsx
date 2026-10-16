@@ -205,11 +205,11 @@ export default function QuickActionsDeck() {
     };
 
     return (
-        <div className="w-full rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-3 sm:p-4 shadow-soft flex flex-col gap-3">
+        <div className="w-full rounded-xl border border-fluent-stroke-subtle bg-fluent-bg-card p-3 sm:p-3.5 shadow-soft flex flex-col gap-2.5">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 pb-2.5 border-b border-fluent-stroke-subtle">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 pb-2 border-b border-fluent-stroke-subtle">
                 <div>
-                    <h2 className="text-[15px] sm:text-[16px] font-semibold tracking-tight text-fluent-fg-primary leading-tight">
+                    <h2 className="text-[15px] sm:text-[16px] tall:text-[16.5px] very-tall:text-[17px] font-semibold tracking-tight text-fluent-fg-primary leading-tight">
                         Standards & Architecture Reference Hub
                     </h2>
                     <p className="text-[12.5px] sm:text-[13px] text-fluent-fg-secondary">
@@ -267,28 +267,33 @@ export default function QuickActionsDeck() {
 
                 {/* Left Column: Interactive CAF Resource Cheatsheet (~58% / 7 cols) */}
                 <div className="lg:col-span-7 flex flex-col gap-2 lg:border-r lg:border-fluent-stroke-subtle lg:pr-4 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 shrink-0">
-                        <div className="flex items-center gap-2">
-                            <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
-                                CAF Resource Cheatsheet
-                            </span>
-                            <span className="text-[10.5px] text-fluent-fg-tertiary">
-                                {searchQuery || selectedCategory !== 'All' || showAll
-                                    ? `${filteredResources.length} standard resources`
-                                    : 'Featured core standards'}
-                            </span>
-                        </div>
+                    <div className="flex flex-col gap-0.5 shrink-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                            <div className="flex items-center gap-2">
+                                <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
+                                    CAF Resource Cheatsheet
+                                </span>
+                                <span className="text-[10.5px] text-fluent-fg-tertiary">
+                                    {searchQuery || selectedCategory !== 'All' || showAll
+                                        ? `${filteredResources.length} standard resources`
+                                        : 'Featured core standards'}
+                                </span>
+                            </div>
 
-                        {/* View All / Featured toggle */}
-                        {!searchQuery && selectedCategory === 'All' && (
-                            <button
-                                type="button"
-                                onClick={() => setShowAll(prev => !prev)}
-                                className="text-[10.5px] text-fluent-brand-fg hover:underline self-start sm:self-auto font-medium"
-                            >
-                                {showAll ? 'Show featured only' : `View all (${RESOURCE_DATA_SORTED.length})`}
-                            </button>
-                        )}
+                            {/* View All / Featured toggle */}
+                            {!searchQuery && selectedCategory === 'All' && (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowAll(prev => !prev)}
+                                    className="text-[10.5px] text-fluent-brand-fg hover:underline self-start sm:self-auto font-medium"
+                                >
+                                    {showAll ? 'Show featured only' : `View all (${RESOURCE_DATA_SORTED.length})`}
+                                </button>
+                            )}
+                        </div>
+                        <p className="text-[11px] text-fluent-fg-secondary">
+                            Click any prefix badge to copy, or select <strong className="text-fluent-fg-primary font-medium">Generate</strong> to configure.
+                        </p>
                     </div>
 
                     {/* Search & Category Filter Controls */}
@@ -330,7 +335,7 @@ export default function QuickActionsDeck() {
                     </div>
 
                     {/* Resource Items Scrollable Deck */}
-                    <div className="flex flex-col gap-1 max-h-[192px] overflow-y-auto pr-1">
+                    <div className="flex flex-col gap-1 max-h-[195px] tall:max-h-[200px] overflow-y-auto pr-1">
                         {filteredResources.length === 0 ? (
                             <div className="py-6 px-3 text-center rounded-lg border border-dashed border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col items-center justify-center gap-1.5">
                                 <Search className="w-4 h-4 text-fluent-fg-tertiary opacity-60" />
@@ -362,7 +367,7 @@ export default function QuickActionsDeck() {
                                 return (
                                     <div
                                         key={resource.name}
-                                        className="group/row flex items-center justify-between gap-2 p-1.5 px-2.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-150 min-w-0"
+                                        className="group/row flex items-center justify-between gap-2 p-1.5 px-2.5 tall:py-2 tall:px-3 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong transition-all duration-150 min-w-0"
                                     >
                                         {/* Left: Icon, Name, Category */}
                                         <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -451,25 +456,25 @@ export default function QuickActionsDeck() {
                             })
                         )}
                     </div>
-
-                    {/* Cheatsheet Footer Guidance */}
-                    <div className="pt-0.5 text-[10.5px] text-fluent-fg-tertiary flex items-center justify-between">
-                        <span>Click any prefix badge to copy, or select <strong>Generate</strong> to configure.</span>
-                    </div>
                 </div>
 
                 {/* Right Column: Reference Frameworks (~42% / 5 cols) */}
                 <div className="lg:col-span-5 flex flex-col gap-2 min-w-0">
-                    <div className="flex items-center justify-between shrink-0">
-                        <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
-                            Architecture Frameworks
-                        </span>
-                        <span className="text-[10.5px] text-fluent-fg-tertiary">
-                            Microsoft Guidelines
-                        </span>
+                    <div className="flex flex-col gap-0.5 shrink-0">
+                        <div className="flex items-center justify-between">
+                            <span className="text-[11px] font-bold text-fluent-fg-primary uppercase tracking-wider">
+                                Architecture Frameworks
+                            </span>
+                            <span className="text-[10.5px] text-fluent-fg-tertiary">
+                                Microsoft Guidelines
+                            </span>
+                        </div>
+                        <p className="text-[11px] text-fluent-fg-secondary">
+                            Official Microsoft patterns, landing zones & guidelines.
+                        </p>
                     </div>
 
-                    <div className="flex flex-col gap-1.5 max-h-[224px] overflow-y-auto pr-1">
+                    <div className="flex flex-col gap-1.5 max-h-[195px] tall:max-h-[200px] overflow-y-auto pr-1">
                         {frameworks.map((framework) => {
                             const IconComponent = framework.icon;
                             return (
@@ -480,26 +485,26 @@ export default function QuickActionsDeck() {
                                     rel="noopener noreferrer"
                                     className="
                                         group flex items-center justify-between gap-2.5
-                                        p-2 px-2.5 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle
+                                        p-1.5 px-2.5 tall:py-2.5 tall:px-3 rounded-md border border-fluent-stroke-subtle bg-fluent-bg-subtle
                                         hover:bg-fluent-bg-hover hover:border-fluent-stroke-strong
                                         transition-all duration-150 active:scale-[0.99]
                                     "
                                     title={`${framework.title}: ${framework.shortDesc}`}
                                 >
                                     <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                        <div className={`w-6 h-6 rounded-[4px] flex items-center justify-center shrink-0 ${framework.bgClass} ${framework.fgClass}`}>
-                                            <IconComponent className="w-3.5 h-3.5" />
+                                        <div className={`w-6 h-6 tall:w-7 tall:h-7 rounded-[4px] flex items-center justify-center shrink-0 ${framework.bgClass} ${framework.fgClass}`}>
+                                            <IconComponent className="w-3.5 h-3.5 tall:w-4 tall:h-4" />
                                         </div>
                                         <div className="flex flex-col min-w-0 flex-1">
                                             <div className="flex items-center gap-1.5 min-w-0">
-                                                <span className="text-[12px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
+                                                <span className="text-[12px] tall:text-[12.5px] font-semibold text-fluent-fg-primary group-hover:text-fluent-brand-fg transition-colors truncate">
                                                     {framework.title}
                                                 </span>
                                                 <span className="hidden sm:inline-flex text-[9.5px] px-1.5 py-0.2 rounded-[3px] bg-fluent-bg-canvas border border-fluent-stroke-subtle text-fluent-fg-tertiary shrink-0">
                                                     {framework.badge}
                                                 </span>
                                             </div>
-                                            <span className="text-[10.5px] text-fluent-fg-secondary truncate">
+                                            <span className="text-[10.5px] tall:text-[11px] text-fluent-fg-secondary truncate">
                                                 {framework.shortDesc}
                                             </span>
                                         </div>
@@ -508,11 +513,6 @@ export default function QuickActionsDeck() {
                                 </a>
                             );
                         })}
-                    </div>
-
-                    {/* Architecture Frameworks Footer Guidance */}
-                    <div className="pt-0.5 text-[10.5px] text-fluent-fg-tertiary flex items-center justify-between">
-                        <span>Official Microsoft patterns, landing zones & guidelines.</span>
                     </div>
                 </div>
 
