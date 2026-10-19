@@ -1,60 +1,43 @@
-import { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { ArrowUp } from 'lucide-react';
 
 /**
  * ScrollToTopButton Component
  * 
- * Floating action button that appears when the main content container is scrolled down,
- * smoothly returning the viewport to the top when clicked.
+ * Fluent 2 secondary action button appended at the end of each page,
+ * smoothly returning the viewport container to the top when clicked.
  * 
- * @returns {JSX.Element|null}
+ * @param {Object} props
+ * @param {string} [props.className] Optional custom class names
+ * @param {string} [props.label='Back to top'] Optional custom button label
+ * @returns {JSX.Element}
  */
-export default function ScrollToTopButton() {
-    const [showScrollTop, setShowScrollTop] = useState(false);
-
-    useEffect(() => {
-        const scrollContainer = document.getElementById('main-scroll-container');
-        if (!scrollContainer) return;
-
-        let ticking = false;
-        const handleScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    setShowScrollTop(scrollContainer.scrollTop > 200);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-        
-        scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-
-        return () => {
-            scrollContainer.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
-    const scrollToTop = useCallback(() => {
-        const scrollContainer = document.getElementById('main-scroll-container');
-        if (scrollContainer) {
+export default function ScrollToTopButton({ className = '', label = 'Back to top' }) {
+    const scrollToTop = () => {
+        const scrollContainer = typeof document !== 'undefined' ? document.getElementById('main-scroll-container') : null;
+        if (scrollContainer && typeof scrollContainer.scrollTo === 'function') {
             scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    }, []);
+    };
 
     return (
         <button
+            type="button"
             onClick={scrollToTop}
-            aria-label="Scroll to top"
-            aria-hidden={!showScrollTop}
-            tabIndex={showScrollTop ? 0 : -1}
-            className={`fixed right-4 sm:right-8 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:bottom-8 p-2.5 rounded-xl shadow-flyout transition-all duration-200 ease-in-out active:scale-95 z-50 bg-fluent-bg-canvas border border-fluent-stroke-subtle text-fluent-fg-secondary hover:text-fluent-brand-fg hover:border-fluent-stroke-strong ${
-                showScrollTop 
-                    ? 'opacity-100 translate-y-0 pointer-events-auto scale-100' 
-                    : 'opacity-0 translate-y-3 pointer-events-none scale-95'
-            }`}
+            className={`px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${className}`}
+            title="Scroll back to top"
+            aria-label={label}
         >
-            <ArrowUp className="w-5 h-5" />
+            <span>{label}</span>
+            <ArrowUp className="w-3.5 h-3.5" />
         </button>
     );
 }
+
+ScrollToTopButton.propTypes = {
+    className: PropTypes.string,
+    label: PropTypes.string,
+};
+

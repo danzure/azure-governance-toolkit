@@ -6,6 +6,7 @@ import ConfigPanel from '../components/naming/ConfigPanel';
 import ResourceGrid from '../components/naming/ResourceGrid';
 import ServiceFilter from '../components/shared/ServiceFilter';
 import NamingPromptBar from '../components/ai/NamingPromptBar';
+import ScrollToTopButton from '../components/layout/ScrollToTopButton';
 import useDebounce from '../hooks/useDebounce';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { generateName as generateResourceName } from '../utils/nameGenerator';
@@ -378,6 +379,11 @@ export default function ResourceNamingPage() {
                 onCopy={copyToClipboard}
                 selectedService={deepLinkedService}
             />
+
+            {/* Back to Top Row */}
+            <div className="flex items-center justify-end pt-2">
+                <ScrollToTopButton />
+            </div>
         </div>
     );
 }

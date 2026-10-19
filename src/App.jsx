@@ -7,7 +7,6 @@ import Header from './components/layout/Header';
 import NavigationMenu from './components/layout/NavigationMenu';
 import CommandPalette from './components/layout/CommandPalette';
 import Footer from './components/layout/Footer';
-import ScrollToTopButton from './components/layout/ScrollToTopButton';
 import useLocalStorage from './hooks/useLocalStorage';
 import ErrorBoundary from './components/layout/ErrorBoundary';
 import PageLoader from './components/layout/PageLoader';
@@ -21,6 +20,7 @@ const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccess'));
 const ManagementGroupsPage = lazy(() => import('./pages/ManagementGroups'));
 const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategy'));
 const RbacDesignerPage = lazy(() => import('./pages/RbacDesigner'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicy'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 /**
@@ -180,6 +180,8 @@ export default function App() {
                                 <Route path="/management-groups" element={<ManagementGroupsPage />} />
                                 <Route path="/tagging-strategy" element={<TaggingStrategyPage />} />
                                 <Route path="/rbac-designer" element={<RbacDesignerPage />} />
+                                <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                                <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                                 <Route path="*" element={<NotFoundPage />} />
                             </Routes>
                         </Suspense>
@@ -187,8 +189,6 @@ export default function App() {
                     <Footer variant={location.pathname === '/' ? 'full' : 'slim'} />
                 </main>
             </div>
-            
-            <ScrollToTopButton />
         </div>
     );
 }

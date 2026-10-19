@@ -5,6 +5,7 @@ import { PREMADE_POLICIES, CA_CATEGORIES, getReadableTitle } from '../data/condi
 import PatternBuilderCard from '../components/ca/PatternBuilderCard';
 import ServiceFilter from '../components/shared/ServiceFilter';
 import PolicyGroupCard from '../components/ca/PolicyGroupCard';
+import ScrollToTopButton from '../components/layout/ScrollToTopButton';
 
 // Pre-compute groupings outside the render lifecycle for performance
 const INITIAL_GROUPS = {};
@@ -209,6 +210,11 @@ export default function ConditionalAccessPage() {
                         ))}
                     </div>
                 )}
+
+                {/* Back to Top Row */}
+                <div className="flex items-center justify-end pt-2">
+                    <ScrollToTopButton />
+                </div>
             </div>
         </div>
     );

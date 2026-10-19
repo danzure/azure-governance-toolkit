@@ -287,7 +287,7 @@ describe('rssParser utils', () => {
             // Feature X had an older pubDate (June) but newer updated date (Sep 23), so it should sort first!
             expect(items[0].id).toBe('2');
             expect(items[0].effectiveDate).toBe('2026-09-23T18:50:00Z');
-            expect(items[0].formattedDate).toBe('Sep 23, 2026');
+            expect(items[0].formattedDate).toMatch(/23 Sept? 2026/);
         });
 
         it('handles empty or malformed XML gracefully', () => {

@@ -11,6 +11,9 @@ describe('SEO Utilities', () => {
 
         // Mock document for Node test environment
         globalThis.document = {
+            documentElement: {
+                lang: 'en'
+            },
             get title() {
                 return mockTitle;
             },
@@ -73,6 +76,7 @@ describe('SEO Utilities', () => {
             '/management-groups',
             '/tagging-strategy',
             '/rbac-designer',
+            '/privacy',
         ];
 
         expectedRoutes.forEach((route) => {
@@ -97,6 +101,7 @@ describe('SEO Utilities', () => {
         applySEO('/resource-naming');
 
         expect(document.title).toBe(ROUTE_SEO['/resource-naming'].title);
+        expect(document.documentElement.lang).toBe('en-GB');
 
         const descMeta = document.querySelector('meta[name="description"]');
         expect(descMeta).not.toBeNull();
@@ -117,6 +122,10 @@ describe('SEO Utilities', () => {
         const ogTitle = document.querySelector('meta[property="og:title"]');
         expect(ogTitle).not.toBeNull();
         expect(ogTitle.getAttribute('content')).toBe(ROUTE_SEO['/resource-naming'].title);
+
+        const ogLocale = document.querySelector('meta[property="og:locale"]');
+        expect(ogLocale).not.toBeNull();
+        expect(ogLocale.getAttribute('content')).toBe('en_GB');
 
         const ogUrl = document.querySelector('meta[property="og:url"]');
         expect(ogUrl).not.toBeNull();

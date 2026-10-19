@@ -125,23 +125,23 @@ export default function RbacDesignerPage() {
     }, [roleName]);
 
     return (
-        <div className="flex flex-col min-w-0 w-full">
-            <div className="max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-4 sm:pt-6 flex-1 flex flex-col gap-4 sm:gap-5 pb-12">
+        <div className={`flex flex-col min-w-0 w-full ${isConfigMinimized ? 'flex-1 h-full min-h-0' : ''}`}>
+            <div className={`max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-3 sm:pt-4 ${isConfigMinimized ? 'pb-2 sm:pb-3 min-h-0 h-full flex-1' : 'pb-6 sm:pb-8'} flex flex-col gap-2.5 sm:gap-3`}>
                 
                 {/* Header */}
-                <div className="flex flex-col gap-3 mb-1">
+                <div className="flex flex-col gap-0.5 shrink-0">
                     <div>
-                        <h1 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-fluent-fg-primary mb-2">
+                        <h1 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-fluent-fg-primary leading-tight">
                             RBAC Custom Role Designer
                         </h1>
-                        <p className="text-[14px] sm:text-[15px] text-fluent-fg-secondary max-w-3xl mt-1 block">
+                        <p className="text-[13px] sm:text-[14px] text-fluent-fg-secondary max-w-3xl block">
                             Design and generate JSON definitions for Azure Custom Roles by selecting specific resource provider operations.
                         </p>
                     </div>
                 </div>
 
                 {/* About / Introduction */}
-                <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden mb-1">
+                <div className="bg-fluent-bg-subtle rounded-lg flex flex-col overflow-hidden shrink-0">
                     <div
                         className="px-3 py-1.5 flex flex-col text-sm text-fluent-fg-secondary cursor-pointer hover:bg-fluent-bg-hover transition-colors"
                         onClick={() => setIsGuidanceExpanded(!isGuidanceExpanded)}
@@ -181,80 +181,84 @@ export default function RbacDesignerPage() {
                 </div>
 
                 {/* AI Smart Role Generator (Primary Interaction Point) */}
-                <RbacPromptBar
-                    ref={aiInputRef}
-                    setRoleName={setRoleName}
-                    setDescription={setDescription}
-                    setAssignableScopes={setAssignableScopes}
-                    setActions={setActions}
-                    setNotActions={setNotActions}
-                    onResetAll={() => applyTemplate('clear')}
-                />
+                <div className="shrink-0">
+                    <RbacPromptBar
+                        ref={aiInputRef}
+                        setRoleName={setRoleName}
+                        setDescription={setDescription}
+                        setAssignableScopes={setAssignableScopes}
+                        setActions={setActions}
+                        setNotActions={setNotActions}
+                        onResetAll={() => applyTemplate('clear')}
+                    />
+                </div>
 
                 {/* Manual Configuration: Collapsed Summary Strip OR Expanded RbacConfigPanel */}
-                {isConfigMinimized ? (
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 px-3 sm:px-4 py-2 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft transition-all animate-fade-in">
-                        <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <div className="flex items-center gap-1.5 shrink-0 text-fluent-fg-secondary">
-                                <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                                <span className="text-[12px] font-semibold text-fluent-fg-primary">Parameters:</span>
-                            </div>
-                            <div className="flex items-center gap-2 flex-wrap">
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Custom Role Name">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-purple-fg shrink-0" />
-                                    <span className="text-fluent-fg-tertiary">Role:</span>
-                                    <span className="font-medium text-fluent-fg-primary">{roleName || 'Custom Role'}</span>
+                <div className="shrink-0">
+                    {isConfigMinimized ? (
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 px-3 sm:px-4 py-2 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft transition-all animate-fade-in">
+                            <div className="flex items-center gap-2 flex-wrap min-w-0">
+                                <div className="flex items-center gap-1.5 shrink-0 text-fluent-fg-secondary">
+                                    <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                    <span className="text-[12px] font-semibold text-fluent-fg-primary">Parameters:</span>
                                 </div>
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Assignable Scope">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-orange-fg shrink-0" />
-                                    <span className="text-fluent-fg-tertiary">Scope:</span>
-                                    <span className="font-medium text-fluent-fg-primary font-mono">{formatScopeBadge(assignableScopes)}</span>
-                                </div>
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Permitted Actions Count">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-cyan-fg shrink-0" />
-                                    <span className="text-fluent-fg-tertiary">Actions:</span>
-                                    <span className="font-mono font-medium text-fluent-fg-primary">{actions.length}</span>
-                                </div>
-                                {notActions.length > 0 && (
-                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Restricted NotActions Count">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-red-fg shrink-0" />
-                                        <span className="text-fluent-fg-tertiary">NotActions:</span>
-                                        <span className="font-mono font-medium text-fluent-fg-primary">{notActions.length}</span>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Custom Role Name">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-purple-fg shrink-0" />
+                                        <span className="text-fluent-fg-tertiary">Role:</span>
+                                        <span className="font-medium text-fluent-fg-primary">{roleName || 'Custom Role'}</span>
                                     </div>
-                                )}
-                                <span className="hidden lg:inline-flex items-center font-mono text-[11px] text-fluent-fg-secondary px-2.5 py-1 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle" title="Active role definition identifier">
-                                    {liveRoleSchema}
-                                </span>
+                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Assignable Scope">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-orange-fg shrink-0" />
+                                        <span className="text-fluent-fg-tertiary">Scope:</span>
+                                        <span className="font-medium text-fluent-fg-primary font-mono">{formatScopeBadge(assignableScopes)}</span>
+                                    </div>
+                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Permitted Actions Count">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-cyan-fg shrink-0" />
+                                        <span className="text-fluent-fg-tertiary">Actions:</span>
+                                        <span className="font-mono font-medium text-fluent-fg-primary">{actions.length}</span>
+                                    </div>
+                                    {notActions.length > 0 && (
+                                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Restricted NotActions Count">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-red-fg shrink-0" />
+                                            <span className="text-fluent-fg-tertiary">NotActions:</span>
+                                            <span className="font-mono font-medium text-fluent-fg-primary">{notActions.length}</span>
+                                        </div>
+                                    )}
+                                    <span className="hidden lg:inline-flex items-center font-mono text-[11px] text-fluent-fg-secondary px-2.5 py-1 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle" title="Active role definition identifier">
+                                        {liveRoleSchema}
+                                    </span>
+                                </div>
                             </div>
+                            <button
+                                type="button"
+                                onClick={handleToggleMinimize}
+                                className="h-[32px] px-3 rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95 shrink-0"
+                            >
+                                <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />
+                                <span>Customize Parameters</span>
+                                <ChevronDown className="w-3.5 h-3.5 text-fluent-fg-tertiary" />
+                            </button>
                         </div>
-                        <button
-                            type="button"
-                            onClick={handleToggleMinimize}
-                            className="h-[32px] px-3 rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95 shrink-0"
-                        >
-                            <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                            <span>Customize Parameters</span>
-                            <ChevronDown className="w-3.5 h-3.5 text-fluent-fg-tertiary" />
-                        </button>
-                    </div>
-                ) : (
-                    <RbacConfigPanel
-                        roleName={roleName}
-                        setRoleName={setRoleName}
-                        description={description}
-                        setDescription={setDescription}
-                        assignableScopes={assignableScopes}
-                        setAssignableScopes={setAssignableScopes}
-                        actions={actions}
-                        notActions={notActions}
-                        onResetRole={() => applyTemplate('clear')}
-                        onApplyTemplate={applyTemplate}
-                        onToggleMinimize={handleToggleMinimize}
-                    />
-                )}
+                    ) : (
+                        <RbacConfigPanel
+                            roleName={roleName}
+                            setRoleName={setRoleName}
+                            description={description}
+                            setDescription={setDescription}
+                            assignableScopes={assignableScopes}
+                            setAssignableScopes={setAssignableScopes}
+                            actions={actions}
+                            notActions={notActions}
+                            onResetRole={() => applyTemplate('clear')}
+                            onApplyTemplate={applyTemplate}
+                            onToggleMinimize={handleToggleMinimize}
+                        />
+                    )}
+                </div>
 
                 {/* Permissions Selector & Custom Role JSON Preview */}
-                <div className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-4 flex flex-col">
+                <div className={`bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-3 sm:p-3.5 flex flex-col ${isConfigMinimized ? 'flex-1 min-h-0' : 'shrink-0'}`}>
                     <PermissionsSelector 
                         roleName={roleName}
                         description={description}
@@ -268,6 +272,7 @@ export default function RbacDesignerPage() {
                         onClearPermissions={handleClearPermissions}
                         onClearActions={handleClearActions}
                         onClearNotActions={handleClearNotActions}
+                        isConfigMinimized={isConfigMinimized}
                     />
                 </div>
             </div>

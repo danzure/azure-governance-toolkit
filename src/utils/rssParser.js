@@ -110,7 +110,7 @@ export function formatRelativeDate(dateString) {
     if (diffDays < 7) return `${diffDays}d ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
 
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 /**
@@ -178,7 +178,7 @@ function parseXmlWithRegex(xmlString) {
             pubDate,
             updatedDate,
             effectiveDate,
-            formattedDate: effectiveDate ? new Date(effectiveDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
+            formattedDate: effectiveDate ? new Date(effectiveDate).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
             relativeTime: formatRelativeDate(effectiveDate),
             categories,
             primaryCategory: primaryCat,
@@ -259,7 +259,7 @@ export function parseAzureRssXml(xmlString) {
                         pubDate,
                         updatedDate,
                         effectiveDate,
-                        formattedDate: effectiveDate ? new Date(effectiveDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
+                        formattedDate: effectiveDate ? new Date(effectiveDate).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
                         relativeTime: formatRelativeDate(effectiveDate),
                         categories,
                         primaryCategory: primaryCat,
@@ -394,7 +394,7 @@ export async function fetchAzureRss({ forceRefresh = false, timeoutMs = 8000 } =
             ...item,
             isDatacenter: Boolean(item.isDatacenter ?? isDatacenterUpdate(item.categories, item.title, item.description)),
             effectiveDate,
-            formattedDate: effectiveDate ? new Date(effectiveDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
+            formattedDate: effectiveDate ? new Date(effectiveDate).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
             relativeTime: formatRelativeDate(effectiveDate)
         };
     });

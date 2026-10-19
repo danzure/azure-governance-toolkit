@@ -1,6 +1,7 @@
 {
   "name": "atozazure | Azure Governance Toolkit",
   "short_name": "atozazure",
+  "lang": "en-GB",
   "id": "https://app.atozazure.com/",
   "start_url": "/",
   "scope": "/",

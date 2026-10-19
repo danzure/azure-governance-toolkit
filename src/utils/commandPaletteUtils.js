@@ -208,6 +208,16 @@ function getBaseSearchIndex() {
             iconComponent: Sparkles,
             actionType: 'external',
             target: 'https://atozazure.com'
+        },
+        {
+            id: 'action-privacy-policy',
+            category: 'Quick Actions',
+            title: 'Privacy Policy',
+            subtitle: 'Client-side processing, Azure West Europe hosting, and GDPR compliance',
+            keywords: 'privacy policy gdpr compliance azure west europe data protection security confidentiality local storage telemetry',
+            iconComponent: ShieldCheck,
+            actionType: 'route',
+            target: '/privacy'
         }
     );
 

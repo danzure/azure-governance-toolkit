@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
 import Tooltip from '../shared/Tooltip';
 import BuyMeACoffeeIcon from '../shared/BuyMeACoffeeIcon';
@@ -20,7 +21,7 @@ export default function Footer({ variant = 'full' }) {
     const showActions = variant === 'full';
 
     return (
-        <footer className="mt-auto w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
+        <footer className="mt-auto shrink-0 w-full border-t border-fluent-stroke-subtle bg-fluent-bg-canvas transition-colors duration-200" role="contentinfo">
             <div className="max-w-[1600px] w-full mx-auto px-3 sm:px-6 pt-2 sm:pt-2.5 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] sm:pb-2.5 flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4">
 
                 {/* Left Side: Single-line Brand & Copyright Lockup */}
@@ -60,6 +61,13 @@ export default function Footer({ variant = 'full' }) {
                     <span className="text-fluent-fg-tertiary">
                         &copy; {currentYear} Daniel Powley. All rights reserved.
                     </span>
+                    <span className="opacity-35 hidden sm:inline select-none" aria-hidden="true">&bull;</span>
+                    <Link
+                        to="/privacy"
+                        className="text-fluent-fg-tertiary hover:text-fluent-fg-primary underline sm:no-underline sm:hover:underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px]"
+                    >
+                        Privacy Policy
+                    </Link>
                 </div>
 
                 {/* Right Side: Navigation Links with Tooltip (Dashboard only) */}

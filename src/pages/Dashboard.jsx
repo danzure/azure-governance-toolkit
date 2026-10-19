@@ -54,13 +54,13 @@ export default function DashboardPage() {
 
     return (
         <div className="flex flex-col flex-1 w-full min-w-0 bg-fluent-bg-canvas">
-            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-2 sm:py-2.5 tall:py-3.5 very-tall:py-4 animate-fade-in flex-1 flex flex-col justify-start tall:justify-between min-h-0">
+            <div className="w-full min-w-0 max-w-[1600px] mx-auto px-4 sm:px-6 py-2 sm:py-2.5 tall:py-3.5 very-tall:py-4 animate-fade-in flex-1 flex flex-col justify-start min-h-0">
 
                 {/* Two-Column Responsive Workspace Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 tall:gap-4.5 very-tall:gap-5 items-stretch w-full min-w-0 tall:flex-1 tall:min-h-0">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 tall:gap-4.5 very-tall:gap-5 items-stretch w-full min-w-0">
 
                     {/* Left Column: Primary Governance Workspace (~68% / 8 cols) */}
-                    <div className="lg:col-span-8 flex flex-col gap-2.5 sm:gap-3 tall:gap-3.5 very-tall:gap-4 min-w-0 w-full tall:h-full tall:min-h-0">
+                    <div className="lg:col-span-8 flex flex-col gap-2.5 sm:gap-3 tall:gap-3.5 very-tall:gap-4 min-w-0 w-full">
 
                         {/* Section: Available Tools */}
                         <div className="flex flex-col gap-1.5 sm:gap-2 tall:gap-2.5">
@@ -176,7 +176,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Right Column: Dedicated Azure Updates Feed (~32% / 4 cols) */}
-                    <div className="lg:col-span-4 flex flex-col min-w-0 w-full h-[540px] lg:h-0 lg:min-h-full min-h-0 tall:h-full">
+                    <div className="lg:col-span-4 flex flex-col min-w-0 w-full h-[540px] lg:h-0 lg:min-h-full min-h-0">
                         <AzureUpdatesFeed layout="vertical" />
                     </div>
 

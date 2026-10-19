@@ -79,6 +79,30 @@ export const ROUTE_SEO = {
             { name: 'RBAC Custom Role Designer', url: 'https://app.atozazure.com/rbac-designer' }
         ],
     },
+    '/privacy': {
+        title: 'Privacy Policy | atozazure',
+        headerTitle: 'Privacy Policy',
+        description: 'Learn how the Azure Governance Toolkit protects your privacy with 100% client-side processing, local browser storage, and Azure West Europe hosting.',
+        keywords: 'azure governance toolkit privacy, privacy policy, gdpr compliance, azure west europe, client side processing, zero telemetry storage, cloud architecture security',
+        canonical: 'https://app.atozazure.com/privacy',
+        ogType: 'website',
+        breadcrumbs: [
+            { name: 'Home', url: 'https://app.atozazure.com/' },
+            { name: 'Privacy Policy', url: 'https://app.atozazure.com/privacy' }
+        ],
+    },
+    '/privacy-policy': {
+        title: 'Privacy Policy | atozazure',
+        headerTitle: 'Privacy Policy',
+        description: 'Learn how the Azure Governance Toolkit protects your privacy with 100% client-side processing, local browser storage, and Azure West Europe hosting.',
+        keywords: 'azure governance toolkit privacy, privacy policy, gdpr compliance, azure west europe, client side processing, zero telemetry storage, cloud architecture security',
+        canonical: 'https://app.atozazure.com/privacy',
+        ogType: 'website',
+        breadcrumbs: [
+            { name: 'Home', url: 'https://app.atozazure.com/' },
+            { name: 'Privacy Policy', url: 'https://app.atozazure.com/privacy' }
+        ],
+    },
 };
 
 export const DEFAULT_SEO = {
@@ -176,6 +200,11 @@ export function applySEO(pathname) {
     // Browser tab title
     document.title = seo.title;
 
+    // Default HTML language
+    if (typeof document !== 'undefined' && document.documentElement) {
+        document.documentElement.lang = 'en-GB';
+    }
+
     // Standard search engine meta tags
     setMetaTag('name', 'description', seo.description);
     setMetaTag('name', 'keywords', seo.keywords);
@@ -191,7 +220,7 @@ export function applySEO(pathname) {
     setMetaTag('property', 'og:url', seo.canonical);
     setMetaTag('property', 'og:type', seo.ogType || 'website');
     setMetaTag('property', 'og:site_name', siteName);
-    setMetaTag('property', 'og:locale', 'en_US');
+    setMetaTag('property', 'og:locale', 'en_GB');
     setMetaTag('property', 'og:image', ogImage);
     setMetaTag('property', 'og:image:secure_url', ogImage);
     setMetaTag('property', 'og:image:type', ogImageType);
