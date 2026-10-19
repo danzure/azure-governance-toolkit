@@ -125,8 +125,8 @@ export default function RbacDesignerPage() {
     }, [roleName]);
 
     return (
-        <div className={`flex flex-col min-w-0 w-full ${isConfigMinimized ? 'flex-1 h-full min-h-0' : ''}`}>
-            <div className={`max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-3 sm:pt-4 ${isConfigMinimized ? 'pb-2 sm:pb-3 min-h-0 h-full flex-1' : 'pb-6 sm:pb-8'} flex flex-col gap-2.5 sm:gap-3`}>
+        <div className="flex flex-col min-w-0 w-full flex-1">
+            <div className={`max-w-[1600px] w-full min-w-0 mx-auto px-3 sm:px-6 pt-3 sm:pt-4 ${isConfigMinimized ? 'pb-4 sm:pb-6' : 'pb-6 sm:pb-8'} flex flex-col gap-2.5 sm:gap-3 flex-1`}>
                 
                 {/* Header */}
                 <div className="flex flex-col gap-0.5 shrink-0">
@@ -258,7 +258,7 @@ export default function RbacDesignerPage() {
                 </div>
 
                 {/* Permissions Selector & Custom Role JSON Preview */}
-                <div className={`bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-3 sm:p-3.5 flex flex-col ${isConfigMinimized ? 'flex-1 min-h-0' : 'shrink-0'}`}>
+                <div className="bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft p-3 sm:p-3.5 flex flex-col">
                     <PermissionsSelector 
                         roleName={roleName}
                         description={description}

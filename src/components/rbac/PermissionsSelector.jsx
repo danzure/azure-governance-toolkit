@@ -150,9 +150,9 @@ export default function PermissionsSelector({
                 <h3 className="text-[15px] sm:text-[16px] font-semibold text-fluent-fg-primary">Permissions & Role Definition</h3>
             </div>
 
-            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 ${isConfigMinimized ? 'flex-1 min-h-0' : ''}`}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                 {/* Available Operations with integrated Search and Provider Filter */}
-                <div className={`flex flex-col border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-canvas ${isConfigMinimized ? 'h-[420px] lg:h-full flex-1 min-h-0' : 'h-[520px] lg:h-[580px]'} overflow-hidden`}>
+                <div className="flex flex-col border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-canvas h-[520px] lg:h-[580px] overflow-hidden">
                     {/* Integrated Header Toolbar */}
                     <div className="p-3 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-col gap-2.5 rounded-t-lg relative z-20">
                         <div className="flex items-center justify-between">
@@ -318,7 +318,7 @@ export default function PermissionsSelector({
                 </div>
 
                 {/* Selected Operations & JSON Definition with Tab Switcher */}
-                <div className={`flex flex-col border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-canvas ${isConfigMinimized ? 'h-[420px] lg:h-full flex-1 min-h-0' : 'h-[520px] lg:h-[580px]'} overflow-hidden shadow-soft`}>
+                <div className="flex flex-col border border-fluent-stroke-subtle rounded-lg bg-fluent-bg-canvas h-[520px] lg:h-[580px] overflow-hidden shadow-soft">
                     {/* Header with Segmented Tabs */}
                     <div className="p-2.5 border-b border-fluent-stroke-subtle bg-fluent-bg-subtle flex flex-wrap items-center justify-between gap-2 min-h-[57px] rounded-t-lg">
                         {/* Tab Segmented Control */}
