@@ -30,7 +30,7 @@ export default function Footer({ variant = 'full' }) {
                         href="https://atozazure.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px] translate-y-[1px] -mr-1.5 md:-ml-0.5"
+                        className="inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg rounded-[2px] translate-y-[1px] -mr-1.5 md:-ml-0.5"
                         aria-label="atozazure"
                     >
                         {logoLight && logoDark ? (
@@ -38,16 +38,16 @@ export default function Footer({ variant = 'full' }) {
                                 <img
                                     src={logoLight}
                                     alt="atozazure"
-                                    className="h-[22px] sm:h-[24px] w-auto object-contain dark:hidden transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                                    className="h-[22px] sm:h-[24px] w-auto object-contain dark:hidden"
                                 />
                                 <img
                                     src={logoDark}
                                     alt="atozazure"
-                                    className="h-[22px] sm:h-[24px] w-auto object-contain hidden dark:block transition-transform duration-200 ease-in-out group-hover:scale-105 active:scale-95"
+                                    className="h-[22px] sm:h-[24px] w-auto object-contain hidden dark:block"
                                 />
                             </>
                         ) : (
-                            <span className="font-semibold text-[13px] sm:text-[14px] text-fluent-fg-primary tracking-tight group-hover:text-fluent-brand-fg transition-colors">
+                            <span className="font-semibold text-[13px] sm:text-[14px] text-fluent-fg-primary tracking-tight">
                                 atozazure
                             </span>
                         )}
