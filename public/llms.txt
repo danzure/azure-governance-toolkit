@@ -1,0 +1,20 @@
+# atozazure | Azure Governance Toolkit
+
+> Free, open-access suite of cloud governance utilities designed for Azure architects, DevOps engineers, and security teams.
+
+atozazure (https://app.atozazure.com) is a comprehensive, production-ready cloud governance platform built for Microsoft Azure. It simplifies foundational governance workflows—enforcing Cloud Adoption Framework (CAF) standards, Zero Trust identity architectures, enterprise management group hierarchies, FinOps tagging taxonomies, and least-privilege RBAC role authoring. All tools feature real-time validation, multi-format Infrastructure as Code (IaC) code generation (Bicep, Terraform, ARM, Azure CLI, PowerShell), and copy-ready configurations.
+
+## Core Governance Tools
+
+- [Azure Resource Naming Tool (CAF Compliant)](https://app.atozazure.com/resource-naming): Interactive Cloud Adoption Framework (CAF) naming generator supporting 100+ Azure resource types. Enforces official abbreviation prefixes, character constraints, length limits, scope rules, and customizable segment ordering (Resource, Workload, Environment, Region, Instance). Exports directly to Terraform, Bicep, ARM templates, and Azure CLI commands.
+- [Microsoft Entra ID Conditional Access Policy Builder](https://app.atozazure.com/conditional-access): Zero Trust policy designer pre-loaded with Microsoft recommended security baselines (MFA enforcement, legacy auth blocking, high-risk user containment, PIM/admin protection). Enforces standardized CA policy naming conventions, safely isolates break-glass emergency accounts, and exports deployable JSON templates.
+- [Azure Management Group Topology Designer](https://app.atozazure.com/management-groups): Visual Enterprise-Scale Landing Zone (ESLZ) hierarchy architect. Model root tenant hierarchies, platform subscriptions (Identity, Management, Connectivity), landing zone archetypes (Corp, Online), and sandbox subscriptions. Generates deployable Bicep modules and Terraform `azurerm_management_group` configurations.
+- [Azure Tagging Strategy Builder & Policy Generator](https://app.atozazure.com/tagging-strategy): Enterprise cloud taxonomy and FinOps tagging builder. Define mandatory, conditional, and operational tags (Owner, CostCenter, Environment, Criticality, Workload) with predefined values and validation regex. Automatically compiles compliant Azure Policy JSON definitions (`Audit`, `Deny`, `Modify` effects) and Markdown documentation.
+- [Azure Custom RBAC Role Designer](https://app.atozazure.com/rbac-designer): Least-privilege Azure Role-Based Access Control definition creator. Search across thousands of Azure Resource Provider operations (`Actions`, `NotActions`, `DataActions`, `NotDataActions`), configure assignable scopes (Management Groups, Subscriptions, Resource Groups), and export ready-to-deploy ARM, Bicep, Terraform, and Azure CLI definitions.
+
+## Extended Documentation & Machine Context
+
+- [Full LLM Documentation](https://app.atozazure.com/llms-full.txt): Complete reference guide covering technical architecture, detailed parameter schemas, supported resource providers, and complete IaC template export examples.
+- [XML Sitemap](https://app.atozazure.com/sitemap.xml): Machine-readable URL index of all pages and tools.
+- [Security Contact](https://app.atozazure.com/.well-known/security.txt): Security disclosure and vulnerability reporting policy.
+- [Main Website & Blog](https://atozazure.com): Cloud architecture tutorials, deep dives, and community resources authored by Daniel Powley.

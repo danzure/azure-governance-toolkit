@@ -1,0 +1,153 @@
+# atozazure | Azure Governance Toolkit — Full Reference Documentation
+
+> Free, production-grade cloud governance utilities designed for Azure architects, DevOps engineers, and security professionals.
+> Canonical URL: https://app.atozazure.com
+> Main Website: https://atozazure.com
+> Author: Daniel Powley (@danzure)
+> License: Open community tool
+
+---
+
+## 1. Architectural Overview & Philosophy
+
+atozazure is a client-side cloud governance toolkit engineered to eliminate common misconfigurations, security oversights, and naming drift across Microsoft Azure environments. The toolkit is built entirely on modern web standards and processes all configurations client-side in the browser. No sensitive cloud topology data, subscription IDs, or tenant details are transmitted to external servers.
+
+### Core Governance Pillars Supported
+1. **Consistency**: Cloud Adoption Framework (CAF) resource naming standardization.
+2. **Zero Trust Security**: Microsoft Entra ID Conditional Access baseline policies.
+3. **Hierarchical Governance**: Enterprise-Scale Landing Zone (ESLZ) management group topologies.
+4. **Cost Transparency & FinOps**: Centralized tagging taxonomies with automated Azure Policy JSON enforcement.
+5. **Least-Privilege Identity**: Custom Azure RBAC role definitions scoped to exact provider actions.
+
+---
+
+## 2. Comprehensive Tool Specifications
+
+### Tool 1: Azure Resource Naming Tool (CAF Compliant)
+- **URL**: `https://app.atozazure.com/resource-naming`
+- **Purpose**: Generates consistent, Cloud Adoption Framework (CAF) compliant Azure resource names while actively enforcing character restrictions, casing rules, length limits, and uniqueness requirements.
+
+#### CAF Components & Order
+The tool enables custom reordering of standard name segments:
+1. **Resource Type Prefix**: Official Microsoft CAF abbreviations (e.g., `rg` for Resource Group, `vm` for Virtual Machine, `st` for Storage Account, `kv` for Key Vault, `vnet` for Virtual Network, `aks` for Azure Kubernetes Service). Over 100+ Azure services supported.
+2. **Workload / Application Name**: Short identifier for the business application, project, or service (e.g., `core`, `billing`, `eshop`).
+3. **Environment**: Standardized lifecycle designation (e.g., `prod`, `dev`, `stage`, `uat`, `test`).
+4. **Region**: Condensed Azure region code (e.g., `uks` for UK South, `ukw` for UK West, `neu` for North Europe, `weu` for West Europe, `eus` for East US).
+5. **Instance Counter**: Two-digit sequence counter (e.g., `01`, `02`) or alphanumeric sequence.
+6. **Optional Organization / Business Unit**: Optional prefix or suffix (e.g., `corp`, `fin`).
+
+#### Validation Engine
+- **Regex & Character Set**: Automatically sanitizes names based on Azure service constraints (e.g., Storage Accounts require 3-24 lowercase alphanumeric characters with no hyphens; Key Vault requires 3-24 alphanumeric characters or hyphens; Virtual Machines max 15 characters for Windows NetBIOS).
+- **Length Monitoring**: Real-time counter comparing current length against minimum and maximum character limits.
+- **Hyphen & Casing Management**: Intelligently converts spaces and unsupported symbols, converting to lowercase or uppercase as dictated by resource provider specifications.
+
+#### Export Options
+- **Bicep**: Generates parameterized Bicep variable definitions (`var storageAccountName = '...'`).
+- **Terraform**: Generates `locals { ... }` or resource blocks with interpolated variables.
+- **ARM Template**: JSON parameter definitions.
+- **Azure CLI**: Ready-to-execute `az` creation scripts.
+- **PowerShell**: Azure PowerShell `New-Az*` commands.
+
+---
+
+### Tool 2: Microsoft Entra ID Conditional Access Policy Builder
+- **URL**: `https://app.atozazure.com/conditional-access`
+- **Purpose**: Streamlines the design, standardization, and deployment of Microsoft Entra ID Conditional Access policies adhering to Zero Trust security baselines.
+
+#### Naming Convention Standard
+Enforces the structured enterprise policy naming taxonomy:
+`CA<Number>-<TargetPersona>-<Platform/Client>-<GrantControl>-<State>`
+*Example*: `CA001-AllUsers-AllApps-RequireMFA-ReportOnly`
+
+#### Pre-Configured Baseline Templates
+- **CA001: Require Multi-Factor Authentication (MFA) for All Users**: Core baseline enforcing MFA across all cloud applications.
+- **CA002: Require Phishing-Resistant MFA / PIM for Privileged Roles**: Protects Global Admins, Privileged Role Admins, and security personnel using FIDO2 / Windows Hello for Business.
+- **CA003: Block Legacy Authentication Protocols**: Disallows POP3, IMAP, SMTP, and legacy basic auth protocols prone to password spraying attacks.
+- **CA004: Require Microsoft Entra Hybrid Joined or Compliant Devices**: Enforces device compliance and health signals before granting resource access.
+- **CA005: High-Risk User & Sign-In Remediation**: Automatically triggers self-service password reset or blocks access when Entra ID Protection detects compromised credentials.
+
+#### Break-Glass Account Safeguards
+Includes explicit guidance and input fields to exclude Emergency Access ("Break-Glass") accounts from policies to prevent accidental tenant lockout.
+
+#### Export Formats
+- **Microsoft Graph JSON**: Fully formatted policy JSON object ready for automated deployment via Microsoft Graph API (`POST /identity/conditionalAccess/policies`) or PowerShell `New-MgIdentityConditionalAccessPolicy`.
+- **Markdown Documentation**: Executive security documentation detailing policy rationale, scope, target conditions, and grant controls.
+
+---
+
+### Tool 3: Azure Management Group Topology Designer
+- **URL**: `https://app.atozazure.com/management-groups`
+- **Purpose**: Interactive visual design canvas for modeling Azure Enterprise-Scale Landing Zone (ESLZ) management group hierarchies and policy inheritance paths.
+
+#### Supported Hierarchical Archetypes
+- **Tenant Root Group**: Top-level root (`/providers/Microsoft.Management/managementGroups/<tenantId>`).
+- **Platform Management Group**:
+  - `Management`: Dedicated subscription for Log Analytics, Azure Monitor, and automation runbooks.
+  - `Connectivity`: Dedicated subscription for Azure Firewall, Virtual WAN, Hub VNets, and ExpressRoute gateways.
+  - `Identity`: Dedicated subscription for Entra Domain Services and domain controllers.
+- **Landing Zones Management Group**:
+  - `Corp`: Private workloads with routing through internal hub connectivity.
+  - `Online`: Publicly facing Internet-exposed workloads.
+- **Sandboxes**: Isolated playgrounds with spend caps and non-inherited restrictive policies.
+- **Decommissioned**: Holding hierarchy for resources pending retirement.
+
+#### Code Generation Engine
+- **Bicep**: Generates nested or flat Bicep modules leveraging `Microsoft.Management/managementGroups@2021-04-01` with explicit parent-child resource references.
+- **Terraform**: Generates `azurerm_management_group` resource blocks with `parent_management_group_id` associations and `subscription_ids` arrays.
+- **Hierarchy Diagram**: Visual tree rendering with real-time add, remove, and re-parent operations.
+
+---
+
+### Tool 4: Azure Tagging Strategy Builder & Policy Generator
+- **URL**: `https://app.atozazure.com/tagging-strategy`
+- **Purpose**: Defines cloud resource taxonomy, FinOps cost allocation matrices, and generates Azure Policy definitions to enforce compliance.
+
+#### Taxonomy Categories
+1. **FinOps & Accounting Tags**: `CostCenter`, `Environment`, `Owner`, `BusinessUnit`, `ProjectCode`.
+2. **Operational & Lifecycle Tags**: `DisasterRecoveryTier`, `MaintenanceWindow`, `BackupSchedule`, `PatchGroup`.
+3. **Security & Governance Tags**: `DataClassification` (Public, Internal, Confidential, Restricted), `Confidentiality`, `ComplianceScope`.
+
+#### Automated Azure Policy Generation
+Generates complete Azure Policy JSON definitions supporting configurable enforcement effects:
+- **Audit**: Flags non-compliant resources in Azure Policy compliance dashboard without disrupting provisioning.
+- **Deny**: Blocks ARM / Bicep / Terraform resource deployment if required tags are missing or fail regex validation.
+- **Modify**: Automatically injects default tag values onto resources or resource groups during deployment.
+
+#### Documentation Generation
+Exports human-readable Markdown tagging dictionary for corporate architecture wikis, Confluence, and GitHub repositories.
+
+---
+
+### Tool 5: Azure Custom RBAC Role Designer
+- **URL**: `https://app.atozazure.com/rbac-designer`
+- **Purpose**: Authors least-privilege Azure Custom Role Definitions with surgical precision across all Azure Resource Providers.
+
+#### Permission Granularity
+- **Actions**: Control plane operations (e.g., `Microsoft.Compute/virtualMachines/read`, `Microsoft.Compute/virtualMachines/restart/action`).
+- **NotActions**: Explicitly subtracted control plane operations to prevent privilege escalation.
+- **DataActions**: Data plane operations (e.g., `Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read`).
+- **NotDataActions**: Explicitly subtracted data plane operations.
+- **AssignableScopes**: Binds roles to Tenant Root, Management Groups, Subscriptions, or Resource Groups.
+
+#### Export Formats
+- **Azure Role Definition JSON**: Standard ARM-compliant JSON for `az role definition create --role-definition @role.json`.
+- **Bicep**: `Microsoft.Authorization/roleDefinitions` resource block with dynamic scope parameters.
+- **Terraform**: `azurerm_role_definition` resource block with HCL arrays.
+- **PowerShell**: `New-AzRoleDefinition` initialization script.
+
+---
+
+## 3. Machine-Readable Endpoints & Sitemaps
+
+- **Manifest / Short Documentation**: `https://app.atozazure.com/llms.txt`
+- **Full Reference Documentation**: `https://app.atozazure.com/llms-full.txt`
+- **Robots Directives**: `https://app.atozazure.com/robots.txt`
+- **Sitemap**: `https://app.atozazure.com/sitemap.xml`
+- **Security Policy**: `https://app.atozazure.com/.well-known/security.txt`
+
+---
+
+## 4. Crawling & AI Usage Policy
+
+- **Real-Time AI Search & Citation**: AI search engines (Perplexity, ChatGPT Search, Bing / Copilot, Google Gemini) are fully welcomed to fetch, index, and cite content to assist engineers querying Azure governance topics.
+- **Bulk Scrapers & Model Training**: Bulk model pre-training scrapers (Common Crawl, Bytespider, etc.) are restricted via `robots.txt` to preserve service availability for interactive human users and engineers.
