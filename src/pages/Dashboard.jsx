@@ -264,28 +264,12 @@ export default function DashboardPage() {
                 </section>
 
                 {/* Section 2: Standards & Architecture Reference Hub (Expansive Full Width) */}
-                <section className="flex flex-col gap-2.5 w-full min-w-0" aria-label="Standards and Architecture Reference Hub">
-                    <div className="pb-0.5">
-                        <h2 className="text-[16px] sm:text-[18px] font-semibold tracking-tight text-fluent-fg-primary leading-tight">
-                            Standards &amp; Architecture Reference Hub
-                        </h2>
-                        <p className="text-[12.5px] sm:text-[13px] text-fluent-fg-secondary mt-0.5">
-                            Cloud Adoption Framework cheatsheet and official Microsoft architecture center guidance
-                        </p>
-                    </div>
+                <section className="w-full min-w-0" aria-label="Standards and Architecture Reference Hub">
                     <QuickActionsDeck />
                 </section>
 
                 {/* Section 3: Azure Service Updates (Horizontal Stream Carousel) */}
-                <section className="flex flex-col gap-2.5 w-full min-w-0" aria-label="Azure Service Updates Feed">
-                    <div className="pb-0.5">
-                        <h2 className="text-[16px] sm:text-[18px] font-semibold tracking-tight text-fluent-fg-primary leading-tight">
-                            Platform Intelligence &amp; Updates
-                        </h2>
-                        <p className="text-[12.5px] sm:text-[13px] text-fluent-fg-secondary mt-0.5">
-                            Real-time Azure service updates, releases, and retirement announcements
-                        </p>
-                    </div>
+                <section className="w-full min-w-0" aria-label="Azure Service Updates Feed">
                     <AzureUpdatesFeed layout="horizontal" />
                 </section>
 
