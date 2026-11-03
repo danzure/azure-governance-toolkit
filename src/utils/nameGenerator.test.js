@@ -399,5 +399,21 @@ describe('generateName', () => {
         expect(orgFirstPreset).toBeDefined();
         expect(orgFirstPreset.requiresOrg).toBe(true);
     });
+    it('correctly generates compliant names for new priority CAF resources', () => {
+        const ergw = makeResource({ name: 'ExpressRoute gateway', abbrev: 'ergw' });
+        expect(generateName(ergw, defaultConfig)).toBe('ergw-web-prod-uks-001');
+
+        const aigw = makeResource({ name: 'AI Gateway', abbrev: 'aigw' });
+        expect(generateName(aigw, defaultConfig)).toBe('aigw-web-prod-uks-001');
+
+        const di = makeResource({ name: 'Document Intelligence', abbrev: 'di' });
+        expect(generateName(di, defaultConfig)).toBe('di-web-prod-uks-001');
+
+        const snap = makeResource({ name: 'Snapshot', abbrev: 'snap' });
+        expect(generateName(snap, defaultConfig)).toBe('snap-web-prod-uks-001');
+
+        const spark = makeResource({ name: 'Azure Synapse Analytics Spark Pool', abbrev: 'synsp', chars: 'a-z, 0-9' });
+        expect(generateName(spark, defaultConfig)).toBe('synspwebproduks001');
+    });
 });
 

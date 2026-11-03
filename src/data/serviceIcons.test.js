@@ -20,18 +20,50 @@ describe('Service Icons & Resource Data Integrity', () => {
         expect(getServiceIconUrl(undefined)).toBeNull();
     });
 
-    it('enforces exclusive isNew badge rule (strictly 7 newly added services)', () => {
+    it('enforces exclusive isNew badge rule (strictly 39 newly added services)', () => {
         const newServices = RESOURCE_DATA_SORTED.filter((r) => r.isNew === true);
-        expect(newServices).toHaveLength(7);
+        expect(newServices).toHaveLength(39);
 
         const expectedNewNames = [
-            'Application Gateway for Containers',
-            'Azure Arc gateway',
-            'Azure Backup Resource Guard',
-            'Compute Fleet',
-            'DNS Forwarding Ruleset',
-            'Front Door firewall policy',
-            'Log Analytics query pack',
+                  "AI Gateway",
+                  "Alert processing rule",
+                  "Application Gateway for Containers",
+                  "Azure Analysis Services server",
+                  "Azure Arc gateway",
+                  "Azure Backup Resource Guard",
+                  "Azure Cosmos DB for PostgreSQL cluster",
+                  "Azure Data Explorer cluster database",
+                  "Azure Monitor Private Link Scope",
+                  "Azure SQL Elastic Job agent",
+                  "Azure Synapse Analytics Spark Pool",
+                  "Azure Synapse Analytics private link hub",
+                  "Backup Vault policy",
+                  "Compute Fleet",
+                  "Computer Vision",
+                  "Content Safety",
+                  "DNS Forwarding Ruleset",
+                  "Deployment script",
+                  "Document Intelligence",
+                  "Event Grid subscription",
+                  "Event Hub consumer group",
+                  "ExpressRoute direct",
+                  "ExpressRoute gateway",
+                  "Front Door firewall policy",
+                  "Image template",
+                  "Log Analytics query pack",
+                  "Notification Hubs namespace",
+                  "Restore point collection",
+                  "Route filter",
+                  "Route server",
+                  "SSH key",
+                  "Service Fabric managed cluster",
+                  "Service endpoint policy",
+                  "Snapshot",
+                  "Translator",
+                  "VPN connection",
+                  "VPN site",
+                  "Virtual machine maintenance configuration",
+                  "Virtual network peering"
         ];
 
         const actualNames = newServices.map((r) => r.name).sort();

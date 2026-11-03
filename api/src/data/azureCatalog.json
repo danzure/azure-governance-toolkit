@@ -6,6 +6,11 @@
       "category": "Management + Governance"
     },
     {
+      "name": "AI Gateway",
+      "abbrev": "aigw",
+      "category": "AI + ML"
+    },
+    {
       "abbrev": "apr",
       "category": "Management + Governance",
       "name": "Alert processing rule"
@@ -96,6 +101,11 @@
       "category": "AI + ML"
     },
     {
+      "name": "Azure Analysis Services server",
+      "abbrev": "as",
+      "category": "Analytics"
+    },
+    {
       "name": "Azure Arc gateway",
       "abbrev": "arcgw",
       "category": "Compute"
@@ -134,6 +144,11 @@
       "abbrev": "cospos",
       "category": "Databases",
       "name": "Azure Cosmos DB for PostgreSQL cluster"
+    },
+    {
+      "name": "Azure Data Explorer cluster database",
+      "abbrev": "dedb",
+      "category": "Analytics"
     },
     {
       "name": "Azure Databricks Access Connector",
@@ -176,6 +191,11 @@
       "category": "Management + Governance"
     },
     {
+      "name": "Azure Monitor Private Link Scope",
+      "abbrev": "ampls",
+      "category": "Management + Governance"
+    },
+    {
       "name": "Azure Monitor workspace",
       "abbrev": "amon",
       "category": "Management + Governance"
@@ -201,8 +221,18 @@
       "name": "Azure Synapse Analytics private link hub"
     },
     {
+      "name": "Azure Synapse Analytics Spark Pool",
+      "abbrev": "synsp",
+      "category": "Analytics"
+    },
+    {
       "name": "Backup vault",
       "abbrev": "bvault",
+      "category": "Storage"
+    },
+    {
+      "name": "Backup Vault policy",
+      "abbrev": "bkpol",
       "category": "Storage"
     },
     {
@@ -236,6 +266,11 @@
       "category": "Compute"
     },
     {
+      "name": "Computer Vision",
+      "abbrev": "cv",
+      "category": "AI + ML"
+    },
+    {
       "name": "Container App",
       "abbrev": "aca",
       "category": "Containers"
@@ -259,6 +294,11 @@
       "name": "Container registry",
       "abbrev": "cr",
       "category": "Containers"
+    },
+    {
+      "name": "Content Safety",
+      "abbrev": "cs",
+      "category": "AI + ML"
     },
     {
       "name": "Cosmos DB account",
@@ -361,6 +401,11 @@
       "category": "Networking"
     },
     {
+      "name": "Document Intelligence",
+      "abbrev": "di",
+      "category": "AI + ML"
+    },
+    {
       "name": "Elastic SAN",
       "abbrev": "esan",
       "category": "Storage"
@@ -373,6 +418,11 @@
     {
       "name": "Event Grid namespace",
       "abbrev": "evgns",
+      "category": "Integration"
+    },
+    {
+      "name": "Event Grid subscription",
+      "abbrev": "evgs",
       "category": "Integration"
     },
     {
@@ -391,6 +441,11 @@
       "category": "Integration"
     },
     {
+      "name": "Event Hub consumer group",
+      "abbrev": "evhcg",
+      "category": "Analytics"
+    },
+    {
       "name": "Event Hub namespace",
       "abbrev": "evhns",
       "category": "Integration"
@@ -404,6 +459,11 @@
       "abbrev": "erd",
       "category": "Networking",
       "name": "ExpressRoute direct"
+    },
+    {
+      "name": "ExpressRoute gateway",
+      "abbrev": "ergw",
+      "category": "Networking"
     },
     {
       "name": "Fabric Capacity",
@@ -616,6 +676,11 @@
       "category": "Integration"
     },
     {
+      "name": "Notification Hubs namespace",
+      "abbrev": "ntfns",
+      "category": "Web"
+    },
+    {
       "name": "Policy assignment",
       "abbrev": "pa",
       "category": "General"
@@ -691,6 +756,16 @@
       "name": "Restore point collection"
     },
     {
+      "name": "Route filter",
+      "abbrev": "rf",
+      "category": "Networking"
+    },
+    {
+      "name": "Route server",
+      "abbrev": "rtserv",
+      "category": "Networking"
+    },
+    {
       "name": "Route table",
       "abbrev": "rt",
       "category": "Networking"
@@ -716,6 +791,11 @@
       "category": "Integration"
     },
     {
+      "name": "Service endpoint policy",
+      "abbrev": "se",
+      "category": "Networking"
+    },
+    {
       "name": "Service Fabric cluster",
       "abbrev": "sf",
       "category": "Compute"
@@ -729,6 +809,11 @@
       "name": "SignalR service",
       "abbrev": "sigr",
       "category": "Integration"
+    },
+    {
+      "name": "Snapshot",
+      "abbrev": "snap",
+      "category": "Compute"
     },
     {
       "name": "Speech service",
@@ -811,6 +896,11 @@
       "category": "Networking"
     },
     {
+      "name": "Translator",
+      "abbrev": "trsl",
+      "category": "AI + ML"
+    },
+    {
       "name": "Virtual hub",
       "abbrev": "vhub",
       "category": "Networking"
@@ -841,6 +931,11 @@
       "category": "Networking"
     },
     {
+      "name": "Virtual network peering",
+      "abbrev": "peer",
+      "category": "Networking"
+    },
+    {
       "name": "Virtual Network routing appliance",
       "abbrev": "vnra",
       "category": "Networking"
@@ -856,8 +951,18 @@
       "category": "Compute"
     },
     {
+      "name": "VPN connection",
+      "abbrev": "vcn",
+      "category": "Networking"
+    },
+    {
       "name": "VPN Gateway",
       "abbrev": "vgw",
+      "category": "Networking"
+    },
+    {
+      "name": "VPN site",
+      "abbrev": "vst",
       "category": "Networking"
     },
     {

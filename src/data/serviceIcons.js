@@ -183,15 +183,15 @@ const SERVICE_ICON_MAP = {
     'Azure AI Search':                  'Search-Services',
     'Azure Bot Service':                'Bot-Services',
     'Machine Learning workspace':       null,               // → ALT
-    'Azure OpenAI Service':             null,               // → MASKATI
-    'Azure OpenAI':                     null,               // → MASKATI
-    'Azure AI services':                null,               // → MASKATI
-    'Azure AI services account':        null,               // → MASKATI
+    'Azure OpenAI Service':             null,               // → PLAYER
+    'Azure OpenAI':                     null,               // → PLAYER
+    'Azure AI services':                null,               // → PLAYER
+    'Azure AI services account':        null,               // → PLAYER
     'Azure AI Video Indexer':           null,               // → PLAYER
-    'Microsoft Foundry resource':       null,               // → MASKATI
-    'Microsoft Foundry hub':            null,               // → MASKATI
-    'Microsoft Foundry project':        null,               // → MASKATI
-    'Foundry IQ':                       null,               // → MASKATI
+    'Microsoft Foundry resource':       null,               // → PLAYER
+    'Microsoft Foundry hub':            null,               // → PLAYER
+    'Microsoft Foundry project':        null,               // → PLAYER
+    'Foundry IQ':                       null,               // → PLAYER
 
     // ── Data & Analytics ─────────────────────────────────────────────────────
     'Data Factory':                     'Data-Factory',
@@ -251,6 +251,27 @@ const SERVICE_ICON_MAP = {
     'Service Fabric managed cluster':   'Service-Fabric-Clusters',
     'SSH key':                          'Keys',
     'Virtual machine maintenance configuration': null,       // → ALT
+    'AI Gateway':                       'Cognitive-Services',
+    'Azure Analysis Services server':   'Analysis-Services',
+    'Azure Data Explorer cluster database': 'Azure-Data-Explorer-Clusters',
+    'Azure Monitor Private Link Scope': 'Monitor',
+    'Azure Synapse Analytics Spark Pool': 'Azure-Synapse-Analytics',
+    'Backup Vault policy':              null,               // → PLAYER
+    'Computer Vision':                  'Cognitive-Services',
+    'Content Safety':                   'Cognitive-Services',
+    'Document Intelligence':            'Cognitive-Services',
+    'Event Grid subscription':          'Event-Grid-Subscriptions',
+    'Event Hub consumer group':         'Event-Hubs',
+    'ExpressRoute gateway':             'ExpressRoute-Circuits',
+    'Notification Hubs namespace':      'Notification-Hubs',
+    'Route filter':                     'Route-Filters',
+    'Route server':                     'Route-Filters',
+    'Service endpoint policy':          'Service-Endpoint-Policies',
+    'Snapshot':                         'Disks-Snapshots',
+    'Translator':                       'Cognitive-Services',
+    'Virtual network peering':          'Virtual-Networks',
+    'VPN connection':                   'Connections',
+    'VPN site':                         'Virtual-Network-Gateways',
 };
 
 
@@ -278,15 +299,8 @@ const SERVICE_ICON_MAP_ALT = {
 // Values are partial SVG path fragments appended to ICON_BASE_URL_MASKATI.
 
 const SERVICE_ICON_MAP_MASKATI = {
-    'Microsoft Foundry resource':       'AIFoundry',
-    'Microsoft Foundry hub':            'AIFoundry',
-    'Microsoft Foundry project':        'AIFoundryProject',
-    'Foundry IQ':                       'AIFoundry',
-    'Azure AI services account':        'AIServices',
-    'Azure AI services':                'AIServices',
-    'Azure OpenAI service':             'OpenAI',
-    'Azure OpenAI':                     'OpenAI',
-    'Azure OpenAI Service':             'OpenAI',
+    // Deprecated: maskati SVGs contained empty text stubs without vector paths.
+    // All AI services are now mapped to official Microsoft icons in PLAYER below.
 };
 
 
@@ -323,6 +337,15 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Azure AI Video Indexer':           'other/01800-icon-service-Azure-Video-Indexer',
     'Backup vault':                     'other/02361-icon-service-Backup-Vault',
     'Azure Managed Redis':              'new%20icons/03675-icon-service-Azure-Managed-Redis',
+    'Azure OpenAI Service':             'ai%20%2B%20machine%20learning/03438-icon-service-Azure-OpenAI',
+    'Azure OpenAI':                     'ai%20%2B%20machine%20learning/03438-icon-service-Azure-OpenAI',
+    'Azure OpenAI service':             'ai%20%2B%20machine%20learning/03438-icon-service-Azure-OpenAI',
+    'Microsoft Foundry resource':       'ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio',
+    'Microsoft Foundry hub':            'ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio',
+    'Microsoft Foundry project':        'ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio',
+    'Foundry IQ':                       'ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio',
+    'Azure AI services':                'ai%20%2B%20machine%20learning/10162-icon-service-Cognitive-Services',
+    'Azure AI services account':        'ai%20%2B%20machine%20learning/10162-icon-service-Cognitive-Services',
     'Managed DevOps Pools':             'devops/03393-icon-service-Managed-DevOps-Pools',
     'Template Spec':                    'other/02340-icon-service-Template-Specs',
     'Azure Arc-enabled Kubernetes cluster': 'other/01088-icon-service-Arc-Kubernetes',
@@ -339,6 +362,7 @@ const SERVICE_ICON_MAP_PLAYER = {
     'Azure Arc gateway':                'management%20%2B%20governance/01710-icon-service-Arc-Machines',
     'DNS Forwarding Ruleset':           'networking/02882-icon-service-DNS-Private-Resolver',
     'Log Analytics query pack':         'other/01085-icon-service-Log-Analytics-Query-Pack',
+    'Backup Vault policy':              'other/02361-icon-service-Backup-Vault',
 };
 
 
