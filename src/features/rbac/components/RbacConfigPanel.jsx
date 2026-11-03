@@ -70,7 +70,8 @@ export default function RbacConfigPanel({
     notActions = [],
     onResetRole,
     onApplyTemplate,
-    onToggleMinimize
+    onToggleMinimize,
+    embedded = false
 }) {
     const [isScopeMenuOpen, setIsScopeMenuOpen] = useState(false);
     const [activeTemplateCategory, setActiveTemplateCategory] = useState('All');
@@ -110,7 +111,7 @@ export default function RbacConfigPanel({
     }, [onApplyTemplate]);
 
     return (
-        <div className="relative z-40 animate-slide-up bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft flex flex-col overflow-hidden">
+        <div className={`relative z-40 bg-fluent-bg-card flex flex-col overflow-hidden ${embedded ? '' : 'rounded-lg border border-fluent-stroke-subtle shadow-soft animate-slide-up'}`}>
             
             {/* Header: Edge-to-edge Fluent 2 card header */}
             <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-card">
@@ -455,5 +456,6 @@ RbacConfigPanel.propTypes = {
     notActions: PropTypes.arrayOf(PropTypes.string),
     onResetRole: PropTypes.func.isRequired,
     onApplyTemplate: PropTypes.func.isRequired,
-    onToggleMinimize: PropTypes.func.isRequired
+    onToggleMinimize: PropTypes.func.isRequired,
+    embedded: PropTypes.bool
 };

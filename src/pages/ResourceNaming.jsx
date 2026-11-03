@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Info, ExternalLink, ChevronDown, Sliders } from 'lucide-react';
+import { Info, ExternalLink, ChevronDown } from 'lucide-react';
 
 import { ConfigPanel, ResourceGrid, NamingPromptBar, generateName as generateResourceName, AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '@features/naming';
 
@@ -266,73 +266,34 @@ export default function ResourceNamingPage() {
                 </div>
             </div>
 
-            {/* AI Smart Naming Generator (Hero Interaction Point) */}
+            {/* Unified Architecture Copilot & Naming Console */}
             <NamingPromptBar 
                 ref={aiInputRef}
+                workload={workload}
                 setWorkload={setWorkload}
+                envValue={envValue}
                 setEnvValue={setEnvValue}
+                regionValue={regionValue}
                 setRegionValue={setRegionValue}
-                setSearchTerm={setSearchTerm}
-                setOrgPrefix={setOrgPrefix}
-                setShowOrg={setShowOrg}
+                instance={instance}
+                formattedInstance={formattedInstance}
+                currentRegion={currentRegion}
                 setInstance={setInstance}
+                showOrg={showOrg}
+                setShowOrg={setShowOrg}
+                orgPrefix={orgPrefix}
+                setOrgPrefix={setOrgPrefix}
+                setSearchTerm={setSearchTerm}
                 setActiveCategory={setActiveCategory}
                 onResetAll={handleResetDefaults}
-            />
-
-            {/* Manual Configuration: Collapsed Summary Strip OR Expanded ConfigPanel */}
-            {isConfigMinimized ? (
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 px-3 sm:px-4 py-2 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft transition-all animate-fade-in">
-                    <div className="flex items-center gap-2 flex-wrap min-w-0">
-                        <div className="flex items-center gap-1.5 shrink-0 text-fluent-fg-secondary">
-                            <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                            <span className="text-[12px] font-semibold text-fluent-fg-primary">Parameters:</span>
-                        </div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                            {showOrg && orgPrefix && (
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Organization prefix">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-neutral-fg shrink-0" />
-                                    <span className="text-fluent-fg-tertiary">Org:</span>
-                                    <span className="font-medium text-fluent-fg-primary">{orgPrefix}</span>
-                                </div>
-                            )}
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Workload">
-                                <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-purple-fg shrink-0" />
-                                <span className="text-fluent-fg-tertiary">Workload:</span>
-                                <span className="font-medium text-fluent-fg-primary">{workload || 'workload'}</span>
-                            </div>
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Environment">
-                                <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-green-fg shrink-0" />
-                                <span className="text-fluent-fg-tertiary">Env:</span>
-                                <span className="font-medium text-fluent-fg-primary">{envValue}</span>
-                            </div>
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Azure region">
-                                <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-orange-fg shrink-0" />
-                                <span className="text-fluent-fg-tertiary">Region:</span>
-                                <span className="font-medium text-fluent-fg-primary">{currentRegion?.abbrev || regionValue}</span>
-                            </div>
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[12px] transition-colors" title="Instance number">
-                                <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-cyan-fg shrink-0" />
-                                <span className="text-fluent-fg-tertiary">Inst:</span>
-                                <span className="font-medium text-fluent-fg-primary font-mono">{formattedInstance}</span>
-                            </div>
-                            <span className="hidden lg:inline-flex items-center font-mono text-[11px] text-fluent-fg-secondary px-2.5 py-1 rounded-[4px] bg-fluent-bg-canvas border border-fluent-stroke-subtle" title="Active naming pattern">
-                                {liveSchemaStr}
-                            </span>
-                        </div>
-                    </div>
-                    <button
-                        type="button"
-                        onClick={handleToggleMinimize}
-                        className="h-[32px] px-3 rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95 shrink-0"
-                    >
-                        <Sliders className="w-3.5 h-3.5 text-fluent-brand-fg" />
-                        <span>Customize Parameters</span>
-                        <ChevronDown className="w-3.5 h-3.5 text-fluent-fg-tertiary" />
-                    </button>
-                </div>
-            ) : (
+                liveSchemaStr={liveSchemaStr}
+                isConfigMinimized={isConfigMinimized}
+                onToggleMinimize={handleToggleMinimize}
+                onCopySchema={handleCopySchema}
+                copiedId={copiedId}
+            >
                 <ConfigPanel
+                    embedded
                     workload={workload}
                     setWorkload={setWorkload}
                     envValue={envValue}
@@ -356,7 +317,7 @@ export default function ResourceNamingPage() {
                     generateName={generateName}
                     onToggleMinimize={handleToggleMinimize}
                 />
-            )}
+            </NamingPromptBar>
 
             {/* Compact service toolbar: search + category tabs */}
             <div className="sticky top-0 z-30 pt-2 pb-2 bg-fluent-bg-canvas relative" style={{ contain: 'layout style', backfaceVisibility: 'hidden' }}>

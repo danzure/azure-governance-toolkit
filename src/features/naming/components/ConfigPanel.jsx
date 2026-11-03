@@ -146,7 +146,8 @@ function ConfigPanel({
     onCopy,
     onResetDefaults,
     generateName,
-    onToggleMinimize
+    onToggleMinimize,
+    embedded = false
 }) {
     const [selectedSampleId, setSelectedSampleId] = useState('rg');
     const [sampleCopied, setSampleCopied] = useState(false);
@@ -207,7 +208,7 @@ function ConfigPanel({
     }, [sampleResourceName]);
 
     return (
-        <div className="relative z-40 animate-slide-up bg-fluent-bg-card rounded-lg border border-fluent-stroke-subtle shadow-soft flex flex-col overflow-hidden">
+        <div className={`relative z-40 bg-fluent-bg-card flex flex-col overflow-hidden ${embedded ? '' : 'rounded-lg border border-fluent-stroke-subtle shadow-soft animate-slide-up'}`}>
             
             {/* Header: Edge-to-edge Fluent 2 card header */}
             <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-card">
@@ -712,7 +713,8 @@ ConfigPanel.propTypes = {
     onCopy: PropTypes.func.isRequired,
     onResetDefaults: PropTypes.func.isRequired,
     generateName: PropTypes.func,
-    onToggleMinimize: PropTypes.func
+    onToggleMinimize: PropTypes.func,
+    embedded: PropTypes.bool
 };
 
 export default memo(ConfigPanel);
