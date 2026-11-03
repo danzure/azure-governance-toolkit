@@ -5,15 +5,13 @@ import PropTypes from 'prop-types';
 /**
  * ServiceFilter Component
  * 
- * A compact, unified toolbar combining an inline search input and horizontal
- * scrollable category tabs. Designed to follow Fluent UI principles with
- * minimal vertical footprint, segmented tab styling, and edge-fade overflow hints.
+ * A cohesive, unified Fluent 2 command bar combining an inline search input
+ * and a segmented category track with smooth overflow fade and non-shifting scroll controls.
  * 
  * @param {Object} props
  * @param {string} props.activeCategory - The name of the currently selected category filter.
  * @param {Function} props.onCategoryChange - Callback fired when a new category is selected.
  * @param {Array<string>} props.categories - List of all available category names.
- * @param {number} props.resultCount - Number of filtered resources to display as a count badge.
  * @param {string} props.searchTerm - Current search/filter input value.
  * @param {Function} props.onSearchChange - Callback for search input changes.
  * @param {Function} props.onClearSearch - Callback to clear the search term.
@@ -47,8 +45,8 @@ const ServiceFilter = ({
         requestAnimationFrame(() => {
             if (scrollContainerRef.current) {
                 const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-                setCanScrollLeft(scrollLeft > 0);
-                setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+                setCanScrollLeft(scrollLeft > 2);
+                setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 2);
             }
             checkScrollRef.current = false;
         });
@@ -69,7 +67,7 @@ const ServiceFilter = ({
         }
     }, [categories]);
 
-    // Update scroll state when categories change or active category changes (in case of auto-scroll)
+    // Update scroll state when categories change or active category changes
     useEffect(() => {
         checkScroll();
     }, [activeCategory, categories]);
@@ -79,10 +77,8 @@ const ServiceFilter = ({
         if (activeCategory && scrollContainerRef.current) {
             const activeBtn = scrollContainerRef.current.querySelector(`[data-category="${activeCategory}"]`);
             if (activeBtn) {
-                // Use a timeout to ensure layout is complete before scrolling
                 setTimeout(() => {
                     activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                    // Re-check scroll buttons after auto-scroll animation (approx 300ms)
                     setTimeout(checkScroll, 350);
                 }, 100);
             }
@@ -99,11 +95,11 @@ const ServiceFilter = ({
     };
 
     return (
-        <div className="rounded-lg border shadow-soft bg-fluent-bg-card border-fluent-stroke-subtle" role="toolbar" aria-label="Filter and category toolbar">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:h-[42px] px-3 gap-3 sm:gap-2 py-3 sm:py-0">
-                {/* Inline compact search */}
-                <div className="flex items-center shrink-0 w-full sm:w-[220px] h-[36px] sm:h-[30px] px-2 gap-1.5 rounded border transition-colors bg-fluent-bg-canvas border-fluent-stroke-subtle focus-within:border-fluent-brand-bg">
-                    <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0 text-fluent-fg-tertiary" aria-hidden="true" />
+        <div className="w-full" role="toolbar" aria-label="Filter and category toolbar">
+            <div className="flex flex-col sm:flex-row sm:items-center min-h-[32px] gap-2">
+                {/* Fluent 2 Standard Search Input */}
+                <div className="flex items-center shrink-0 w-full sm:w-[220px] md:w-[240px] h-[32px] px-2.5 gap-2 rounded-[4px] border transition-colors duration-150 bg-fluent-bg-card border-fluent-stroke-strong focus-within:border-fluent-brand-bg focus-within:ring-1 focus-within:ring-fluent-brand-bg shadow-sm">
+                    <Search className="w-3.5 h-3.5 shrink-0 text-fluent-fg-tertiary" aria-hidden="true" />
                     <input
                         ref={searchInputRef}
                         type="text"
@@ -111,90 +107,103 @@ const ServiceFilter = ({
                         onChange={onSearchChange}
                         placeholder={isMobile ? "Filter..." : "Filter... (/)"}
                         aria-label="Filter resources"
-                        className="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px] sm:text-[12px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
+                        className="flex-1 min-w-0 bg-transparent border-none outline-none text-[13px] text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
                     />
                     {searchTerm && (
-                        <button onClick={onClearSearch} aria-label="Clear search" className="p-1 sm:p-0.5 rounded-sm hover:bg-fluent-bg-hover transition-colors">
-                            <X className="w-3.5 h-3.5 sm:w-3 sm:h-3 text-fluent-fg-tertiary" />
+                        <button
+                            type="button"
+                            onClick={onClearSearch}
+                            aria-label="Clear search"
+                            className="p-1 rounded-[3px] text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-colors"
+                        >
+                            <X className="w-3.5 h-3.5" />
                         </button>
                     )}
                 </div>
 
-                {/* Divider — desktop only */}
-                <div className="w-px h-5 shrink-0 bg-fluent-stroke-subtle hidden sm:block" aria-hidden="true" />
-
-                {/* Categories area wrapper (tabs + clear button) */}
-                <div className="flex items-center w-full sm:w-auto flex-1 min-w-0 gap-1 sm:gap-0">
-                    {/* Scroll left — desktop only */}
+                {/* Fluent 2 Segmented Control Track for Categories */}
+                <div className="flex items-center flex-1 min-w-0 h-[32px] p-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle relative">
+                    {/* Fixed-slot Scroll Left Button (No Layout Shift) */}
                     <button
+                        type="button"
                         onClick={() => scroll('left')}
                         disabled={!canScrollLeft}
                         aria-label="Scroll categories left"
                         aria-hidden={!canScrollLeft}
                         tabIndex={canScrollLeft ? 0 : -1}
-                        className={`hidden sm:flex shrink-0 p-0.5 rounded transition-colors text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary ${!canScrollLeft ? 'opacity-0 pointer-events-none w-0 p-0 overflow-hidden' : ''}`}
+                        className={`hidden sm:flex shrink-0 w-5 h-6 items-center justify-center rounded-[3px] text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-opacity duration-200 ${
+                            !canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                        }`}
                     >
-                        <ChevronLeft className="w-4 h-4" />
+                        <ChevronLeft className="w-3.5 h-3.5" />
                     </button>
 
-                    {/* Scrollable category tabs */}
-                    <div className="relative flex-1 min-w-0 overflow-hidden">
+                    {/* Scrollable Category Tabs Viewport with Smooth Edge Fade */}
+                    <div className="relative flex-1 min-w-0 overflow-hidden h-full flex items-center">
                         <div
                             ref={scrollContainerRef}
-                            className="flex items-center gap-1.5 sm:gap-0.5 overflow-x-auto py-1 scrollbar-none"
+                            className="flex items-center gap-1 overflow-x-auto h-full px-1 scrollbar-none"
                             role="tablist"
                             aria-label="Category filters"
                             style={{
                                 scrollbarWidth: 'none',
                                 msOverflowStyle: 'none',
-                                maskImage: `linear-gradient(to right, ${canScrollLeft ? 'transparent' : 'black'} 0%, black 24px, black calc(100% - 24px), ${canScrollRight ? 'transparent' : 'black'} 100%)`,
-                                WebkitMaskImage: `linear-gradient(to right, ${canScrollLeft ? 'transparent' : 'black'} 0%, black 24px, black calc(100% - 24px), ${canScrollRight ? 'transparent' : 'black'} 100%)`
+                                maskImage: `linear-gradient(to right, ${canScrollLeft ? 'transparent' : 'black'} 0%, black 16px, black calc(100% - 16px), ${canScrollRight ? 'transparent' : 'black'} 100%)`,
+                                WebkitMaskImage: `linear-gradient(to right, ${canScrollLeft ? 'transparent' : 'black'} 0%, black 16px, black calc(100% - 16px), ${canScrollRight ? 'transparent' : 'black'} 100%)`
                             }}
                         >
-                            {categories.map(cat => (
-                                <button
-                                    key={cat}
-                                    data-category={cat}
-                                    onClick={() => onCategoryChange(cat)}
-                                    role="tab"
-                                    aria-selected={activeCategory === cat}
-                                    className={`
-                                        shrink-0 px-3 py-1.5 sm:px-2.5 sm:py-1 text-[13px] sm:text-[12px] font-medium rounded-[4px] transition-colors duration-150
-                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg
-                                        ${activeCategory === cat
-                                            ? 'bg-fluent-info-bg text-fluent-brand-fg shadow-sm font-semibold'
-                                            : 'bg-fluent-bg-canvas sm:bg-transparent border border-fluent-stroke-subtle sm:border-transparent text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
-                                        }
-                                    `}
-                                >
-                                    {cat}
-                                </button>
-                            ))}
+                            {categories.map((cat) => {
+                                const isActive = activeCategory === cat;
+                                return (
+                                    <button
+                                        key={cat}
+                                        data-category={cat}
+                                        onClick={() => onCategoryChange(cat)}
+                                        role="tab"
+                                        type="button"
+                                        aria-selected={isActive}
+                                        className={`
+                                            shrink-0 h-[24px] px-2.5 rounded-[3px] text-[12px] font-medium transition-all duration-150 active:scale-95
+                                            focus:outline-none focus-visible:ring-1 focus-visible:ring-fluent-brand-bg select-none
+                                            ${isActive
+                                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle'
+                                                : 'text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover'
+                                            }
+                                        `}
+                                    >
+                                        {cat}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
-                    {/* Scroll right — desktop only */}
+                    {/* Fixed-slot Scroll Right Button (No Layout Shift) */}
                     <button
+                        type="button"
                         onClick={() => scroll('right')}
                         disabled={!canScrollRight}
                         aria-label="Scroll categories right"
                         aria-hidden={!canScrollRight}
                         tabIndex={canScrollRight ? 0 : -1}
-                        className={`hidden sm:flex shrink-0 p-0.5 rounded transition-colors text-fluent-fg-secondary hover:bg-fluent-bg-hover hover:text-fluent-fg-primary ${!canScrollRight ? 'opacity-0 pointer-events-none w-0 p-0 overflow-hidden' : ''}`}
+                        className={`hidden sm:flex shrink-0 w-5 h-6 items-center justify-center rounded-[3px] text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover transition-opacity duration-200 ${
+                            !canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                        }`}
                     >
-                        <ChevronRight className="w-4 h-4" />
+                        <ChevronRight className="w-3.5 h-3.5" />
                     </button>
 
-                    {/* Clear filter */}
+                    {/* Pinned Clear Filter Button */}
                     {activeCategory !== 'All' && (
                         <button
+                            type="button"
                             onClick={() => onCategoryChange('All')}
-                            title="Clear filter"
+                            title="Clear category filter"
                             aria-label="Clear category filter"
-                            className="ml-2 sm:ml-0 shrink-0 flex items-center gap-1.5 h-[32px] sm:h-[28px] px-2.5 sm:px-2 rounded-[4px] text-[13px] sm:text-[12px] font-semibold transition-colors bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover"
+                            className="shrink-0 h-[24px] px-2 rounded-[3px] text-[11px] font-semibold transition-all duration-150 inline-flex items-center gap-1 bg-fluent-brand-bg text-white hover:bg-fluent-brand-hover active:scale-95 shadow-sm ml-1"
                         >
-                            <X className="w-3.5 h-3.5" aria-hidden="true" />
-                            <span className="hidden sm:inline">Clear</span>
+                            <X className="w-3 h-3" aria-hidden="true" />
+                            <span>Clear</span>
                         </button>
                     )}
                 </div>

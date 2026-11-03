@@ -179,7 +179,7 @@ export default function ConditionalAccessPage() {
                     </button>
                 </div>
 
-                <div className="sticky top-0 z-30 py-2.5 bg-fluent-bg-canvas border-b border-fluent-stroke-subtle" style={{ contain: 'layout style', backfaceVisibility: 'hidden' }}>
+                <div className="sticky top-0 z-30 pt-2 pb-2 bg-fluent-bg-canvas relative" style={{ contain: 'layout style', backfaceVisibility: 'hidden' }}>
                     <ServiceFilter
                         activeCategory={activeCategory}
                         onCategoryChange={setActiveCategory}
@@ -189,6 +189,8 @@ export default function ConditionalAccessPage() {
                         onClearSearch={handleClearSearch}
                         searchInputRef={searchInputRef}
                     />
+                    {/* Soft gradient dissolve edge allowing content to glide seamlessly underneath */}
+                    <div className="absolute top-full left-0 right-0 h-3 bg-gradient-to-b from-fluent-bg-canvas to-transparent pointer-events-none" aria-hidden="true" />
                 </div>
 
                 {groupedPolicies.length === 0 ? (
