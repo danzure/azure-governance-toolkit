@@ -14,7 +14,7 @@ import {
     Search,
     X
 } from 'lucide-react';
-import { generateName as generateResourceName, AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES, getServiceIconUrl, getCategoryColors } from '@features/naming';
+import { RESOURCE_DATA_SORTED, CATEGORIES, getServiceIconUrl, getCategoryColors } from '@features/naming';
 
 
 
@@ -27,7 +27,6 @@ import { FluentDropdown } from '@shared';
  */
 export default function QuickActionsDeck() {
     const navigate = useNavigate();
-    const [copiedIndex, setCopiedIndex] = useState(null);
     const [copiedPrefix, setCopiedPrefix] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
@@ -39,40 +38,9 @@ export default function QuickActionsDeck() {
         if (typeof window === 'undefined') return null;
         try {
             const workload = localStorage.getItem('azres_workload');
-            const env = localStorage.getItem('azres_env');
-            const region = localStorage.getItem('azres_region');
-            const instance = localStorage.getItem('azres_instance');
-            const org = localStorage.getItem('azres_orgPrefix');
-            const showOrg = localStorage.getItem('azres_showOrg') === 'true';
-
             const cleanWorkload = workload ? JSON.parse(workload) : '';
-            const cleanEnv = env ? JSON.parse(env) : 'prod';
-            const cleanRegion = region ? JSON.parse(region) : 'uksouth';
-            const cleanInstance = instance ? JSON.parse(instance) : '001';
-            const cleanOrg = org ? JSON.parse(org) : '';
-
-            if (!cleanWorkload && !cleanOrg) return null;
-
-            const regionObj = AZURE_REGIONS.find(r => r.name === cleanRegion) || { shortName: cleanRegion };
-
-            const sampleRgName = generateResourceName({
-                resourceType: 'rg',
-                workload: cleanWorkload || 'app',
-                env: cleanEnv,
-                region: regionObj.shortName,
-                instance: cleanInstance,
-                orgPrefix: cleanOrg,
-                namingOrder: ['Org', 'Resource', 'Workload', 'Environment', 'Region', 'Instance'],
-                showOrg
-            });
-
-            return {
-                workload: cleanWorkload,
-                env: cleanEnv,
-                region: cleanRegion,
-                instance: cleanInstance,
-                sampleName: sampleRgName
-            };
+            if (!cleanWorkload) return null;
+            return { workload: cleanWorkload };
         } catch {
             return null;
         }
@@ -186,13 +154,6 @@ export default function QuickActionsDeck() {
         },
     ];
 
-    const handleCopySample = (text, idx, e) => {
-        e.stopPropagation();
-        navigator.clipboard.writeText(text);
-        setCopiedIndex(idx);
-        setTimeout(() => setCopiedIndex(null), 2000);
-    };
-
     const handleCopyPrefix = (prefix, id, e) => {
         e.stopPropagation();
         navigator.clipboard.writeText(prefix);
@@ -232,35 +193,6 @@ export default function QuickActionsDeck() {
                 )}
             </div>
 
-            {/* Active Naming Preview Bar (if active config present) */}
-            {activeConfig && activeConfig.sampleName && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-2.5 py-1.5 rounded-md bg-fluent-bg-subtle border border-fluent-stroke-subtle">
-                    <div className="flex items-center gap-2 min-w-0">
-                        <Compass className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
-                        <span className="text-[11.5px] text-fluent-fg-tertiary shrink-0">Active Naming Baseline:</span>
-                        <code className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all">
-                            {activeConfig.sampleName}
-                        </code>
-                    </div>
-                    <button
-                        type="button"
-                        onClick={(e) => handleCopySample(activeConfig.sampleName, 'sample', e)}
-                        className="shrink-0 h-[24px] px-2 rounded-[4px] text-[11.5px] font-medium border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-fg-primary active:scale-95 transition-all inline-flex items-center justify-center gap-1.5"
-                    >
-                        {copiedIndex === 'sample' ? (
-                            <>
-                                <Check className="w-3 h-3 text-fluent-cat-green-fg" />
-                                <span className="text-fluent-cat-green-fg">Copied</span>
-                            </>
-                        ) : (
-                            <>
-                                <Copy className="w-3 h-3" />
-                                <span>Copy Name</span>
-                            </>
-                        )}
-                    </button>
-                </div>
-            )}
 
             {/* Balanced Split Layout: CAF Cheatsheet (Left) & Reference Frameworks (Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
