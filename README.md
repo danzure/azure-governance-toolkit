@@ -147,26 +147,30 @@ azure-governance-toolkit/
 ├── api/                 # Azure Functions serverless proxy backend (Node.js)
 ├── public/              # Static public assets, favicon, and manifests
 ├── src/
-│   ├── assets/          # Application logos, graphics, and static media
-│   ├── components/      # Modular component architecture
-│   │   ├── ai/          # AI Prompt Bar, CAF feedback banners
-│   │   ├── ca/          # Conditional Access policy forms, cards, and modal
+│   ├── core/            # Cross-cutting foundational services (layout, telemetry, seo, hooks)
+│   │   ├── command-palette/ # Search index and code-split preloader
+│   │   ├── hooks/       # Custom React hooks (useLocalStorage, useDebounce, etc.)
 │   │   ├── layout/      # Navbar, Footer, FlyoutMenu, CommandPaletteModal
-│   │   ├── naming/      # PatternBuilder, ConfigPanel, ResourceCard, ServiceFilter
-│   │   ├── rbac/        # RBAC Designer panels, permission pickers, role preview
-│   │   ├── shared/      # FluentDropdown, TechnologyIcon, ResetButton, CopyButton
-│   │   ├── tagging/     # Tagging Strategy tables, rule cards, export panels
+│   │   ├── seo/         # Dynamic metadata and OpenGraph management
+│   │   └── telemetry/   # Azure Application Insights tracking
+│   ├── features/        # Modular domain-driven vertical slices
+│   │   ├── conditional-access/ # CA forms, pattern builder, JSON/Terraform exporters
+│   │   ├── dashboard/   # Azure Updates feed, quick action deck, RSS parser
+│   │   ├── naming/      # Resource naming engine, templates, rules, service catalog
+│   │   ├── rbac/        # Custom role designer, permission selector, templates
+│   │   ├── tagging/     # CAF starter tags, builder, policy & IaC exporters
 │   │   └── topology/    # Management Group tree builder, node editor, IaC exporters
-│   ├── data/            # Static schemas, Azure services catalog, RBAC & CA databases
-│   ├── hooks/           # Custom React hooks (useLocalStorage, useDebounce, etc.)
 │   ├── pages/           # Route views (Dashboard, ResourceNaming, ConditionalAccess, etc.)
-│   ├── utils/           # Pure utility logic, validation engines, IaC code generators
+│   ├── shared/          # Reusable Fluent 2 component library (FluentDropdown, TechnologyIcon, etc.)
+│   │   ├── components/  # Fluent 2 input controls and buttons
+│   │   └── icons/       # Shared SVG assets (Management Groups, Subscriptions, Rss)
 │   ├── App.jsx          # Top-level routing and theme providers
 │   ├── index.css        # Fluent 2 design tokens and Tailwind directives
 │   └── main.jsx         # Application entry point
+├── jsconfig.json        # Path aliases mapping (@/, @core/*, @features/*, @shared/*)
 ├── staticwebapp.config.json # Azure Static Web Apps routing and security headers
 ├── tailwind.config.js   # Tailwind theme configuration and Fluent 2 semantic mappings
-└── vite.config.js       # Vite configuration with chunk splitting optimizations
+└── vite.config.js       # Vite configuration with chunk splitting & path aliases
 ```
 
 ---

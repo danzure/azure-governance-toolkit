@@ -20,7 +20,7 @@ import {
     Clock,
     AlertTriangle
 } from 'lucide-react';
-import ScrollToTopButton from '../components/layout/ScrollToTopButton';
+import { ScrollToTopButton } from '@core/layout';
 
 /**
  * Registry of all localStorage keys explicitly managed by the Azure Governance Toolkit.

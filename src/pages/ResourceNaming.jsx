@@ -2,16 +2,16 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Info, ExternalLink, ChevronDown, Sliders } from 'lucide-react';
 
-import ConfigPanel from '../components/naming/ConfigPanel';
-import ResourceGrid from '../components/naming/ResourceGrid';
-import ServiceFilter from '../components/shared/ServiceFilter';
-import NamingPromptBar from '../components/ai/NamingPromptBar';
-import ScrollToTopButton from '../components/layout/ScrollToTopButton';
-import useDebounce from '../hooks/useDebounce';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { generateName as generateResourceName } from '../utils/nameGenerator';
+import { ConfigPanel, ResourceGrid, NamingPromptBar, generateName as generateResourceName, AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '@features/naming';
 
-import { AZURE_REGIONS, RESOURCE_DATA_SORTED, CATEGORIES } from '../data/constants';
+import { ServiceFilter } from '@shared';
+
+import { ScrollToTopButton } from '@core/layout';
+import { useDebounce, useLocalStorage } from '@core/hooks';
+
+
+
+
 
 /**
  * Main Resource Naming Page Component

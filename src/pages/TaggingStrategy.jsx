@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ExternalLink, ChevronDown, Info } from 'lucide-react';
-import TagBuilder from '../components/tagging/TagBuilder';
-import TagOutputPanel from '../components/tagging/TagOutputPanel';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { CAF_STARTER_TAGS } from '../data/taggingData';
+import { TagBuilder, TagOutputPanel, CAF_STARTER_TAGS } from '@features/tagging';
+
+import { useLocalStorage } from '@core/hooks';
+
 
 /**
  * TaggingStrategyPage Component

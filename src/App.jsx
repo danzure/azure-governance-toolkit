@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { trackPageView } from './utils/telemetry';
-import { getRouteSEO, applySEO } from './utils/seo';
+import { trackPageView } from '@core/telemetry';
+import { getRouteSEO, applySEO } from '@core/seo';
 
-import Header from './components/layout/Header';
-import NavigationMenu from './components/layout/NavigationMenu';
-import CommandPalette from './components/layout/CommandPalette';
-import Footer from './components/layout/Footer';
-import useLocalStorage from './hooks/useLocalStorage';
-import ErrorBoundary from './components/layout/ErrorBoundary';
-import PageLoader from './components/layout/PageLoader';
+import { Header, NavigationMenu, CommandPalette, Footer, ErrorBoundary, PageLoader } from '@core/layout';
+
+
+
+import { useLocalStorage } from '@core/hooks';
+
+
 
 import { Suspense, lazy } from 'react';
 

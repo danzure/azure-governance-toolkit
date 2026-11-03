@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
-import { initTelemetry } from './utils/telemetry'
+import { initTelemetry } from '@core/telemetry'
 
 // Initialise Application Insights before React mounts
 initTelemetry();

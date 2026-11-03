@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ExternalLink, Network, ChevronDown, Info, BookOpen } from 'lucide-react';
-import TopologyTreeBuilder from '../components/topology/TopologyTreeBuilder';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { TopologyTreeBuilder } from '@features/topology';
+import { useLocalStorage } from '@core/hooks';
 
 export default function ManagementGroupsPage() {
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);

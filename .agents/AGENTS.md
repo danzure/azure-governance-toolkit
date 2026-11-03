@@ -361,16 +361,16 @@ All 5 governance tools (`ResourceNaming`, `ConditionalAccess`, `ManagementGroups
 5. **Operational Workspace**: Main tool content, prompt bar, and outputs placed below guidance.
 
 ### 6.2 Azure Service Catalog Management
-When adding or updating services in `src/data/constants.js`:
-1. **Prevent Duplicates**: Thoroughly search `src/data/constants.js` to confirm the service does not already exist under another name or abbreviation.
+When adding or updating services in `src/features/naming/data/constants.js`:
+1. **Prevent Duplicates**: Thoroughly search `src/features/naming/data/constants.js` to confirm the service does not already exist under another name or abbreviation.
 2. **"New" Badge**: Apply `isNew: true` **only** to genuinely newly added services. Remove `isNew: true` from older entries so the badge remains exclusive.
 3. **Documentation & Pricing Links**: Always provide a valid `learnUrl` pointing to the official Microsoft Learn documentation overview, and a `pricingUrl` pointing to the specific Azure Pricing Calculator page.
 4. **Content Separation**:
    - `desc` and `longDesc`: Strictly explain what the service is and its architectural purpose.
    - `bestPractice` and `namingGuidance`: Contain operational advice, deployment recommendations, and newer recommended alternatives if the service is marked as `legacy` or `retired`.
 
-### 6.3 Service Icon Architecture (`src/data/serviceIcons.js`)
-Service icons are **not** stored as local files in `src/assets/icons/`. Instead, `src/data/serviceIcons.js` resolves icon URLs using a strict 4-tier repository hierarchy:
+### 6.3 Service Icon Architecture (`src/features/naming/data/serviceIcons.js`)
+Service icons are **not** stored as local files in `src/assets/icons/`. Instead, `src/features/naming/data/serviceIcons.js` resolves icon URLs using a strict 4-tier repository hierarchy:
 1. **Source 1 (Primary)**: `benc-uk/icon-collection` (community-curated Azure icons).
 2. **Source 2 (Alt)**: `MarczakIO/azure-portal-icons` (Azure Portal official icons).
 3. **Source 3 (Maskati)**: `maskati/azure-icons` (AI / Foundry specific SVGs).

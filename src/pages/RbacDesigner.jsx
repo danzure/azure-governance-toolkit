@@ -1,10 +1,10 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Info, ChevronDown, ExternalLink, Sliders } from 'lucide-react';
-import PermissionsSelector from '../components/rbac/PermissionsSelector';
-import RbacConfigPanel from '../components/rbac/RbacConfigPanel';
-import RbacPromptBar from '../components/ai/RbacPromptBar';
-import { RBAC_ROLE_TEMPLATES } from '../data/rbacData';
+import { PermissionsSelector, RbacConfigPanel, RbacPromptBar, RBAC_ROLE_TEMPLATES } from '@features/rbac';
+
+
+
 
 export default function RbacDesignerPage() {
     const [searchParams, setSearchParams] = useSearchParams();

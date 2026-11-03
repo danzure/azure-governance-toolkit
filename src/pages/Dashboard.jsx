@@ -5,8 +5,8 @@ import {
     Plus,
     Star
 } from 'lucide-react';
-import AzureUpdatesFeed from '../components/dashboard/AzureUpdatesFeed';
-import QuickActionsDeck from '../components/dashboard/QuickActionsDeck';
+import { AzureUpdatesFeed, QuickActionsDeck } from '@features/dashboard';
+
 
 export default function DashboardPage() {
     const navigate = useNavigate();
