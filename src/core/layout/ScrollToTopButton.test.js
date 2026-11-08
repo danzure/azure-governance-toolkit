@@ -29,6 +29,9 @@ describe('ScrollToTopButton Component', () => {
         expect(element).toBeDefined();
         expect(element.props.title).toBe('Scroll back to top');
         expect(element.props['aria-label']).toBe('Back to top');
+        expect(element.props.className).toContain('self-end');
+        expect(element.props.className).toContain('w-fit');
+        expect(element.props.className).toContain('shrink-0');
 
         element.props.onClick();
 

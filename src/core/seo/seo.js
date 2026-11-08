@@ -79,6 +79,18 @@ export const ROUTE_SEO = {
             { name: 'RBAC Custom Role Designer', url: 'https://app.atozazure.com/rbac-designer' }
         ],
     },
+    '/ai-foundry': {
+        title: 'Azure AI Foundry Landing Zone & Topology Designer | atozazure',
+        headerTitle: 'AI Foundry Designer',
+        description: 'Architect and export enterprise Azure AI Foundry Hubs, child Projects, Zero-Trust Managed Virtual Networks, and RAG landing zones with Bicep and Terraform.',
+        keywords: 'azure ai foundry, azure ai studio, azure ai hub, azure ai project, azure openai landing zone, zero trust ai managed vnet, bicep ai foundry, terraform ai foundry, enterprise rag architecture, ai governance',
+        canonical: 'https://app.atozazure.com/ai-foundry',
+        ogType: 'website',
+        breadcrumbs: [
+            { name: 'Home', url: 'https://app.atozazure.com/' },
+            { name: 'AI Foundry Designer', url: 'https://app.atozazure.com/ai-foundry' }
+        ],
+    },
     '/privacy': {
         title: 'Privacy Policy | atozazure',
         headerTitle: 'Privacy Policy',

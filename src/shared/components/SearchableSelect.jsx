@@ -26,7 +26,8 @@ import PropTypes from 'prop-types';
  * @param {boolean} [props.compact] - If true, hides external label and adapts height to match input fields.
  * @returns {JSX.Element}
  */
-export default function SearchableSelect({ items, value, onChange, label, placeholder = "Select...", description, compact }) {
+export default function SearchableSelect({ items, options, value, onChange, label, placeholder = "Select...", description, compact }) {
+    const listItems = useMemo(() => items || options || [], [items, options]);
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -35,16 +36,16 @@ export default function SearchableSelect({ items, value, onChange, label, placeh
     const listboxRef = useRef(null);
     const searchInputRef = useRef(null);
 
-    const selectedItem = items.find(i => i.value === value && !i.type) || items.find(i => !i.type);
+    const selectedItem = listItems.find(i => i.value === value && !i.type) || listItems.find(i => !i.type);
 
     const filteredItems = useMemo(() => {
-        if (!search) return items;
+        if (!search) return listItems;
         const lowerSearch = search.toLowerCase();
-        return items.filter(i => {
+        return listItems.filter(i => {
             if (i.type === 'header') return true;
             return String(i.label).toLowerCase().includes(lowerSearch);
         });
-    }, [items, search]);
+    }, [listItems, search]);
 
     // Get only selectable (non-header) items for keyboard navigation
     const selectableItems = useMemo(() => {

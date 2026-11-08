@@ -39,6 +39,19 @@ export default function DashboardPage() {
 
     const companionTools = [
         {
+            id: 'ai-foundry',
+            title: 'AI Foundry Designer',
+            description: 'Architect and export enterprise Azure AI Foundry Hubs, child Projects, and Zero-Trust landing zones.',
+            iconUrl: 'https://raw.githubusercontent.com/Azure-Player/icons-and-symbols/master/Microsoft/Azure_Public_Service_Icons/Icons/ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio.svg',
+            path: '/ai-foundry',
+            isNew: true,
+            tags: [
+                { label: 'AI Landing Zones', color: 'bg-fluent-cat-purple-fg' },
+                { label: 'Zero-Trust Managed VNet', color: 'bg-fluent-cat-green-fg' },
+                { label: 'Bicep & Terraform', color: 'bg-fluent-cat-blue-fg' }
+            ]
+        },
+        {
             id: 'conditional-access',
             title: 'Conditional Access Policy Builder',
             description: 'Design, build, and document secure Conditional Access policies using standardized naming conventions.',

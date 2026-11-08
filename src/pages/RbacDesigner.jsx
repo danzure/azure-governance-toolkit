@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Info, ChevronDown, ExternalLink } from 'lucide-react';
+import { ScrollToTopButton } from '@core/layout';
 import { PermissionsSelector, RbacConfigPanel, RbacPromptBar, RBAC_ROLE_TEMPLATES } from '@features/rbac';
 
 
@@ -234,6 +235,11 @@ export default function RbacDesignerPage() {
                         onClearNotActions={handleClearNotActions}
                         isConfigMinimized={isConfigMinimized}
                     />
+                </div>
+
+                {/* Back to Top Row */}
+                <div className="flex items-center justify-end pt-2">
+                    <ScrollToTopButton />
                 </div>
             </div>
         </div>

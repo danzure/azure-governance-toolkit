@@ -102,6 +102,17 @@ function getBaseSearchIndex() {
             target: '/rbac-designer'
         },
         {
+            id: 'nav-ai-foundry',
+            category: 'Navigation',
+            title: 'AI Foundry Designer',
+            subtitle: 'Architect Azure AI Foundry Hubs, child Projects, and Zero-Trust landing zones',
+            keywords: 'ai foundry designer studio hub project openai search rag agentic vnet bicep terraform',
+            iconUrl: 'https://raw.githubusercontent.com/Azure-Player/icons-and-symbols/master/Microsoft/Azure_Public_Service_Icons/Icons/ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio.svg',
+            iconComponent: Sparkles,
+            actionType: 'route',
+            target: '/ai-foundry'
+        },
+        {
             id: 'nav-tags',
             category: 'Navigation',
             title: 'Tagging Strategy Designer',

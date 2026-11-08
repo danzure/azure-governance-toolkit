@@ -76,6 +76,7 @@ describe('SEO Utilities', () => {
             '/management-groups',
             '/tagging-strategy',
             '/rbac-designer',
+            '/ai-foundry',
             '/privacy',
         ];
 

@@ -204,6 +204,35 @@ export default function NavigationMenu({ isExpanded, onToggleExpand, isMobile, o
                 </NavLink>
 
                 <NavLink
+                    to="/ai-foundry"
+                    onClick={handleNavClick}
+                    title={!isExpanded && !isMobile ? "AI Foundry Designer" : undefined}
+                    className={({ isActive }) =>
+                        `group relative flex items-center h-[42px] px-3 mx-2 rounded-md text-[15px] transition-colors duration-200 ${isActive
+                            ? 'bg-fluent-bg-subtle text-fluent-brand-fg font-semibold'
+                            : 'text-fluent-fg-secondary font-medium hover:bg-fluent-bg-hover hover:text-fluent-fg-primary'
+                        }`
+                    }
+                >
+                    {({ isActive }) => (
+                        <>
+                            {isActive && (
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-fluent-brand-bg rounded-full" />
+                            )}
+                            <img
+                                src="https://raw.githubusercontent.com/Azure-Player/icons-and-symbols/master/Microsoft/Azure_Public_Service_Icons/Icons/ai%20%2B%20machine%20learning/03513-icon-service-AI-Studio.svg"
+                                alt=""
+                                className={`w-5 h-5 min-w-[20px] shrink-0 object-contain transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}
+                                aria-hidden="true"
+                            />
+                            <span className={`whitespace-nowrap overflow-hidden transition-all duration-200 ease-in-out ${isExpanded || isMobile ? 'opacity-100 max-w-[200px] ml-3 translate-x-0' : 'opacity-0 max-w-0 ml-0 -translate-x-2 pointer-events-none'}`}>
+                                AI Foundry Designer
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+                <NavLink
                     to="/tagging-strategy"
                     onClick={handleNavClick}
                     title={!isExpanded && !isMobile ? "Tagging Strategy" : undefined}

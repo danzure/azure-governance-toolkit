@@ -32,12 +32,13 @@ describe('Command Palette Utilities', () => {
         expect(navTargets).toContain('/conditional-access');
         expect(navTargets).toContain('/management-groups');
         expect(navTargets).toContain('/rbac-designer');
+        expect(navTargets).toContain('/ai-foundry');
         expect(navTargets).toContain('/tagging-strategy');
 
         // Verify navigation items have matching official SVG icons
         const navItems = index.filter(i => i.category === 'Navigation');
-        expect(navItems.length).toBe(6);
-        expect(navItems.every(i => typeof i.iconUrl === 'string' && i.iconUrl.includes('benc-uk/icon-collection/master/azure-icons/'))).toBe(true);
+        expect(navItems.length).toBe(7);
+        expect(navItems.every(i => typeof i.iconUrl === 'string' && (i.iconUrl.includes('benc-uk/icon-collection/master/azure-icons/') || i.iconUrl.includes('Azure-Player/icons-and-symbols')))).toBe(true);
 
         // Verify Azure resources exist
         const kvItem = index.find(i => i.title === 'Key vault');
@@ -89,7 +90,7 @@ describe('Command Palette Utilities', () => {
 
         const navOnly = filterSearchIndex(index, '', 'Navigation');
         expect(navOnly.every(i => i.category === 'Navigation')).toBe(true);
-        expect(navOnly.length).toBe(6);
+        expect(navOnly.length).toBe(7);
 
         const actionsOnly = filterSearchIndex(index, '', 'Quick Actions');
         expect(actionsOnly.every(i => i.category === 'Quick Actions')).toBe(true);

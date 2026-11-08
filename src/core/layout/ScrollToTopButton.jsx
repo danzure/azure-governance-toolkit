@@ -26,12 +26,12 @@ export default function ScrollToTopButton({ className = '', label = 'Back to top
         <button
             type="button"
             onClick={scrollToTop}
-            className={`px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${className}`}
+            className={`self-end w-fit shrink-0 px-3 h-[32px] rounded-[4px] border transition-colors inline-flex items-center justify-center gap-1.5 bg-fluent-bg-card border-fluent-stroke-strong text-fluent-fg-secondary hover:border-fluent-fg-primary hover:text-fluent-fg-primary text-[13px] font-medium active:scale-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fluent-brand-bg ${className}`.trim()}
             title="Scroll back to top"
             aria-label={label}
         >
             <span>{label}</span>
-            <ArrowUp className="w-3.5 h-3.5" />
+            <ArrowUp className="w-3.5 h-3.5 shrink-0" />
         </button>
     );
 }

@@ -20,6 +20,7 @@ const ConditionalAccessPage = lazy(() => import('./pages/ConditionalAccess'));
 const ManagementGroupsPage = lazy(() => import('./pages/ManagementGroups'));
 const TaggingStrategyPage = lazy(() => import('./pages/TaggingStrategy'));
 const RbacDesignerPage = lazy(() => import('./pages/RbacDesigner'));
+const AiFoundryPage = lazy(() => import('./pages/AiFoundry'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicy'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
@@ -180,6 +181,8 @@ export default function App() {
                                 <Route path="/management-groups" element={<ManagementGroupsPage />} />
                                 <Route path="/tagging-strategy" element={<TaggingStrategyPage />} />
                                 <Route path="/rbac-designer" element={<RbacDesignerPage />} />
+                                <Route path="/ai-foundry" element={<AiFoundryPage />} />
+                                <Route path="/ai-foundry-designer" element={<AiFoundryPage />} />
                                 <Route path="/privacy" element={<PrivacyPolicyPage />} />
                                 <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                                 <Route path="*" element={<NotFoundPage />} />
