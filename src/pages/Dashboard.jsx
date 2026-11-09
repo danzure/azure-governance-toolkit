@@ -29,7 +29,6 @@ export default function DashboardPage() {
         iconUrl: 'https://raw.githubusercontent.com/benc-uk/icon-collection/master/azure-icons/Azure-AD-Roles-and-Administrators.svg',
         path: '/rbac-designer',
         hasAi: true,
-        isNew: true,
         tags: [
             { label: 'AI Prompt Assistant', color: 'bg-fluent-cat-purple-fg' },
             { label: 'Least Privilege', color: 'bg-fluent-cat-green-fg' },
@@ -151,14 +150,18 @@ export default function DashboardPage() {
                                         className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200 ease-in-out"
                                     />
                                     <div className="flex flex-wrap items-center justify-end gap-1.5">
-                                        <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-semibold shadow-sm">
-                                            <Star className="w-3 h-3 fill-current" />
-                                            New
-                                        </span>
-                                        <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors">
-                                            <Sparkles className="w-3 h-3" />
-                                            AI Powered
-                                        </span>
+                                        {aiCompanionTool.isNew && (
+                                            <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-semibold shadow-sm">
+                                                <Star className="w-3 h-3 fill-current" />
+                                                New
+                                            </span>
+                                        )}
+                                        {aiCompanionTool.hasAi && (
+                                            <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors">
+                                                <Sparkles className="w-3 h-3" />
+                                                AI Powered
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
 
@@ -238,6 +241,12 @@ export default function DashboardPage() {
                                             alt={`${tool.title} icon`}
                                             className="w-10 h-10 sm:w-11 sm:h-11 tall:w-12 tall:h-12 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200 ease-in-out"
                                         />
+                                        {tool.isNew && (
+                                            <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-semibold shadow-sm">
+                                                <Star className="w-3 h-3 fill-current" />
+                                                New
+                                            </span>
+                                        )}
                                     </div>
 
                                     {/* Title & Description */}

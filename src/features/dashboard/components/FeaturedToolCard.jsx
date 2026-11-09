@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import {
     ArrowRight,
-    Sparkles
+    Sparkles,
+    Star
 } from 'lucide-react';
 
 /**
@@ -50,6 +51,12 @@ export default function FeaturedToolCard({ tool, onNavigate }) {
                             <Sparkles className="w-3.5 h-3.5" />
                             Featured Flagship
                         </span>
+                        {tool.isNew && (
+                            <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-semibold shadow-sm">
+                                <Star className="w-3 h-3 fill-current" />
+                                New
+                            </span>
+                        )}
                         {tool.hasAi && (
                             <span className="inline-flex items-center gap-1 bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-brand-fg text-[11px] px-2 py-0.5 rounded-[4px] font-medium shadow-sm group-hover:border-fluent-stroke-strong transition-colors">
                                 <Sparkles className="w-3 h-3" />

@@ -336,7 +336,7 @@ The application enforces a strict **"One Concept = One Unified Icon"** rule acro
 ## 6. Application Architecture & Data Conventions
 
 ### 6.1 Standard Page Blueprint
-All 5 governance tools (`ResourceNaming`, `ConditionalAccess`, `ManagementGroups`, `TaggingStrategy`, `RbacDesigner`) must follow this standardized layout:
+All 6 governance tools (`ResourceNaming`, `ConditionalAccess`, `ManagementGroups`, `TaggingStrategy`, `RbacDesigner`, `AiFoundry`) must follow this standardized layout:
 1. **Root Container**:
    ```jsx
    <div className="flex flex-col min-w-0 w-full animate-fade-in">
@@ -388,3 +388,20 @@ For tools with AI or smart prompt capabilities (`ResourceNaming`, `RbacDesigner`
 3. **Interactive AI Feedback Banner**: Always render an AI resolution banner displaying the summary, CAF governance rationale, and quick-filter tags upon successful prompt execution.
 4. **Keyboard Shortcuts**: Bind `Ctrl+K` to focus the prompt input and `Escape` to blur/clear it (with key hints hidden on mobile: `hidden sm:inline-flex`).
 5. **Dashboard Registration**: Ensure `hasAi: true` is set on the tool entry in `src/pages/Dashboard.jsx`.
+
+### 6.5 New Tool Lifecycle & Exclusive Dashboard Badge
+1. **Mandatory "New" Badge for Newly Added Tools**:
+   - Whenever any new tool is added to the application (e.g., `AiFoundry`), its card entry in `src/pages/Dashboard.jsx` **must ALWAYS** have `isNew: true` applied.
+   - The tool card header must render the standardized Fluent 2 "New" badge when `tool.isNew` is true:
+     ```jsx
+     {tool.isNew && (
+         <span className="inline-flex items-center gap-1 bg-fluent-brand-bg text-white text-[10.5px] tall:text-[11px] px-2 py-0.5 rounded-[4px] font-semibold shadow-sm">
+             <Star className="w-3 h-3 fill-current" />
+             New
+         </span>
+     )}
+     ```
+2. **Strict Exclusivity (Removal of Existing Badges)**:
+   - When a new tool is introduced, any tools that previously had the "New" badge applied **must be immediately removed** (`isNew: false` or omitted from their definition).
+   - At any given time, only the single most recently released tool across the application may display the "New" badge on the Dashboard.
+

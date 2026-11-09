@@ -33,8 +33,8 @@ export function buildTopologyAndBOM(config) {
             provider: 'Microsoft.MachineLearningServices/workspaces',
             tier: 'Hub',
             scope: 'Platform Core',
-            network: isPrivate ? 'Managed VNet (Private Link)' : 'Public Access',
-            costTier: 'Free (underlying compute billed)'
+            network: isPrivate ? 'Managed VNet (Private)' : 'Public Access',
+            costTier: 'Free (compute billed)'
         },
         ...names.projects.map(p => ({
             category: 'Foundry Project',
@@ -45,7 +45,7 @@ export function buildTopologyAndBOM(config) {
             tier: 'Project',
             scope: `Linked to ${names.hubName}`,
             network: isPrivate ? 'Inherits Hub VNet' : 'Public Access',
-            costTier: 'Free (shared compute pool)'
+            costTier: 'Free (shared pool)'
         })),
         {
             category: 'Storage',
@@ -53,7 +53,7 @@ export function buildTopologyAndBOM(config) {
             categoryGroup: 'Storage',
             name: names.storageName,
             provider: 'Microsoft.Storage/storageAccounts',
-            tier: 'Standard_LRS (StorageV2)',
+            tier: 'Standard_LRS',
             scope: 'Hub Dependency',
             network: isPrivate ? 'Private Endpoint' : 'Public Access',
             costTier: 'Pay-as-you-go'
@@ -64,7 +64,7 @@ export function buildTopologyAndBOM(config) {
             categoryGroup: 'Security',
             name: names.keyVaultName,
             provider: 'Microsoft.KeyVault/vaults',
-            tier: enableCmk ? 'Premium (HSM / CMK)' : 'Standard',
+            tier: enableCmk ? 'Premium (HSM)' : 'Standard',
             scope: 'Hub Dependency',
             network: isPrivate ? 'Private Endpoint' : 'Public Access',
             costTier: 'Pay-as-you-go'
