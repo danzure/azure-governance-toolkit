@@ -19,6 +19,7 @@ import { RESOURCE_DATA_SORTED, getServiceIconUrl, getCategoryColors } from '@fea
 
 import { PREMADE_POLICIES, getReadableTitle } from '@features/conditional-access';
 import { RBAC_ROLE_TEMPLATES } from '@features/rbac';
+import { ARCHETYPE_PRESETS } from '@features/ai-foundry';
 
 export const CATEGORY_FILTERS = [
     'All',
@@ -179,7 +180,23 @@ function getBaseSearchIndex() {
         });
     });
 
-    // 5. Static Quick Actions & External Links
+    // 5. AI Foundry Architecture Archetypes
+    ARCHETYPE_PRESETS.forEach((preset) => {
+        items.push({
+            id: `foundry-${preset.id}`,
+            category: 'Policies & Templates',
+            title: preset.label,
+            subtitle: `AI Foundry Archetype • ${preset.shortDesc}`,
+            keywords: `${preset.label} ${preset.shortDesc} ai foundry hub project openai search rag zero trust caf archetype`,
+            badge: 'AI Foundry',
+            iconComponent: Sparkles,
+            actionType: 'foundry-archetype',
+            target: `/ai-foundry?archetype=${preset.id}`,
+            archetypeId: preset.id
+        });
+    });
+
+    // 6. Static Quick Actions & External Links
     items.push(
         {
             id: 'action-copy-url',

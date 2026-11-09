@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { validateSecurity } from '../utils/securityValidator';
 import { ShieldCheck, AlertTriangle, Check } from 'lucide-react';
 
-function FoundrySecurityChecklist({ config }) {
+function FoundrySecurityChecklist({ config, onRemediateRule }) {
     const checks = useMemo(() => validateSecurity(config), [config]);
     const passCount = checks.filter(c => c.passed).length;
     const allPassed = passCount === checks.length;
@@ -78,9 +78,21 @@ function FoundrySecurityChecklist({ config }) {
                                     {check.description}
                                 </span>
                                 {!check.passed && (
-                                    <div className="mt-1 px-2.5 py-1.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle inline-flex items-center gap-2 text-[12px] font-medium text-fluent-cat-yellow-fg">
-                                        <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
-                                        <span>Recommendation: Enable this control in the configurator to satisfy enterprise Zero-Trust landing zone compliance.</span>
+                                    <div className="mt-1 px-2.5 py-1.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle flex flex-wrap items-center justify-between gap-2 text-[12px] font-medium text-fluent-cat-yellow-fg">
+                                        <div className="inline-flex items-center gap-2 min-w-0">
+                                            <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                                            <span>Recommendation: Enable this control to satisfy Zero-Trust landing zone compliance.</span>
+                                        </div>
+                                        {onRemediateRule && (
+                                            <button
+                                                type="button"
+                                                onClick={() => onRemediateRule(check.id)}
+                                                className="shrink-0 h-[26px] px-2.5 bg-fluent-brand-bg text-white rounded-[4px] text-[12px] font-medium hover:bg-fluent-brand-hover transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 active:scale-95"
+                                            >
+                                                <ShieldCheck className="w-3.5 h-3.5" />
+                                                <span>Apply Fix</span>
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -93,7 +105,8 @@ function FoundrySecurityChecklist({ config }) {
 }
 
 FoundrySecurityChecklist.propTypes = {
-    config: PropTypes.object.isRequired
+    config: PropTypes.object.isRequired,
+    onRemediateRule: PropTypes.func
 };
 
 export default memo(FoundrySecurityChecklist);

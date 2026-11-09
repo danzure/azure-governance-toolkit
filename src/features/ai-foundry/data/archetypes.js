@@ -40,7 +40,7 @@ export const ARCHETYPE_PRESETS = [
     {
         id: 'autonomous-agents',
         label: 'Autonomous Multi-Agent Service',
-        shortDesc: 'Hub + Foundry Agent Service + Azure Functions Tool Calling + Cosmos DB Session State',
+        shortDesc: 'Hub + 2 Agent Projects + Container Registry (ACR) + Multi-Model Deployments + AI Search',
         dotColor: 'bg-fluent-cat-purple-fg',
         config: {
             workload: 'agents',
@@ -133,4 +133,68 @@ export const ARCHETYPE_PRESETS = [
         }
     }
 ];
+
+/**
+ * Determines whether the provided AI Foundry configuration matches one of the
+ * built-in CAF archetype presets, or returns 'custom' if modified.
+ *
+ * @param {Object} config - Current AI Foundry configuration object
+ * @param {Array<Object>} [presets=ARCHETYPE_PRESETS] - List of archetype presets
+ * @returns {string} Matching preset id or 'custom'
+ */
+export function matchArchetype(config, presets = ARCHETYPE_PRESETS) {
+    if (!config || typeof config !== 'object') return 'custom';
+
+    const scalarKeys = [
+        'workload',
+        'environment',
+        'region',
+        'instance',
+        'networkMode',
+        'managedVnetMode',
+        'enableAiSearch',
+        'searchSku',
+        'searchSemanticRanker',
+        'enableOpenAi',
+        'openAiSku',
+        'identityType',
+        'disableLocalAuth',
+        'enableCmk',
+        'enableAppInsights',
+        'enableContainerRegistry'
+    ];
+
+    for (const preset of presets) {
+        const pc = preset.config;
+        const scalarsMatch = scalarKeys.every((key) => config[key] === pc[key]);
+        if (!scalarsMatch) continue;
+
+        const cfgProjects = Array.isArray(config.projects) ? config.projects : [];
+        const pcProjects = Array.isArray(pc.projects) ? pc.projects : [];
+        if (cfgProjects.length !== pcProjects.length) continue;
+        const projectsMatch = cfgProjects.every((p, idx) =>
+            p.id === pcProjects[idx].id &&
+            p.name === pcProjects[idx].name &&
+            (p.description || '') === (pcProjects[idx].description || '')
+        );
+        if (!projectsMatch) continue;
+
+        const cfgModels = Array.isArray(config.modelDeployments) ? config.modelDeployments : [];
+        const pcModels = Array.isArray(pc.modelDeployments) ? pc.modelDeployments : [];
+        if (cfgModels.length !== pcModels.length) continue;
+        const modelsMatch = cfgModels.every((m, idx) => m.name === pcModels[idx].name);
+        if (!modelsMatch) continue;
+
+        const cfgFqdns = Array.isArray(config.allowedFqdns) ? config.allowedFqdns : [];
+        const pcFqdns = Array.isArray(pc.allowedFqdns) ? pc.allowedFqdns : [];
+        if (cfgFqdns.length !== pcFqdns.length) continue;
+        const fqdnsMatch = pcFqdns.every((f) => cfgFqdns.includes(f));
+        if (!fqdnsMatch) continue;
+
+        return preset.id;
+    }
+
+    return 'custom';
+}
+
 

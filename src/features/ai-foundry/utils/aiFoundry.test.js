@@ -5,6 +5,7 @@ import { validateSecurity } from './securityValidator';
 import { buildTopologyAndBOM } from './topologyBuilder';
 import { getFoundryResourceNames } from './foundryNaming';
 import { DEFAULT_CONFIG } from '../data/defaultServices';
+import { ARCHETYPE_PRESETS, matchArchetype } from '../data/archetypes';
 
 describe('AI Foundry Generators and Validators', () => {
     it('generates fully CAF-compliant names matching Resource Naming standard', () => {
@@ -82,6 +83,17 @@ describe('AI Foundry Generators and Validators', () => {
         expect(bom.some(item => item.category === 'Security')).toBe(true);
         expect(bom.some(item => item.category === 'AI Services')).toBe(true);
         expect(bom.some(item => item.category === 'Search & Retrieval')).toBe(true);
+    });
+
+    it('matches built-in archetypes and detects custom configuration drift', () => {
+        expect(matchArchetype(DEFAULT_CONFIG)).toBe('enterprise-rag');
+
+        ARCHETYPE_PRESETS.forEach(preset => {
+            expect(matchArchetype(preset.config)).toBe(preset.id);
+        });
+
+        const modifiedConfig = { ...DEFAULT_CONFIG, workload: 'customai' };
+        expect(matchArchetype(modifiedConfig)).toBe('custom');
     });
 });
 

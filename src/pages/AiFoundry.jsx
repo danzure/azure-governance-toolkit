@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
     Info, 
     ChevronDown, 
@@ -10,6 +11,7 @@ import {
     BookOpen
 } from 'lucide-react';
 import { useLocalStorage } from '@core/hooks';
+import { ScrollToTopButton } from '@core/layout';
 import {
     FoundryArchetypeBar,
     FoundryConfigPanel,
@@ -18,14 +20,17 @@ import {
     FoundryBOMTable,
     FoundrySecurityChecklist,
     DEFAULT_CONFIG,
-    ARCHETYPE_PRESETS
+    ARCHETYPE_PRESETS,
+    matchArchetype,
+    buildTopologyAndBOM,
+    validateSecurity
 } from '@features/ai-foundry';
 
 export default function AiFoundryPage() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isGuidanceExpanded, setIsGuidanceExpanded] = useState(false);
     const [activeTab, setActiveTab] = useState('topology'); // 'topology' | 'iac' | 'bom' | 'security'
     const [rawConfig, setConfig] = useLocalStorage('azres_foundryConfig', DEFAULT_CONFIG);
-    const [activeArchetypeId, setActiveArchetypeId] = useState('enterprise-rag');
 
     // Ensure config is safe and deeply merged with DEFAULT_CONFIG in case of outdated/partial localStorage
     const config = useMemo(() => {
@@ -39,15 +44,77 @@ export default function AiFoundryPage() {
         };
     }, [rawConfig]);
 
+    // Dynamically derive active archetype ID (or 'custom' if modified)
+    const activeArchetypeId = useMemo(
+        () => matchArchetype(config, ARCHETYPE_PRESETS),
+        [config]
+    );
+
+    // Deep-link integration from Command Palette (?archetype= & ?tab=)
+    useEffect(() => {
+        const archetypeParam = searchParams.get('archetype');
+        const tabParam = searchParams.get('tab');
+        let changed = false;
+
+        if (archetypeParam) {
+            const preset = ARCHETYPE_PRESETS.find((p) => p.id === archetypeParam);
+            if (preset) {
+                setConfig(preset.config);
+                changed = true;
+            }
+        }
+        if (tabParam && ['topology', 'iac', 'bom', 'security'].includes(tabParam)) {
+            setActiveTab(tabParam);
+            changed = true;
+        }
+        if (changed) {
+            setSearchParams({}, { replace: true });
+        }
+    }, [searchParams, setSearchParams, setConfig]);
+
+    // Live metrics for Inspector Tab Badges
+    const bomCount = useMemo(() => buildTopologyAndBOM(config).bom.length, [config]);
+    const securitySummary = useMemo(() => {
+        const checks = validateSecurity(config);
+        const passed = checks.filter((c) => c.passed).length;
+        return {
+            passed,
+            total: checks.length,
+            allPassed: passed === checks.length
+        };
+    }, [config]);
+
     const handleSelectArchetype = useCallback((preset) => {
-        setActiveArchetypeId(preset.id);
         setConfig(preset.config);
     }, [setConfig]);
 
     const handleResetDefaults = useCallback(() => {
-        const defaultPreset = ARCHETYPE_PRESETS[0];
-        setActiveArchetypeId(defaultPreset.id);
         setConfig(DEFAULT_CONFIG);
+    }, [setConfig]);
+
+    const handleRemediateRule = useCallback((ruleId) => {
+        setConfig((prev) => {
+            switch (ruleId) {
+                case 'SEC-01':
+                    return {
+                        ...prev,
+                        networkMode: 'private',
+                        managedVnetMode: prev.managedVnetMode === 'Disabled' ? 'AllowOnlyApprovedOutbound' : prev.managedVnetMode
+                    };
+                case 'SEC-02':
+                    return { ...prev, managedVnetMode: 'AllowOnlyApprovedOutbound' };
+                case 'SEC-03':
+                    return { ...prev, disableLocalAuth: true };
+                case 'SEC-04':
+                    return { ...prev, identityType: 'UserAssigned' };
+                case 'SEC-05':
+                    return { ...prev, enableCmk: true };
+                case 'SEC-06':
+                    return { ...prev, enableAppInsights: true };
+                default:
+                    return prev;
+            }
+        });
     }, [setConfig]);
 
     return (
@@ -198,6 +265,9 @@ export default function AiFoundryPage() {
                                     >
                                         <Layers className="w-3.5 h-3.5 shrink-0" />
                                         <span>Bill of Materials</span>
+                                        <span className="inline-flex items-center justify-center px-1.5 py-0.2 rounded-[3px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[10px] font-mono font-semibold text-fluent-fg-secondary">
+                                            {bomCount}
+                                        </span>
                                     </button>
 
                                     <button
@@ -213,6 +283,10 @@ export default function AiFoundryPage() {
                                     >
                                         <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                                         <span>Zero-Trust Audit</span>
+                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded-[3px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[10px] font-mono font-semibold text-fluent-fg-secondary">
+                                            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${securitySummary.allPassed ? 'bg-fluent-cat-green-fg' : 'bg-fluent-cat-yellow-fg'}`} />
+                                            <span>{securitySummary.passed}/{securitySummary.total}</span>
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -222,12 +296,18 @@ export default function AiFoundryPage() {
                                 {activeTab === 'topology' && <FoundryVisualTopology config={config} />}
                                 {activeTab === 'iac' && <FoundryIaCTerminal config={config} />}
                                 {activeTab === 'bom' && <FoundryBOMTable config={config} />}
-                                {activeTab === 'security' && <FoundrySecurityChecklist config={config} />}
+                                {activeTab === 'security' && (
+                                    <FoundrySecurityChecklist
+                                        config={config}
+                                        onRemediateRule={handleRemediateRule}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <ScrollToTopButton />
         </div>
     );
 }

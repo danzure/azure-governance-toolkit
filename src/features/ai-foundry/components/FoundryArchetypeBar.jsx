@@ -10,6 +10,7 @@ import { AzureServiceIcon } from '@features/naming';
  */
 function FoundryArchetypeBar({ activeArchetypeId, onSelectArchetype }) {
     const activePreset = ARCHETYPE_PRESETS.find((p) => p.id === activeArchetypeId);
+    const isCustom = activeArchetypeId === 'custom';
 
     return (
         <div className="rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft p-3 sm:px-4 sm:py-3 flex flex-col gap-2.5">
@@ -22,10 +23,20 @@ function FoundryArchetypeBar({ activeArchetypeId, onSelectArchetype }) {
                     <span className="inline-flex items-center px-2 py-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[11px] font-medium text-fluent-fg-secondary">
                         CAF Presets
                     </span>
+                    {isCustom && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-[11px] font-medium text-fluent-fg-primary animate-fade-in">
+                            <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-purple-fg shrink-0" />
+                            <span>Custom Configuration</span>
+                        </span>
+                    )}
                 </div>
-                {activePreset && (
+                {activePreset ? (
                     <span className="text-[12px] text-fluent-fg-secondary hidden md:inline truncate">
                         {activePreset.shortDesc}
+                    </span>
+                ) : (
+                    <span className="text-[12px] text-fluent-fg-secondary hidden md:inline truncate">
+                        Customized landing zone parameters — select a preset below to reset to a standard CAF baseline
                     </span>
                 )}
             </div>

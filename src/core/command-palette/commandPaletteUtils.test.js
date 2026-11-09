@@ -57,6 +57,11 @@ describe('Command Palette Utilities', () => {
         expect(rbacItem).toBeDefined();
         expect(rbacItem.target).toContain('/rbac-designer?template=');
 
+        // Verify AI Foundry archetypes exist
+        const foundryItem = index.find(i => i.category === 'Policies & Templates' && i.actionType === 'foundry-archetype');
+        expect(foundryItem).toBeDefined();
+        expect(foundryItem.target).toContain('/ai-foundry?archetype=');
+
         // Verify theme indicator reflects active preference
         const darkAction = index.find(i => i.id === 'action-theme-dark');
         expect(darkAction.badge).toBe('Active');

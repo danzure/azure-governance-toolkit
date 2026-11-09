@@ -311,44 +311,69 @@ function FoundryConfigPanel({ config, onChangeConfig, onResetDefaults }) {
                                         config.projects.length > 3 ? 'max-h-[264px] overflow-y-auto pr-1 custom-scrollbar' : ''
                                     }`}
                                 >
-                                    {config.projects.map((proj, idx) => (
-                                        <div key={idx} className="shrink-0 flex flex-col gap-1.5 p-2.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle">
-                                            <div className="flex items-center gap-2">
+                                    {config.projects.map((proj, idx) => {
+                                        const projCopyId = `proj-name-${idx}`;
+                                        const generatedProjName = names.projects[idx]?.generatedName || '';
+                                        return (
+                                            <div key={idx} className="shrink-0 flex flex-col gap-1.5 p-2.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle">
+                                                <div className="flex items-center gap-2">
+                                                    <input
+                                                        type="text"
+                                                        value={proj.name}
+                                                        onChange={(e) => handleProjectChange(idx, 'name', e.target.value)}
+                                                        placeholder="Project Display Name"
+                                                        className="flex-1 min-w-0 px-3 h-[32px] text-[13px] bg-fluent-bg-card border border-fluent-stroke-strong rounded-[4px] outline-none transition-all duration-200 focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        value={proj.id}
+                                                        onChange={(e) => handleProjectChange(idx, 'id', e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                                                        placeholder="app-id"
+                                                        className="w-28 px-3 h-[32px] text-[13px] font-mono bg-fluent-bg-card border border-fluent-stroke-strong rounded-[4px] outline-none transition-all duration-200 focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
+                                                        title="Application slug for CAF naming"
+                                                    />
+                                                    {config.projects.length > 1 && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleRemoveProject(idx)}
+                                                            title="Delete project"
+                                                            aria-label={`Delete ${proj.name}`}
+                                                            className="shrink-0 h-[32px] w-[32px] rounded-[4px] transition-all inline-flex items-center justify-center border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-state-danger active:scale-95"
+                                                        >
+                                                            <Trash2 className="w-3.5 h-3.5" />
+                                                        </button>
+                                                    )}
+                                                </div>
                                                 <input
                                                     type="text"
-                                                    value={proj.name}
-                                                    onChange={(e) => handleProjectChange(idx, 'name', e.target.value)}
-                                                    placeholder="Project Display Name"
-                                                    className="flex-1 min-w-0 px-3 h-[32px] text-[13px] bg-fluent-bg-card border border-fluent-stroke-strong rounded-[4px] outline-none transition-all duration-200 focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
+                                                    value={proj.description || ''}
+                                                    onChange={(e) => handleProjectChange(idx, 'description', e.target.value)}
+                                                    placeholder="Project purpose or workload description..."
+                                                    className="w-full px-2.5 h-[26px] text-[12px] bg-fluent-bg-card border border-fluent-stroke-subtle rounded-[4px] outline-none transition-all duration-200 focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg text-fluent-fg-secondary focus:text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
                                                 />
-                                                <input
-                                                    type="text"
-                                                    value={proj.id}
-                                                    onChange={(e) => handleProjectChange(idx, 'id', e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                                                    placeholder="app-id"
-                                                    className="w-28 px-3 h-[32px] text-[13px] font-mono bg-fluent-bg-card border border-fluent-stroke-strong rounded-[4px] outline-none transition-all duration-200 focus:border-fluent-brand-bg focus:ring-1 focus:ring-fluent-brand-bg text-fluent-fg-primary placeholder:text-fluent-fg-tertiary"
-                                                    title="Application slug for CAF naming"
-                                                />
-                                                {config.projects.length > 1 && (
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => handleRemoveProject(idx)}
-                                                        title="Delete project"
-                                                        aria-label={`Delete ${proj.name}`}
-                                                        className="shrink-0 h-[32px] w-[32px] rounded-[4px] transition-all inline-flex items-center justify-center border bg-fluent-bg-card border-fluent-stroke-subtle text-fluent-fg-secondary hover:border-fluent-stroke-strong hover:text-fluent-state-danger active:scale-95"
-                                                    >
-                                                        <Trash2 className="w-3.5 h-3.5" />
-                                                    </button>
-                                                )}
+                                                <div className="flex items-center justify-between gap-2 text-[11px] px-1 font-mono text-fluent-fg-secondary">
+                                                    <span className="text-fluent-fg-tertiary">CAF Name:</span>
+                                                    <div className="flex items-center gap-1.5 min-w-0">
+                                                        <span className="font-semibold text-fluent-fg-primary truncate select-all" title={generatedProjName}>
+                                                            {generatedProjName}
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleCopyText(generatedProjName, projCopyId)}
+                                                            title={`Copy ${generatedProjName}`}
+                                                            className={`p-0.5 rounded-[3px] transition-colors shrink-0 ${
+                                                                copiedId === projCopyId
+                                                                    ? 'text-fluent-cat-green-fg'
+                                                                    : 'text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-card'
+                                                            }`}
+                                                        >
+                                                            {copiedId === projCopyId ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="flex items-center justify-between text-[11px] px-1 font-mono text-fluent-fg-secondary">
-                                                <span className="text-fluent-fg-tertiary">CAF Name:</span>
-                                                <span className="font-semibold text-fluent-fg-primary truncate select-all" title={names.projects[idx]?.generatedName}>
-                                                    {names.projects[idx]?.generatedName}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
