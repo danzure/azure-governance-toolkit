@@ -144,7 +144,7 @@ function FoundryVisualTopology({ config }) {
                                                 Project
                                             </span>
                                         </div>
-                                        <div className="flex items-center justify-between gap-1.5 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[11px] font-mono font-medium text-fluent-fg-primary truncate select-all" title={proj.generatedName}>
                                                 {proj.generatedName}
                                             </span>
@@ -187,7 +187,7 @@ function FoundryVisualTopology({ config }) {
                             <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                 <AzureServiceIcon resourceName="Storage account" category="Storage" className="w-4 h-4 shrink-0 mt-0.5" />
                                 <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                    <div className="flex items-center justify-between gap-1 min-w-0">
+                                    <div className="flex items-center gap-1.5 min-w-0">
                                         <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.storageName}>{names.storageName}</span>
                                         <button
                                             type="button"
@@ -214,7 +214,7 @@ function FoundryVisualTopology({ config }) {
                             <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                 <AzureServiceIcon resourceName="Key vault" category="Security" className="w-4 h-4 shrink-0 mt-0.5" />
                                 <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                    <div className="flex items-center justify-between gap-1 min-w-0">
+                                    <div className="flex items-center gap-1.5 min-w-0">
                                         <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.keyVaultName}>{names.keyVaultName}</span>
                                         <button
                                             type="button"
@@ -242,7 +242,7 @@ function FoundryVisualTopology({ config }) {
                                 <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                     <AzureServiceIcon resourceName="Azure OpenAI Service" category="AI + ML" className="w-4 h-4 shrink-0 mt-0.5" />
                                     <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                        <div className="flex items-center justify-between gap-1 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.openAiName}>{names.openAiName}</span>
                                             <button
                                                 type="button"
@@ -273,7 +273,7 @@ function FoundryVisualTopology({ config }) {
                                 <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                     <AzureServiceIcon resourceName="Azure AI Search" category="AI + ML" className="w-4 h-4 shrink-0 mt-0.5" />
                                     <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                        <div className="flex items-center justify-between gap-1 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.searchName}>{names.searchName}</span>
                                             <button
                                                 type="button"
@@ -304,7 +304,7 @@ function FoundryVisualTopology({ config }) {
                                 <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                     <AzureServiceIcon resourceName="Application Insights" category="Management + Governance" className="w-4 h-4 shrink-0 mt-0.5" />
                                     <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                        <div className="flex items-center justify-between gap-1 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.appInsightsName}>{names.appInsightsName}</span>
                                             <button
                                                 type="button"
@@ -333,7 +333,7 @@ function FoundryVisualTopology({ config }) {
                                 <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                     <AzureServiceIcon resourceName="Log Analytics workspace" category="Management + Governance" className="w-4 h-4 shrink-0 mt-0.5" />
                                     <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                        <div className="flex items-center justify-between gap-1 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.logAnalyticsName}>{names.logAnalyticsName}</span>
                                             <button
                                                 type="button"
@@ -362,7 +362,7 @@ function FoundryVisualTopology({ config }) {
                                 <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                     <AzureServiceIcon resourceName="Container registry" category="Containers" className="w-4 h-4 shrink-0 mt-0.5" />
                                     <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                        <div className="flex items-center justify-between gap-1 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.acrName}>{names.acrName}</span>
                                             <button
                                                 type="button"
@@ -391,7 +391,7 @@ function FoundryVisualTopology({ config }) {
                                 <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                     <AzureServiceIcon resourceName="Managed identity (user)" category="Security" className="w-4 h-4 shrink-0 mt-0.5" />
                                     <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                                        <div className="flex items-center justify-between gap-1 min-w-0">
+                                        <div className="flex items-center gap-1.5 min-w-0">
                                             <span className="text-[12px] font-mono font-semibold text-fluent-fg-primary truncate select-all" title={names.uamiName}>{names.uamiName}</span>
                                             <button
                                                 type="button"

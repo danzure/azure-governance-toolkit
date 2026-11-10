@@ -258,6 +258,7 @@ function FoundryConfigPanel({ config, onChangeConfig, onResetDefaults }) {
                                         value={config.environment}
                                         onChange={(val) => updateField('environment', val)}
                                         options={ENVIRONMENTS.map(e => ({ value: e.value, label: e.label }))}
+                                        className="w-full"
                                     />
                                 </div>
 
@@ -417,6 +418,7 @@ function FoundryConfigPanel({ config, onChangeConfig, onResetDefaults }) {
                                     value={config.networkMode}
                                     onChange={(val) => updateField('networkMode', val)}
                                     options={NETWORK_MODE_OPTIONS}
+                                    className="w-full"
                                 />
                             </div>
 
@@ -429,6 +431,7 @@ function FoundryConfigPanel({ config, onChangeConfig, onResetDefaults }) {
                                         value={config.managedVnetMode}
                                         onChange={(val) => updateField('managedVnetMode', val)}
                                         options={MANAGED_VNET_OPTIONS}
+                                        className="w-full"
                                     />
                                     <span className="text-[12px] text-fluent-fg-secondary mt-1 block">
                                         Managed VNets isolate compute instances, prompt flows, and training jobs inside an automated perimeter.
@@ -570,6 +573,7 @@ function FoundryConfigPanel({ config, onChangeConfig, onResetDefaults }) {
                                             value={config.searchSku}
                                             onChange={(val) => updateField('searchSku', val)}
                                             options={SEARCH_SKUS.map(s => ({ value: s.value, label: s.label }))}
+                                            className="w-full"
                                         />
                                     </div>
                                     <label className="flex items-center gap-2.5 cursor-pointer text-[12px] text-fluent-fg-primary">
@@ -622,6 +626,7 @@ function FoundryConfigPanel({ config, onChangeConfig, onResetDefaults }) {
                                     value={config.identityType}
                                     onChange={(val) => updateField('identityType', val)}
                                     options={IDENTITY_OPTIONS}
+                                    className="w-full"
                                 />
                             </div>
 

@@ -251,13 +251,13 @@ export default function SearchableSelect({ items, options, value, onChange, labe
                     aria-haspopup="listbox"
                     aria-controls={isOpen ? listboxId : undefined}
                     aria-label={label || 'Select an option'}
-                    className={`w-full flex items-center justify-between px-3 h-[32px] cursor-pointer transition-all border rounded text-[14px] bg-fluent-bg-card ${isOpen ? 'border-b-2 border-b-fluent-brand-bg border-x-transparent border-t-transparent' : 'border-fluent-stroke-strong hover:border-fluent-fg-primary'}`}
+                    className={`w-full flex items-center justify-between px-3 h-[32px] cursor-pointer transition-all border rounded-[4px] text-[13px] bg-fluent-bg-card ${isOpen ? 'border-b-2 border-b-fluent-brand-bg border-x-transparent border-t-transparent' : 'border-fluent-stroke-strong hover:border-fluent-fg-primary'}`}
                 >
                     <div className="flex items-center gap-1.5 truncate">
                         <span className="text-fluent-fg-primary">{selectedItem?.label}</span>
                         {selectedItem?.abbrev && <span className="text-[12px] text-fluent-fg-tertiary">({selectedItem.abbrev})</span>}
                     </div>
-                    <ChevronDown className={`w-3 h-3 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+                    <ChevronDown className={`w-3.5 h-3.5 shrink-0 text-fluent-fg-tertiary transition-transform duration-200 ${isOpen ? 'rotate-180 text-fluent-brand-fg' : ''}`} aria-hidden="true" />
                 </div>
 
                 {isOpen && renderDropdown()}
