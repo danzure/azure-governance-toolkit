@@ -11,7 +11,7 @@ export const AVAILABLE_MODELS = [
 ];
 
 export const SEARCH_SKUS = [
-    { value: 'basic', label: 'Basic (Dev / PoC)', desc: '2 GB storage, 3 index partitions, no semantic ranker' },
+    { value: 'basic', label: 'Basic (Dev / PoC)', desc: '15 GB storage (up to 45 GB), 3 partitions, supports semantic ranker' },
     { value: 'standard', label: 'Standard S1 (Production RAG)', desc: '25 GB storage, up to 12 partitions, semantic ranker support' },
     { value: 'standard2', label: 'Standard S2 (High Volume)', desc: '100 GB storage, high QPS vector indexing and high throughput' },
     { value: 'storage_optimized_l1', label: 'Storage Optimized L1 (Large Docs)', desc: 'Large document corpora and multi-million vector archives' }

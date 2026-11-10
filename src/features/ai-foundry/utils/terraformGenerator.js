@@ -276,7 +276,44 @@ ${selectedFqdnEndpoints.map((fqdn, idx) => `          "fqdn-rule-${idx + 1}" = {
     }
   })
 }
-
+${enableOpenAi ? `
+# Connection from AI Hub to AI Services (OpenAI)
+resource "azapi_resource" "hub_openai_connection" {
+  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-07-01-preview"
+  name      = "conn-openai-default"
+  parent_id = azapi_resource.ai_hub.id
+  body = jsonencode({
+    properties = {
+      category      = "AzureOpenAI"
+      target        = azurerm_cognitive_account.openai.endpoint
+      authType      = "AAD"
+      isSharedToAll = true
+      metadata = {
+        ApiType    = "Azure"
+        ResourceId = azurerm_cognitive_account.openai.id
+      }
+    }
+  })
+}
+` : ''}${enableAiSearch ? `
+# Connection from AI Hub to Azure AI Search
+resource "azapi_resource" "hub_search_connection" {
+  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-07-01-preview"
+  name      = "conn-search-default"
+  parent_id = azapi_resource.ai_hub.id
+  body = jsonencode({
+    properties = {
+      category      = "CognitiveSearch"
+      target        = "https://\${azurerm_search_service.search.name}.search.windows.net"
+      authType      = "AAD"
+      isSharedToAll = true
+      metadata = {
+        ResourceId = azurerm_search_service.search.id
+      }
+    }
+  })
+}
+` : ''}
 # -----------------------------------------------------------------------------
 # 5. Azure AI Foundry Projects
 # -----------------------------------------------------------------------------
@@ -300,6 +337,19 @@ resource "azapi_resource" "ai_project_${i + 1}" {
 output "ai_hub_id" {
   value = azapi_resource.ai_hub.id
 }
+
+output "ai_hub_name" {
+  value = "${names.hubName}"
+}
+${enableOpenAi ? `
+output "openai_endpoint" {
+  value = azurerm_cognitive_account.openai.endpoint
+}
+` : ''}${enableAiSearch ? `
+output "search_endpoint" {
+  value = "https://\${azurerm_search_service.search.name}.search.windows.net"
+}
+` : ''}
 `;
 }
 

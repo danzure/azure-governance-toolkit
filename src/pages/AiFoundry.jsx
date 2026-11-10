@@ -11,7 +11,6 @@ import {
     BookOpen
 } from 'lucide-react';
 import { useLocalStorage } from '@core/hooks';
-import { ScrollToTopButton } from '@core/layout';
 import {
     FoundryArchetypeBar,
     FoundryConfigPanel,
@@ -57,7 +56,9 @@ export default function AiFoundryPage() {
         let changed = false;
 
         if (archetypeParam) {
-            const preset = ARCHETYPE_PRESETS.find((p) => p.id === archetypeParam);
+            const preset = ARCHETYPE_PRESETS.find(
+                (p) => p.id === archetypeParam || (archetypeParam === 'air-gapped-banking' && p.id === 'regulated-zero-trust')
+            );
             if (preset) {
                 setConfig(preset.config);
                 changed = true;
@@ -307,7 +308,6 @@ export default function AiFoundryPage() {
                     </div>
                 </div>
             </div>
-            <ScrollToTopButton />
         </div>
     );
 }

@@ -37,6 +37,8 @@ describe('AI Foundry Generators and Validators', () => {
         expect(bicep).toContain('name: \'oai-coreai-prod-uks-001\'');
         expect(bicep).toContain('name: \'srch-coreai-prod-uks-001\'');
         expect(bicep).toContain('managedNetwork:');
+        expect(bicep).toContain('resource hubAiServiceConnection');
+        expect(bicep).toContain('resource hubAiSearchConnection');
     });
 
     it('generates valid Terraform template with Hub and Projects using CAF names', () => {
@@ -49,6 +51,10 @@ describe('AI Foundry Generators and Validators', () => {
         expect(tf).toContain('name                     = "kv-coreai-prod-uks-001"');
         expect(tf).toContain('name                          = "oai-coreai-prod-uks-001"');
         expect(tf).toContain('name                          = "srch-coreai-prod-uks-001"');
+        expect(tf).toContain('resource "azapi_resource" "hub_openai_connection"');
+        expect(tf).toContain('resource "azapi_resource" "hub_search_connection"');
+        expect(tf).toContain('name      = "conn-openai-default"');
+        expect(tf).toContain('name      = "conn-search-default"');
     });
 
     it('validates security controls correctly', () => {

@@ -57,20 +57,9 @@ function FoundryVisualTopology({ config }) {
             <div className="p-4 sm:p-5 flex-1 flex flex-col bg-fluent-bg-card">
                 <div className="relative w-full flex-1 rounded-lg border border-dashed border-fluent-stroke-strong p-4 sm:p-5 bg-fluent-bg-canvas flex flex-col justify-between gap-5">
                     {/* Boundary Tag */}
-                    <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5 text-[11px] text-fluent-fg-tertiary uppercase tracking-wider font-semibold">
-                            <Layers className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
-                            <span>Azure Virtual Network & Landing Zone Boundary</span>
-                        </div>
-                        <button
-                            type="button"
-                            onClick={() => handleCopy(names.rgName, 'rg')}
-                            title={`Copy resource group ${names.rgName}`}
-                            className="hidden sm:inline-flex items-center gap-1.5 font-mono text-[11px] text-fluent-fg-secondary hover:text-fluent-fg-primary px-2 py-0.5 rounded-[4px] bg-fluent-bg-card border border-fluent-stroke-subtle hover:border-fluent-stroke-strong transition-colors"
-                        >
-                            <span>{names.rgName}</span>
-                            {copiedId === 'rg' ? <Check className="w-3 h-3 text-fluent-cat-green-fg" /> : <Copy className="w-3 h-3 text-fluent-fg-tertiary" />}
-                        </button>
+                    <div className="flex items-center gap-1.5 text-[11px] text-fluent-fg-tertiary uppercase tracking-wider font-semibold">
+                        <Layers className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
+                        <span>Azure Virtual Network & Landing Zone Boundary</span>
                     </div>
 
                     {/* Level 1: Platform Hub Layer */}

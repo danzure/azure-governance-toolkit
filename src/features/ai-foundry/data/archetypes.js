@@ -9,6 +9,12 @@ export const ARCHETYPE_PRESETS = [
         label: 'Enterprise RAG (CAF Baseline)',
         shortDesc: 'AI Hub + 2 Projects + Azure AI Search (Private Link) + User-Assigned Managed Identity',
         dotColor: 'bg-fluent-cat-blue-fg',
+        bestFor: 'Enterprise search, internal copilots, and multi-department Q&A grounded on proprietary data.',
+        useCases: [
+            'Internal employee copilots grounded on SharePoint and private knowledge bases',
+            'Enterprise document search with hybrid vector indexing and semantic re-ranking',
+            'Cross-department AI projects governed under a shared platform security boundary'
+        ],
         config: {
             workload: 'coreai',
             environment: 'prod',
@@ -39,9 +45,15 @@ export const ARCHETYPE_PRESETS = [
     },
     {
         id: 'autonomous-agents',
-        label: 'Autonomous Multi-Agent Service',
+        label: 'Multi-Agent System (AI Agent Service)',
         shortDesc: 'Hub + 2 Agent Projects + Container Registry (ACR) + Multi-Model Deployments + AI Search',
         dotColor: 'bg-fluent-cat-purple-fg',
+        bestFor: 'Autonomous multi-agent orchestration, tool execution, and automated code/DevOps workflows.',
+        useCases: [
+            'Multi-agent workflows where planner, coder, and reviewer agents collaborate',
+            'Custom agent tools and sandboxes hosted in Azure Container Registry (ACR)',
+            'Long-running autonomous tasks utilizing Azure AI Agent Service and function calling'
+        ],
         config: {
             workload: 'agents',
             environment: 'prod',
@@ -71,10 +83,16 @@ export const ARCHETYPE_PRESETS = [
         }
     },
     {
-        id: 'air-gapped-banking',
-        label: 'Regulated Zero-Trust (CMK + Air-Gapped)',
+        id: 'regulated-zero-trust',
+        label: 'Regulated Zero-Trust (CMK + Isolated VNet)',
         shortDesc: 'Customer-Managed Keys (CMK) + Strict FQDN Egress + Zero Public Endpoints',
         dotColor: 'bg-fluent-cat-red-fg',
+        bestFor: 'Highly regulated banking, healthcare, and government workloads requiring maximum data protection.',
+        useCases: [
+            'Anti-money laundering (AML), fraud surveillance, and high-frequency audit pipelines',
+            'Clinical and medical notes analysis adhering to strict HIPAA and ISO 27001 requirements',
+            'Air-gapped and perimeter-isolated environments demanding CMK/HSM encryption at rest'
+        ],
         config: {
             workload: 'secureai',
             environment: 'prod',
@@ -102,10 +120,91 @@ export const ARCHETYPE_PRESETS = [
         }
     },
     {
+        id: 'eu-data-boundary',
+        label: 'EU Data Boundary (Sovereign Zone)',
+        shortDesc: 'EU Data Residency + DataZone Model SKUs + Swedish/German Landing Zone + Local Auth Disabled',
+        dotColor: 'bg-fluent-cat-cyan-fg',
+        bestFor: 'GDPR compliance, public sector regulations, and European Union data sovereignty guarantees.',
+        useCases: [
+            'Public sector citizen services and government document processing inside the EU',
+            'Cross-border European enterprise analytics where prompts and embeddings never leave the EU boundary',
+            'Sovereign compliance auditing requiring Entra ID token-only auth and disabled local API keys'
+        ],
+        config: {
+            workload: 'euzone',
+            environment: 'prod',
+            region: 'swedencentral',
+            instance: '001',
+            projects: [
+                { id: 'eudata', name: 'EU Compliance Analytics', description: 'Strict European Union data boundary analytics workspace' }
+            ],
+            networkMode: 'private',
+            managedVnetMode: 'AllowOnlyApprovedOutbound',
+            enableAiSearch: true,
+            searchSku: 'standard',
+            searchSemanticRanker: true,
+            enableOpenAi: true,
+            openAiSku: 'S0',
+            modelDeployments: [
+                { name: 'gpt-4o', model: 'gpt-4o', version: '2024-08-06', sku: 'DataZoneStandard', capacity: 30 }
+            ],
+            identityType: 'UserAssigned',
+            disableLocalAuth: true,
+            enableCmk: false,
+            enableAppInsights: true,
+            enableContainerRegistry: false,
+            allowedFqdns: ['microsoft']
+        }
+    },
+    {
+        id: 'fine-tuning-llmops',
+        label: 'Fine-Tuning & LLMOps Pipeline',
+        shortDesc: 'Hub + Custom Runtime Container Registry (ACR) + Hugging Face / PyTorch Egress + App Insights Tracing',
+        dotColor: 'bg-fluent-cat-magenta-fg',
+        bestFor: 'Custom model adaptation, LoRA fine-tuning, benchmark evaluation, and automated LLMOps.',
+        useCases: [
+            'Domain-specific fine-tuning (SLMs/LLMs like Phi-4, Llama 3) on custom training corpora',
+            'Continuous evaluation pipelines measuring prompt drift, accuracy, and safety filters',
+            'Curating specialized PyTorch / Hugging Face runtime containers in ACR'
+        ],
+        config: {
+            workload: 'llmops',
+            environment: 'prod',
+            region: 'uksouth',
+            instance: '001',
+            projects: [
+                { id: 'finetune', name: 'Model Distillation & Tuning', description: 'Hyperparameter tuning and custom adapter pipeline' },
+                { id: 'eval', name: 'Prompt & Safety Eval', description: 'Continuous evaluation and benchmark scoring' }
+            ],
+            networkMode: 'private',
+            managedVnetMode: 'AllowOnlyApprovedOutbound',
+            enableAiSearch: false,
+            searchSku: 'basic',
+            searchSemanticRanker: false,
+            enableOpenAi: true,
+            openAiSku: 'S0',
+            modelDeployments: [
+                { name: 'gpt-4o-mini', model: 'gpt-4o-mini', version: '2024-07-18', sku: 'GlobalStandard', capacity: 50 }
+            ],
+            identityType: 'UserAssigned',
+            disableLocalAuth: true,
+            enableCmk: false,
+            enableAppInsights: true,
+            enableContainerRegistry: true,
+            allowedFqdns: ['pypi', 'huggingface', 'github', 'conda']
+        }
+    },
+    {
         id: 'fast-track-sandbox',
         label: 'Fast-Track Dev / Sandbox',
         shortDesc: 'Shared Compute + Public Access with IP Restrictions + Pay-As-You-Go OpenAI',
         dotColor: 'bg-fluent-cat-green-fg',
+        bestFor: 'Rapid prototyping, hackathons, prompt experimentation, and pre-production exploration.',
+        useCases: [
+            'Hackathons and exploratory prototyping of new models without VNet complexity',
+            'Prompt engineering experimentation and UI wireframing before security hardening',
+            'Cost-effective developer labs with pay-as-you-go capacity and public access'
+        ],
         config: {
             workload: 'pocai',
             environment: 'dev',
