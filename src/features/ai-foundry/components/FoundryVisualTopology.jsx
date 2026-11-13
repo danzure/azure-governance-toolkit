@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { 
     Layers, 
@@ -10,12 +10,23 @@ import {
     ShieldCheck
 } from 'lucide-react';
 import { AzureServiceIcon } from '@features/naming';
+import { FOUNDRY_DNS_ZONES } from '../data/dnsZones';
 import { getFoundryResourceNames } from '../utils/foundryNaming';
 
-function FoundryVisualTopology({ config }) {
+function FoundryVisualTopology({ config, hideSubHeader = false }) {
     const isPrivate = config.networkMode === 'private';
     const names = getFoundryResourceNames(config);
     const [copiedId, setCopiedId] = useState(null);
+
+    const activeDnsZones = useMemo(() => {
+        if (!isPrivate) return [];
+        return FOUNDRY_DNS_ZONES.filter((dz) => {
+            if (dz.resourceType === 'Microsoft.CognitiveServices/accounts' && !config.enableOpenAi) return false;
+            if (dz.resourceType === 'Microsoft.Search/searchServices' && !config.enableAiSearch) return false;
+            if (dz.resourceType === 'Microsoft.ContainerRegistry/registries' && !config.enableContainerRegistry) return false;
+            return true;
+        });
+    }, [isPrivate, config.enableOpenAi, config.enableAiSearch, config.enableContainerRegistry]);
 
     const handleCopy = useCallback(async (text, id) => {
         try {
@@ -29,42 +40,65 @@ function FoundryVisualTopology({ config }) {
 
     return (
         <div className="w-full flex-1 h-full flex flex-col animate-fade-in">
-            {/* Sub-Header Context Bar */}
-            <div className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 border-b border-fluent-stroke-subtle bg-fluent-bg-canvas shrink-0">
-                <div className="flex items-center gap-2">
-                    <Network className="w-4 h-4 text-fluent-brand-fg shrink-0" />
-                    <span className="text-[13px] font-semibold text-fluent-fg-primary">
-                        Architecture Topology & Security Perimeter
-                    </span>
+            {/* Sub-Header Context Bar (hidden when integrated into unified page toolbar) */}
+            {!hideSubHeader && (
+                <div className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 border-b border-fluent-stroke-subtle bg-fluent-bg-canvas shrink-0">
+                    <div className="flex items-center gap-2">
+                        <Network className="w-4 h-4 text-fluent-brand-fg shrink-0" />
+                        <span className="text-[13px] font-semibold text-fluent-fg-primary">
+                            Architecture Topology & Security Perimeter
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] text-[11px] font-medium border ${
+                            isPrivate 
+                                ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
+                                : 'bg-fluent-bg-subtle border-fluent-stroke-subtle text-fluent-cat-yellow-fg'
+                        }`}>
+                            {isPrivate ? <Lock className="w-3 h-3 shrink-0" /> : <Globe className="w-3 h-3 shrink-0" />}
+                            <span>{isPrivate ? 'Zero-Trust Managed VNet' : 'Public Endpoint Access'}</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] bg-fluent-bg-subtle text-[11px] text-fluent-fg-primary border border-fluent-stroke-subtle font-mono">
+                            <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-blue-fg shrink-0" />
+                            <span>{config.region}</span>
+                        </span>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] text-[11px] font-medium border ${
-                        isPrivate 
-                            ? 'bg-fluent-cat-green-bg border-fluent-cat-green-border text-fluent-cat-green-fg' 
-                            : 'bg-fluent-bg-subtle border-fluent-stroke-subtle text-fluent-cat-yellow-fg'
-                    }`}>
-                        {isPrivate ? <Lock className="w-3 h-3 shrink-0" /> : <Globe className="w-3 h-3 shrink-0" />}
-                        <span>{isPrivate ? 'Zero-Trust Managed VNet' : 'Public Endpoint Access'}</span>
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] bg-fluent-bg-subtle text-[11px] text-fluent-fg-primary border border-fluent-stroke-subtle font-mono">
-                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-blue-fg shrink-0" />
-                        <span>{config.region}</span>
-                    </span>
-                </div>
-            </div>
+            )}
 
             {/* Architecture Canvas Wrapper */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col bg-fluent-bg-card">
                 <div className="relative w-full flex-1 rounded-lg border border-dashed border-fluent-stroke-strong p-4 sm:p-5 bg-fluent-bg-canvas flex flex-col justify-between gap-5">
-                    {/* Boundary Tag */}
-                    <div className="flex items-center gap-1.5 text-[11px] text-fluent-fg-tertiary uppercase tracking-wider font-semibold">
-                        <Layers className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
-                        <span>Azure Virtual Network & Landing Zone Boundary</span>
+                    {/* Boundary Tag & Resource Group Pill */}
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-1.5 text-[11px] text-fluent-fg-tertiary uppercase tracking-wider font-semibold">
+                            <Layers className="w-3.5 h-3.5 text-fluent-brand-fg shrink-0" />
+                            <span>Azure Virtual Network &amp; Landing Zone Boundary</span>
+                        </div>
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-fluent-bg-card border border-fluent-stroke-subtle text-[11.5px]">
+                            <AzureServiceIcon resourceName="Resource group" category="Management + Governance" className="w-3.5 h-3.5 shrink-0" />
+                            <span className="text-fluent-fg-tertiary">RG:</span>
+                            <span className="font-mono font-semibold text-fluent-fg-primary select-all" title={names.rgName}>
+                                {names.rgName}
+                            </span>
+                            <button
+                                type="button"
+                                onClick={() => handleCopy(names.rgName, 'rg')}
+                                title={`Copy ${names.rgName}`}
+                                className={`p-0.5 rounded-[3px] transition-colors shrink-0 ${
+                                    copiedId === 'rg'
+                                        ? 'text-fluent-cat-green-fg'
+                                        : 'text-fluent-fg-tertiary hover:text-fluent-fg-primary hover:bg-fluent-bg-subtle'
+                                }`}
+                            >
+                                {copiedId === 'rg' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Level 1: Platform Hub Layer */}
                     <div className="flex flex-col items-center">
-                        <div className="group/hub w-full max-w-xl p-4 rounded-lg border-2 border-fluent-brand-bg bg-fluent-bg-card flex flex-col gap-2.5 shadow-soft">
+                        <div className="group/hub w-full max-w-2xl p-4 rounded-lg border-2 border-fluent-brand-bg bg-fluent-bg-card flex flex-col gap-2.5 shadow-soft">
                             <div className="flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-2.5 min-w-0">
                                     <div className="p-1.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle flex items-center justify-center shrink-0">
@@ -182,7 +216,7 @@ function FoundryVisualTopology({ config }) {
                         <span className="text-[11px] font-semibold text-fluent-fg-tertiary uppercase tracking-wider">
                             Backing Dependencies & Linked Providers
                         </span>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                             {/* Storage Account */}
                             <div className="group/card p-3 rounded-[4px] border border-fluent-stroke-subtle bg-fluent-bg-card flex items-start gap-2.5 shadow-soft">
                                 <AzureServiceIcon resourceName="Storage account" category="Storage" className="w-4 h-4 shrink-0 mt-0.5" />
@@ -260,6 +294,18 @@ function FoundryVisualTopology({ config }) {
                                         <span className="text-[11px] text-fluent-fg-secondary">
                                             AI Services ({(config.modelDeployments || []).length} models)
                                         </span>
+                                        {(config.modelDeployments || []).length > 0 && (
+                                            <div className="flex flex-wrap items-center gap-1 mt-0.5">
+                                                {config.modelDeployments.map((m) => (
+                                                    <span
+                                                        key={m.name}
+                                                        className="font-mono text-[10px] px-1.5 py-0.5 rounded-[3px] bg-fluent-bg-subtle border border-fluent-stroke-subtle text-fluent-fg-primary"
+                                                    >
+                                                        {m.name}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
                                         <span className={`inline-flex items-center gap-1 text-[11px] font-medium mt-0.5 ${isPrivate ? 'text-fluent-cat-green-fg' : 'text-fluent-cat-yellow-fg'}`}>
                                             {isPrivate ? <Check className="w-3 h-3 shrink-0" /> : <Globe className="w-3 h-3 shrink-0" />}
                                             <span>{isPrivate ? 'Private Endpoint' : 'Public Access'}</span>
@@ -416,6 +462,32 @@ function FoundryVisualTopology({ config }) {
                             )}
                         </div>
                     </div>
+
+                    {/* Private Link DNS Zones Strip */}
+                    {isPrivate && activeDnsZones.length > 0 && (
+                        <div className="pt-3 border-t border-fluent-stroke-subtle flex flex-col gap-2">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                                <span className="text-[11px] font-semibold text-fluent-fg-tertiary uppercase tracking-wider">
+                                    Private Link DNS Zones (privatelink.*)
+                                </span>
+                                <span className="text-[11px] text-fluent-fg-secondary">
+                                    {activeDnsZones.length} zones required for private endpoint resolution
+                                </span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-1.5">
+                                {activeDnsZones.map((dz) => (
+                                    <span
+                                        key={dz.zone}
+                                        title={`${dz.service}: ${dz.description}`}
+                                        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] bg-fluent-bg-card border border-fluent-stroke-subtle text-[11px] font-mono text-fluent-fg-primary"
+                                    >
+                                        <span className="w-1.5 h-1.5 rounded-full bg-fluent-cat-cyan-fg shrink-0" />
+                                        <span>{dz.zone}</span>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
@@ -423,7 +495,8 @@ function FoundryVisualTopology({ config }) {
 }
 
 FoundryVisualTopology.propTypes = {
-    config: PropTypes.object.isRequired
+    config: PropTypes.object.isRequired,
+    hideSubHeader: PropTypes.bool
 };
 
 export default memo(FoundryVisualTopology);

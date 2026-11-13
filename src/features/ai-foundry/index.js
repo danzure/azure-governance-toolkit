@@ -1,5 +1,6 @@
 // Components
 export { default as FoundryArchetypeBar } from './components/FoundryArchetypeBar';
+export { default as FoundryPromptBar } from './components/FoundryPromptBar';
 export { default as FoundryConfigPanel } from './components/FoundryConfigPanel';
 export { default as FoundryVisualTopology } from './components/FoundryVisualTopology';
 export { default as FoundryIaCTerminal } from './components/FoundryIaCTerminal';
@@ -20,3 +21,4 @@ export * from './utils/terraformGenerator';
 export * from './utils/securityValidator';
 export * from './utils/topologyBuilder';
 
+export * from './utils/foundryAiFallback';

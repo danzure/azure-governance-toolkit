@@ -6,19 +6,29 @@ import { generateBicepTemplate } from '../utils/bicepGenerator';
 import { generateTerraformTemplate } from '../utils/terraformGenerator';
 import { getFoundryResourceNames } from '../utils/foundryNaming';
 
-function FoundryIaCTerminal({ config }) {
-    const [activeTab, setActiveTab] = useState('bicep');
+function FoundryIaCTerminal({ config, format, onFormatChange, hideToolbar = false, precomputedCode }) {
+    const [internalTab, setInternalTab] = useState('bicep');
     const [copied, setCopied] = useState(false);
 
+    const activeTab = format ?? internalTab;
+    const setActiveTab = onFormatChange ?? setInternalTab;
+
     const code = useMemo(() => {
+        if (typeof precomputedCode === 'string') return precomputedCode;
         return activeTab === 'bicep'
             ? generateBicepTemplate(config)
             : generateTerraformTemplate(config);
-    }, [activeTab, config]);
+    }, [activeTab, config, precomputedCode]);
 
     const docsUrl = activeTab === 'bicep'
         ? 'https://learn.microsoft.com/azure/templates/microsoft.machinelearningservices/workspaces?pivots=deployment-language-bicep'
         : 'https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_foundry';
+
+    const filename = useMemo(() => {
+        const ext = activeTab === 'bicep' ? 'bicep' : 'tf';
+        const { hubName } = getFoundryResourceNames(config);
+        return `${hubName || 'ai-foundry'}.${ext}`;
+    }, [activeTab, config]);
 
     const handleCopy = async () => {
         try {
@@ -31,9 +41,6 @@ function FoundryIaCTerminal({ config }) {
     };
 
     const handleDownload = () => {
-        const ext = activeTab === 'bicep' ? 'bicep' : 'tf';
-        const { hubName } = getFoundryResourceNames(config);
-        const filename = `${hubName || 'ai-foundry'}.${ext}`;
         const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -44,39 +51,48 @@ function FoundryIaCTerminal({ config }) {
     };
 
     return (
-        <div className="flex flex-col flex-1 h-full min-h-[480px] lg:min-h-[540px] overflow-hidden bg-fluent-code-bg animate-fade-in">
-            {/* Sub-Header Toolbar */}
-            <div className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-canvas shrink-0">
-                {/* Format Selector Tabs */}
-                <div className="flex items-center gap-1 p-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle" role="tablist" aria-label="IaC format">
-                    <button
-                        type="button"
-                        role="tab"
-                        aria-selected={activeTab === 'bicep'}
-                        onClick={() => setActiveTab('bicep')}
-                        className={`px-3 h-[26px] rounded-[3px] text-[12px] transition-all inline-flex items-center gap-1.5 active:scale-95 ${
-                            activeTab === 'bicep'
-                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle'
-                                : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent font-medium'
-                        }`}
+        <div className="flex flex-col flex-1 h-full min-h-[480px] lg:min-h-[540px] overflow-hidden bg-fluent-code-bg rounded-b-lg animate-fade-in">
+            {/* Sub-Header Toolbar (hidden when integrated into unified page toolbar) */}
+            {!hideToolbar && (
+                <div className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 border-b border-fluent-stroke-subtle bg-fluent-bg-canvas shrink-0">
+                {/* Format Selector Tabs & Target Filename Badge */}
+                <div className="flex items-center gap-2.5 flex-wrap">
+                    <div className="flex items-center gap-1 p-0.5 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle" role="tablist" aria-label="IaC format">
+                        <button
+                            type="button"
+                            role="tab"
+                            aria-selected={activeTab === 'bicep'}
+                            onClick={() => setActiveTab('bicep')}
+                            className={`px-3 h-[26px] rounded-[3px] text-[12px] transition-all inline-flex items-center gap-1.5 active:scale-95 ${
+                                activeTab === 'bicep'
+                                    ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle'
+                                    : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent font-medium'
+                            }`}
+                        >
+                            <TechnologyIcon name="bicep" className="w-3.5 h-3.5 shrink-0" />
+                            <span>Bicep</span>
+                        </button>
+                        <button
+                            type="button"
+                            role="tab"
+                            aria-selected={activeTab === 'terraform'}
+                            onClick={() => setActiveTab('terraform')}
+                            className={`px-3 h-[26px] rounded-[3px] text-[12px] transition-all inline-flex items-center gap-1.5 active:scale-95 ${
+                                activeTab === 'terraform'
+                                    ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle'
+                                    : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent font-medium'
+                            }`}
+                        >
+                            <TechnologyIcon name="terraform" className="w-3.5 h-3.5 shrink-0" />
+                            <span>Terraform</span>
+                        </button>
+                    </div>
+                    <span
+                        className="hidden md:inline-flex items-center font-mono text-[11px] text-fluent-fg-secondary px-2.5 py-1 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle"
+                        title="Target IaC artifact filename"
                     >
-                        <TechnologyIcon name="bicep" className="w-3.5 h-3.5 shrink-0" />
-                        <span>Bicep</span>
-                    </button>
-                    <button
-                        type="button"
-                        role="tab"
-                        aria-selected={activeTab === 'terraform'}
-                        onClick={() => setActiveTab('terraform')}
-                        className={`px-3 h-[26px] rounded-[3px] text-[12px] transition-all inline-flex items-center gap-1.5 active:scale-95 ${
-                            activeTab === 'terraform'
-                                ? 'bg-fluent-bg-card text-fluent-brand-fg font-semibold shadow-sm border border-fluent-stroke-subtle'
-                                : 'bg-transparent text-fluent-fg-secondary hover:text-fluent-fg-primary hover:bg-fluent-bg-hover border border-transparent font-medium'
-                        }`}
-                    >
-                        <TechnologyIcon name="terraform" className="w-3.5 h-3.5 shrink-0" />
-                        <span>Terraform</span>
-                    </button>
+                        {filename}
+                    </span>
                 </div>
 
                 {/* Actions */}
@@ -127,6 +143,7 @@ function FoundryIaCTerminal({ config }) {
                     </button>
                 </div>
             </div>
+            )}
 
             {/* Code Surface */}
             <div className="relative flex-1 min-h-[420px] lg:min-h-0 w-full">
@@ -139,7 +156,11 @@ function FoundryIaCTerminal({ config }) {
 }
 
 FoundryIaCTerminal.propTypes = {
-    config: PropTypes.object.isRequired
+    config: PropTypes.object.isRequired,
+    format: PropTypes.oneOf(['bicep', 'terraform']),
+    onFormatChange: PropTypes.func,
+    hideToolbar: PropTypes.bool,
+    precomputedCode: PropTypes.string
 };
 
 export default memo(FoundryIaCTerminal);

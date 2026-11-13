@@ -12,6 +12,7 @@ function FoundryArchetypeBar({ activeArchetypeId, onSelectArchetype }) {
     const [hoveredPreset, setHoveredPreset] = useState(null);
     const activePreset = ARCHETYPE_PRESETS.find((p) => p.id === activeArchetypeId);
     const isCustom = activeArchetypeId === 'custom';
+    const displayedPreset = hoveredPreset || activePreset;
 
     return (
         <div className="relative z-20 rounded-lg border border-fluent-stroke-subtle bg-fluent-bg-card shadow-soft p-3 sm:px-4 sm:py-3 flex flex-col gap-2.5">
@@ -31,23 +32,13 @@ function FoundryArchetypeBar({ activeArchetypeId, onSelectArchetype }) {
                         </span>
                     )}
                 </div>
-                {hoveredPreset ? (
-                    <span className="text-[12px] text-fluent-fg-primary hidden md:inline truncate animate-fade-in">
-                        <strong className="text-fluent-brand-fg">{hoveredPreset.label}:</strong> {hoveredPreset.bestFor}
-                    </span>
-                ) : activePreset ? (
-                    <span className="text-[12px] text-fluent-fg-secondary hidden md:inline truncate">
-                        {activePreset.shortDesc}
-                    </span>
-                ) : (
-                    <span className="text-[12px] text-fluent-fg-secondary hidden md:inline truncate">
-                        Customized landing zone parameters — select a preset below to reset to a standard CAF baseline
-                    </span>
-                )}
+                <span className="text-[12px] text-fluent-fg-tertiary hidden md:inline">
+                    Select a reference architecture preset or tailor parameters below
+                </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-                {ARCHETYPE_PRESETS.map((preset, idx) => {
+                {ARCHETYPE_PRESETS.map((preset) => {
                     const isActive = activeArchetypeId === preset.id;
 
                     return (
@@ -73,9 +64,7 @@ function FoundryArchetypeBar({ activeArchetypeId, onSelectArchetype }) {
 
                             {/* Rich Hover Popover Card */}
                             <div
-                                className={`absolute z-50 top-full mt-2 w-[280px] sm:w-[340px] max-w-[calc(100vw-32px)] p-3 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle shadow-flyout text-[12px] opacity-0 pointer-events-none group-hover/archetype:opacity-100 group-hover/archetype:pointer-events-auto transition-all duration-200 delay-150 ease-out flex flex-col gap-2 ${
-                                    idx >= 3 ? 'right-0 sm:right-0' : 'left-0 sm:left-0'
-                                }`}
+                                className="absolute z-50 top-full mt-2 w-[280px] sm:w-[340px] max-w-[calc(100vw-32px)] p-3 rounded-lg bg-fluent-bg-card border border-fluent-stroke-subtle shadow-flyout text-[12px] opacity-0 pointer-events-none group-hover/archetype:opacity-100 group-hover/archetype:pointer-events-auto transition-all duration-200 delay-150 ease-out flex flex-col gap-2 left-0"
                                 role="tooltip"
                             >
                                 <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-fluent-stroke-subtle">
@@ -119,6 +108,34 @@ function FoundryArchetypeBar({ activeArchetypeId, onSelectArchetype }) {
                         </div>
                     );
                 })}
+            </div>
+
+            {/* Persistent Responsive Active Archetype Summary Bar */}
+            <div className="px-3 py-2 rounded-[4px] bg-fluent-bg-subtle border border-fluent-stroke-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[12px]">
+                {displayedPreset ? (
+                    <>
+                        <div className="flex items-start sm:items-center gap-2 min-w-0">
+                            <span className={`w-2 h-2 rounded-full shrink-0 mt-1.5 sm:mt-0 ${displayedPreset.dotColor}`} />
+                            <p className="text-fluent-fg-secondary leading-snug">
+                                <strong className="text-fluent-fg-primary font-semibold">
+                                    {hoveredPreset ? `Preview (${displayedPreset.label}):` : 'Best for:'}
+                                </strong>{' '}
+                                {displayedPreset.bestFor}
+                            </p>
+                        </div>
+                        <span className="text-[11.5px] text-fluent-fg-tertiary sm:text-right shrink-0 lg:max-w-[45%] truncate" title={displayedPreset.shortDesc}>
+                            {displayedPreset.shortDesc}
+                        </span>
+                    </>
+                ) : (
+                    <div className="flex items-start sm:items-center gap-2 min-w-0">
+                        <span className="w-2 h-2 rounded-full bg-fluent-cat-purple-fg shrink-0 mt-1.5 sm:mt-0" />
+                        <p className="text-fluent-fg-secondary leading-snug">
+                            <strong className="text-fluent-fg-primary font-semibold">Custom Configuration:</strong>{' '}
+                            Parameters have been tailored from the baseline. Select any CAF archetype above to reset to a reference preset.
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );

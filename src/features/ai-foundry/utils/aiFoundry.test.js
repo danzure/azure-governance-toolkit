@@ -6,6 +6,7 @@ import { buildTopologyAndBOM } from './topologyBuilder';
 import { getFoundryResourceNames } from './foundryNaming';
 import { DEFAULT_CONFIG } from '../data/defaultServices';
 import { ARCHETYPE_PRESETS, matchArchetype } from '../data/archetypes';
+import { generateAiFoundryFallback } from './foundryAiFallback';
 
 describe('AI Foundry Generators and Validators', () => {
     it('generates fully CAF-compliant names matching Resource Naming standard', () => {
@@ -64,12 +65,29 @@ describe('AI Foundry Generators and Validators', () => {
         expect(sec1.passed).toBe(true);
     });
 
-    it('flags public network access as a security warning', () => {
-        const insecureConfig = { ...DEFAULT_CONFIG, networkMode: 'public' };
-        const results = validateSecurity(insecureConfig);
-        const sec1 = results.find(r => r.id === 'SEC-01');
-        expect(sec1.passed).toBe(false);
-        expect(sec1.status).toBe('warning');
+    it('flags public network access and non-restricted managed VNet modes in security audit', () => {
+        const publicConfig = { ...DEFAULT_CONFIG, networkMode: 'public', managedVnetMode: 'Disabled' };
+        const publicResults = validateSecurity(publicConfig);
+        const publicSec1 = publicResults.find(r => r.id === 'SEC-01');
+        const publicSec2 = publicResults.find(r => r.id === 'SEC-02');
+        expect(publicSec1.passed).toBe(false);
+        expect(publicSec1.status).toBe('warning');
+        expect(publicSec2.passed).toBe(false);
+        expect(publicSec2.status).toBe('warning');
+
+        const openOutboundConfig = { ...DEFAULT_CONFIG, networkMode: 'private', managedVnetMode: 'AllowInternetOutbound' };
+        const openOutboundResults = validateSecurity(openOutboundConfig);
+        const openSec2 = openOutboundResults.find(r => r.id === 'SEC-02');
+        expect(openSec2.passed).toBe(false);
+
+        const strictResults = validateSecurity({ ...DEFAULT_CONFIG, networkMode: 'private', managedVnetMode: 'AllowOnlyApprovedOutbound' });
+        const strictSec2 = strictResults.find(r => r.id === 'SEC-02');
+        expect(strictSec2.passed).toBe(true);
+
+        strictResults.forEach(rule => {
+            expect(typeof rule.remediation).toBe('string');
+            expect(rule.remediation.trim().length).toBeGreaterThan(0);
+        });
     });
 
     it('builds topology bill of materials correctly with CAF names', () => {
@@ -103,3 +121,56 @@ describe('AI Foundry Generators and Validators', () => {
     });
 });
 
+
+describe('generateAiFoundryFallback (Heuristic NLP Parser)', () => {
+    it('parses regulated banking prompt with West Europe, CMK, and Private Link', () => {
+        const result = generateAiFoundryFallback(
+            'Regulated banking AML RAG landing zone in West Europe with CMK encryption'
+        );
+        expect(result.config.workload).toBe('bankai');
+        expect(result.config.region).toBe('westeurope');
+        expect(result.config.enableCmk).toBe(true);
+        expect(result.config.networkMode).toBe('private');
+        expect(result.config.managedVnetMode).toBe('AllowOnlyApprovedOutbound');
+        expect(result.config.disableLocalAuth).toBe(true);
+        expect(result.hubName).toMatch(/^hub-bankai-.*-weu-/);
+        expect(result.rgName).toMatch(/^rg-bankai-.*-weu-/);
+        expect(result.explanation).toContain(result.hubName);
+    });
+
+    it('parses multi-agent architecture with Sweden Central and ACR', () => {
+        const result = generateAiFoundryFallback(
+            'Multi-agent orchestration hub in Sweden Central with Container Registry'
+        );
+        expect(result.config.region).toBe('swedencentral');
+        expect(result.config.enableContainerRegistry).toBe(true);
+        expect(result.config.networkMode).toBe('private');
+        expect(result.summary.toLowerCase()).toContain('agent');
+    });
+
+    it('parses fast-track dev sandbox with public endpoint mode', () => {
+        const result = generateAiFoundryFallback(
+            'Fast-track dev sandbox for quick PoC with public endpoint access'
+        );
+        expect(result.config.environment).toBe('dev');
+        expect(result.config.networkMode).toBe('public');
+        expect(result.config.managedVnetMode).toBe('Disabled');
+        expect(result.summary.toLowerCase()).toContain('sandbox');
+    });
+
+    it('extracts explicit model deployment overrides cleanly', () => {
+        const result = generateAiFoundryFallback(
+            'Enterprise RAG with gpt-4o-mini and o3-mini deployments'
+        );
+        expect(result.config.enableOpenAi).toBe(true);
+        expect(result.config.modelDeployments.map((m) => m.model)).toEqual([
+            'gpt-4o-mini',
+            'o3-mini'
+        ]);
+    });
+
+    it('throws when prompt is empty or whitespace', () => {
+        expect(() => generateAiFoundryFallback('')).toThrow();
+        expect(() => generateAiFoundryFallback('   ')).toThrow();
+    });
+});
